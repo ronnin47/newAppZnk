@@ -24,14 +24,64 @@ export const Nava= ({tituloNav})=> {
 const mostrar=()=>setModalLogin(true);
 const desaparecer=()=>setModalLogin(false);
 
-
+//estados de lso campos de login
+const[loginEmail,setLoginEmail]=useState("");
+const[loginPassword,setLoginPassword]=useState("")
 
 
 
  
 const handleSubmit = (e) => {
   e.preventDefault();
-  // Aquí iría la lógica de autenticación
+
+  console.log("boton de login funciona");
+  console.log("Email: ",loginEmail);
+  console.log("Contraseña: ",loginPassword);
+
+  
+  const loginUsuario = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/loginUsuario', {
+        email:loginEmail,
+        contrasenia: loginPassword
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      //const { personajes } = response.data;
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        //text: `Se han recuperado ${personajes.length} personajes.`,
+      });
+  
+      //console.log('Personajes recuperados:', personajes);
+      
+      // Puedes manejar los personajes como desees
+      // Por ejemplo, almacenarlos en el estado de tu aplicación
+  
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response?.data?.message || 'Error al iniciar sesión ACAAAA.',
+      });
+    }
+  };
+
+  loginUsuario();
+
+
+
+
+
+
+
+
+
   console.log('Login submitted');
   desaparecer();
 };
@@ -45,45 +95,25 @@ const mostrarRegistrar=()=>setModalRegistrarme(true);
 const desaparecerRegistrar=()=>setModalRegistrarme(false);
 
  
-//estados de lso campos de login
-const[loginEmail,setLoginEmail]=useState("");
-const[loginPassword,setLoginPassword]=useState("")
-
-
-
-
  // Estados para los campos del formulario de registro
  const [registroEmail, setRegistroEmail] = useState('');
  const [registroPassword, setRegistroPassword] = useState('');
 
+ //REGISTRARSE OK!!
 const handleSubmitRegistro = (e) => {
   e.preventDefault();
   console.log('funciona registarse');
   
-  
-  
-
   console.log('Email:', registroEmail);
   console.log('Password:', registroPassword);
 
-
-
-
-
-//CARGAR NUEVO USUARIO
-
-
-  //PETICION DE INSERT AL SERVIDOR 
+//CARGAR NUEVO USUARIO OK!!
 const cargarNuevoUsuario = async () => {
   const newUsuario = {
     email: registroEmail,
     contrasenia: registroPassword,
   };
-
-
-  
   try {
-    
     const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
     //const response = await axios.post(`https://rankingznk.onrender.com/insert-personaje`, newPersonaje, {   
     headers: {
@@ -92,9 +122,7 @@ const cargarNuevoUsuario = async () => {
     });
     const { idusuario,message } = response.data;
     
-    
-
-
+  
     console.log("El ID de usuario es:", idusuario);
 
     if (idusuario) {
@@ -123,18 +151,7 @@ const cargarNuevoUsuario = async () => {
   }
 };
 
-
 cargarNuevoUsuario();
-
-
-
-
-
-
-
-
-
-  
   
   setLoginEmail(registroEmail);
   setLoginPassword(registroPassword);

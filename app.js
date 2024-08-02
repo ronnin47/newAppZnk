@@ -87,14 +87,14 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('un usuario se conecto');
+  console.log('Socket: un usuario se conecto');
 
   socket.on('message', (message) => {
     io.emit('message', message);
   });
 
   socket.on('disconnect', () => {
-    console.log('un usuario se desconecto');
+    console.log('Socket: un usuario se desconecto');
   });
 });
 
@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
 
 
 
-// ****************INSERTAR USUARIO*************************
+// INSERTAR USUARIO ok!!
 app.post('/insert-usuario', async (req, res) => {
   const { email, contrasenia } = req.body;
     console.log("llego la peticion de insert de usuario")
@@ -136,6 +136,50 @@ app.post('/insert-usuario', async (req, res) => {
   }
 });
 
+
+
+app.post('/loginUsuario', async (req, res) => {
+  const { email, contrasenia } = req.body;
+
+  console.log("Info del cliente que se loguea: ", req.body);
+
+  try {
+    // Verificar si el usuario existe
+    const userQuery = 'SELECT * FROM usuarios WHERE email = $1';
+    const userResult = await pool.query(userQuery, [email]);
+
+    if (userResult.rows.length === 0) {
+      console.log("No se encontró el usuario con el email proporcionado.");
+      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+    }
+
+    const user = userResult.rows[0];
+
+    // Verificar la contraseña directamente
+    if (user.contrasenia !== contrasenia) {
+      console.log("Contraseña proporcionada no coincide con la almacenada.");
+      console.log("Contraseña de la base de datos: ", user.contrasenia);
+      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+    }
+
+    // Si se necesita obtener los personajes del usuario, descomenta el siguiente código
+    /*
+    const personajesQuery = 'SELECT * FROM personajes WHERE usuario_id = $1';
+    const personajesResult = await pool.query(personajesQuery, [user.idusuario]);
+    */
+
+    console.log("Inicio de sesión exitoso para el usuario:", user.idusuario);
+
+    res.json({
+      message: 'Inicio de sesión exitoso',
+      // personajes: personajesResult.rows, // Descomenta esto si obtienes personajes
+    });
+
+  } catch (error) {
+    console.error('Error en el inicio de sesión:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
 
 //UPDATE
 /*
