@@ -2,9 +2,10 @@
 import React, { useRef, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { Ventajas } from './ventajas.jsx';
+import axios from 'axios';
 
 export const CargarPersonaje = ({
-
+  usuarioId,
   setActiveKey,
   personajes,
   setPersonajes,
@@ -347,15 +348,15 @@ export const CargarPersonaje = ({
     reader.readAsDataURL(file);
   };
 
-  const agregarPersonaje = () => {
+  const agregarPersonaje = async () => {
  // Obtener el último id del localStorage o inicializarlo en 0 si no existe
- let lastId = parseInt(localStorage.getItem('lastId')) || 0;
+// let lastId = parseInt(localStorage.getItem('lastId')) || 0;
 
  // Incrementar el id para el nuevo personaje
- const nextId = lastId + 1;
+  const nextId  = 0;
     
     const pjNuevo = {
-      id: nextId,
+      idpersonaje: nextId,
       nombre: nombre,
       dominio: dominio,
       raza:raza,
@@ -364,8 +365,8 @@ export const CargarPersonaje = ({
 
       ken:ken || 0,
       ki:ki || 0,
-      destino:destino,
-      pDestino:pDestino,
+      destino:destino || 0,
+      pDestino:pDestino || 0,
 
       fuerza: fuerza || 0,
       fortaleza: fortaleza || 0,
@@ -426,23 +427,67 @@ export const CargarPersonaje = ({
       valAdd4: valAdd4 || 0,
 
       imagen: imagen,
-      inventario: inventario,
-      dominios: dominios,
+      inventario: inventario,//JSON
+      dominios: dominios,//JASON
       kenActual:ken || 0,
       kiActual:ki || 0,
       positiva:3,
       negativa:3,
       vidaActual:0,
-      hechizos:hechizos,
-      consumision:consumision,
+      hechizos:hechizos,//JSON
+      consumision:consumision || 0,
       iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
       historia:"",
+      usuario_id: usuarioId,
       
    
     };
-    localStorage.setItem('lastId', nextId);
 
-    setPersonajes([...personajes, pjNuevo]);
+
+    try {
+    
+      //const response = await axios.post(`https://rankingznk.onrender.com/insert-personaje`, pjNuevo, {   
+      const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
+      headers: {
+          'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
+        },
+      });
+      const { idpersonaje } = response.data;
+      
+      setPersonajes([...personajes, { ...pjNuevo, idpersonaje }]);
+  
+  /*
+    //lalam a la peticion 
+        const fetchPersonajes = async () => {
+          try {
+            //const response = await axios.get('http://localhost:4000/personajes');
+            const response = await axios.get(`https://rankingznk.onrender.com/personajes`);
+            setPersonajes(response.data);
+          
+          } catch (error) {
+            console.error('Error al obtener los personajes:', error);
+          }
+        };
+      
+        fetchPersonajes();
+  */    
+  
+      //console.log("Last added ID:", idpersonaje);
+    } catch (error) {
+      console.error('Error al insertar el personaje:', error.message);
+    }
+
+
+  
+     
+    
+
+    
+    
+
+    //localStorage.setItem('lastId', nextId);
+
+    //setPersonajes([...personajes, pjNuevo]);
      
    console.log(personajes[0].ventajas)
 

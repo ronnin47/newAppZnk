@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 
 
 
-export const Nava= ({tituloNav})=> {
+export const Nava= ({setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
 
 //visible o no visible
@@ -23,14 +23,44 @@ export const Nava= ({tituloNav})=> {
 
 const mostrar=()=>setModalLogin(true);
 const desaparecer=()=>setModalLogin(false);
-
-//estados de lso campos de login
+/*
+//estados de los campos de login
 const[loginEmail,setLoginEmail]=useState("");
 const[loginPassword,setLoginPassword]=useState("")
+*/
+const [loginEmail, setLoginEmail] = useState(() => {
+  // Leer el email de localStorage si existe
+  const savedEmail = localStorage.getItem('loginEmail');
+  return savedEmail || '';
+});
+
+const [loginPassword, setLoginPassword] = useState(() => {
+  // Leer la contraseña de localStorage si existe
+  const savedPassword = localStorage.getItem('loginPassword');
+  return savedPassword || '';
+});
 
 
 
- 
+/*
+ // Función para iniciar sesión
+ const iniciarSesion = () => {
+  setSesion(true);
+};
+*/
+// Función para cerrar sesión
+const cerrarSesion = () => {
+  localStorage.setItem('loginEmail', "");
+  localStorage.setItem('loginPassword', "");
+  localStorage.setItem('idusuario', "");
+  setPersonajes([])
+  setSesion(false);
+};
+
+
+
+
+ //UINICIAR SESION Y RECUPERA TODOS LO PERSONAJES DE LA BASE Y LOS GUARDA EN EL STORAGE Y LOS SETEA EN USE
 const handleSubmit = (e) => {
   e.preventDefault();
 
@@ -50,7 +80,7 @@ const handleSubmit = (e) => {
         },
       });
   
-      //const { personajes } = response.data;
+      const { idusuario, personajes } = response.data;
   
       Swal.fire({
         icon: 'success',
@@ -58,10 +88,22 @@ const handleSubmit = (e) => {
         //text: `Se han recuperado ${personajes.length} personajes.`,
       });
   
-      //console.log('Personajes recuperados:', personajes);
-      
+      console.log('Personajes recuperados:', personajes);
+      console.log("IDUSUARIO ES: ",idusuario)
       // Puedes manejar los personajes como desees
       // Por ejemplo, almacenarlos en el estado de tu aplicación
+        // Actualiza el estado y localStorage
+       // 
+       localStorage.setItem('personajes', JSON.stringify(personajes));
+       setPersonajes(personajes);
+
+
+       localStorage.setItem('loginEmail', loginEmail);
+       localStorage.setItem('loginPassword', loginPassword);
+       localStorage.setItem('idusuario', idusuario);
+       setUSuarioId(idusuario)
+       setSesion(true)
+       console.log("Personajes recien cargados: ",personajes)
   
     } catch (error) {
       Swal.fire({
@@ -73,14 +115,6 @@ const handleSubmit = (e) => {
   };
 
   loginUsuario();
-
-
-
-
-
-
-
-
 
   console.log('Login submitted');
   desaparecer();
@@ -160,7 +194,7 @@ cargarNuevoUsuario();
   desaparecerRegistrar();
 };
 
-
+console.log("estado de sesion en el nav: ",sesion)
 
   return (
     <>
@@ -183,8 +217,11 @@ cargarNuevoUsuario();
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1" onClick={mostrar}>Iniciar sesion</Nav.Link>
-            <Nav.Link href="#action2"></Nav.Link>          
+           {sesion==false?(<Nav.Link href="#action1" onClick={mostrar}>Iniciar sesion</Nav.Link>):(<Nav.Link href="#action1" onClick={cerrarSesion}>Cerrar sesion</Nav.Link>)} 
+
+
+
+            {sesion===true ? (<Nav.Link href="#action2" style={{color:"yellow"}}>{loginEmail}</Nav.Link>) : (<Nav.Link href="#action2"></Nav.Link>) }       
             <Nav.Link href="#" disabled>
               
             </Nav.Link>

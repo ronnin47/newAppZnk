@@ -137,7 +137,7 @@ app.post('/insert-usuario', async (req, res) => {
 });
 
 
-
+//LOGIN USUARIO OK!!
 app.post('/loginUsuario', async (req, res) => {
   const { email, contrasenia } = req.body;
 
@@ -154,7 +154,9 @@ app.post('/loginUsuario', async (req, res) => {
     }
 
     const user = userResult.rows[0];
+    const idusuario = userResult.rows[0].idusuario;
 
+    console.log("IDUSUARIO ES: ",idusuario)
     // Verificar la contraseña directamente
     if (user.contrasenia !== contrasenia) {
       console.log("Contraseña proporcionada no coincide con la almacenada.");
@@ -163,21 +165,276 @@ app.post('/loginUsuario', async (req, res) => {
     }
 
     // Si se necesita obtener los personajes del usuario, descomenta el siguiente código
-    /*
+    
     const personajesQuery = 'SELECT * FROM personajes WHERE usuario_id = $1';
     const personajesResult = await pool.query(personajesQuery, [user.idusuario]);
-    */
+    
 
     console.log("Inicio de sesión exitoso para el usuario:", user.idusuario);
 
     res.json({
       message: 'Inicio de sesión exitoso',
-      // personajes: personajesResult.rows, // Descomenta esto si obtienes personajes
+      personajes: personajesResult.rows, // Descomenta esto si obtienes personajes
+      idusuario: idusuario,
     });
 
   } catch (error) {
     console.error('Error en el inicio de sesión:', error);
     res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
+
+
+
+
+
+//*************INSERT CARGAR PERSONAJE NUEVO
+
+// INSERT ok!!
+app.post('/insert-personaje', async (req, res) => {
+  const { 
+    nombre,
+      dominio,
+      raza,
+      naturaleza,
+      edad,
+
+      ken,
+      ki,
+      destino,
+      pDestino,
+
+      fuerza,
+      fortaleza,
+      destreza,
+      agilidad,
+      sabiduria,
+      presencia,
+      principio,
+      sentidos,
+
+
+      academisismo,
+      alerta,
+      atletismo,
+      conBakemono,
+      mentir,
+      pilotear,
+      artesMarciales,
+      medicina,
+      conObjMagicos,
+      sigilo,
+      conEsferas,
+      conLeyendas,
+      forja,
+      conDemonio,
+      conEspiritual,
+      manejoBlaster,
+      manejoSombras,
+      tratoBakemono,
+      conHechiceria,
+      medVital,
+      medEspiritual,
+      rayo,
+      fuego,
+      frio,
+      veneno,
+      corte,
+      energia,
+
+
+      ventajas,
+      
+
+      
+      apCombate,
+      valCombate,
+      apCombate2,
+      valCombate2,
+
+
+      add1,
+      valAdd1,
+      add2,
+      valAdd2,
+      add3,
+      valAdd3,
+      add4,
+      valAdd4,
+
+      imagen,
+      inventario,
+      dominios,
+      kenActual,
+      kiActual,
+      positiva,
+      negativa,
+      vidaActual,
+      hechizos,
+      consumision,
+      iniciativa,
+      historia,
+      
+   } = req.body;
+    console.log("llego la peticion de insert!!")
+    console.log(req.body)
+    // Convierte la imagen de base64 a un buffer
+   // const imagenBuffer = Buffer.from(imagen, 'base64');
+
+  try {
+    const query = `
+      INSERT INTO personajes (nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino, fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio, sentidos, academisismo, alerta, atletismo, conBakemono, mentir,
+      pilotear,
+      artesMarciales,
+      medicina,
+      conObjMagicos,
+      sigilo,
+      conEsferas,
+      conLeyendas,
+      forja,
+      conDemonio,
+      conEspiritual,
+      manejoBlaster,
+      manejoSombras,
+      tratoBakemono,
+      conHechiceria,
+      medVital,
+      medEspiritual,
+      rayo,
+      fuego,
+      frio,
+      veneno,
+      corte,
+      energia,
+
+
+      ventajas,
+      
+
+      
+      apCombate,
+      valCombate,
+      apCombate2,
+      valCombate2,
+
+
+      add1,
+      valAdd1,
+      add2,
+      valAdd2,
+      add3,
+      valAdd3,
+      add4,
+      valAdd4,
+
+      imagen,
+      inventario,
+      dominios,
+      kenActual,
+      kiActual,
+      positiva,
+      negativa,
+      vidaActual,
+      hechizos,
+      consumision,
+      iniciativa,
+      historia)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70)
+      RETURNING idpersonaje
+    `;
+
+    const values = [
+      nombre,
+      dominio,
+      raza,
+      naturaleza,
+      edad,
+
+      ken,
+      ki,
+      destino,
+      pDestino,
+
+      fuerza,
+      fortaleza,
+      destreza,
+      agilidad,
+      sabiduria,
+      presencia,
+      principio,
+      sentidos,
+
+
+      academisismo,
+      alerta,
+      atletismo,
+      conBakemono,
+      mentir,
+      pilotear,
+      artesMarciales,
+      medicina,
+      conObjMagicos,
+      sigilo,
+      conEsferas,
+      conLeyendas,
+      forja,
+      conDemonio,
+      conEspiritual,
+      manejoBlaster,
+      manejoSombras,
+      tratoBakemono,
+      conHechiceria,
+      medVital,
+      medEspiritual,
+      rayo,
+      fuego,
+      frio,
+      veneno,
+      corte,
+      energia,
+
+
+      ventajas,
+      
+
+      
+      apCombate,
+      valCombate,
+      apCombate2,
+      valCombate2,
+
+
+      add1,
+      valAdd1,
+      add2,
+      valAdd2,
+      add3,
+      valAdd3,
+      add4,
+      valAdd4,
+
+      imagen,
+      inventario,
+      dominios,
+      kenActual,
+      kiActual,
+      positiva,
+      negativa,
+      vidaActual,
+      hechizos,
+      consumision,
+      iniciativa,
+      historia,
+      
+      ];
+    const result = await pool.query(query, values);
+
+    const newId = result.rows[0].idpersonaje;
+    console.log("El Id que viene de la base de datos es: "+newId)
+    res.status(201).json({ message: 'Personaje insertado exitosamente.', idpersonaje: newId });
+  } catch (err) {
+    console.error('Error al insertar el personaje:', err.message);
+    res.status(500).json({ error: 'Error al insertar el personaje.' });
   }
 });
 

@@ -12,13 +12,16 @@ import Swal from 'sweetalert2';
 
 import Badge from 'react-bootstrap/Badge';
 
-
+import { Nava } from "./nava.jsx";
 
 export const Principal= ()=> {
+
+  
     const [personajes, setPersonajes] = useState(() => {
         const storedPersonajes = localStorage.getItem("personajes");
         return storedPersonajes ? JSON.parse(storedPersonajes) : [];
       });
+
 
     useEffect(() => {
         localStorage.setItem("personajes", JSON.stringify(personajes));
@@ -158,6 +161,27 @@ export const Principal= ()=> {
 
 
 
+
+
+  // Estado inicial, que será leído de localStorage si existe
+  const [sesion, setSesion] = useState(() => {
+    // Leer el estado de localStorage o establecerlo en false si no existe
+    const savedSesion = localStorage.getItem('sesion');
+    return savedSesion === 'true'; // localStorage almacena valores como strings
+  });
+
+  const [usuarioId, setUsuarioId] = useState(() => {
+    // Leer el estado de localStorage o establecerlo en null si no existe
+    const savedUsuarioId = localStorage.getItem('idusuario');
+    return savedUsuarioId ? savedUsuarioId : null;
+  });
+
+  // Efecto para guardar el estado de la sesión en localStorage cuando cambie
+  useEffect(() => {
+    localStorage.setItem('sesion', sesion);
+  }, [sesion]);
+ 
+
 //aca trabajamos con los badge
 /*
 const [fuerzaBadge,setFuerzaBadge]=useState("");
@@ -181,11 +205,20 @@ const bajarFuerzaBadge = (event) => {
 */
   return (
     <>
+     <Nava 
+     tituloNav=" ZNK"
+     setUSuarioId={setUsuarioId}
+     setPersonajes={setPersonajes} 
+     sesion={sesion}
+     setSesion={setSesion}
+     />
      <Accordion defaultActiveKey={['1']}  alwaysOpen>
       <Accordion.Item eventKey="0">
         <Accordion.Header >Cargar nuevo personaje</Accordion.Header>
         <Accordion.Body className="fondoBody">
         <CargarPersonaje 
+        usuarioId={usuarioId}
+
         setActiveKey={setActiveKey}
         personajes={personajes} 
         setPersonajes={setPersonajes} 
