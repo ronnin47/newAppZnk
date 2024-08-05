@@ -12,6 +12,7 @@ import { Historia } from './historia.jsx';
 
 import Accordion from 'react-bootstrap/Accordion';
 
+import axios from 'axios';
 
 import Badge from 'react-bootstrap/Badge';
 /*
@@ -23,7 +24,7 @@ export const FichaPersonaje = ({
   personaje,
   personajes, 
   setPersonajes, 
-  id, 
+  idpersonaje, 
   nombre, 
   dominio, 
   raza, 
@@ -99,7 +100,8 @@ export const FichaPersonaje = ({
   historia,
   eliminarPj,
   setVivoMuerto,
-  vivoMuerto
+  vivoMuerto,
+  usuarioId
 
 }) => {
   
@@ -406,109 +408,220 @@ export const FichaPersonaje = ({
 const handleChangeNaturaleza= (event)=>{
   setNaturalezaN(event.target.value)
 }
-  const btnGuardarCambios = () => {
+
+const btnGuardarCambios = () => {
    
-    console.log("Funciona el botón guardar cambios");
-    // Encuentra el índice del personaje actual en el array de personajes
-    const index = personajes.findIndex(pj => pj.id == id);
-  
-    // Crea una copia del array de personajes
-    const nuevosPersonajes = [...personajes];
-  
-    // Actualiza los valores del personaje actual en la copia del array
-    nuevosPersonajes[index] = {
-      ...nuevosPersonajes[index],
+  console.log("Funciona el botón guardar cambios");
+  // Encuentra el índice del personaje actual en el array de personajes
+  const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
+
+  // Crea una copia del array de personajes
+  const nuevosPersonajes = [...personajes];
+
+  // Actualiza los valores del personaje actual en la copia del array
+  nuevosPersonajes[index] = {
+    ...nuevosPersonajes[index],
+
+    nombre: nombreN,
+    dominio: dominioN,
+    raza:razaN,
+    edad:edadN,
+    imagen: imagenN,
+
+    ken:kenN,
+    ki:kiN,
+    destino:destinoN,
+    pDestino:pDestinoN,
+
+    fuerza: fuerzaN,
+    fortaleza: fortalezaN,
+    destreza: destrezaN,
+    agilidad: agilidadN,
+    sabiduria:sabiduriaN,
+    presencia:presenciaN,
+    principio:principioN,
+    sentidos:sentidosN,
+
+    academisismo:academisismoN,
+    alerta:alertaN,
+    atletismo:atletismoN,
+    conBakemono:conBakemonoN,
+    mentir:mentirN,
+    pilotear:pilotearN,
+    artesMarciales:artesMarcialesN,
+    medicina:medicinaN,
+    conObjMagicos:conObjMagicosN,
+    sigilo:sigiloN,
+    conEsferas:conEsferasN,
+    conLeyendas:conLeyendasN,
+    forja:forjaN,
+    conDemonio:conDemonioN,
+    conEspiritual:conEspiritualN,
+    manejoBlaster:manejoBlasterN,
+    manejoSombras:manejoSombrasN,
+    tratoBakemono:tratoBakemonoN,
+    conHechiceria:conHechiceriaN,
+    medVital:medVitalN,
+    medEspiritual:medEspiritualN,
+    rayo:rayoN,
+    fuego:fuegoN,
+    frio:frioN,
+    veneno:venenoN,
+    corte:corteN,
+    energia:energiaN,
+
+    apCombate: apCombateN,
+    valCombate: valCombateN,
+    apCombate2: apCombate2N,
+    valCombate2: valCombate2N,
  
+    ventajas: ventajasN,
+    inventario:inventarioN,
+    dominios:dominiosN,
+    hechizos:hechizosN,
+
+    kenActual:kenActualN,
+    kiActual:kiActualN,
+    positiva:positivaN,
+    negativa:negativaN,
+    vidaActual:damageActualN,
+
+    add1:add1N,
+    valAdd1: valAdd1N,
+    add2:add2N,
+    valAdd2: valAdd2N,
+    add3:add3N,
+    valAdd3: valAdd3N,
+    add4:add4N,
+    valAdd4: valAdd4N,
+    consumision: consumisionN,
+    iniciativa:iniciativaN,
+    historia:historiaN,
+    naturaleza:naturalezaN,
+    
+  };
+
+
+  // Actualiza el estado de los personajes con la copia modificada
+  setPersonajes(nuevosPersonajes);
+ /* Swal.fire({
+    position: "top-center",
+    icon: "success",
+    title: `Los cambios de ${nombre} fueron guardados`,
+    showConfirmButton: false,
+    timer: 1500
+  });*/
+}
+
+const guardarCambiosBBDD = async () => {
+  try {
+    console.log("Guardando cambios del personaje con id:", idpersonaje);
+
+    // Supongamos que el personaje tiene estos datos
+   
+    const personaje = {
       nombre: nombreN,
       dominio: dominioN,
       raza:razaN,
+      naturaleza:naturalezaN,
       edad:edadN,
-      imagen: imagenN,
 
-      ken:kenN,
-      ki:kiN,
-      destino:destinoN,
-      pDestino:pDestinoN,
+      ken:kenN || 0,
+      ki:kiN || 0,
+      destino:destinoN || 0,
+      pDestino:pDestinoN || 0,
 
-      fuerza: fuerzaN,
-      fortaleza: fortalezaN,
-      destreza: destrezaN,
-      agilidad: agilidadN,
-      sabiduria:sabiduriaN,
-      presencia:presenciaN,
-      principio:principioN,
-      sentidos:sentidosN,
+      fuerza: fuerzaN|| 0,
+      fortaleza: fortalezaN || 0,
+      destreza: destrezaN || 0,
+      agilidad: agilidadN || 0,
+      sabiduria:sabiduriaN || 0,
+      presencia:presenciaN || 0,
+      principio:principioN ||0,
+      sentidos:sentidosN ||0,
 
-      academisismo:academisismoN,
-      alerta:alertaN,
-      atletismo:atletismoN,
-      conBakemono:conBakemonoN,
-      mentir:mentirN,
-      pilotear:pilotearN,
-      artesMarciales:artesMarcialesN,
-      medicina:medicinaN,
-      conObjMagicos:conObjMagicosN,
-      sigilo:sigiloN,
-      conEsferas:conEsferasN,
-      conLeyendas:conLeyendasN,
-      forja:forjaN,
-      conDemonio:conDemonioN,
-      conEspiritual:conEspiritualN,
-      manejoBlaster:manejoBlasterN,
-      manejoSombras:manejoSombrasN,
-      tratoBakemono:tratoBakemonoN,
-      conHechiceria:conHechiceriaN,
-      medVital:medVitalN,
-      medEspiritual:medEspiritualN,
-      rayo:rayoN,
-      fuego:fuegoN,
-      frio:frioN,
-      veneno:venenoN,
-      corte:corteN,
-      energia:energiaN,
 
+      academisismo:academisismoN ||0,
+      alerta:alertaN ||0,
+      atletismo:atletismoN||0,
+      conBakemono:conBakemonoN ||0,
+      mentir:mentirN ||0,
+      pilotear:pilotearN||0,
+      artesMarciales:artesMarcialesN ||0,
+      medicina:medicina ||0,
+      conObjMagicos:conObjMagicosN ||0,
+      sigilo:sigilo ||0,
+      conEsferas:conEsferasN ||0,
+      conLeyendas:conLeyendasN ||0,
+      forja:forjaN ||0,
+      conDemonio:conDemonioN ||0,
+      conEspiritual:conEspiritualN ||0,
+      manejoBlaster:manejoBlasterN ||0,
+      manejoSombras:manejoSombrasN ||0,
+      tratoBakemono:tratoBakemonoN ||0,
+      conHechiceria:conHechiceriaN ||0,
+      medVital:medVitalN ||0,
+      medEspiritual:medEspiritualN ||0,
+      rayo:rayoN ||0,
+      fuego:fuegoN ||0,
+      frio:frioN ||0,
+      veneno:venenoN ||0,
+      corte:corteN ||0,
+      energia:energiaN ||0,
+
+
+      ventajas:ventajasN,
+      
+
+      
       apCombate: apCombateN,
-      valCombate: valCombateN,
-      apCombate2: apCombate2N,
-      valCombate2: valCombate2N,
-   
-      ventajas: ventajasN,
-      inventario:inventarioN,
-      dominios:dominiosN,
-      hechizos:hechizosN,
+      valCombate: valCombateN ||0,
+      apCombate2:apCombate2N,
+      valCombate2:valCombate2N ||0,
 
-      kenActual:kenActualN,
-      kiActual:kiActualN,
+
+      add1:add1N,
+      valAdd1: valAdd1N || 0,
+      add2:add2N,
+      valAdd2: valAdd2N || 0,
+      add3:add3N,
+      valAdd3: valAdd3N || 0,
+      add4:add4N,
+      valAdd4: valAdd4N || 0,
+
+      imagen: imagenN,
+      inventario: inventarioN,//JSON
+      dominios: dominiosN,//JASON
+      kenActual:kenN || 0,
+      kiActual:kiN || 0,
       positiva:positivaN,
       negativa:negativaN,
       vidaActual:damageActualN,
-
-      add1:add1N,
-      valAdd1: valAdd1N,
-      add2:add2N,
-      valAdd2: valAdd2N,
-      add3:add3N,
-      valAdd3: valAdd3N,
-      add4:add4N,
-      valAdd4: valAdd4N,
-      consumision: consumisionN,
-      iniciativa:iniciativaN,
+      hechizos:hechizosN,//JSON
+      consumision:consumisionN || 0,
+      iniciativa:(parseInt(sentidosN)+parseInt(agilidadN)) || 0,
       historia:historiaN,
-      naturaleza:naturalezaN,
-      
+      usuarioId: usuarioId,
     };
 
-  
-    // Actualiza el estado de los personajes con la copia modificada
-    setPersonajes(nuevosPersonajes);
-   /* Swal.fire({
-      position: "top-center",
-      icon: "success",
-      title: `Los cambios de ${nombre} fueron guardados`,
-      showConfirmButton: false,
-      timer: 1500
-    });*/
+    const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
+      headers: {
+        'Content-Type': 'application/json',
+        // Añade aquí cualquier header adicional, como autenticación si es necesario
+      }
+    });
+
+    console.log('Cambios guardados exitosamente:', response.data);
+
+    // Aquí puedes manejar la respuesta del servidor
+    // como mostrar un mensaje de éxito o redirigir al usuario
+
+  } catch (error) {
+    console.error('Error al guardar cambios:', error);
+    // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
   }
+};
+
 
 /*
   const guardarCambiosBarras = () => {
@@ -620,8 +733,18 @@ useEffect(() => {
 
 
  
-    const handleEliminarPj = () => {
-        eliminarPj(personaje.id);
+    const handleEliminarPj = async() => {
+       eliminarPj(personaje.idpersonaje);
+
+       
+       try {
+        const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+        console.log('Personaje eliminado:', response.data);
+      } catch (error) {
+        console.error('Error al eliminar el personaje:', error);
+      }
+
+
     };
 
 
@@ -886,6 +1009,9 @@ useEffect(() => {
      
     <div className='col1'>
       <button className='btn btn-danger' onClick={handleEliminarPj} style={{width:"150px", marginTop:"10px"}}>Eliminar personaje</button>
+    </div>
+    <div className='col1'>
+      <button className='btn btn-success' onClick={guardarCambiosBBDD} style={{width:"150px", marginTop:"10px"}}>Guardar Cambios</button>
     </div>
    
     

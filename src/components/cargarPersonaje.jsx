@@ -5,7 +5,6 @@ import { Ventajas } from './ventajas.jsx';
 import axios from 'axios';
 
 export const CargarPersonaje = ({
-  usuarioId,
   setActiveKey,
   personajes,
   setPersonajes,
@@ -141,6 +140,7 @@ export const CargarPersonaje = ({
   consumision,
   naturaleza,
   setNaturaleza,
+  usuarioId,
   
 
 }) => {
@@ -356,7 +356,7 @@ export const CargarPersonaje = ({
   const nextId  = 0;
     
     const pjNuevo = {
-      idpersonaje: nextId,
+      //idpersonaje: nextId,
       nombre: nombre,
       dominio: dominio,
       raza:raza,
@@ -438,7 +438,7 @@ export const CargarPersonaje = ({
       consumision:consumision || 0,
       iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
       historia:"",
-      usuario_id: usuarioId,
+      usuarioId: usuarioId,
       
    
     };

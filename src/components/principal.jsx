@@ -29,6 +29,13 @@ export const Principal= ()=> {
 
 
     const [pjSeleccionado,setPjSeleccionado]=useState("")
+    console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
+    useEffect(() => {
+      console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
+    }, [pjSeleccionado]);
+
+
+
 
     const [nombre,setNombre]=useState("")
     const [imagen,setImagen]=useState("/imagenBase.jpeg")
@@ -47,7 +54,6 @@ export const Principal= ()=> {
     const [presencia,setPresencia]=useState("")
     const [principio,setPrincipio]=useState("")
     const [sentidos,setSentidos]=useState("")
-
     const [academisismo,setAcademisismo]=useState("")
     const [alerta,setAlerta]=useState("")
     const [atletismo,setAtletismo]=useState("")
@@ -75,14 +81,10 @@ export const Principal= ()=> {
     const [veneno,setVeneno]=useState("")
     const [corte,setCorte]=useState("")
     const [energia,setEnergia]=useState("")
-
-
-
     const [apCombate,setApCombate]=useState("")
     const [valCombate,setValCombate]=useState("")
     const [apCombate2,setApCombate2]=useState("")
     const [valCombate2,setValCombate2]=useState("")
-
     const [add1,setAdd1]=useState("")
     const [valAdd1,setValAdd1]=useState("")
     const [add2,setAdd2]=useState("")
@@ -91,28 +93,20 @@ export const Principal= ()=> {
     const [valAdd3,setValAdd3]=useState("")
     const [add4,setAdd4]=useState("")
     const [valAdd4,setValAdd4]=useState("")
-
-
-
     const [activeKey, setActiveKey] = useState(""); 
-
     const [ventajas, setVentajas] = useState([]);
-
     const [inventario, setInventario] = useState([]);
     const [dominios, setDominios] = useState([]);
     const [hechizos, setHechizos] = useState([]);
-
     const [kenActual, setKenActual] = useState("");
     const [kiActual, setKiActual] = useState("");
-
     const [positiva, setPositivaActual] = useState("");
     const [negativa, setNegativaActual] = useState("");
     const [vidaActual,setVidaActual]=useState("")
     const [naturaleza,setNaturaleza]=useState("")
-
     const [consumision,setConsumision]=useState("")
   
-    const pj = personajes.find(pj => pj.id === pjSeleccionado);
+    const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
     const [vivoMuerto,setVivoMuerto]=useState(true)
 
 
@@ -121,22 +115,24 @@ export const Principal= ()=> {
     const [sock, setSock] = useState([]);
     
    const handleDragEnd=(event)=>{
-    //console.log("orden original: ",personajes)
+    console.log("orden original: ",personajes)
     const {active, over}=event
     
     
-      const oldIndex= personajes.findIndex( pj=>pj.id===active.id)
-      const newIndex= personajes.findIndex( pj=>pj.id===over.id)
-      //console.log("oldIndex ",oldIndex);
-      //console.log("newIndex ",newIndex);
+      const oldIndex= personajes.findIndex( pj=>pj.idpersonaje===active.id)
+      const newIndex= personajes.findIndex( pj=>pj.idpersonaje===over.id)
+      console.log("oldIndex ",oldIndex);
+      console.log("newIndex ",newIndex);
       const newOrder= arrayMove(personajes,oldIndex,newIndex) 
-      //console.log("nuevo orden: ",newOrder)
+      console.log("nuevo orden: ",newOrder)
       setPersonajes(newOrder)
   }
 
 
+  
 
-  const eliminarPj = (id) => {
+
+  const eliminarPj = (idpersonaje) => {
     Swal.fire({
         title: '¿quieres eliminar el personaje?',
         text: '¡No podrás revertir esto!',
@@ -147,7 +143,7 @@ export const Principal= ()=> {
         confirmButtonText: 'Sí, eliminarlo'
     }).then((result) => {
         if (result.isConfirmed) {
-            const listaNueva = personajes.filter((pj) => pj.id !== id);
+            const listaNueva = personajes.filter((pj) => pj.idpersonaje !== idpersonaje);
             setPjSeleccionado("");
             setPersonajes(listaNueva);
             Swal.fire(
@@ -182,6 +178,24 @@ export const Principal= ()=> {
   }, [sesion]);
  
 
+  // Función para cerrar sesión
+const cerrarSesion = () => {
+  localStorage.setItem('loginEmail', "");
+  localStorage.setItem('loginPassword', "");
+  localStorage.setItem('idusuario', "");
+  setPjSeleccionado("");
+  setPersonajes([])
+  setSesion(false);
+};
+
+
+
+
+
+
+
+
+
 //aca trabajamos con los badge
 /*
 const [fuerzaBadge,setFuerzaBadge]=useState("");
@@ -211,6 +225,7 @@ const bajarFuerzaBadge = (event) => {
      setPersonajes={setPersonajes} 
      sesion={sesion}
      setSesion={setSesion}
+     cerrarSesion={cerrarSesion}
      />
      <Accordion defaultActiveKey={['1']}  alwaysOpen>
       <Accordion.Item eventKey="0">
@@ -378,7 +393,7 @@ const bajarFuerzaBadge = (event) => {
                 <SortableContext items={personajes} strategy={horizontalListSortingStrategy}>
                 <div className="miniCartas">
                 { personajes.length>0 ?(
-                  personajes.map(pj=><MiniCard vivoMuerto={vivoMuerto} setVivoMuerto={setVivoMuerto} setActiveKey={setActiveKey} personajes={personajes} setPersonajes={setPersonajes} key={pj.id} id={pj.id} nombre={pj.nombre} dominio={pj.dominio} imagen={pj.imagen} setPjSeleccionado={setPjSeleccionado} pjSeleccionado={pjSeleccionado}></MiniCard>)):(<p style={{color:"aliceblue"}}>No exiten personajes cargados</p>)} 
+                  personajes.map(pj=><MiniCard vivoMuerto={vivoMuerto} setVivoMuerto={setVivoMuerto} setActiveKey={setActiveKey} personajes={personajes} setPersonajes={setPersonajes} key={pj.idpersonaje} id={pj.idpersonaje} nombre={pj.nombre} dominio={pj.dominio} imagen={pj.imagen} setPjSeleccionado={setPjSeleccionado} pjSeleccionado={pjSeleccionado}></MiniCard>)):(<p style={{color:"aliceblue"}}>No exiten personajes cargados</p>)} 
                 </div>
                 </SortableContext>     
             </DndContext>
@@ -389,13 +404,14 @@ const bajarFuerzaBadge = (event) => {
         <Accordion.Body className="fondoBody">
          {pjSeleccionado ? (
           <FichaPersonaje
-          vivoMuerto={vivoMuerto}
-          setVivoMuerto={setVivoMuerto}
+            usuarioId={usuarioId}
+            vivoMuerto={vivoMuerto}
+            setVivoMuerto={setVivoMuerto}
             personajes={personajes}
             setPersonajes={setPersonajes}
             personaje={pj}
-            key={pj.id} 
-            id={pj.id}
+            key={pj.idpersonaje} 
+            idpersonaje={pj.idpersonaje}
             nombre={pj.nombre}
             imagen={pj.imagen}
             dominio={pj.dominio}
@@ -489,8 +505,8 @@ const bajarFuerzaBadge = (event) => {
           <Tiradas
             personajes={personajes}
             setPersonajes={setPersonajes}
-            key={pj.id} 
-            id={pj.id}
+            key={pj.idpersonaje} 
+            idpersonaje={pj.idpersonaje}
             nombre={pj.nombre}
             imagen={pj.imagen}
             destreza={pj.destreza}

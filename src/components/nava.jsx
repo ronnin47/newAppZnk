@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 
 
 
-export const Nava= ({setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
+export const Nava= ({cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
 
 //visible o no visible
@@ -48,6 +48,7 @@ const [loginPassword, setLoginPassword] = useState(() => {
   setSesion(true);
 };
 */
+/*
 // Función para cerrar sesión
 const cerrarSesion = () => {
   localStorage.setItem('loginEmail', "");
@@ -56,7 +57,7 @@ const cerrarSesion = () => {
   setPersonajes([])
   setSesion(false);
 };
-
+*/
 
 
 
