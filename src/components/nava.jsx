@@ -151,8 +151,9 @@ const cargarNuevoUsuario = async () => {
     contrasenia: registroPassword,
   };
   try {
-    const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
-    //const response = await axios.post(`https://rankingznk.onrender.com/insert-personaje`, newPersonaje, {   
+    
+    //const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
+    const response = await axios.post(`http://zepiro.onrender.com/insert-usuario`, newUsuario, { 
     headers: {
         'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
       },
@@ -179,7 +180,7 @@ const cargarNuevoUsuario = async () => {
 
 
   } catch (error) {
-    console.error('Error al insertar el personaje:', error.message);
+    console.error('Error al insertar el usuario/contaseña:', error.message);
     Swal.fire({
       icon: 'error',
       title: 'Error',
