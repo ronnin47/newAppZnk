@@ -12,7 +12,7 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
   const [animacionActiva, setAnimacionActiva] = useState(false);
 
   const {
-    atributes,
+    attributes,
     listeners,
     setNodeRef,
     transform,
@@ -50,7 +50,7 @@ console.log("abrioooooooo")
     <div className='col1'>
 
      
-       <div className='container' {...atributes} {...listeners} ref={setNodeRef} style={style}>
+       <div className='container' {...attributes} {...listeners} ref={setNodeRef} style={style}>
        <div   className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
           <Card  style={{ width: '8em', border: "8px solid black" }} className={cardClassName}>
           <Card.Img   variant="top" src={imagen} style={{ maxWidth: "100%", maxHeight: "100%",   opacity: !vivoMuerto && id === pjSeleccionado ? 0.3 : 1}} />
@@ -76,7 +76,7 @@ console.log("abrioooooooo")
           </Card.Body>
         </Card>
       </div>
-     </div>
+      </div>
      <Button variant="outline-success" onClick={seleccionar} style={{transform:"scale(0.7)" , marginTop:"0px"}} onMouseEnter={(e) => { e.target.style.boxShadow= "0 0 20px 5px rgba(0, 255, 0, 0.8)"  }}
         onMouseLeave={(e) => { e.target.style.boxShadow = "none" }}>Seleccionar Pj</Button>
      

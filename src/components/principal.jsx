@@ -28,6 +28,9 @@ export const Principal= ()=> {
       }, [personajes]);
 
 
+   
+
+
     const [pjSeleccionado,setPjSeleccionado]=useState("")
     console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
     useEffect(() => {
@@ -126,8 +129,7 @@ export const Principal= ()=> {
       const newOrder= arrayMove(personajes,oldIndex,newIndex) 
       console.log("nuevo orden: ",newOrder)
       setPersonajes(newOrder)
-  }
-
+    };
 
   
 
@@ -187,10 +189,24 @@ const cerrarSesion = () => {
   setPersonajes([])
   setSesion(false);
 };
+/*
+useEffect(() => {
+  const handleBeforeUnload = (e) => {
+    // Mensaje de confirmación
+    const mensaje = '¿Estás seguro de que quieres salir? Los cambios no guardados se perderán.';
+    e.preventDefault(); // Necesario para algunos navegadores
+    e.returnValue = mensaje; // Para navegadores modernos
+    return mensaje; // Para navegadores antiguos
+  };
 
+  window.addEventListener('beforeunload', handleBeforeUnload);
 
-
-
+  // Limpiar el event listener cuando el componente se desmonta
+  return () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  };
+}, []);
+*/
 
 
 

@@ -37,10 +37,8 @@ app.use(express.static(join(__dirname, 'dist')));
 
 const server = http.createServer(app);
 
-
+/*
 //LOCAL HOST
-
-// Configuración de la conexión a la base de datos
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -48,6 +46,17 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
+*/
+
+//CONFIGURACION A LA BASE DE DATOS POSTGRESQL EN RENDER 
+const pool = new Pool({
+  user: 'databaserenderznk_user',          // Reemplaza con tu usuario de PostgreSQL
+  host: 'dpg-cqp2laaj1k6c73dbpfp0-a',
+  database: 'znkbasepg', // Reemplaza con el nombre de tu base de datos
+  password: 'ZaIKkfZ7i8tkjVUPvpk7b9DwlDyqbw1m',   // Reemplaza con tu contraseña de PostgreSQL
+  port: 5432,
+});
+
 
 
 
@@ -97,6 +106,9 @@ io.on('connection', (socket) => {
     console.log('Socket: un usuario se desconecto');
   });
 });
+
+
+
 
 
 
@@ -185,12 +197,7 @@ app.post('/loginUsuario', async (req, res) => {
 });
 
 
-
-
-
-//*************INSERT CARGAR PERSONAJE NUEVO
-
-// INSERT ok!!
+//INSERT ok!!
 app.post('/insert-personaje', async (req, res) => {
   const { 
     nombre,
@@ -464,11 +471,6 @@ app.post('/insert-personaje', async (req, res) => {
 });
 
 
-
-
-
-//UPDATE
-
 //UPDATE ok!!
 app.put('/update-personaje/:id', async (req, res) => {
   const idpersonaje = req.params.id;
@@ -735,7 +737,7 @@ app.put('/update-personaje/:id', async (req, res) => {
   
 });
 
-
+//DELETE ok!!
 app.delete('/deletePersonaje/:id', async (req, res) => {
   const idpersonaje = parseInt(req.params.id, 10);
   console.log("IDPERSOANJE QUE VIENEDEL CLIENTE: ",idpersonaje)
@@ -757,9 +759,9 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
 
 
 
+//const PORT = process.env.PORT || 4000;
 
-
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

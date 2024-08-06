@@ -9,6 +9,7 @@ import { BarraKi } from './barraKi.jsx';
 import {BarraVida} from "./barraVida.jsx";
 import { Hechizos } from './hechizos.jsx';
 import { Historia } from './historia.jsx';
+import Button from 'react-bootstrap/Button';
 
 import Accordion from 'react-bootstrap/Accordion';
 
@@ -580,7 +581,7 @@ const guardarCambiosBBDD = async () => {
       valCombate2:valCombate2N ||0,
 
 
-      add1:add1N,
+      add1:add1N ||"",
       valAdd1: valAdd1N || 0,
       add2:add2N,
       valAdd2: valAdd2N || 0,
@@ -603,8 +604,9 @@ const guardarCambiosBBDD = async () => {
       historia:historiaN,
       usuarioId: usuarioId,
     };
-
-    const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
+    
+    //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`https://zepiro.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
         // Añade aquí cualquier header adicional, como autenticación si es necesario
@@ -615,6 +617,12 @@ const guardarCambiosBBDD = async () => {
 
     // Aquí puedes manejar la respuesta del servidor
     // como mostrar un mensaje de éxito o redirigir al usuario
+    Swal.fire({
+      icon: 'success',
+      title: '¡Cambios!',
+      text: 'Los cambios se han guardado correctamente.',
+      confirmButtonText: 'Aceptar'
+    });
 
   } catch (error) {
     console.error('Error al guardar cambios:', error);
@@ -738,7 +746,9 @@ useEffect(() => {
 
        
        try {
-        const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+       
+        //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+        const response = await axios.delete(`https://zepiro.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
         console.error('Error al eliminar el personaje:', error);
@@ -782,7 +792,7 @@ useEffect(() => {
         <div className='row col2' >
           <div className='col1'>
             <img src={imagenN} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
-            <button onClick={handleImageUpload} className='btn btn-danger' style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</button>
+            <Button onClick={handleImageUpload} variant="outline-danger" style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</Button>
             <input type="file" accept="image/*" ref={inputFileRef} style={{ display: 'none' }} onChange={handleFileChange} />
           </div>
           <div className='col1'>
@@ -879,12 +889,12 @@ useEffect(() => {
           <input type="number" value={pilotearN} onChange={handleChangePilotear} placeholder="0" />
           <label htmlFor="">Artes marciales</label>
           <input type="number" value={artesMarcialesN} onChange={handleChangeArtesMarciales} placeholder="0" />
-          <input style={{border:"3px solid black", width:"80%"}} type="text" value={apCombateN} onChange={handleChangeApCombate} placeholder="ingrese Arma:"/>
+          <input style={{border:"3px solid black",width:"80%"}} type="text" value={apCombateN} onChange={handleChangeApCombate} placeholder="ingrese Arma:"/>
           <input type="number" value={valCombateN} onChange={handleChangeValCombate} placeholder="0"/>
-          <input style={{border:"3px solid black", width:"80%"}} type="text" value={apCombate2N} onChange={handleChangeApCombate2} placeholder="ingrese Arma:"/>
+          <input style={{border:"3px solid black",width:"80%"}} type="text" value={apCombate2N} onChange={handleChangeApCombate2} placeholder="ingrese Arma:"/>
           <input type="number" value={valCombate2N} onChange={handleChangeValCombate2} placeholder="0"/>
 
-          <input style={{border:"3px solid black", width:"80%"}} type="text" value={add1N} onChange={handleChangeAdd1} placeholder="Ap. nueva:"/>
+          <input style={{border:"3px solid black",width:"80%"}} type="text" value={add1N} onChange={handleChangeAdd1} placeholder="Ap. nueva:"/>
             <input type="number" value={valAdd1N} onChange={handleChangeValAdd1} placeholder="0"/>
             <input style={{border:"3px solid black", width:"80%"}} type="text" value={add2N} onChange={handleChangeAdd2} placeholder="Ap. nueva:"/>
             <input type="number" value={valAdd2N} onChange={handleChangeValAdd2} placeholder="0"/>
@@ -1005,17 +1015,17 @@ useEffect(() => {
 
 
 
-    <div style={{padding:"2rem"}}>
+    <div style={{padding:"2rem"}} className='col1'>
      
-    <div className='col1'>
-      <button className='btn btn-danger' onClick={handleEliminarPj} style={{width:"150px", marginTop:"10px"}}>Eliminar personaje</button>
-    </div>
-    <div className='col1'>
-      <button className='btn btn-success' onClick={guardarCambiosBBDD} style={{width:"150px", marginTop:"10px"}}>Guardar Cambios</button>
-    </div>
+    <div>
+      <Button variant="outline-danger" onClick={handleEliminarPj} style={{width:"150px", marginTop:"10px", marginRight:"1em"}}>Eliminar Pj</Button>
    
-    
+
+      <Button variant="outline-success"  onClick={guardarCambiosBBDD} style={{width:"150px", marginTop:"10px"}}>Guardar Cambios</Button>
     </div>
+       
+    </div>
+
    
     </>
     
