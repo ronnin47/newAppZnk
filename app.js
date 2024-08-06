@@ -52,7 +52,7 @@ const pool = new Pool({
 const pool = new Pool({
   user: 'databaserenderznk_user',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-cqp2laaj1k6c73dbpfp0-a',
-  database: 'znkbasepg', // Reemplaza con el nombre de tu base de datos
+  database: 'databaserenderznk', // Reemplaza con el nombre de tu base de datos
   password: 'ZaIKkfZ7i8tkjVUPvpk7b9DwlDyqbw1m',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
