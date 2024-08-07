@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
 export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN, setKiActualN }) => {
     
-
     const [animacionActiva, setAnimacionActiva] = useState(true);
-
-   
     const [consumir,setConsumir]=useState("")
+
 
     const porcentajeKi = (kiActualN / kiN) * 100;
 
@@ -60,13 +57,6 @@ export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN,
             socket.emit('message', msgEnviar);
             
         }
-
-       
-
-
-
-
-
 
 
     }

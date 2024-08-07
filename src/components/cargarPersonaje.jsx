@@ -489,7 +489,7 @@ export const CargarPersonaje = ({
 
     //setPersonajes([...personajes, pjNuevo]);
      
-   console.log(personajes[0].ventajas)
+   //console.log(personajes[0].ventajas)
 
 
     setNombre("");
@@ -573,11 +573,11 @@ export const CargarPersonaje = ({
     });
    
   };
-
+/*
   useEffect(() => {
     //console.log(personajes);
   }, [personajes]); 
-
+*/
   return (
     <>
     <div className='container'> 

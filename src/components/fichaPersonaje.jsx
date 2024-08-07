@@ -192,7 +192,8 @@ export const FichaPersonaje = ({
     guardarCambiosBarras();
   }, [damageActualN,kenActualN,kiActualN,positivaN,negativaN,consumisionN]);
 */
-
+//QUIERO CONSOLOGEAR COMO INICIA
+console.log("EL KiActaulN es:--------",kiActualN)
 
   const [apCombateN,setApCombateN]=useState(apCombate)
   const [valCombateN,setValCombateN]=useState(valCombate)
@@ -483,6 +484,7 @@ const btnGuardarCambios = () => {
 
     kenActual:kenActualN,
     kiActual:kiActualN,
+    
     positiva:positivaN,
     negativa:negativaN,
     vidaActual:damageActualN,
@@ -501,6 +503,10 @@ const btnGuardarCambios = () => {
     naturaleza:naturalezaN,
     
   };
+
+
+
+
 
 
   // Actualiza el estado de los personajes con la copia modificada
@@ -593,8 +599,10 @@ const guardarCambiosBBDD = async () => {
       imagen: imagenN,
       inventario: inventarioN,//JSON
       dominios: dominiosN,//JASON
-      kenActual:kenN || 0,
-      kiActual:kiN || 0,
+//*************ACA VEMOS LA SOLUCION******************** */
+      kenActual:kenActualN || 0,
+      kiActual:kiActualN || 0,
+      
       positiva:positivaN,
       negativa:negativaN,
       vidaActual:damageActualN,
