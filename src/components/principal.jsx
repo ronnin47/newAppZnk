@@ -849,7 +849,7 @@ return (
 
 
                 />
-              ):(<p style={{color:"aliceblue", textAlign:"center"}}>selecione un personaje de personajes cargados</p>)}
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>
             <Tab eventKey="tiradas" title="Tiradas" className="fondoBody">
             {pjSeleccionado ? (
