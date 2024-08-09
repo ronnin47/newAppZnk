@@ -580,7 +580,7 @@ export const CargarPersonaje = ({
 */
   return (
     <>
-    <div className='container'> 
+    <div className='container '> 
      <div className='row col1'>
          <p style={{color:"aliceblue", fontSize:"50px", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombre}</p>
         <div className='row col2' >

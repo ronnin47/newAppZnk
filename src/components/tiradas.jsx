@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 
 
 
+
+
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 //REACT_APP_BACKEND_URL=https://tu-backend-en-render.onrender.com
 
@@ -20,7 +22,7 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 }
 
 
-export const Tiradas = ({nombre,setMessage,sock,setSock}) => {
+export const Tiradas = ({ textareaRef, messagesEndRef,nombre,setMessage,sock,setSock}) => {
 
 const [valTirada,setValTirada]=useState("")
 const [sumaTirada,setSumaTirada]=useState("")
@@ -37,9 +39,10 @@ const [valTiradaD10Bono,setValTiradaD10Bono]=useState("")
 
 const[principal,setPrincipal]=useState("")
 const[secundaria,setSecundaria]=useState("")
-
+/*
 const textareaRef = useRef(null);
 const messagesEndRef = useRef(null);
+*/
 const [animacionActiva, setAnimacionActiva] = useState(false);
 
 
@@ -432,7 +435,6 @@ const cargarTirada1=()=>{
    setDadosD12Bono(dadosD121); 
 }
 
-
 const cargarTirada2=()=>{
   setSelectedButton(2);
   setNombreTirada(boton2.nombreTirada || "Accion-2")
@@ -624,7 +626,7 @@ const handleNombreTirada=(event)=>{
 
 ///const [message, setMessage] = useState('');
 //const [sock, setSock] = useState([]);
-
+/*
 useEffect(() => {
   // Escuchar mensajes del servidor y actualizar el estado
 socket.on('message', (newMessage) => {
@@ -635,7 +637,7 @@ socket.on('message', (newMessage) => {
     socket.off('message');
   };
 }, []);
-
+*/
 const [mensajeChat,setMensajeChat]=useState("")
 
 const handleChangeM=(event)=>{
@@ -653,7 +655,6 @@ const msgEnviar={
 }
 
 
-
 useEffect(() => {
   if (textareaRef.current) {
     textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
@@ -668,26 +669,19 @@ const handleKeyPress = (event) => {
   }
 };
 
-/* <textarea 
-      name="" 
-      id="" 
-      ref={textareaRef}
-      value={sock.join('\n')} className="consolaTiradas" readOnly></textarea>*/
-
-
+/*
 useEffect(() => {
   if (messagesEndRef.current) {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }
 }, [sock]);
-
+*/
      
 
-  return (
-    <>
-      <div>
-      <div className="contChat">
-          {/* Verificar contenido de sock */}
+
+/*
+  <div className="contChat">
+         
           {console.log("Contenido de sock:", sock)}
           {sock.map((msg, index) => {
             const [msgNombre, ...msgMensajeArray] = msg.split(': ');
@@ -700,7 +694,11 @@ useEffect(() => {
           })}
           <div ref={messagesEndRef} />
         </div>
-     
+*/
+
+  return (
+    <>
+      <div >
       <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
       <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
       </div>

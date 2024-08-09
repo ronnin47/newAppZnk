@@ -2,10 +2,12 @@ html,body{
     height: 100%;
     margin: 0;
     padding: 0;
-    background-image: url('../assets/logo.jpeg');
+    /*background-image: url('../assets/logo.jpeg');
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
+    background-color:rgb(10, 7, 45);
+    font-size: 14px;
    
 }
 .imgZnk{
@@ -13,7 +15,7 @@ html,body{
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    opacity: 0.94;
+    opacity: 1;
 
 }
 .miniCartas{
@@ -30,7 +32,8 @@ html,body{
     border:30px solid black
 }
 .fondoBody{
-background-color: rgb(0, 0, 0);    
+background-color: rgba(0, 0, 0, 0.719);    
+
 }
 .fichaCombate{
     color: aliceblue;
@@ -387,6 +390,8 @@ background-color: rgb(0, 0, 0);
     width: 90%;
     margin-bottom: 2em;
     padding-left: 1em;
+    margin-top: 2em;
+    margin-left: 1em;
   }
   .green{
     color: aliceblue;
@@ -425,3 +430,11 @@ background-color: rgb(0, 0, 0);
     transform: scale(0.8);
     
 }
+.contChat {
+    height: 400px; /* Ajusta según tus necesidades */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    border: 1px solid #ccc; /* Opcional: añade un borde para que sea más visible */
+    padding: 10px; /* Opcional: añade padding para el contenido */
+  }
+
+

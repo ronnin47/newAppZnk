@@ -1,18 +1,26 @@
 import { MiniCard } from "./miniCard.jsx"
 import { CargarPersonaje } from "./cargarPersonaje.jsx"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useEffect } from "react";
 import Accordion from 'react-bootstrap/Accordion';
 import { FichaPersonaje } from "./fichaPersonaje.jsx"
 import { Tiradas } from "./tiradas.jsx";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy, arrayMove,verticalListSortingStrategy} from "@dnd-kit/sortable";
+import { Panel } from "./panel.jsx";
+
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+
+
+
 
 import Swal from 'sweetalert2';
 
 import Badge from 'react-bootstrap/Badge';
 
 import { Nava } from "./nava.jsx";
+
 
 export const Principal= ()=> {
 
@@ -233,17 +241,8 @@ const bajarFuerzaBadge = (event) => {
   });
 };
 */
-  return (
-    <>
-     <Nava 
-     tituloNav=" ZNK"
-     setUSuarioId={setUsuarioId}
-     setPersonajes={setPersonajes} 
-     sesion={sesion}
-     setSesion={setSesion}
-     cerrarSesion={cerrarSesion}
-     />
-     <Accordion defaultActiveKey={['1']}  alwaysOpen>
+/*
+   <Accordion defaultActiveKey={['1']}  alwaysOpen>
       <Accordion.Item eventKey="0">
         <Accordion.Header >Cargar nuevo personaje</Accordion.Header>
         <Accordion.Body className="fondoBody">
@@ -537,6 +536,358 @@ const bajarFuerzaBadge = (event) => {
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
+    
+*/
+  
+
+const textareaRef = useRef(null);
+const messagesEndRef = useRef(null);
+
+return (
+    <>
+     <Nava 
+     tituloNav=" ZNK"
+     setUSuarioId={setUsuarioId}
+     setPersonajes={setPersonajes} 
+     sesion={sesion}
+     setSesion={setSesion}
+     cerrarSesion={cerrarSesion}
+     />
+     <div>
+     {pjSeleccionado ? (
+                <Panel
+                  personajes={personajes}
+                  setPersonajes={setPersonajes}
+                  key={pj.idpersonaje} 
+                  idpersonaje={pj.idpersonaje}
+                  nombre={pj.nombre}
+                  imagen={pj.imagen}
+                  destreza={pj.destreza}
+                  apCombate={pj.apCombate}
+                  valCombate={pj.valCombate}
+                  message={message}
+                  setMessage={setMessage}
+                  sock={sock}
+                  setSock={setSock}
+                  textareaRef={textareaRef }
+                  messagesEndRef={messagesEndRef}
+                />
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>selecione un personaje de personajes cargados</p>)}
+     </div>
+    
+    
+  
+
+
+
+
+
+
+
+
+
+
+    <Tabs
+            defaultActiveKey="personajes"
+            id="fill-tab-example"
+            className="mb-3"
+            fill
+            style={{ marginTop: '1em'}} 
+           
+
+          >
+            <Tab eventKey="cargarPersonajes" title="Cargar pj" className="fondoBody"  >
+            {sesion==true ? (
+            <CargarPersonaje 
+              usuarioId={usuarioId}
+
+              setActiveKey={setActiveKey}
+              personajes={personajes} 
+              setPersonajes={setPersonajes} 
+              setNombre={setNombre} 
+              setRaza={setRaza} 
+              raza={raza} 
+              setEdad={setEdad} 
+              edad={edad} 
+              setDominio={setDominio} 
+              dominio={dominio} 
+              ken={ken}
+              setKen={setKen}
+              ki={ki}
+              setKi={setKi}
+              destino={destino}
+              setDestino={setDestino}
+              pDestino={pDestino}
+              setPdestino={setPdestino}
+
+              setFuerza={setFuerza} 
+              setFortaleza={setFortaleza} 
+              setAgilidad={setAgilidad}
+              setSabiduria={setSabiduria}
+              setPresencia={setPresencia}
+              setPrincipio={setPrincipio}
+              setSentidos={setSentidos}
+              sabiduria={sabiduria}
+              presencia={presencia}
+              principio={principio}
+              sentidos={sentidos}
+
+              setImagen={setImagen} 
+              setDestreza={setDestreza} 
+              setApCombate={setApCombate} 
+              setValCombate={setValCombate} 
+              setApCombate2={setApCombate2} 
+              setValCombate2={setValCombate2}
+
+              nombre={nombre} 
+              fuerza={fuerza} 
+              fortaleza={fortaleza} 
+              agilidad={agilidad}  
+              imagen={imagen} 
+              destreza={destreza} 
+              apCombate={apCombate} 
+              valCombate={valCombate}
+              apCombate2={apCombate2} 
+              valCombate2={valCombate2}
+
+              academisismo={academisismo}
+              alerta={alerta}
+              atletismo={atletismo}
+              conBakemono={conBakemono}
+              mentir={mentir}
+              pilotear={pilotear}
+              artesMarciales={artesMarciales}
+              medicina={medicina}
+              conObjMagicos={conObjMagicos}
+              sigilo={sigilo}
+              conEsferas={conEsferas}
+              conLeyendas={conLeyendas}
+              forja={forja}
+              conDemonio={conDemonio}
+              conEspiritual={conEspiritual}
+              manejoBlaster={manejoBlaster}
+              manejoSombras={manejoSombras}
+              tratoBakemono={tratoBakemono}
+              conHechiceria={conHechiceria}
+              medVital={medVital}
+              medEspiritual={medEspiritual}
+              rayo={rayo}
+              fuego={fuego}
+              frio={frio}
+              veneno={veneno}
+              corte={corte}
+              energia={energia}
+
+              setAcademisismo={setAcademisismo}
+              setAlerta={setAlerta}
+              setAtletismo={setAtletismo}
+              setConBakemono={setConBakemono}
+              setMentir={setMentir}
+              setPilotear={setPilotear}
+              setArtesMarciales={setArtesMarciales}
+              setMedicina={setMedicina}
+              setConObjMagicos={setConObjMagicos}
+              setSigilo={setSigilo}
+              setConEsferas={setConEsferas}
+              setConLeyendas={setConLeyendas}
+              setForja={setForja}
+              setConDemonio={setConDemonio}
+              setConEspiritual={setConEspiritual}
+              setManejoBlaster={setManejoBlaster}
+              setManejoSombras={setManejoSombras}
+              setTratoBakemono={setTratoBakemono}
+              setConHechiceria={setConHechiceria}
+              setMedVital={setMedVital}
+              setMedEspiritual={setMedEspiritual}
+              setRayo={setRayo}
+              setFuego={setFuego}
+              setFrio={setFrio}
+              setVeneno={setVeneno}
+              setCorte={setCorte}
+              setEnergia={setEnergia}
+
+              ventajas={ventajas}
+              setVentajas={setVentajas}
+
+              inventario={inventario}
+              
+              dominios={dominios}
+
+              hechizos={hechizos}
+
+              kenActual={kenActual}
+              kiActual={kiActual}
+              positiva={positiva}
+              negativa={negativa}
+              vidaActual={vidaActual}
+
+
+                add1={add1}
+                setAdd1={setAdd1}
+                valAdd1={valAdd1}
+                setValAdd1={setValAdd1}
+
+                add2={add2}
+                setAdd2={setAdd2}
+                valAdd2={valAdd2}
+                setValAdd2={setValAdd2}
+                
+                add3={add3}
+                setAdd3={setAdd3}
+                valAdd3={valAdd3}
+                setValAdd3={setValAdd3}
+                
+                add4={add4}
+                setAdd4={setAdd4}
+                valAdd4={valAdd4}
+                setValAdd4={setValAdd4}
+                consumision={consumision}
+                naturaleza={naturaleza}
+                setNaturaleza={setNaturaleza}
+                
+
+            
+
+              
+              ></CargarPersonaje>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
+          
+            </Tab>
+            <Tab eventKey="personajes" title="personajes" className="container-fluid fondoBody">
+            <DndContext collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}>
+                      <SortableContext items={personajes} strategy={horizontalListSortingStrategy}>
+                      <div className="miniCartas">
+                      { personajes.length>0 ?(
+                        personajes.map(pj=><MiniCard vivoMuerto={vivoMuerto} setVivoMuerto={setVivoMuerto} setActiveKey={setActiveKey} personajes={personajes} setPersonajes={setPersonajes} key={pj.idpersonaje} id={pj.idpersonaje} nombre={pj.nombre} dominio={pj.dominio} imagen={pj.imagen} setPjSeleccionado={setPjSeleccionado} pjSeleccionado={pjSeleccionado}></MiniCard>)):(<p style={{color:"aliceblue"}}>No exiten personajes cargados</p>)} 
+                      </div>
+                      </SortableContext>     
+                  </DndContext>
+            </Tab>
+            <Tab eventKey="ficha" title="Ficha" className="fondoBody">
+            {pjSeleccionado ? (
+                <FichaPersonaje
+                  usuarioId={usuarioId}
+                  vivoMuerto={vivoMuerto}
+                  setVivoMuerto={setVivoMuerto}
+                  personajes={personajes}
+                  setPersonajes={setPersonajes}
+                  personaje={pj}
+                  key={pj.idpersonaje} 
+                  idpersonaje={pj.idpersonaje}
+                  nombre={pj.nombre}
+                  imagen={pj.imagen}
+                  dominio={pj.dominio}
+                  raza={pj.raza}
+                  edad={pj.edad}
+
+                  ken={pj.ken}
+                  ki={pj.ki}
+                  destino={pj.destino}
+                  pDestino={pj.pDestino}
+            
+
+                  fuerza={pj.fuerza}
+                  fortaleza={pj.fortaleza}
+                  destreza={pj.destreza}
+                  agilidad={pj.agilidad}
+                  sabiduria={pj.sabiduria}
+                  presencia={pj.presencia}
+                  principio={pj.principio}
+                  sentidos={pj.sentidos}
+                  academisismo={pj.academisismo}
+                  alerta={pj.alerta}
+                  atletismo={pj.atletismo}
+                  conBakemono={pj.conBakemono}
+                  mentir={pj.mentir}
+                  pilotear={pj.pilotear}
+                  artesMarciales={pj.artesMarciales}
+                  medicina={pj.medicina}
+                  conObjMagicos={pj.conObjMagicos}
+                  sigilo={pj.sigilo}
+                  conEsferas={pj.conEsferas}
+                  conLeyendas={pj.conLeyendas}
+                  forja={pj.forja}
+                  conDemonio={pj.conDemonio}
+                  conEspiritual={pj.conEspiritual}
+                  manejoBlaster={pj.manejoBlaster}
+                  manejoSombras={pj.manejoSombras}
+                  tratoBakemono={pj.tratoBakemono}
+                  conHechiceria={pj.conHechiceria}
+                  medVital={pj.medVital}
+                  medEspiritual={pj.medEspiritual}
+                  rayo={pj.rayo}
+                  fuego={pj.fuego}
+                  frio={pj.frio}
+                  veneno={pj.veneno}
+                  corte={pj.corte}
+                  energia={pj.energia}
+
+
+                  apCombate={pj.apCombate}
+                  valCombate={pj.valCombate}
+                  apCombate2={pj.apCombate2}
+                  valCombate2={pj.valCombate2}
+
+
+                  add1={pj.add1}
+                  valAdd1={pj.valAdd1}
+                  add2={pj.add2}
+                  valAdd2={pj.valAdd2}
+                  add3={pj.add3}
+                  valAdd3={pj.valAdd3}
+                  add4={pj.add4}
+                  valAdd4={pj.valAdd4}
+
+                
+                  ventajas={pj.ventajas}
+                  inventario={pj.inventario} 
+                  dominios={pj.dominios}
+                  kenActual={pj.kenActual}
+                  kiActual={pj.kiActual} 
+                  positiva={pj.positiva}
+                  negativa={pj.negativa}
+                  vidaActual={pj.vidaActual}
+                  hechizos={pj.hechizos}
+                  consumision={pj.consumision}
+                  iniciativa={pj.iniciativa}
+                  historia={pj.historia}
+                  naturaleza={pj.naturaleza}
+                  eliminarPj={eliminarPj}
+
+
+
+                />
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>selecione un personaje de personajes cargados</p>)}
+            </Tab>
+            <Tab eventKey="tiradas" title="Tiradas" className="fondoBody">
+            {pjSeleccionado ? (
+                <Tiradas
+                  personajes={personajes}
+                  setPersonajes={setPersonajes}
+                  key={pj.idpersonaje} 
+                  idpersonaje={pj.idpersonaje}
+                  nombre={pj.nombre}
+                  imagen={pj.imagen}
+                  destreza={pj.destreza}
+                  apCombate={pj.apCombate}
+                  valCombate={pj.valCombate}
+                  message={message}
+                  setMessage={setMessage}
+                  sock={sock}
+                  setSock={setSock}
+                  textareaRef={textareaRef }
+                  messagesEndRef={messagesEndRef}
+                />
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>selecione un personaje de personajes cargados</p>)}
+            </Tab>
+      
+    </Tabs>
+    
+
+
+
+
+
   
     </>
    

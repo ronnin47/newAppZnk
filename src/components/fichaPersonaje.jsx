@@ -193,7 +193,7 @@ export const FichaPersonaje = ({
   }, [damageActualN,kenActualN,kiActualN,positivaN,negativaN,consumisionN]);
 */
 //QUIERO CONSOLOGEAR COMO INICIA
-console.log("EL KiActaulN es:--------",kiActualN)
+
 
   const [apCombateN,setApCombateN]=useState(apCombate)
   const [valCombateN,setValCombateN]=useState(valCombate)
@@ -755,7 +755,7 @@ useEffect(() => {
        
        try {
        
-        //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+       // const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
         const response = await axios.delete(`https://zepiro.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
@@ -795,9 +795,13 @@ useEffect(() => {
   return (
     <>
     <div className='container'>
-         <p style={{color:"yellow", fontSize:"50px", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombreN}</p>
-        
-        <div className='row col2' >
+         <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombreN}</p>
+         <div style={{marginLeft:"20px"}}>  
+          <BarraVida nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
+          <BarraKi nombreN={nombreN} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={kiN} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
+          <BarraKen nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
+        </div>
+        <div className='row col2' style={{marginBottom:"1em", marginTop:"4.5em"}}>
           <div className='col1'>
             <img src={imagenN} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
             <Button onClick={handleImageUpload} variant="outline-danger" style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</Button>
@@ -840,11 +844,7 @@ useEffect(() => {
         </div>
          
     
-        <div style={{padding:"40px", marginLeft:"40px"}}>  
-          <BarraVida nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
-          <BarraKi nombreN={nombreN} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={kiN} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
-          <BarraKen nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
-        </div>
+     
 
         </div>
 

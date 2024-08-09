@@ -47,7 +47,7 @@ console.log("abrioooooooo")
 
   return (
     
-    <div className='col1'>
+    <div className='col1' >
 
      
        <div className='container' {...attributes} {...listeners} ref={setNodeRef} style={style}>

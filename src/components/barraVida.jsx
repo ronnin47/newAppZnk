@@ -201,10 +201,10 @@ export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, nega
     <div className="col1" >
       <div className='colBarraVida'>
       <div className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
-      <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"10px"}}>Daño: {damageActualN}/{vidaTotal}</p>
+      <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"5px"}}>Daño: {damageActualN}/{vidaTotal}</p>
       </div>  
         <div className="col2">
-        <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"7px"}} >+ Daño</button>
+        <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"5px"}} >+ Daño</button>
         <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen'/>
         </div>
         <div className="col4" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
