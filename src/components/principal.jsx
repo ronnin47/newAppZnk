@@ -572,19 +572,11 @@ return (
                   textareaRef={textareaRef }
                   messagesEndRef={messagesEndRef}
                 />
-              ):(<p style={{color:"aliceblue", textAlign:"center"}}>selecione un personaje de personajes cargados</p>)}
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
      </div>
     
     
   
-
-
-
-
-
-
-
-
 
 
     <Tabs
@@ -878,7 +870,7 @@ return (
                   textareaRef={textareaRef }
                   messagesEndRef={messagesEndRef}
                 />
-              ):(<p style={{color:"aliceblue", textAlign:"center"}}>selecione un personaje de personajes cargados</p>)}
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje de personajes cargados</p>)}
             </Tab>
       
     </Tabs>
