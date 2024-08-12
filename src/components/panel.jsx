@@ -45,7 +45,6 @@ export const Panel = ({textareaRef, messagesEndRef,nombre,setMessage,sock,setSoc
     <>
    <div style={{ display: 'flex', flexDirection: 'column', height: '200px' }}>
       <div className="contChat" style={{ flex: 1, overflowY: 'auto', border: '1px solid #ccc', padding: '1em',boxSizing: 'border-box' }}>
-        {/* Verificar contenido de sock */}
         {console.log("Contenido de sock:", sock)}
         {sock.map((msg, index) => {
           const [msgNombre, ...msgMensajeArray] = msg.split(': ');
@@ -58,9 +57,7 @@ export const Panel = ({textareaRef, messagesEndRef,nombre,setMessage,sock,setSoc
         })}
         <div ref={messagesEndRef} />
       </div>
-    </div>
-   
-   
+    </div>  
     </>
   )
 }

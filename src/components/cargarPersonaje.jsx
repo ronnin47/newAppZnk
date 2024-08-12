@@ -149,8 +149,7 @@ export const CargarPersonaje = ({
 
   const handleImageUpload = () => {
     inputFileRef.current.click();
-  };
-  
+  }; 
   const handleChangeNombre = (event) => {
     setNombre(event.target.value);
   };
@@ -166,7 +165,6 @@ export const CargarPersonaje = ({
    const handleChangeKen=(event)=>{
     setKen(event.target.value)
    }
-
    const handleChangeKi=(event)=>{
     setKi(event.target.value)
    }
@@ -176,8 +174,6 @@ export const CargarPersonaje = ({
    const handleChangePdestino=(event)=>{
     setPdestino(event.target.value)
    }
-
-
   const handleChangeFuerza=(event)=>{
     setFuerza(event.target.value)
    }
@@ -284,7 +280,6 @@ export const CargarPersonaje = ({
   const handleChangeEnergia = (event) => {
     setEnergia(event.target.value)    
   }
-
   const handleChangeApCombate2=(event)=>{
     setApCombate2(event.target.value)
    }
@@ -297,11 +292,6 @@ export const CargarPersonaje = ({
    const handleChangeValCombate2=(event)=>{
     setValCombate2(event.target.value)
    }
-
-   
-
-
-
    const handleChangeAdd1=(event)=>{
     setAdd1(event.target.value)
    }
@@ -315,7 +305,6 @@ export const CargarPersonaje = ({
    const handleChangeValAdd2=(event)=>{
     setValAdd2(event.target.value)
    }
-
    const handleChangeAdd3=(event)=>{
     setAdd3(event.target.value)
    }
@@ -329,10 +318,6 @@ export const CargarPersonaje = ({
    const handleChangeValAdd4=(event)=>{
     setValAdd4(event.target.value)
    }
-
-
-
-
   const handleChangeNaturaleza=(event)=>{
     setNaturaleza(event.target.value)
   }
@@ -349,14 +334,8 @@ export const CargarPersonaje = ({
   };
 
   const agregarPersonaje = async () => {
- // Obtener el último id del localStorage o inicializarlo en 0 si no existe
-// let lastId = parseInt(localStorage.getItem('lastId')) || 0;
-
- // Incrementar el id para el nuevo personaje
-  const nextId  = 0;
-    
     const pjNuevo = {
-      //idpersonaje: nextId,
+      
       nombre: nombre,
       dominio: dominio,
       raza:raza,
@@ -427,29 +406,27 @@ export const CargarPersonaje = ({
       valAdd4: valAdd4 || 0,
 
       imagen: imagen,
-      inventario: inventario,//JSON
-      dominios: dominios,//JASON
+      inventario: inventario,
+      dominios: dominios,
       kenActual:ken || 0,
       kiActual:ki || 0,
       positiva:3,
       negativa:3,
       vidaActual:0,
-      hechizos:hechizos,//JSON
+      hechizos:hechizos,
       consumision:consumision || 0,
       iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
       historia:"",
-      usuarioId: usuarioId,
-      
-   
+      usuarioId: usuarioId,   
     };
 
 
     try {
     
-      const response = await axios.post(`https://zepiro.onrender.com/insert-personaje`, pjNuevo, {   
-      //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
+      //const response = await axios.post(`https://zepiro.onrender.com/insert-personaje`, pjNuevo, {   
+      const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
-          'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
+          'Content-Type': 'application/json', 
         },
       });
       const { idpersonaje } = response.data;
@@ -471,19 +448,11 @@ export const CargarPersonaje = ({
       
         fetchPersonajes();
   */    
-  
       //console.log("Last added ID:", idpersonaje);
     } catch (error) {
       console.error('Error al insertar el personaje:', error.message);
     }
 
-
-  
-     
-    
-
-    
-    
 
     //localStorage.setItem('lastId', nextId);
 
@@ -509,10 +478,7 @@ export const CargarPersonaje = ({
     setSabiduria("");
     setPresencia("");
     setPrincipio("");
-    setSentidos("");
-
-
-    
+    setSentidos("");   
     setAcademisismo("");
     setAlerta("")
     setAtletismo("")
@@ -541,14 +507,10 @@ export const CargarPersonaje = ({
     setCorte("")
     setEnergia("")
     setNaturaleza("")
-
-   
     setApCombate("");
     setValCombate("");
     setApCombate2("");
     setValCombate2("");
-
-
     setAdd1("");
     setValAdd1("");
     setAdd2("");
@@ -556,14 +518,10 @@ export const CargarPersonaje = ({
     setAdd3("");
     setValAdd3("");
     setAdd4("");
-    setValAdd4("");
-
-    
+    setValAdd4("");  
     setImagen("/imagenBase.jpeg");
     setVentajas([]);
     
-
-
     Swal.fire({
       position: "top-center",
       icon: "success",
@@ -573,11 +531,7 @@ export const CargarPersonaje = ({
     });
    
   };
-/*
-  useEffect(() => {
-    //console.log(personajes);
-  }, [personajes]); 
-*/
+
   return (
     <>
     <div className='container '> 
@@ -738,9 +692,6 @@ export const CargarPersonaje = ({
      
     </div>
 
-
-      
-     
     </div>
     <div style={{padding:"2rem"}}>
       <Ventajas setVentajas={setVentajas} ventajas={ventajas}></Ventajas>

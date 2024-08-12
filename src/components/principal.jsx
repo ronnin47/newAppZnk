@@ -11,20 +11,23 @@ import { Panel } from "./panel.jsx";
 
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
-
-
-
+import { Narrador } from "./narrador.jsx";
 import Swal from 'sweetalert2';
-
 import Badge from 'react-bootstrap/Badge';
-
 import { Nava } from "./nava.jsx";
+import axios from 'axios';
+
+
+
+
+import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
 
 
 export const Principal= ()=> {
 
+  const [personajes, setPersonajes] = useState([]);
   
+  /* STATE PERSOANJES PARA GUARDARSE EN EL STORAGE
     const [personajes, setPersonajes] = useState(() => {
         const storedPersonajes = localStorage.getItem("personajes");
         return storedPersonajes ? JSON.parse(storedPersonajes) : [];
@@ -35,7 +38,7 @@ export const Principal= ()=> {
         localStorage.setItem("personajes", JSON.stringify(personajes));
       }, [personajes]);
 
-
+*/
    
 
 
@@ -189,13 +192,24 @@ export const Principal= ()=> {
  
 
   // Función para cerrar sesión
-const cerrarSesion = () => {
+const cerrarSesion = async() => {
   localStorage.setItem('loginEmail', "");
   localStorage.setItem('loginPassword', "");
   localStorage.setItem('idusuario', "");
+  localStorage.setItem('estatus', "");
+  //localStorage.setItem('coleccionPersonajes', "")
+  setColeccionPersonajes([])
+  setEstatus("")
   setPjSeleccionado("");
   setPersonajes([])
   setSesion(false);
+
+  try {
+    await clearIndexedDB();
+    console.log('IndexedDB ha sido limpiado.');
+  } catch (error) {
+    console.error('Error al limpiar IndexedDB:', error);
+  }
 };
 /*
 useEffect(() => {
@@ -543,6 +557,184 @@ const bajarFuerzaBadge = (event) => {
 const textareaRef = useRef(null);
 const messagesEndRef = useRef(null);
 
+const [estatus,setEstatus]=useState(()=>{
+  const savedEstatus = localStorage.getItem('estatus');
+  return savedEstatus || '';
+})
+
+
+
+//********************************************************************************** */
+/* USANDO EL STORAGE PARA PERSONAJES DE NARRADOR
+ // Recupera todos los personajes o crea un array vacío en coleccionPersonajes
+ const [coleccionPersonajes, setColeccionPersonajes] = useState(() => {
+  const storedColeccionPersonajes = localStorage.getItem("coleccionPersonajes");
+  return storedColeccionPersonajes ? JSON.parse(storedColeccionPersonajes) : [];
+});
+
+// Función para consumir personajes del servidor
+const consumirPersonajesNarrador = async () => {
+  try {
+    const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Verifica que response.data y coleccionPersonajes existen
+    const { coleccionPersonajes } = response.data;
+    if (!Array.isArray(coleccionPersonajes)) {
+      console.error('El formato de datos no es un array.');
+      return;
+    }
+
+    console.log('Colección de personajes:', coleccionPersonajes);
+
+    // Guarda en localStorage y actualiza el estado
+    localStorage.setItem('coleccionPersonajes', JSON.stringify(coleccionPersonajes));
+    setColeccionPersonajes(coleccionPersonajes);
+
+  } catch (error) {
+    console.error("Cliente: Fallo al consumir personajes narrador", error.message);
+  }
+};
+
+
+
+
+
+useEffect(() => {
+  if (estatus === "narrador" && sesion) {
+    consumirPersonajesNarrador();
+    console.log("Disparo effect de consumir personajes narrador");
+  }
+}, [estatus, sesion]);
+
+*/
+
+/*
+useEffect(() => {
+  if (estatus === "narrador" && sesion) {
+    // Consume personajes del servidor y actualiza IndexedDB
+
+    const personajesDB = await getPersonajesDB();
+    setPersonajes(personajesDB);
+    consumirPersonajesNarrador();
+    console.log("Disparo effect de consumir personajes narrador");
+  }
+}, [estatus, sesion]);
+*/
+
+
+//USANDO INDEXDdb***************************************************
+const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
+
+// Función para consumir personajes del servidor
+const consumirPersonajesNarrador = async () => {
+  try {
+    const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const { coleccionPersonajes } = response.data;
+    if (!Array.isArray(coleccionPersonajes)) {
+      console.error('El formato de datos no es un array.');
+      return;
+    }
+
+    console.log('Colección de personajes:', coleccionPersonajes);
+
+    // Guarda en IndexedDB y actualiza el estado
+    await setAllPersonajes(coleccionPersonajes);
+    setColeccionPersonajes(coleccionPersonajes);
+
+  } catch (error) {
+    console.error("Cliente: Fallo al consumir personajes narrador", error.message);
+  }
+};
+
+useEffect(() => {
+  // Recupera todos los personajes desde IndexedDB al montar el componente
+  const loadPersonajes = async () => {
+    const personajesNarrador = await getAllPersonajes();
+    setColeccionPersonajes(personajesNarrador);
+    console.log(personajesNarrador)
+
+/*
+    //recupera los personajes del usuario y guardarlos en el state personajes
+    const personajesDbUsuario = await getPersonajesDB();
+    console.log("persoanjes del usuario: ",personajesDbUsuario)
+    setPersonajes(personajesDbUsuario);*/
+  };
+
+  loadPersonajes();
+}, []); // Este efecto se ejecuta solo una vez al montar el componente
+
+useEffect(() => {
+  const loadPersonajes = async () => {
+    try {
+      const personajesDbUsuario = await getPersonajesDB();
+      if (personajesDbUsuario.length > 0) {
+        setPersonajes(personajesDbUsuario);
+        console.log("Personajes recuperados de IndexedDB:", personajesDbUsuario);
+      } else {
+        console.log("No hay personajes en IndexedDB.");
+      }
+    } catch (error) {
+      console.error("Error al recuperar personajes de IndexedDB:", error.message);
+    }
+  };
+
+  loadPersonajes();
+}, []); // Se ejecuta solo una vez al montar el componente
+
+
+
+
+useEffect(() => {
+  if (sesion) {
+    const updateIndexedDB = async () => {
+      try {
+        console.log("Personajes antes de la actualización:", personajes);
+        console.log("Limpieza de 'personajesDB' antes de la actualización");
+        //await clearPersonajesDB();
+        console.log("Añadiendo personajes a 'personajesDB'");
+        await setPersonajesDB(personajes);
+        console.log("Personajes actualizados en IndexedDB");
+      } catch (error) {
+        console.error("Fallo al actualizar IndexedDB", error.message);
+      }
+    };
+
+    updateIndexedDB();
+  }
+}, [personajes, sesion]);
+
+
+
+
+
+
+
+useEffect(() => {
+  if (estatus === "narrador" && sesion) {
+
+    // Primero, obtén los personajes guardados en IndexedDB
+    const loadPersonajesDB = async () => {
+     /* const personajesDB = await getPersonajesDB();
+      setPersonajes(personajesDB);*/
+
+      // Luego, actualiza IndexedDB con los personajes del servidor
+      consumirPersonajesNarrador();
+    };
+
+    loadPersonajesDB();
+    console.log("Disparo effect de consumir personajes narrador");
+  }
+}, [estatus, sesion]);
+
 return (
     <>
      <Nava 
@@ -552,6 +744,8 @@ return (
      sesion={sesion}
      setSesion={setSesion}
      cerrarSesion={cerrarSesion}
+     
+     setEstatus={setEstatus}
      />
      <div>
      {pjSeleccionado ? (
@@ -575,18 +769,12 @@ return (
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
      </div>
     
-    
-  
-
-
     <Tabs
-            defaultActiveKey="personajes"
+            defaultActiveKey="Personajes"
             id="fill-tab-example"
             className="mb-3"
             fill
             style={{ marginTop: '1em'}} 
-           
-
           >
             <Tab eventKey="cargarPersonajes" title="Cargar pj" className="fondoBody"  >
             {sesion==true ? (
@@ -611,7 +799,6 @@ return (
               setDestino={setDestino}
               pDestino={pDestino}
               setPdestino={setPdestino}
-
               setFuerza={setFuerza} 
               setFortaleza={setFortaleza} 
               setAgilidad={setAgilidad}
@@ -623,14 +810,12 @@ return (
               presencia={presencia}
               principio={principio}
               sentidos={sentidos}
-
               setImagen={setImagen} 
               setDestreza={setDestreza} 
               setApCombate={setApCombate} 
               setValCombate={setValCombate} 
               setApCombate2={setApCombate2} 
               setValCombate2={setValCombate2}
-
               nombre={nombre} 
               fuerza={fuerza} 
               fortaleza={fortaleza} 
@@ -641,7 +826,6 @@ return (
               valCombate={valCombate}
               apCombate2={apCombate2} 
               valCombate2={valCombate2}
-
               academisismo={academisismo}
               alerta={alerta}
               atletismo={atletismo}
@@ -669,7 +853,6 @@ return (
               veneno={veneno}
               corte={corte}
               energia={energia}
-
               setAcademisismo={setAcademisismo}
               setAlerta={setAlerta}
               setAtletismo={setAtletismo}
@@ -712,8 +895,6 @@ return (
               positiva={positiva}
               negativa={negativa}
               vidaActual={vidaActual}
-
-
                 add1={add1}
                 setAdd1={setAdd1}
                 valAdd1={valAdd1}
@@ -735,12 +916,7 @@ return (
                 setValAdd4={setValAdd4}
                 consumision={consumision}
                 naturaleza={naturaleza}
-                setNaturaleza={setNaturaleza}
-                
-
-            
-
-              
+                setNaturaleza={setNaturaleza}             
               ></CargarPersonaje>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
           
             </Tab>
@@ -771,13 +947,10 @@ return (
                   dominio={pj.dominio}
                   raza={pj.raza}
                   edad={pj.edad}
-
                   ken={pj.ken}
                   ki={pj.ki}
                   destino={pj.destino}
                   pDestino={pj.pDestino}
-            
-
                   fuerza={pj.fuerza}
                   fortaleza={pj.fortaleza}
                   destreza={pj.destreza}
@@ -813,14 +986,10 @@ return (
                   veneno={pj.veneno}
                   corte={pj.corte}
                   energia={pj.energia}
-
-
                   apCombate={pj.apCombate}
                   valCombate={pj.valCombate}
                   apCombate2={pj.apCombate2}
                   valCombate2={pj.valCombate2}
-
-
                   add1={pj.add1}
                   valAdd1={pj.valAdd1}
                   add2={pj.add2}
@@ -828,9 +997,7 @@ return (
                   add3={pj.add3}
                   valAdd3={pj.valAdd3}
                   add4={pj.add4}
-                  valAdd4={pj.valAdd4}
-
-                
+                  valAdd4={pj.valAdd4}                
                   ventajas={pj.ventajas}
                   inventario={pj.inventario} 
                   dominios={pj.dominios}
@@ -845,9 +1012,6 @@ return (
                   historia={pj.historia}
                   naturaleza={pj.naturaleza}
                   eliminarPj={eliminarPj}
-
-
-
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>
@@ -870,19 +1034,16 @@ return (
                   textareaRef={textareaRef }
                   messagesEndRef={messagesEndRef}
                 />
-              ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje de personajes cargados</p>)}
+              ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
+            </Tab>
+
+            <Tab eventKey="narrador" title="Narrador" className="fondoBody">
+              {sesion==true && estatus=="narrador"?(<Narrador estatus={estatus} coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+
             </Tab>
       
     </Tabs>
-    
-
-
-
-
-
-  
-    </>
-   
+    </>  
   );
 }
 

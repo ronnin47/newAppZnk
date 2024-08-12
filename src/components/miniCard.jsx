@@ -17,7 +17,6 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
     setNodeRef,
     transform,
     transition
-
   }=useSortable({
     id:id
   })

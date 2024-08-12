@@ -13,9 +13,9 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+import { setPersonajesDB } from './indexedDB'; // Asegúrate de importar las funciones correctas
 
-
-export const Nava= ({cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
+export const Nava= ({setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
 
 //visible o no visible
@@ -41,13 +41,6 @@ const [loginPassword, setLoginPassword] = useState(() => {
 });
 
 
-
-/*
- // Función para iniciar sesión
- const iniciarSesion = () => {
-  setSesion(true);
-};
-*/
 /*
 // Función para cerrar sesión
 const cerrarSesion = () => {
@@ -73,8 +66,8 @@ const handleSubmit = (e) => {
   const loginUsuario = async () => {
     try {
       
-      //const response = await axios.post('http://localhost:4000/loginUsuario', {    
-      const response = await axios.post('https://zepiro.onrender.com/loginUsuario', {
+      const response = await axios.post('http://localhost:4000/loginUsuario', {    
+      //const response = await axios.post('https://zepiro.onrender.com/loginUsuario', {
         email:loginEmail,
         contrasenia: loginPassword
       }, {
@@ -83,7 +76,10 @@ const handleSubmit = (e) => {
         },
       });
   
-      const { idusuario, personajes } = response.data;
+      const { idusuario, personajes, estatus } = response.data;
+//*********Estatus***************** */
+      setEstatus(estatus);
+      console.log("Estatus de sesion: ",estatus)
   
       Swal.fire({
         icon: 'success',
@@ -93,14 +89,12 @@ const handleSubmit = (e) => {
   
       console.log('Personajes recuperados:', personajes);
       console.log("IDUSUARIO ES: ",idusuario)
-      // Puedes manejar los personajes como desees
-      // Por ejemplo, almacenarlos en el estado de tu aplicación
-        // Actualiza el estado y localStorage
-       // 
-       localStorage.setItem('personajes', JSON.stringify(personajes));
-       setPersonajes(personajes);
+      
+       //localStorage.setItem('personajes', JSON.stringify(personajes));
+        await setPersonajesDB(personajes);
+        setPersonajes(personajes);
 
-
+       localStorage.setItem('estatus', estatus);
        localStorage.setItem('loginEmail', loginEmail);
        localStorage.setItem('loginPassword', loginPassword);
        localStorage.setItem('idusuario', idusuario);
@@ -123,9 +117,6 @@ const handleSubmit = (e) => {
   desaparecer();
 };
 
-
-
-//****************NUEVO REGISTRO************
 
 const [modalRegistarme,setModalRegistrarme]=useState(false);
 const mostrarRegistrar=()=>setModalRegistrarme(true);
@@ -152,23 +143,26 @@ const cargarNuevoUsuario = async () => {
   };
   try {
     
-    //const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
-    const response = await axios.post(`https://zepiro.onrender.com/insert-usuario`, newUsuario, { 
+    const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
+    //const response = await axios.post(`https://zepiro.onrender.com/insert-usuario`, newUsuario, { 
     headers: {
         'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
       },
     });
-    const { idusuario,message } = response.data;
+    const { idusuario, message, estatus } = response.data;
     
   
     console.log("El ID de usuario es:", idusuario);
+    console.log("el estatus de usuario es: ",estatus)
+
+  
 
     if (idusuario) {
       Swal.fire({
         icon: 'success',
         title: 'Nuevo registro exitoso',
         text: message || 'Usuario registrado exitosamente.',
-        footer: `ID de Usuario: ${idusuario}`,
+        footer: `Tu sesion es de: ${estatus}`,
       });
     }else{
       Swal.fire({
@@ -189,10 +183,11 @@ const cargarNuevoUsuario = async () => {
   }
 };
 
-cargarNuevoUsuario();
+  cargarNuevoUsuario();
   
   setLoginEmail(registroEmail);
   setLoginPassword(registroPassword);
+  
   setRegistroEmail("");
   setRegistroPassword("");
   desaparecerRegistrar();
@@ -234,14 +229,6 @@ console.log("estado de sesion en el nav: ",sesion)
       </Container>
     </Navbar>
 
-
-
-
-
-
-
-
-          {/* Modal de Login */}
           <Modal show={modalLogin} onHide={desaparecer}>
           <Modal.Header closeButton>
             <Modal.Title>Inicia sesion ZNK</Modal.Title>
@@ -286,16 +273,7 @@ console.log("estado de sesion en el nav: ",sesion)
           </Modal.Body>
           </Modal>
 
-
-
-
-
-
-
-
-
-
-           {/* Modal de Nuevo registro */}
+ 
            <Modal show={modalRegistarme} onHide={desaparecerRegistrar}>
           <Modal.Header closeButton>
             <Modal.Title>Registrate</Modal.Title>

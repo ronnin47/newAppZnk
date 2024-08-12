@@ -438,3 +438,55 @@ background-color: rgba(0, 0, 0, 0.719);
   }
 
 
+
+
+
+
+
+
+
+
+
+  .cartita {
+    display: flex;
+    border: 3px solid red;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px;
+    flex-direction: row;
+}
+
+.cartita-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.cartita-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: aliceblue;
+    flex: 1; /* Esto hace que .cartita-info ocupe el espacio restante */
+    height: 60px; /* Asegura que .cartita-info tenga la misma altura que .cartita-image */
+}
+
+.cartita-name {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.cartita-description {
+    font-size: 1em;
+    color: aliceblue;
+}
+
+.cartita-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dos columnas */
+    gap: 10px; /* Espacio entre las cartas */
+    padding: 10px; /* Espacio interno del contenedor */
+}

@@ -39,7 +39,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-/*
+
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -47,8 +47,8 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
 
+/*
 //CONFIGURACION A LA BASE DE DATOS POSTGRESQL EN RENDER 
 const pool = new Pool({
   user: 'databaserenderznk_user',          // Reemplaza con tu usuario de PostgreSQL
@@ -57,7 +57,7 @@ const pool = new Pool({
   password: 'ZaIKkfZ7i8tkjVUPvpk7b9DwlDyqbw1m',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
+*/
 
 
 
@@ -120,21 +120,27 @@ app.post('/insert-usuario', async (req, res) => {
   const { email, contrasenia } = req.body;
     console.log("llego la peticion de insert de usuario")
     console.log(req.body)
+
+    const estatus="jugador"
   
 
   try {
     const query = `
-      INSERT INTO usuarios (email, contrasenia)
-      VALUES ($1, $2)
+      INSERT INTO usuarios (email, contrasenia, estatus)
+      VALUES ($1, $2, $3)
       RETURNING idusuario
     `;
 
-    const values = [email, contrasenia];
+    const values = [email, contrasenia, estatus];
     const result = await pool.query(query, values);
 
     const newId = result.rows[0].idusuario;
+    const newEstatus = result.rows[0].estatus;
+
     console.log("El Id que viene de la base de datos es: "+newId)
-    res.status(201).json({ message: `Bienvenido ${email}.`, idusuario: newId });
+    console.log("El Id que viene de la base de datos es: "+newEstatus)
+
+    res.status(201).json({ message: `Bienvenido ${email}.`, idusuario: newId, estatus: newEstatus });
   } catch (err) {
 
     if (err.code === '23505') { // Código de error para violación de restricción de unicidad
@@ -168,8 +174,10 @@ app.post('/loginUsuario', async (req, res) => {
 
     const user = userResult.rows[0];
     const idusuario = userResult.rows[0].idusuario;
+    const estatus = userResult.rows[0].estatus;
 
     console.log("IDUSUARIO ES: ",idusuario)
+    console.log("SU ESTATUS ES: ",estatus)
     // Verificar la contraseña directamente
     if (user.contrasenia !== contrasenia) {
       console.log("Contraseña proporcionada no coincide con la almacenada.");
@@ -189,10 +197,44 @@ app.post('/loginUsuario', async (req, res) => {
       message: 'Inicio de sesión exitoso',
       personajes: personajesResult.rows, // Descomenta esto si obtienes personajes
       idusuario: idusuario,
+      estatus: estatus,
     });
 
   } catch (error) {
     console.error('Error en el inicio de sesión:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
+
+
+//CONSUMIR PERSONAJES NARRADOR
+app.get('/consumirPersonajesNarrador', async (req, res) => {
+ // const { email, contrasenia } = req.body;
+
+  console.log("Info del cliente que se loguea: ", req.body);
+
+  try {
+    // Verificar si el usuario existe
+    const userQuery = 'SELECT * FROM personajes';
+    const userResult = await pool.query(userQuery);
+
+    if (userResult.rows.length === 0) {
+      return res.status(401).json({ message: 'No se recupero personajes para Narrador' });
+    }
+
+    const coleccionPersonajes = userResult.rows;
+
+    console.log("Coleccion personajes para el Narrador: ",coleccionPersonajes)
+    
+
+    res.json({
+      message: 'Inicio de sesión exitoso',
+      coleccionPersonajes: coleccionPersonajes, 
+    
+    });
+
+  } catch (error) {
+    console.error('Error al obtener coleccion personajes Narrador:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
@@ -760,9 +802,9 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
 
 
 
-//const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 
-const PORT = process.env.PORT || 10000;
+//const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });
