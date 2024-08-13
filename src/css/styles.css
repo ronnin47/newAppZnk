@@ -490,3 +490,11 @@ background-color: rgba(0, 0, 0, 0.719);
     gap: 10px; /* Espacio entre las cartas */
     padding: 10px; /* Espacio interno del contenedor */
 }
+
+
+.modalus{
+    border: 5px solid red;
+    border-radius: 9px;
+    opacity: 0.9;
+    
+    }

@@ -140,6 +140,8 @@ export const Principal= ()=> {
       const newOrder= arrayMove(personajes,oldIndex,newIndex) 
       console.log("nuevo orden: ",newOrder)
       setPersonajes(newOrder)
+      const orderedIds = newOrder.map(pj => pj.idpersonaje);
+      localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
     };
 
   
@@ -197,6 +199,7 @@ const cerrarSesion = async() => {
   localStorage.setItem('loginPassword', "");
   localStorage.setItem('idusuario', "");
   localStorage.setItem('estatus', "");
+  localStorage.setItem('personajesOrder','')
   //localStorage.setItem('coleccionPersonajes', "")
   setColeccionPersonajes([])
   setEstatus("")
@@ -674,11 +677,28 @@ useEffect(() => {
 
 useEffect(() => {
   const loadPersonajes = async () => {
+    const storedOrder = localStorage.getItem('personajesOrder');
+    const orderedIds = storedOrder ? JSON.parse(storedOrder) : [];
+
     try {
       const personajesDbUsuario = await getPersonajesDB();
       if (personajesDbUsuario.length > 0) {
-        setPersonajes(personajesDbUsuario);
-        console.log("Personajes recuperados de IndexedDB:", personajesDbUsuario);
+        const personajesMap = new Map(personajesDbUsuario.map(pj => [pj.idpersonaje, pj]));
+
+        if (orderedIds.length === 0) {
+          // Si no hay un orden almacenado, se crea uno basado en el orden de los personajes en la base de datos
+          const defaultOrder = personajesDbUsuario.map(pj => pj.idpersonaje);
+          localStorage.setItem('personajesOrder', JSON.stringify(defaultOrder));
+          setPersonajes(personajesDbUsuario); // Se establece el estado con el orden por defecto
+        } else {
+          // Reordena los personajes basado en los IDs almacenados
+          const orderedPersonajes = orderedIds.map(id => personajesMap.get(id)).filter(pj => pj);
+
+          // Solo actualiza el estado si el orden ha cambiado
+          if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
+            setPersonajes(orderedPersonajes);
+          }
+        }
       } else {
         console.log("No hay personajes en IndexedDB.");
       }
