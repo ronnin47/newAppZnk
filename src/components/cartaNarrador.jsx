@@ -13,7 +13,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
 import { Estrellitas } from './estrellitas';
-import { ItemVentaja } from './ventajasN';
+
 
 
 
@@ -41,7 +41,7 @@ export const Item = ({ id, itemValues }) => {
     return <div>Item values no disponibles</div>;
   }
 
-  console.log(itemValues)
+ 
 
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
@@ -60,7 +60,7 @@ export const TecnicasDominio = ({ ID, itemValues }) => {
     return <div>Item values no disponibles</div>;
   }
 
-  console.log(itemValues)
+ 
 
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
@@ -82,7 +82,7 @@ export const Hechizos = ({ ID, itemValues }) => {
     return <div>Item values no disponibles</div>;
   }
 
-  console.log(itemValues)
+  
 
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
@@ -189,7 +189,7 @@ const [animacion,setAnimacion]=useState("")
 
 
 const cerrar=()=>{
-  console.log("paso por aca")
+  
   setFade(true)
   //setAnimacion("animate__animated animate__flipOutY");
   setTimeout(() => {

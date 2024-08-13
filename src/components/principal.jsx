@@ -635,7 +635,8 @@ const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
 // Función para consumir personajes del servidor
 const consumirPersonajesNarrador = async () => {
   try {
-    const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+    //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+    const response = await axios.get('https://zepiro.onrender.com/consumirPersonajesNarrador', {
       headers: {
         'Content-Type': 'application/json',
       },

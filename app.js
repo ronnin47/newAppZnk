@@ -39,7 +39,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-
+/*
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -47,8 +47,8 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
+*/
 
-/*
 //CONFIGURACION A LA BASE DE DATOS POSTGRESQL EN RENDER 
 const pool = new Pool({
   user: 'databaserenderznk_user',          // Reemplaza con tu usuario de PostgreSQL
@@ -57,7 +57,7 @@ const pool = new Pool({
   password: 'ZaIKkfZ7i8tkjVUPvpk7b9DwlDyqbw1m',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 
 
@@ -802,9 +802,9 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 4000;
 
-//const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });
