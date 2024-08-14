@@ -28,6 +28,7 @@ export const getAllPersonajes = async () => {
 export const setAllPersonajes = async (personajes) => {
   const db = await dbPromise;
   const tx = db.transaction('coleccionPersonajesDB', 'readwrite');
+  await tx.store.clesr()
   personajes.forEach(personaje => tx.store.put(personaje));
   await tx.done;
 };
