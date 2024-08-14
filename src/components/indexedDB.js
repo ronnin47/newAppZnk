@@ -28,9 +28,7 @@ export const getAllPersonajes = async () => {
 export const setAllPersonajes = async (personajes) => {
   const db = await dbPromise;
   const tx = db.transaction('coleccionPersonajesDB', 'readwrite');
-
   await tx.store.clear();
-  
   personajes.forEach(personaje => tx.store.put(personaje));
   await tx.done;
 };
