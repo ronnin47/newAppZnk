@@ -53,17 +53,7 @@ const Cartita=({
   apCombate2, 
   valCombate2,
   ventajas,
-
-
-
-
   inventario,
-
-
-
-
-
-
   dominios,
   hechizos,
   kenActual,

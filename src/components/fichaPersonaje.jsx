@@ -413,8 +413,6 @@ const handleChangeNaturaleza= (event)=>{
 
 const btnGuardarCambios = () => {
    
-  console.log("Funciona el botón guardar cambios");
-  // Encuentra el índice del personaje actual en el array de personajes
   const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
 
   // Crea una copia del array de personajes
@@ -617,14 +615,11 @@ const guardarCambiosBBDD = async () => {
     const response = await axios.put(`https://zepiro.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
-        // Añade aquí cualquier header adicional, como autenticación si es necesario
       }
     });
 
     console.log('Cambios guardados exitosamente:', response.data);
 
-    // Aquí puedes manejar la respuesta del servidor
-    // como mostrar un mensaje de éxito o redirigir al usuario
     Swal.fire({
       icon: 'success',
       title: '¡Cambios!',
@@ -634,36 +629,8 @@ const guardarCambiosBBDD = async () => {
 
   } catch (error) {
     console.error('Error al guardar cambios:', error);
-    // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
   }
 };
-
-
-/*
-  const guardarCambiosBarras = () => {
-    // Encuentra el índice del personaje actual en el array de personajes
-    const index = personajes.findIndex(pj => pj.id == id);
-  
-    // Crea una copia del array de personajes
-    const nuevosPersonajes = [...personajes];
-  
-    // Actualiza los valores de vida y energía del personaje actual en la copia del array
-    nuevosPersonajes[index] = {
-      ...nuevosPersonajes[index],
-      kenActual: kenActualN,
-      kiActual: kiActualN,
-      positiva: positivaN,
-      negativa: negativaN,
-      vidaActual: damageActualN,
-      consumision:consumisionN,
-
-    };
-  
-    // Actualiza el estado de los personajes con la copia modificada
-    setPersonajes(nuevosPersonajes);
-    console.log(vidaActual)
-};
-*/
 
 
 
@@ -755,7 +722,7 @@ useEffect(() => {
        
        try {
        
-       //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+        //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
         const response = await axios.delete(`https://zepiro.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {

@@ -23,11 +23,7 @@ export const Nava= ({setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonaje
 
 const mostrar=()=>setModalLogin(true);
 const desaparecer=()=>setModalLogin(false);
-/*
-//estados de los campos de login
-const[loginEmail,setLoginEmail]=useState("");
-const[loginPassword,setLoginPassword]=useState("")
-*/
+
 const [loginEmail, setLoginEmail] = useState(() => {
   // Leer el email de localStorage si existe
   const savedEmail = localStorage.getItem('loginEmail');
@@ -100,7 +96,7 @@ const handleSubmit = (e) => {
        localStorage.setItem('idusuario', idusuario);
        setUSuarioId(idusuario)
        setSesion(true)
-       console.log("Personajes recien cargados: ",personajes)
+      // console.log("Personajes recien cargados: ",personajes)
   
     } catch (error) {
       Swal.fire({
@@ -113,7 +109,7 @@ const handleSubmit = (e) => {
 
   loginUsuario();
 
-  console.log('Login submitted');
+  //console.log('Login submitted');
   desaparecer();
 };
 

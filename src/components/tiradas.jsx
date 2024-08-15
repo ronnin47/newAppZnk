@@ -6,9 +6,6 @@ import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 
 
-
-
-
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 //REACT_APP_BACKEND_URL=https://tu-backend-en-render.onrender.com
 
@@ -24,25 +21,17 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 
 export const Tiradas = ({ textareaRef, messagesEndRef,nombre,setMessage,sock,setSock}) => {
 
-const [valTirada,setValTirada]=useState("")
-const [sumaTirada,setSumaTirada]=useState("")
+const [valTirada,setValTirada]=useState("");
+const [sumaTirada,setSumaTirada]=useState("");
+const[valTiradaD6,setValTiradaD6]=useState("");
+const[valTiradaD4,setValTiradaD4]=useState("");
+const[valTiradaD12,setValTiradaD12]=useState("");
+const [valTiradaD10,setValTiradaD10]=useState("");
+const [valTiradaD20,setValTiradaD20]=useState("");
+const [valTiradaD10Bono,setValTiradaD10Bono]=useState("");
 
-const[valTiradaD6,setValTiradaD6]=useState("")
-const[valTiradaD4,setValTiradaD4]=useState("")
-
-// aca paso 1 para incorporar dados
-const[valTiradaD12,setValTiradaD12]=useState("")
-
-const [valTiradaD10,setValTiradaD10]=useState("")
-const [valTiradaD20,setValTiradaD20]=useState("")
-const [valTiradaD10Bono,setValTiradaD10Bono]=useState("")
-
-const[principal,setPrincipal]=useState("")
-const[secundaria,setSecundaria]=useState("")
-/*
-const textareaRef = useRef(null);
-const messagesEndRef = useRef(null);
-*/
+const[principal,setPrincipal]=useState("");
+const[secundaria,setSecundaria]=useState("");
 const [animacionActiva, setAnimacionActiva] = useState(false);
 
 
@@ -55,21 +44,17 @@ const [animacionActiva, setAnimacionActiva] = useState(false);
       base=0
     }
   let cantD10= Math.floor(principal / 10)+base;
-  console.log("base: ",base)
   let tirada=generarNumerosAzarSinRangoMin(cantD10,10);
-
-  //acaaaaaaaa 2
   let d12=generarNumerosAzarSinRangoMin(dadosD12Bono,12);
   let d6=generarNumerosAzarSinRangoMin(dadosD6Bono,6);
   let d4=generarNumerosAzarSinRangoMin(dadosD4Bono,4);
-  
   let d10=generarNumerosAzarSinRangoMin(dadosD10,10);
   let d20=generarNumerosAzarSinRangoMin(dadosD20,20);
   let d10Bono=generarNumerosAzarSinRangoMin(dadosD10Bono,10);
 
   let sumaTirada = tirada.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
   
-  //acaaa 3
+
   let sumaD12= d12.reduce((acumulador, valorActual)=> acumulador +valorActual,0);
   let sumaD6= d6.reduce((acumulador, valorActual)=> acumulador +valorActual,0);
   let sumaD4= d4.reduce((acumulador, valorActual)=> acumulador +valorActual,0);
@@ -78,12 +63,10 @@ const [animacionActiva, setAnimacionActiva] = useState(false);
   let sumaD20= d20.reduce((acumulador, valorActual) => acumulador + valorActual, 0)
   let sumaD10Bono= d10Bono.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
 
-  // acaaa 4
   let total=sumaTirada+parseInt(principalValue)+parseInt(secundariaValue)+sumaD10+sumaD20+sumaD10Bono+sumaD6+sumaD4+sumaD12
   
   setValTirada(tirada.join(", "))
-  
-  //acaaa 5
+
   setValTiradaD12(d12.join(", "))
   setValTiradaD6(d6.join(", "))
   setValTiradaD4(d4.join(", "))
@@ -97,7 +80,6 @@ const [animacionActiva, setAnimacionActiva] = useState(false);
   let imprimirTirada
   let imprimirBase
   
-  //acaaa 6
   let imprimirBonoD12;
   let imprimirBonoD6;
   let imprimirBonoD4;
@@ -106,7 +88,7 @@ const [animacionActiva, setAnimacionActiva] = useState(false);
   let imprimirBonoD20;
   let imprimirBonoKen;
 
-console.log("suma de la base ", principalValue+secundariaValue)
+//console.log("suma de la base ", principalValue+secundariaValue)
 const baset=principalValue+secundariaValue
 
   if(baset>0){
@@ -121,15 +103,12 @@ const baset=principalValue+secundariaValue
     imprimirTirada="";
   }
 
-  //acaaaa 7
-
   if(d12.length>0){
     imprimirBonoD12=`Bono D12:    ${d12.join(", ")}`
   }else{
     imprimirBonoD12="";
   }
 
- 
   if(d6.length>0){
     imprimirBonoD6=`Bono D6:    ${d6.join(", ")}`
   }else{
@@ -141,9 +120,6 @@ const baset=principalValue+secundariaValue
   }else{
     imprimirBonoD4="";
   }
-
-
-
 
   if(d10.length>0){
     imprimirBonoD10=`Bono D10:    ${d10.join(", ")}`
@@ -163,7 +139,6 @@ const baset=principalValue+secundariaValue
     imprimirBonoKen="";
   }
   
-  //acaaa 8
   const message = `     Tirada  ${nombreTirada}      ${imprimirBase}     ${imprimirTirada}       ${imprimirBonoD10}        ${imprimirBonoD20}        ${imprimirBonoKen}         ${imprimirBonoD6}        ${imprimirBonoD4}       ${imprimirBonoD12}       TOTAL: ${total}`;
   
   const msgEnviar={
@@ -177,24 +152,20 @@ const baset=principalValue+secundariaValue
 }, 1000); 
   
   socket.emit('message', msgEnviar);
-  setMessage('')
-  //Una opcion era limpiar el nombre tirada tras una tirada o activar y desactivar el boton
+  setMessage('');
   setNombreTirada("");
 
 }
 
-//acaaaa 9
+
 const[dadosD12Bono,setDadosD12Bono]=useState(0);
-
 const[dadosD6Bono,setDadosD6Bono]=useState(0);
-const[dadosD4Bono,setDadosD4Bono]=useState(0)
+const[dadosD4Bono,setDadosD4Bono]=useState(0);
+const[dadosD10,setDadosD10]=useState(0);
+const[dadosD20,setDadosD20]=useState(0);
+const[dadosD10Bono,setDadosD10Bono]=useState(0);
 
-
-const[dadosD10,setDadosD10]=useState(0)
-const[dadosD20,setDadosD20]=useState(0)
-const[dadosD10Bono,setDadosD10Bono]=useState(0)
-
-const [nombreTirada,setNombreTirada]=useState("")
+const [nombreTirada,setNombreTirada]=useState("");
 
 //SELECTOR DEL BOTON DONDE SE GUARDARA LA TIRADA
 const [selectedButton, setSelectedButton] = useState(1);
@@ -203,36 +174,24 @@ const [selectedButton, setSelectedButton] = useState(1);
 const addD10=()=>{
   setDadosD10(dadosD10+1)
 }
-
 const restD10=()=>{
   setDadosD10(dadosD10-1)
 }
-
-
-
 useEffect(() => {
  console.log(dadosD10)
 }, [dadosD10]);
-
 const addD20=()=>{
   setDadosD20(dadosD20+1)
 }
-
 const restD20=()=>{
   setDadosD20(dadosD20-1)
 }
-
 useEffect(() => {
  console.log(dadosD20)
 }, [dadosD20]);
-
-
-
-
 const addD10Bono=()=>{
   setDadosD10Bono(dadosD10Bono+1)
 }
-
 const restD10Bono=()=>{
   setDadosD10Bono(dadosD10Bono-1)
 }
@@ -242,32 +201,24 @@ useEffect(() => {
 }, [dadosD10]);
 
 
-
-//acaaa 10
 const addD12Bono=()=>{
   setDadosD12Bono(dadosD12Bono+1)
 }
 const restD12Bono=()=>{
   setDadosD12Bono(dadosD12Bono-1)
 }
-
-
-
 const addD6Bono=()=>{
   setDadosD6Bono(dadosD6Bono+1)
 }
 const restD6Bono=()=>{
   setDadosD6Bono(dadosD6Bono-1)
 }
-
 const addD4Bono=()=>{
   setDadosD4Bono(dadosD4Bono+1)
 }
 const restD4Bono=()=>{
   setDadosD4Bono(dadosD4Bono-1)
 }
-
-
 const handlePrincipal=(event)=>{
  setPrincipal(event.target.value)
 }
@@ -275,61 +226,48 @@ const handleSecundaria=(event)=>{
   setSecundaria(event.target.value)
 }
 
-//botones state de los seis botones
+
 const [boton1, setBoton1] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton1_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 1";
 });
 const [boton2, setBoton2] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton2_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 2";
 });
 const [boton3, setBoton3] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton3_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 3";
 });
 const [boton4, setBoton4] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton4_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 4";
 });
 const [boton5, setBoton5] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton5_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 5";
 });
 const [boton6, setBoton6] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton6_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 6";
 });
 const [boton7, setBoton7] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton7_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 7";
 });
 const [boton8, setBoton8] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton8_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 8";
 });
 const [boton9, setBoton9] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton9_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 9";
 });
 const [boton10, setBoton10] = useState(() => {
-  // Recuperar del localStorage si existe, si no, utilizar un valor por defecto
   const storedValue = localStorage.getItem(`boton10_${nombre}`);
   return storedValue ? JSON.parse(storedValue) : "Boton 10";
 });
-//console.log("este es el contenido de boton 1: "+boton1)
 
-//console.log(boton1.nombreTirada)
-/************************************************** */
 
 //GUARDAR TIRADA
 const guardarTiradaMacro=()=>{
@@ -669,32 +607,6 @@ const handleKeyPress = (event) => {
   }
 };
 
-/*
-useEffect(() => {
-  if (messagesEndRef.current) {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }
-}, [sock]);
-*/
-     
-
-
-/*
-  <div className="contChat">
-         
-          {console.log("Contenido de sock:", sock)}
-          {sock.map((msg, index) => {
-            const [msgNombre, ...msgMensajeArray] = msg.split(': ');
-            const msgMensaje = msgMensajeArray.join(': ');
-            return (
-              <div key={index} className={msgNombre === nombre ? 'red' : 'green'}>
-                <span>{msgNombre}: {msgMensaje}</span>
-              </div>
-            );
-          })}
-          <div ref={messagesEndRef} />
-        </div>
-*/
 
   return (
     <>

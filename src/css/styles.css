@@ -538,4 +538,67 @@ background-color: rgba(0, 0, 0, 0.719);
     .filaDeTres p {
         text-align: left; /* Alinea el texto a la izquierda */
     }
-    
+
+
+    .reglas4columnas {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Crea 4 columnas de igual ancho */
+        gap: 1rem; /* Ajusta el espacio entre columnas */
+        color: aliceblue;
+        
+    }
+
+    .cuadros{
+     border: 2px solid red;
+     border-radius: 10px;
+     padding: 1em;
+     text-align: center;
+     background: linear-gradient(135deg, #4CAF50, #2C6B4F);
+    }
+    .cuadros>p{
+        margin: 0;
+        font-size:1em;
+    }
+    .lumina > tbody :hover{
+        color: black;
+        text-align: center;
+        transform: scale(1.01);
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        transition: box-shadow 0.3s ease-in-out;
+        background-color: rgba(255, 255, 0, 0.63); 
+    }
+
+    .topCanvas{
+        background-color: #d0f0c0;
+        color: black;
+    }
+    .bordes {
+        border: 3px solid black;
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
+        background-color: #333; /* Puedes ajustar este color según tu preferencia */
+    }
+    .lumina > p:hover{
+        color: yellow;
+        text-align: center;
+        transform: scale(1.01);
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        transition: box-shadow 0.3s ease-in-out;
+        background-color: rgba(0, 0, 0, 0.616);
+    }
+
+    .reglas2columnas {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual ancho */
+        gap: 1rem; /* Ajusta el espacio entre columnas */
+        color: aliceblue;
+        
+    }
+    .reglas1columnas {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual ancho */
+        gap: 1rem; /* Ajusta el espacio entre columnas */
+        color: aliceblue;
+        
+    }

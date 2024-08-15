@@ -2,8 +2,8 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import { fileURLToPath } from 'url'; // Importa la función fileURLToPath para convertir __filename a ruta de archivo
-import { dirname, join } from 'path'; // Importa dirname y join para trabajar con rutas de archivos
+import { fileURLToPath } from 'url'; 
+import { dirname, join } from 'path'; 
 
 
 import pkg from 'pg'; 
@@ -18,9 +18,6 @@ app.use(cors()); // Permitir CORS para todas las rutas
 
 // Servir archivos estáticos desde la carpeta 'dist'
 app.use(express.static(join(__dirname, 'dist')));
-
-
-
 
 
 dotenv.config();
@@ -58,11 +55,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-
-
-
-
-
 async function checkDatabaseConnection() {
   try {
     // Verifica la conexión a la base de datos
@@ -87,9 +79,6 @@ checkDatabaseConnection();
 
 app.use(express.json());
 
-
-
-
 const io = new Server(server, {
   cors: {
     origin: '*', // Cambia esto según sea necesario
@@ -108,18 +97,11 @@ io.on('connection', (socket) => {
   });
 });
 
-
-
-
-
-
-
-
 // INSERTAR USUARIO ok!!
 app.post('/insert-usuario', async (req, res) => {
   const { email, contrasenia } = req.body;
-    console.log("llego la peticion de insert de usuario")
-    console.log(req.body)
+    //console.log("llego la peticion de insert de usuario")
+    //console.log(req.body)
 
     const estatus="jugador"
   
@@ -137,14 +119,14 @@ app.post('/insert-usuario', async (req, res) => {
     const newId = result.rows[0].idusuario;
     const newEstatus = result.rows[0].estatus;
 
-    console.log("El Id que viene de la base de datos es: "+newId)
-    console.log("El Id que viene de la base de datos es: "+newEstatus)
+    //console.log("El Id que viene de la base de datos es: "+newId)
+    //console.log("El Id que viene de la base de datos es: "+newEstatus)
 
     res.status(201).json({ message: `Bienvenido ${email}.`, idusuario: newId, estatus: newEstatus });
   } catch (err) {
 
     if (err.code === '23505') { // Código de error para violación de restricción de unicidad
-      console.error('El email ya existe.');
+      //console.error('El email ya existe.');
       res.json({ message: 'El mail ya se encuentra registrado.' });
     } else {
       console.error('Error al insertar el usuario:', err.message);
@@ -155,12 +137,11 @@ app.post('/insert-usuario', async (req, res) => {
   }
 });
 
-
 //LOGIN USUARIO OK!!
 app.post('/loginUsuario', async (req, res) => {
   const { email, contrasenia } = req.body;
 
-  console.log("Info del cliente que se loguea: ", req.body);
+  //console.log("Info del cliente que se loguea: ", req.body);
 
   try {
     // Verificar si el usuario existe
@@ -176,12 +157,12 @@ app.post('/loginUsuario', async (req, res) => {
     const idusuario = userResult.rows[0].idusuario;
     const estatus = userResult.rows[0].estatus;
 
-    console.log("IDUSUARIO ES: ",idusuario)
-    console.log("SU ESTATUS ES: ",estatus)
+    //console.log("IDUSUARIO ES: ",idusuario)
+    //console.log("SU ESTATUS ES: ",estatus)
     // Verificar la contraseña directamente
     if (user.contrasenia !== contrasenia) {
-      console.log("Contraseña proporcionada no coincide con la almacenada.");
-      console.log("Contraseña de la base de datos: ", user.contrasenia);
+      //console.log("Contraseña proporcionada no coincide con la almacenada.");
+      //console.log("Contraseña de la base de datos: ", user.contrasenia);
       return res.status(401).json({ message: 'Email o contraseña incorrectos' });
     }
 
@@ -191,11 +172,11 @@ app.post('/loginUsuario', async (req, res) => {
     const personajesResult = await pool.query(personajesQuery, [user.idusuario]);
     
 
-    console.log("Inicio de sesión exitoso para el usuario:", user.idusuario);
+   // console.log("Inicio de sesión exitoso para el usuario:", user.idusuario);
 
     res.json({
       message: 'Inicio de sesión exitoso',
-      personajes: personajesResult.rows, // Descomenta esto si obtienes personajes
+      personajes: personajesResult.rows, 
       idusuario: idusuario,
       estatus: estatus,
     });
@@ -211,7 +192,7 @@ app.post('/loginUsuario', async (req, res) => {
 app.get('/consumirPersonajesNarrador', async (req, res) => {
  // const { email, contrasenia } = req.body;
 
-  console.log("Info del cliente que se loguea: ", req.body);
+  //console.log("Info del cliente que se loguea: ", req.body);
 
   try {
     // Verificar si el usuario existe
@@ -224,7 +205,7 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
 
     const coleccionPersonajes = userResult.rows;
 
-    console.log("Coleccion personajes para el Narrador: ",coleccionPersonajes)
+    //console.log("Coleccion personajes para el Narrador: ",coleccionPersonajes)
     
 
     res.json({
@@ -327,10 +308,9 @@ app.post('/insert-personaje', async (req, res) => {
       usuarioId,
       
    } = req.body;
-    console.log("llego la peticion de insert!!")
-    console.log(req.body)
-    // Convierte la imagen de base64 a un buffer
-   // const imagenBuffer = Buffer.from(imagen, 'base64');
+   // console.log("llego la peticion de insert!!")
+    //console.log(req.body)
+  
 
   try {
     const query = `
@@ -505,7 +485,7 @@ app.post('/insert-personaje', async (req, res) => {
     const result = await pool.query(query, values);
 
     const newId = result.rows[0].idpersonaje;
-    console.log("El Id que viene de la base de datos es: "+newId)
+    //console.log("El Id que viene de la base de datos es: "+newId)
     res.status(201).json({ message: 'Personaje insertado exitosamente.', idpersonaje: newId });
   } catch (err) {
     console.error('Error al insertar el personaje:', err.message);
@@ -602,10 +582,9 @@ app.put('/update-personaje/:id', async (req, res) => {
       usuarioId,
       
    } = req.body;
-    console.log("llego la peticion del update personaje!")
-    console.log(req.body)
-  // Convierte la imagen de base64 a un buffer
-  //const imagenBuffer = Buffer.from(imagen, 'base64');
+   // console.log("llego la peticion del update personaje!")
+    //console.log(req.body)
+  
   try {
     const query = `
     UPDATE personajes
@@ -803,7 +782,6 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
 
 
 //const PORT = process.env.PORT || 4000;
-
 const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
