@@ -68,6 +68,14 @@ export const Reglas = () => {
         <div className='reglas1Columnas' style={{padding:"1em",fontSize:"0.8em"}}>
        <div className="cuadros lumina">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.accion.titulo,reglas.accion.info)}>
+        <img
+          alt=""
+          src="/acciones.svg"
+          width="20"
+          height="20"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
         Acciones
         </Button>
         <Table  className='lumina bordes'>
@@ -196,6 +204,14 @@ export const Reglas = () => {
 
         <div className="cuadros lumina">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.salud.titulo,reglas.salud.info)}>
+        <img
+          alt=""
+          src="/salud.svg"
+          width="20"
+          height="20"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
         Recuperacion de Salud
         </Button>
 
@@ -255,6 +271,14 @@ export const Reglas = () => {
 
         <div className="cuadros lumina">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.incremento.titulo,reglas.incremento.info)}>
+        <img
+          alt=""
+          src="/incremento.svg"
+          width="20"
+          height="20"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
         Incremento de caracteristicas
         </Button>
            <p>Un persoanje segun su valor de caracteristica principal tendra 1d10 + 1d10 adicional cada 10p a sus tiradas de esfuerzo.</p> 
@@ -293,6 +317,14 @@ export const Reglas = () => {
 
         <div className="cuadros lumina">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.campo.titulo,reglas.campo.info)}>
+        <img
+          alt=""
+          src="/campo.svg"
+          width="20"
+          height="20"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
         Campo de Invocacion
         </Button>
 
@@ -338,6 +370,14 @@ export const Reglas = () => {
      <div className='reglas2columnas' style={{padding:"1em",fontSize:"0.8em"}}>
      <div className="cuadros lumina">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.ken.titulo,reglas.ken.info)}>
+        <img
+          alt=""
+          src="/ken.svg"
+          width="20"
+          height="20"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
         Proezas del Ken
         </Button>
         <Table  className='lumina bordes'>
@@ -413,6 +453,14 @@ export const Reglas = () => {
 
         <div className="cuadros">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.estudio.titulo,reglas.estudio.info)}>
+        <img
+          alt=""
+          src="/estudio.svg"
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
           Estudio
         </Button>
         <Table  className='lumina bordes'>
@@ -471,6 +519,14 @@ export const Reglas = () => {
       <div className='reglas1Columnas' style={{padding:"1em",fontSize:"0.8em"}}>
        <div className="cuadros lumina">
         <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.herbolaria.titulo,reglas.herbolaria.info)}>
+        <img
+          alt=""
+          src="/herbolaria.svg"
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+          style={{marginRight:"5px"}}
+        />
         Herbolaria
         </Button>
         <Table  className='lumina bordes'>
