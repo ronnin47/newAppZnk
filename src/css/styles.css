@@ -556,7 +556,6 @@ background-color: rgba(0, 0, 0, 0.719);
      background: linear-gradient(135deg, #4CAF50, #2C6B4F);
      display: flex;
      flex-direction: column;
-     justify-content: center; /* Centra verticalmente */
      align-items: center;     /* Centra horizontalmente */
      height: 100%;     
     }
