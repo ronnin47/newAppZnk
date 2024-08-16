@@ -67,12 +67,12 @@ export const Reglas = () => {
         </Offcanvas>    
         <div className='reglas1Columnas' style={{padding:"1em",fontSize:"0.8em"}}>
        <div className="cuadros lumina">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.accion.titulo,reglas.accion.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.accion.titulo,reglas.accion.info)}>
         <img
           alt=""
           src="/acciones.svg"
-          width="20"
-          height="20"
+          width="30"
+          height="30"
           className="d-inline-block align-top"
           style={{marginRight:"5px"}}
         />
@@ -203,12 +203,12 @@ export const Reglas = () => {
      <div className="reglas4columnas" style={{padding:"1em", fontSize:"0.8em"}}>
 
         <div className="cuadros lumina">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.salud.titulo,reglas.salud.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.salud.titulo,reglas.salud.info)}>
         <img
           alt=""
           src="/salud.svg"
-          width="20"
-          height="20"
+          width="30"
+          height="30"
           className="d-inline-block align-top"
           style={{marginRight:"5px"}}
         />
@@ -270,12 +270,12 @@ export const Reglas = () => {
 
 
         <div className="cuadros lumina">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.incremento.titulo,reglas.incremento.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.incremento.titulo,reglas.incremento.info)}>
         <img
           alt=""
           src="/incremento.svg"
-          width="20"
-          height="20"
+          width="30"
+          height="30"
           className="d-inline-block align-top"
           style={{marginRight:"5px"}}
         />
@@ -316,12 +316,12 @@ export const Reglas = () => {
 
 
         <div className="cuadros lumina">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.campo.titulo,reglas.campo.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.campo.titulo,reglas.campo.info)}>
         <img
           alt=""
           src="/campo.svg"
-          width="20"
-          height="20"
+          width="30"
+          height="30"
           className="d-inline-block align-top"
           style={{marginRight:"5px"}}
         />
@@ -369,12 +369,12 @@ export const Reglas = () => {
 
      <div className='reglas2columnas' style={{padding:"1em",fontSize:"0.8em"}}>
      <div className="cuadros lumina">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.ken.titulo,reglas.ken.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.ken.titulo,reglas.ken.info)}>
         <img
           alt=""
           src="/ken.svg"
-          width="20"
-          height="20"
+          width="30"
+          height="30"
           className="d-inline-block align-top"
           style={{marginRight:"5px"}}
         />
@@ -452,7 +452,7 @@ export const Reglas = () => {
 
 
         <div className="cuadros">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.estudio.titulo,reglas.estudio.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.estudio.titulo,reglas.estudio.info)}>
         <img
           alt=""
           src="/estudio.svg"
@@ -518,7 +518,7 @@ export const Reglas = () => {
 
       <div className='reglas1Columnas' style={{padding:"1em",fontSize:"0.8em"}}>
        <div className="cuadros lumina">
-        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black"}} onClick={()=>handleShow(reglas.herbolaria.titulo,reglas.herbolaria.info)}>
+        <Button style={{border:"2px solid red", color:"yellow", borderRadius:"10px", textAlign:"center",fontSize:"1em",padding:"5px",backgroundColor:"black", display:"flex", justifyContent:"center"}} onClick={()=>handleShow(reglas.herbolaria.titulo,reglas.herbolaria.info)}>
         <img
           alt=""
           src="/herbolaria.svg"
