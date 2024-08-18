@@ -397,7 +397,9 @@ return (
     <div style={{ flex: 1, padding: '10px', overflow: 'hidden' }}>
     
       <h3>Historia:</h3>
-      <p>{historia}</p>
+      <textarea className='historia'>
+      {historia}
+      </textarea>
     
     </div>
     
