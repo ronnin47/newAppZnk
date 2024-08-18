@@ -384,7 +384,7 @@ return (
 
 
 
-      <Tab eventKey="historia" title="historia" className="fondoBody">
+      <Tab eventKey="historia" title="Historia" className="fondoBody">
       <div className={`modalus ${fade==true ? 'fadeOut' : 'fadeIn'}`}>
       
 
