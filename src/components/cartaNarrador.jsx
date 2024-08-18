@@ -99,6 +99,38 @@ export const Hechizos = ({ ID, itemValues }) => {
   );
 };
 
+export const TecnicasEspeciales = ({ ID, itemValues }) => {
+  if (!itemValues) {
+    return <div>Item values no disponibles</div>;
+  }
+
+ 
+
+  return (
+
+
+<div className="container-fluid tecnicaEspecial" style={{marginTop:"1em"}}>
+<input
+  className="inputInventario"
+  type="text"
+  value={itemValues.nombre} 
+  placeholder="Nombre"
+  style={{fontFamily:"cursive", fontSize:"1em", color:"yellow"}}
+/>
+  <textarea
+  className="tecnica"
+  value={itemValues.presentacion}  // Mantener la referencia correcta
+  placeholder="Presentacion:"  // Corregido aquí
+/>
+<textarea
+  className="tecnica"
+  value={itemValues.sistema}  // Mantener la referencia correcta
+  placeholder="Sistema:"  // Corregido aquí
+/>
+</div>
+  );
+};
+
 
 
 
@@ -179,9 +211,10 @@ export const CartaNarrador = ({
   iniciativa,
   historia,  
   naturaleza,
+  tecEspecial,
 }) => {
 
-
+console.log("TECNICA ESPECIAL ",tecEspecial)
 
 const [fade,setFade]=useState(false)
 const [animacion,setAnimacion]=useState("")
@@ -454,7 +487,7 @@ return (
     </div>
     
   </div>
-</Modal.Body>
+  </Modal.Body>
       <Modal.Footer style={{backgroundColor:"black", color:"aliceblue"}}> 
         <Button variant="outline-danger" onClick={cerrar}>
           Cerrar
@@ -545,7 +578,54 @@ return (
 
 
 
+      
+
+    <Tab eventKey="tecEspeciales" title="Tecnicas Especiales">
+      <div className={`modalus ${fade==true ? 'fadeOut' : 'fadeIn'}`}>
+      
+
+      <Modal.Body className='modalCartaPjBody' style={{ backgroundColor: "black", color: "aliceblue", overflow: 'auto' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', height: '100%' }}>
+   
+    <div style={{ flex: 1, padding: '10px', overflow: 'hidden' }}>
+    
+    <div style={{ marginTop: '10px' }}>
+    <h3>Tecnicas Especiales</h3>
+    {tecEspecial.map((item, index) => {
+        return (
+          <TecnicasEspeciales
+            key={index}
+            id={index}
+            itemValues={item || {}}
+          />
+        );
+      })}    
+    </div> 
+    
+    </div>
+    
+  </div>
+</Modal.Body>
+      <Modal.Footer style={{backgroundColor:"black", color:"aliceblue"}}> 
+        <Button variant="outline-danger" onClick={cerrar}>
+          Cerrar
+        </Button>
+        
+      </Modal.Footer>
+        
+       </div>
+      </Tab>
+
+
+
     </Tabs>
+
+
+
+
+
+
+
 
 
 

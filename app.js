@@ -55,6 +55,7 @@ const pool = new Pool({
   port: 5432,
 });
 
+
 async function checkDatabaseConnection() {
   try {
     // Verifica la conexión a la base de datos
@@ -306,6 +307,7 @@ app.post('/insert-personaje', async (req, res) => {
       iniciativa,
       historia,
       usuarioId,
+      tecEspecial,
       
    } = req.body;
    // console.log("llego la peticion de insert!!")
@@ -392,8 +394,9 @@ app.post('/insert-personaje', async (req, res) => {
       consumision,
       iniciativa,
       historia,
+      "tecEspecial",
       "usuarioId")
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71)
       RETURNING idpersonaje
     `;
 
@@ -479,6 +482,7 @@ app.post('/insert-personaje', async (req, res) => {
       consumision,
       iniciativa,
       historia,
+      tecEspecial,
       usuarioId,
       
       ];
@@ -580,6 +584,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       iniciativa,
       historia,
       usuarioId,
+      tecEspecial,
       
    } = req.body;
    // console.log("llego la peticion del update personaje!")
@@ -658,8 +663,9 @@ app.put('/update-personaje/:id', async (req, res) => {
       consumision = $67,
       iniciativa = $68,
       historia = $69,
-      "usuarioId" = $70
-    WHERE idpersonaje = $71
+      "usuarioId" = $70,
+      "tecEspecial" = $71
+    WHERE idpersonaje = $72
   `;
     const values = [
       nombre,
@@ -744,6 +750,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       iniciativa,
       historia,
       usuarioId,
+      tecEspecial,
       idpersonaje
       
       ];

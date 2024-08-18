@@ -73,6 +73,7 @@ const Cartita=({
   iniciativa,
   historia,  
   naturaleza,
+  tecEspecial,
 })=>{
 
   const [showCartaPj, setShowCartaPj] = useState(false);
@@ -174,6 +175,8 @@ const Cartita=({
             historia={historia}
             naturaleza={naturaleza}
 
+            tecEspecial={tecEspecial || []}
+
            
 
           />
@@ -268,6 +271,7 @@ export const Narrador = ({estatus,coleccionPersonajes}) => {
            iniciativa={pj.iniciativa}
            historia={pj.historia}
            naturaleza={pj.naturaleza}
+           tecEspecial={pj.tecEspecial}
            ></Cartita>
         ))}
   

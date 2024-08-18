@@ -109,12 +109,14 @@ export const Principal= ()=> {
     const [vidaActual,setVidaActual]=useState("")
     const [naturaleza,setNaturaleza]=useState("")
     const [consumision,setConsumision]=useState("")
-  
     const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
     const [vivoMuerto,setVivoMuerto]=useState(true)
 
     const [message, setMessage] = useState('');
     const [sock, setSock] = useState([]);
+
+
+    const [tecEspecial, setTecEspecial] = useState([]);
     
    const handleDragEnd=(event)=>{
     //console.log("orden original: ",personajes)
@@ -627,6 +629,7 @@ return (
                   historia={pj.historia}
                   naturaleza={pj.naturaleza}
                   eliminarPj={eliminarPj}
+                  tecEspecial={pj.tecEspecial || []}
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>

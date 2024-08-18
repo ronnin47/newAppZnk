@@ -16,6 +16,9 @@ import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
 
 import Badge from 'react-bootstrap/Badge';
+
+
+import { TecnicaEspecial } from './tecEspecial.jsx';
 /*
 <div className='col1'>
     <button className="btn btn-success" style={{width:"150px", marginTop:"10px"}} onClick={btnGuardarCambios}>Guardar cambios</button>
@@ -102,6 +105,7 @@ export const FichaPersonaje = ({
   eliminarPj,
   setVivoMuerto,
   vivoMuerto,
+  tecEspecial,
   usuarioId
 
 }) => {
@@ -211,7 +215,10 @@ export const FichaPersonaje = ({
 
   
  const [iniciativaN,setIniciativaN]=useState(iniciativa) 
- const [historiaN,setHistoriaN]=useState(historia) 
+ const [historiaN,setHistoriaN]=useState(historia)
+ 
+ 
+ const [tecEspecialN,setTecEspecialN]=useState(tecEspecial)
 
  
 
@@ -499,6 +506,7 @@ const btnGuardarCambios = () => {
     iniciativa:iniciativaN,
     historia:historiaN,
     naturaleza:naturalezaN,
+    tecEspecial:tecEspecialN,
     
   };
 
@@ -609,6 +617,7 @@ const guardarCambiosBBDD = async () => {
       iniciativa:(parseInt(sentidosN)+parseInt(agilidadN)) || 0,
       historia:historiaN,
       usuarioId: usuarioId,
+      tecEspecial: tecEspecialN,
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
@@ -712,7 +721,9 @@ useEffect(() => {
   consumisionN,
   iniciativaN,
   historiaN,
-  naturalezaN,]);
+  naturalezaN,
+  tecEspecialN,
+]);
 
 
  
@@ -982,6 +993,18 @@ useEffect(() => {
         </div>
         </Accordion.Body>
       </Accordion.Item>
+
+      <Accordion.Item eventKey="6">
+        <Accordion.Header>Tecnicas especiales</Accordion.Header>
+        <Accordion.Body  style={{backgroundColor:"black"}}>
+        <div>
+        <TecnicaEspecial tecEspecialN={tecEspecialN} setTecEspecialN={setTecEspecialN}></TecnicaEspecial>
+        </div>
+        </Accordion.Body>
+      </Accordion.Item>
+
+      
+
 
     </Accordion>   
 
