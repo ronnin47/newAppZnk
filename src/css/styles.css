@@ -631,4 +631,23 @@ background-color: rgba(0, 0, 0, 0.719);
         align-items: center;
         padding: 15px;
     }
+
+    .col5{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;  
+        justify-items: center;
+        align-items: start;  
+    }
+
+    
+    .boton-imagen {
+        border: 2px solid #007bff; /* Borde del botón (puedes ajustar el color) */
+        border-radius: 50%; /* Bordes redondeados */
+        padding: 5px; /* Espacio alrededor de la imagen */
+        transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+      }
       
+      .boton-imagen:hover {
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Efecto de brillo */
+        transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
+      }

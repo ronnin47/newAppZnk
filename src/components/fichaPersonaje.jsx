@@ -191,13 +191,6 @@ export const FichaPersonaje = ({
   const [negativaN,setNegativaN]=useState(negativa)
   const [damageActualN,setDamageActualN]=useState(vidaActual)
   const [consumisionN,setConsumisionN]=useState(consumision)
-/*
-  useEffect(() => {
-    guardarCambiosBarras();
-  }, [damageActualN,kenActualN,kiActualN,positivaN,negativaN,consumisionN]);
-*/
-//QUIERO CONSOLOGEAR COMO INICIA
-
 
   const [apCombateN,setApCombateN]=useState(apCombate)
   const [valCombateN,setValCombateN]=useState(valCombate)
@@ -621,7 +614,7 @@ const guardarCambiosBBDD = async () => {
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
-    const response = await axios.put(`https://zepiro.onrender.com/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -734,7 +727,7 @@ useEffect(() => {
        try {
        
         //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-        const response = await axios.delete(`https://zepiro.onrender.com/deletePersonaje/${idpersonaje}`);
+        const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
         console.error('Error al eliminar el personaje:', error);

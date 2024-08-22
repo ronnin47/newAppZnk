@@ -196,6 +196,17 @@ export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, nega
     setNegativaN(newNeg)
   }
 
+
+  const curarFase=async()=>{
+    console.log("CURO UNA FASE!!")
+    setConsumirVida("")
+    setConsumirVida(-(faseSalud))
+    if(consumirVida==-(faseSalud)){
+      agregarDamage();
+      setConsumirVida("")
+    }
+   
+  }
   
   return (
     <div className="col1" >
@@ -207,13 +218,24 @@ export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, nega
         <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"5px"}} >+ Daño</button>
         <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen'/>
         </div>
-        <div className="col4" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
+        <div className="col5" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
             <p style={{color:"aliceblue"}}>fases +</p>
             <input type="number" value={positivaN} onChange={handlePos} className='inputKen' />
             <p style={{color:"aliceblue"}}>fases -</p>
             <input type="number" value={negativaN} onChange={handleNeg} className='inputKen' />
+            <div>
+          <img 
+          alt=""
+          src="/salud.svg"
+          width="60px"
+          height="60px"
+          className="boton-imagen  d-inline-block align-top"
+           onClick={curarFase} 
+           style={{ marginLeft: "3em", cursor: "pointer" }} ></img>
         </div>
+        </div> 
       </div>
+     
       {estaMuerto ? (
         <>
         

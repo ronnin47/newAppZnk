@@ -17,7 +17,6 @@ export const CargarPersonaje = ({
   setKi,
   setDestino,
   setPdestino,
-
   setFuerza,
   setFortaleza,
   setAgilidad,
@@ -27,7 +26,6 @@ export const CargarPersonaje = ({
   setPresencia,
   setPrincipio,
   setSentidos,
-
   nombre,
   dominio,
   raza,
@@ -36,7 +34,6 @@ export const CargarPersonaje = ({
   ki,
   destino,
   pDestino,
-
   fuerza,
   fortaleza,
   destreza,
@@ -45,7 +42,6 @@ export const CargarPersonaje = ({
   presencia,
   principio,
   sentidos,
-
   academisismo,
   alerta,
   atletismo,
@@ -73,8 +69,6 @@ export const CargarPersonaje = ({
   veneno,
   corte,
   energia,
-
- 
   setAcademisismo,
   setAlerta,
   setAtletismo,
@@ -102,7 +96,6 @@ export const CargarPersonaje = ({
   setVeneno,
   setCorte,
   setEnergia,
-
   setApCombate,
   setValCombate,
   setApCombate2,
@@ -120,7 +113,6 @@ export const CargarPersonaje = ({
   negativa,
   vidaActual,
   hechizos,
-
   add1,
   setAdd1,
   valAdd1,
@@ -141,7 +133,6 @@ export const CargarPersonaje = ({
   naturaleza,
   setNaturaleza,
   usuarioId,
-  
 
 }) => {
  
@@ -198,7 +189,6 @@ export const CargarPersonaje = ({
   const handleChangeSentidos = (event) => {
     setSentidos(event.target.value)    
   }
-
   const handleChangeAcademisismo = (event) => {
     setAcademisismo(event.target.value)    
   }
@@ -311,7 +301,6 @@ export const CargarPersonaje = ({
    const handleChangeValAdd3=(event)=>{
     setValAdd3(event.target.value)
    }
-   
    const handleChangeAdd4=(event)=>{
     setAdd4(event.target.value)
    }
@@ -346,7 +335,6 @@ export const CargarPersonaje = ({
       ki:ki || 0,
       destino:destino || 0,
       pDestino:pDestino || 0,
-
       fuerza: fuerza || 0,
       fortaleza: fortaleza || 0,
       destreza: destreza || 0,
@@ -355,8 +343,6 @@ export const CargarPersonaje = ({
       presencia:presencia || 0,
       principio:principio ||0,
       sentidos:sentidos ||0,
-
-
       academisismo:academisismo ||0,
       alerta:alerta ||0,
       atletismo:atletismo ||0,
@@ -384,18 +370,11 @@ export const CargarPersonaje = ({
       veneno:veneno ||0,
       corte:corte ||0,
       energia:energia ||0,
-
-
       ventajas:ventajas,
-      
-
-      
       apCombate: apCombate,
       valCombate: valCombate ||0,
       apCombate2:apCombate2,
       valCombate2:valCombate2 ||0,
-
-
       add1:add1,
       valAdd1: valAdd1 || 0,
       add2:add2,
@@ -404,7 +383,6 @@ export const CargarPersonaje = ({
       valAdd3: valAdd3 || 0,
       add4:add4,
       valAdd4: valAdd4 || 0,
-
       imagen: imagen,
       inventario: inventario,
       dominios: dominios,
@@ -423,7 +401,7 @@ export const CargarPersonaje = ({
 
     try {
     
-      const response = await axios.post(`https://zepiro.onrender.com/insert-personaje`, pjNuevo, {   
+      const response = await axios.post(`https://zepironokioku.onrender.com/insert-personaje`, pjNuevo, {   
       //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
           'Content-Type': 'application/json', 
@@ -452,13 +430,6 @@ export const CargarPersonaje = ({
     } catch (error) {
       console.error('Error al insertar el personaje:', error.message);
     }
-
-
-    //localStorage.setItem('lastId', nextId);
-
-    //setPersonajes([...personajes, pjNuevo]);
-     
-   //console.log(personajes[0].ventajas)
 
 
     setNombre("");

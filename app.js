@@ -45,7 +45,7 @@ const pool = new Pool({
   port: 5432,
 });
 */
-
+/*
 //CONFIGURACION A LA BASE DE DATOS POSTGRESQL EN RENDER 
 const pool = new Pool({
   user: 'databaserenderznk_user',          // Reemplaza con tu usuario de PostgreSQL
@@ -54,7 +54,16 @@ const pool = new Pool({
   password: 'ZaIKkfZ7i8tkjVUPvpk7b9DwlDyqbw1m',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
+*/
 
+
+const pool = new Pool({
+  user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
+  host: 'dpg-cr3aaqij1k6c73dj3qs0-a',
+  database: 'baseagosto', // Reemplaza con el nombre de tu base de datos
+  password: 'zFi2JRnG9cX2Iig2tmuLoZdgFn7D8XK9',   // Reemplaza con tu contraseña de PostgreSQL
+  port: 5432,
+});
 
 async function checkDatabaseConnection() {
   try {
