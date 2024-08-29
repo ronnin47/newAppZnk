@@ -315,6 +315,19 @@ background-color: rgba(0, 0, 0, 0.719);
     margin: 5px;
     font-size: larger;
 }
+.inputCicatriz{
+    border: 2px solid red;
+    border-radius: 10px;
+    background-color: black;
+    width: 100px;
+    padding:5px;
+    align-items: center;
+    text-align: center;
+    color: red;
+    margin: 5px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: larger;
+}
 .colBarraVida{
     display: grid;
     grid-template-columns: 25% 35% 20% 20%;  
@@ -427,27 +440,16 @@ background-color: rgba(0, 0, 0, 0.719);
     grid-template-columns:  50% 20% 20%;
 }
 .botoncinios>button{
-    transform: scale(0.8);
-    
+    transform: scale(0.8);    
 }
 .contChat {
-    height: 400px; /* Ajusta según tus necesidades */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    border: 1px solid #ccc; /* Opcional: añade un borde para que sea más visible */
-    padding: 10px; /* Opcional: añade padding para el contenido */
-  }
+height: 400px; /* Ajusta según tus necesidades */
+overflow-y: auto; /* Habilita el desplazamiento vertical */
+border: 1px solid #ccc; /* Opcional: añade un borde para que sea más visible */
+padding: 10px; /* Opcional: añade padding para el contenido */
+}
 
-
-
-
-
-
-
-
-
-
-
-  .cartita {
+.cartita {
     display: flex;
     border: 3px solid red;
     border-radius: 8px;
@@ -457,13 +459,11 @@ background-color: rgba(0, 0, 0, 0.719);
     margin: 10px;
     flex-direction: row;
 }
-
 .cartita-image {
     width: 60px;
     height: 60px;
     object-fit: cover;
 }
-
 .cartita-info {
     padding: 15px;
     display: flex;
@@ -473,181 +473,169 @@ background-color: rgba(0, 0, 0, 0.719);
     flex: 1; /* Esto hace que .cartita-info ocupe el espacio restante */
     height: 60px; /* Asegura que .cartita-info tenga la misma altura que .cartita-image */
 }
-
 .cartita-name {
     font-size: 1.5em;
     margin: 0;
 }
-
 .cartita-description {
     font-size: 1em;
     color: aliceblue;
 }
-
 .cartita-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dos columnas */
     gap: 10px; /* Espacio entre las cartas */
     padding: 10px; /* Espacio interno del contenedor */
 }
-
-
 .modalus{
     border: 5px solid red;
     border-radius: 9px;
-    opacity: 0.9;
-    
-    }
-    .saludNarrador{
-        border: 3px solid red;
-        border-radius: 10px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        align-items: center;
-        padding: 10px;
-        justify-items: center;
-
-    }
-
-    .filaDeCuatro {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); /* Crea 4 columnas iguales */
-        gap: 10px; /* Espacio entre columnas y filas */
-        padding: 10px;
-        border: 3px solid red;
-        border-radius: 10px;
-        justify-items: center;
-        align-items: center;
-    }
-    
-    .filaDeCuatro p {
-        margin: 0; /* Elimina el margen por defecto de los elementos p */
-        text-align: center; /* Centra el texto dentro de cada elemento p */
-    }
-
-    .filaDeTres {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Crea 4 columnas iguales */
-        gap: 10px; /* Espacio entre columnas y filas */
-        padding: 10px;
-        border: 3px solid red;
-        border-radius: 10px;
-        justify-items: center;
-        align-items: center;
-    }
-    .filaDeTres p {
-        text-align: left; /* Alinea el texto a la izquierda */
-    }
-
-
-    .reglas4columnas {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Crea 4 columnas de igual ancho */
-        gap: 1rem; /* Ajusta el espacio entre columnas */
-        color: aliceblue;
-        
-    }
-
-    .cuadros{
-     border: 2px solid red;
-     border-radius: 10px;
-     padding: 1em;
-     text-align: center;
-     background: linear-gradient(135deg, #4CAF50, #2C6B4F);
-     display: flex;
-     flex-direction: column;
-     align-items: center;     /* Centra horizontalmente */
-     height: 100%;     
-    }
-    .cuadros>p{
-        margin: 0;
-        font-size:1em;
-    }
-    .lumina > tbody :hover{
-        color: black;
-        text-align: center;
-        transform: scale(1.01);
-        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
-        border-radius: 10px;
-        transition: box-shadow 0.3s ease-in-out;
-        background-color: rgba(255, 255, 0, 0.63); 
-    }
-
-    .topCanvas{
-        background-color: #d0f0c0;
-        color: black;
-    }
-    .bordes {
-        border: 3px solid black;
-        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
-        background-color: #333; /* Puedes ajustar este color según tu preferencia */
-    }
-    .lumina > p:hover{
-        color: yellow;
-        text-align: center;
-        transform: scale(1.01);
-        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
-        border-radius: 10px;
-        transition: box-shadow 0.3s ease-in-out;
-        background-color: rgba(0, 0, 0, 0.616);
-    }
-
-    .reglas2columnas {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual ancho */
-        gap: 1rem; /* Ajusta el espacio entre columnas */
-        color: aliceblue;
-        
-    }
-    .reglas1columnas {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual ancho */
-        gap: 1rem; /* Ajusta el espacio entre columnas */
-        color: aliceblue;
-        
-    }
-
-    .tecnicaEspecial{
-        display: flex;
-        flex-direction: column;
-    }
-    .tecnica {
-        min-height: 200px;
-        width:100%;
-        height: 30px;
-        border: 3px solid aliceblue;
-        color:aliceblue;
-        background-color: rgba(0, 0, 0, 0.685);
-        border-radius: 15px;
-        align-items: center;
-        padding: 15px;
-    }
-    .historia{
-        min-height: 200px;
-        width:100%;
-        height: 200px;
-        color:aliceblue;
-        background-color: rgba(0, 0, 0, 0.685);
-        align-items: center;
-        padding: 15px;
-    }
-
-    .col5{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;  
-        justify-items: center;
-        align-items: start;  
-    }
-
-    
-    .boton-imagen {
-        border: 2px solid #007bff; /* Borde del botón (puedes ajustar el color) */
-        border-radius: 50%; /* Bordes redondeados */
-        padding: 5px; /* Espacio alrededor de la imagen */
-        transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
-      }
-      
-      .boton-imagen:hover {
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Efecto de brillo */
-        transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
-      }
+    opacity: 0.9;  
+}
+.saludNarrador{
+    border: 3px solid red;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 10px;
+    justify-items: center;
+}
+.filaDeCuatro {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Crea 4 columnas iguales */
+    gap: 10px; /* Espacio entre columnas y filas */
+    padding: 10px;
+    border: 3px solid red;
+    border-radius: 10px;
+    justify-items: center;
+    align-items: center;
+}
+.filaDeCuatroMasCicatriz {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Crea 4 columnas iguales */
+    gap: 10px; /* Espacio entre columnas y filas */
+    padding: 10px;
+    border: 3px solid red;
+    border-radius: 10px;
+    justify-items: center;
+    align-items: center;
+    font-size: 0.8em;
+}
+.filaDeCuatro p {
+    margin: 0; /* Elimina el margen por defecto de los elementos p */
+    text-align: center; /* Centra el texto dentro de cada elemento p */
+}
+.filaDeTres {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Crea 4 columnas iguales */
+    gap: 10px; /* Espacio entre columnas y filas */
+    padding: 10px;
+    border: 3px solid red;
+    border-radius: 10px;
+    justify-items: center;
+    align-items: center;
+}
+.filaDeTres p {
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+.reglas4columnas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Crea 4 columnas de igual ancho */
+    gap: 1rem; /* Ajusta el espacio entre columnas */
+    color: aliceblue;   
+}
+.cuadros{
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 1em;
+    text-align: center;
+    background: linear-gradient(135deg, #4CAF50, #2C6B4F);
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* Centra horizontalmente */
+    height: 100%;     
+}
+.cuadros>p{
+    margin: 0;
+    font-size:1em;
+}
+.lumina > tbody :hover{
+    color: black;
+    text-align: center;
+    transform: scale(1.01);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease-in-out;
+    background-color: rgba(255, 255, 0, 0.63); 
+}
+.topCanvas{
+    background-color: #d0f0c0;
+    color: black;
+}
+.bordes {
+    border: 3px solid black;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
+    background-color: #333; /* Puedes ajustar este color según tu preferencia */
+}
+.lumina > p:hover{
+    color: yellow;
+    text-align: center;
+    transform: scale(1.01);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.616);
+}
+.reglas2columnas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual ancho */
+    gap: 1rem; /* Ajusta el espacio entre columnas */
+    color: aliceblue;   
+}
+.reglas1columnas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual ancho */
+    gap: 1rem; /* Ajusta el espacio entre columnas */
+    color: aliceblue;      
+}
+.tecnicaEspecial{
+    display: flex;
+    flex-direction: column;
+}
+.tecnica {
+    min-height: 200px;
+    width:100%;
+    height: 30px;
+    border: 3px solid aliceblue;
+    color:aliceblue;
+    background-color: rgba(0, 0, 0, 0.685);
+    border-radius: 15px;
+    align-items: center;
+    padding: 15px;
+}
+.historia{
+    min-height: 200px;
+    width:100%;
+    height: 200px;
+    color:aliceblue;
+    background-color: rgba(0, 0, 0, 0.685);
+    align-items: center;
+    padding: 15px;
+}
+.col6{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;  
+    justify-items: center;
+    align-items: start;  
+}
+.boton-imagen {
+    border: 2px solid #007bff; /* Borde del botón (puedes ajustar el color) */
+    border-radius: 50%; /* Bordes redondeados */
+    padding: 5px; /* Espacio alrededor de la imagen */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+}
+.boton-imagen:hover {
+box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Efecto de brillo */
+transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
+}

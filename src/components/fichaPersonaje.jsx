@@ -106,7 +106,10 @@ export const FichaPersonaje = ({
   setVivoMuerto,
   vivoMuerto,
   tecEspecial,
-  usuarioId
+  usuarioId,
+
+  conviccion,
+  cicatriz,
 
 }) => {
   
@@ -212,6 +215,10 @@ export const FichaPersonaje = ({
  
  
  const [tecEspecialN,setTecEspecialN]=useState(tecEspecial)
+
+ 
+ const [conviccionN,setConviccionN]=useState(conviccion);
+ const [cicatrizN,setCicatrizN]=useState(cicatriz);
 
  
 
@@ -387,29 +394,33 @@ export const FichaPersonaje = ({
   const handleChangeValAdd2=(event)=>{
     setValAdd2N(event.target.value)
   }
-
    const handleChangeAdd3=(event)=>{
     setAdd3N(event.target.value)
    }
    const handleChangeValAdd3=(event)=>{
     setValAdd3N(event.target.value)
    }
-   
    const handleChangeAdd4=(event)=>{
     setAdd4N(event.target.value)
    }
    const handleChangeValAdd4=(event)=>{
     setValAdd4N(event.target.value)
    }
-
-
   const handleChangeIniciativa = (event) => {
     setIniciativaN(event.target.value)
   }
+  const handleChangeNaturaleza= (event)=>{
+    setNaturalezaN(event.target.value)
+  }
 
-const handleChangeNaturaleza= (event)=>{
-  setNaturalezaN(event.target.value)
-}
+
+  const handleChangeConviccion= (event)=>{
+    setConviccionN(event.target.value)
+  }
+
+
+
+
 
 const btnGuardarCambios = () => {
    
@@ -500,6 +511,9 @@ const btnGuardarCambios = () => {
     historia:historiaN,
     naturaleza:naturalezaN,
     tecEspecial:tecEspecialN,
+
+    conviccion: conviccionN,
+    cicatriz: cicatrizN,
     
   };
 
@@ -611,6 +625,9 @@ const guardarCambiosBBDD = async () => {
       historia:historiaN,
       usuarioId: usuarioId,
       tecEspecial: tecEspecialN,
+
+      conviccion: conviccionN || "",
+      cicatriz: cicatrizN || 0,
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
@@ -716,6 +733,10 @@ useEffect(() => {
   historiaN,
   naturalezaN,
   tecEspecialN,
+
+  conviccionN,
+  cicatrizN,
+
 ]);
 
 
@@ -768,7 +789,7 @@ useEffect(() => {
     <div className='container'>
          <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombreN}</p>
          <div style={{marginLeft:"20px"}}>  
-          <BarraVida nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
+          <BarraVida cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
           <BarraKi nombreN={nombreN} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={kiN} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
           <BarraKen nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
         </div>
@@ -789,6 +810,8 @@ useEffect(() => {
             <input type="text" value={naturalezaN} onChange={handleChangeNaturaleza} placeholder="ingrese naturaleza" />
             <label htmlFor="">Edad:</label>
             <input type="text" value={edadN} onChange={handleChangeEdad} placeholder="ingrese edad" />
+            <label htmlFor="">Convicicon:</label>
+            <input type="text" value={conviccionN} onChange={handleChangeConviccion} placeholder="ingrese conviccion" />
           
             <div className='col4' style={{gap:"10%" ,justifyContent: "center"}}>
               <div className='col1' >

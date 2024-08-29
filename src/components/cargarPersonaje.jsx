@@ -134,6 +134,12 @@ export const CargarPersonaje = ({
   setNaturaleza,
   usuarioId,
 
+  conviccion,
+  setConviccion,
+
+  cicatriz,
+  setCicatriz,
+
 }) => {
  
   const inputFileRef = useRef(null);
@@ -288,7 +294,6 @@ export const CargarPersonaje = ({
    const handleChangeValAdd1=(event)=>{
     setValAdd1(event.target.value)
    }
-
    const handleChangeAdd2=(event)=>{
     setAdd2(event.target.value)
    }
@@ -310,6 +315,13 @@ export const CargarPersonaje = ({
   const handleChangeNaturaleza=(event)=>{
     setNaturaleza(event.target.value)
   }
+
+
+  const handleChangeConviccion=(event)=>{
+    setConviccion(event.target.value)
+  }
+
+  
 
 
  
@@ -395,7 +407,14 @@ export const CargarPersonaje = ({
       consumision:consumision || 0,
       iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
       historia:"",
-      usuarioId: usuarioId,   
+
+      conviccion: conviccion || "",
+      cicatriz: cicatriz || 0,
+
+      usuarioId: usuarioId,  
+
+     
+
     };
 
 
@@ -451,33 +470,33 @@ export const CargarPersonaje = ({
     setPrincipio("");
     setSentidos("");   
     setAcademisismo("");
-    setAlerta("")
-    setAtletismo("")
-    setConBakemono("")
-    setMentir("")
-    setPilotear("")
-    setArtesMarciales("")
-    setMedicina("")
-    setConObjMagicos("")
-    setSigilo("")
-    setConEsferas("")
-    setConLeyendas("")
-    setForja("")
-    setConDemonio("")
-    setConEspiritual("")
-    setManejoBlaster("")
-    setManejoSombras("")
-    setTratoBakemono("")
-    setConHechiceria("")
-    setMedVital("")
-    setMedEspiritual("")
-    setRayo("")
-    setFuego("")
-    setFrio("")
-    setVeneno("")
-    setCorte("")
-    setEnergia("")
-    setNaturaleza("")
+    setAlerta("");
+    setAtletismo("");
+    setConBakemono("");
+    setMentir("");
+    setPilotear("");
+    setArtesMarciales("");
+    setMedicina("");
+    setConObjMagicos("");
+    setSigilo("");
+    setConEsferas("");
+    setConLeyendas("");
+    setForja("");
+    setConDemonio("");
+    setConEspiritual("");
+    setManejoBlaster("");
+    setManejoSombras("");
+    setTratoBakemono("");
+    setConHechiceria("");
+    setMedVital("");
+    setMedEspiritual("");
+    setRayo("");
+    setFuego("");
+    setFrio("");
+    setVeneno("");
+    setCorte("");
+    setEnergia("");
+    setNaturaleza("");
     setApCombate("");
     setValCombate("");
     setApCombate2("");
@@ -492,6 +511,10 @@ export const CargarPersonaje = ({
     setValAdd4("");  
     setImagen("/imagenBase.jpeg");
     setVentajas([]);
+
+    setConviccion("");
+  
+
     
     Swal.fire({
       position: "top-center",
@@ -505,7 +528,7 @@ export const CargarPersonaje = ({
 
   return (
     <>
-    <div className='container '> 
+    <div className='container'> 
      <div className='row col1'>
          <p style={{color:"aliceblue", fontSize:"50px", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombre}</p>
         <div className='row col2' >
@@ -525,6 +548,8 @@ export const CargarPersonaje = ({
             <input type="text" value={naturaleza} onChange={handleChangeNaturaleza} placeholder="ingrese naturaleza" />
             <label htmlFor="">Edad:</label>
             <input type="text" value={edad} onChange={handleChangeEdad} placeholder="ingrese edad" />
+            <label htmlFor="">Conviccion:</label>
+            <input type="text" value={conviccion} onChange={handleChangeConviccion} placeholder="ingrese conviccion" />
             
             <div className='col4' style={{gap:"10%" ,justifyContent: "center"}}>
               <div className='col1' >

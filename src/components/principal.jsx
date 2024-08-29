@@ -41,62 +41,62 @@ export const Principal= ()=> {
 
 
 
-    const [nombre,setNombre]=useState("")
-    const [imagen,setImagen]=useState("/imagenBase.jpeg")
-    const [dominio,setDominio]=useState("")
-    const [raza,setRaza]=useState("")
-    const [edad,setEdad]=useState("")
-    const [ken,setKen]=useState("")
-    const [ki,setKi]=useState("")
-    const [destino,setDestino]=useState("")
-    const [pDestino,setPdestino]=useState("")
-    const [fuerza,setFuerza]=useState("")
-    const [fortaleza,setFortaleza]=useState("")
-    const [destreza,setDestreza]=useState("")
-    const [agilidad,setAgilidad]=useState("")
-    const [sabiduria,setSabiduria]=useState("")
-    const [presencia,setPresencia]=useState("")
-    const [principio,setPrincipio]=useState("")
-    const [sentidos,setSentidos]=useState("")
-    const [academisismo,setAcademisismo]=useState("")
-    const [alerta,setAlerta]=useState("")
-    const [atletismo,setAtletismo]=useState("")
-    const [conBakemono,setConBakemono]=useState("")
-    const [mentir,setMentir]=useState("")
-    const [pilotear,setPilotear]=useState("")
-    const [artesMarciales,setArtesMarciales]=useState("")
-    const [medicina,setMedicina]=useState("")
-    const [conObjMagicos,setConObjMagicos]=useState("")
-    const [sigilo,setSigilo]=useState("")
-    const [conEsferas,setConEsferas]=useState("")
-    const [conLeyendas,setConLeyendas]=useState("")
-    const [forja,setForja]=useState("")
-    const [conDemonio,setConDemonio]=useState("")
-    const [conEspiritual,setConEspiritual]=useState("")
-    const [manejoBlaster,setManejoBlaster]=useState("")
-    const [manejoSombras,setManejoSombras]=useState("")
-    const [tratoBakemono,setTratoBakemono]=useState("")
-    const [conHechiceria,setConHechiceria]=useState("")
-    const [medVital,setMedVital]=useState("")
-    const [medEspiritual,setMedEspiritual]=useState("") 
-    const [rayo,setRayo]=useState("")
-    const [fuego,setFuego]=useState("")
-    const [frio,setFrio]=useState("")
-    const [veneno,setVeneno]=useState("")
-    const [corte,setCorte]=useState("")
-    const [energia,setEnergia]=useState("")
-    const [apCombate,setApCombate]=useState("")
-    const [valCombate,setValCombate]=useState("")
-    const [apCombate2,setApCombate2]=useState("")
-    const [valCombate2,setValCombate2]=useState("")
-    const [add1,setAdd1]=useState("")
-    const [valAdd1,setValAdd1]=useState("")
-    const [add2,setAdd2]=useState("")
+    const [nombre,setNombre]=useState("");
+    const [imagen,setImagen]=useState("/imagenBase.jpeg");
+    const [dominio,setDominio]=useState("");
+    const [raza,setRaza]=useState("");
+    const [edad,setEdad]=useState("");
+    const [ken,setKen]=useState("");
+    const [ki,setKi]=useState("");
+    const [destino,setDestino]=useState("");
+    const [pDestino,setPdestino]=useState("");
+    const [fuerza,setFuerza]=useState("");
+    const [fortaleza,setFortaleza]=useState("");
+    const [destreza,setDestreza]=useState("");
+    const [agilidad,setAgilidad]=useState("");
+    const [sabiduria,setSabiduria]=useState("");
+    const [presencia,setPresencia]=useState("");
+    const [principio,setPrincipio]=useState("");
+    const [sentidos,setSentidos]=useState("");
+    const [academisismo,setAcademisismo]=useState("");
+    const [alerta,setAlerta]=useState("");
+    const [atletismo,setAtletismo]=useState("");
+    const [conBakemono,setConBakemono]=useState("");
+    const [mentir,setMentir]=useState("");
+    const [pilotear,setPilotear]=useState("");
+    const [artesMarciales,setArtesMarciales]=useState("");
+    const [medicina,setMedicina]=useState("");
+    const [conObjMagicos,setConObjMagicos]=useState("");
+    const [sigilo,setSigilo]=useState("");
+    const [conEsferas,setConEsferas]=useState("");
+    const [conLeyendas,setConLeyendas]=useState("");
+    const [forja,setForja]=useState("");
+    const [conDemonio,setConDemonio]=useState("");
+    const [conEspiritual,setConEspiritual]=useState("");
+    const [manejoBlaster,setManejoBlaster]=useState("");
+    const [manejoSombras,setManejoSombras]=useState("");
+    const [tratoBakemono,setTratoBakemono]=useState("");
+    const [conHechiceria,setConHechiceria]=useState("");
+    const [medVital,setMedVital]=useState("");
+    const [medEspiritual,setMedEspiritual]=useState(""); 
+    const [rayo,setRayo]=useState("");
+    const [fuego,setFuego]=useState("");
+    const [frio,setFrio]=useState("");
+    const [veneno,setVeneno]=useState("");
+    const [corte,setCorte]=useState("");
+    const [energia,setEnergia]=useState("");
+    const [apCombate,setApCombate]=useState("");
+    const [valCombate,setValCombate]=useState("");
+    const [apCombate2,setApCombate2]=useState("");
+    const [valCombate2,setValCombate2]=useState("");
+    const [add1,setAdd1]=useState("");
+    const [valAdd1,setValAdd1]=useState("");
+    const [add2,setAdd2]=useState("");
     const [valAdd2,setValAdd2]=useState("")
-    const [add3,setAdd3]=useState("")
-    const [valAdd3,setValAdd3]=useState("")
-    const [add4,setAdd4]=useState("")
-    const [valAdd4,setValAdd4]=useState("")
+    const [add3,setAdd3]=useState("");
+    const [valAdd3,setValAdd3]=useState("");
+    const [add4,setAdd4]=useState("");
+    const [valAdd4,setValAdd4]=useState("");
     const [activeKey, setActiveKey] = useState(""); 
     const [ventajas, setVentajas] = useState([]);
     const [inventario, setInventario] = useState([]);
@@ -106,9 +106,17 @@ export const Principal= ()=> {
     const [kiActual, setKiActual] = useState("");
     const [positiva, setPositivaActual] = useState("");
     const [negativa, setNegativaActual] = useState("");
-    const [vidaActual,setVidaActual]=useState("")
-    const [naturaleza,setNaturaleza]=useState("")
-    const [consumision,setConsumision]=useState("")
+    const [vidaActual,setVidaActual]=useState("");
+    const [naturaleza,setNaturaleza]=useState("");
+    const [consumision,setConsumision]=useState("");
+
+    
+
+    const [cicatriz,setCicatriz]=useState("");
+    const [conviccion,setConviccion]=useState("");
+
+
+
     const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
     const [vivoMuerto,setVivoMuerto]=useState(true)
 
@@ -512,28 +520,37 @@ return (
               positiva={positiva}
               negativa={negativa}
               vidaActual={vidaActual}
-                add1={add1}
-                setAdd1={setAdd1}
-                valAdd1={valAdd1}
-                setValAdd1={setValAdd1}
+              add1={add1}
+              setAdd1={setAdd1}
+              valAdd1={valAdd1}
+              setValAdd1={setValAdd1}
 
-                add2={add2}
-                setAdd2={setAdd2}
-                valAdd2={valAdd2}
-                setValAdd2={setValAdd2}
-                
-                add3={add3}
-                setAdd3={setAdd3}
-                valAdd3={valAdd3}
-                setValAdd3={setValAdd3}
-                
-                add4={add4}
-                setAdd4={setAdd4}
-                valAdd4={valAdd4}
-                setValAdd4={setValAdd4}
-                consumision={consumision}
-                naturaleza={naturaleza}
-                setNaturaleza={setNaturaleza}             
+              add2={add2}
+              setAdd2={setAdd2}
+              valAdd2={valAdd2}
+              setValAdd2={setValAdd2}
+              
+              add3={add3}
+              setAdd3={setAdd3}
+              valAdd3={valAdd3}
+              setValAdd3={setValAdd3}
+              
+              add4={add4}
+              setAdd4={setAdd4}
+              valAdd4={valAdd4}
+              setValAdd4={setValAdd4}
+              consumision={consumision}
+              
+
+              conviccion={conviccion}
+              setConviccion={setConviccion}
+              
+              cicatriz={cicatriz}
+              setCicatriz={setCicatriz}
+
+
+              naturaleza={naturaleza}
+              setNaturaleza={setNaturaleza}             
               ></CargarPersonaje>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
           
             </Tab>
@@ -630,6 +647,9 @@ return (
                   naturaleza={pj.naturaleza}
                   eliminarPj={eliminarPj}
                   tecEspecial={pj.tecEspecial || []}
+
+                  conviccion={pj.conviccion}
+                  cicatriz={pj.cicatriz}
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>

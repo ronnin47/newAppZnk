@@ -45,17 +45,9 @@ const pool = new Pool({
   port: 5432,
 });
 */
-/*
-//CONFIGURACION A LA BASE DE DATOS POSTGRESQL EN RENDER 
-const pool = new Pool({
-  user: 'databaserenderznk_user',          // Reemplaza con tu usuario de PostgreSQL
-  host: 'dpg-cqp2laaj1k6c73dbpfp0-a',
-  database: 'databaserenderznk', // Reemplaza con el nombre de tu base de datos
-  password: 'ZaIKkfZ7i8tkjVUPvpk7b9DwlDyqbw1m',   // Reemplaza con tu contraseña de PostgreSQL
-  port: 5432,
-});
-*/
 
+
+//*************base de datos nueva de render************
 
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
@@ -64,6 +56,8 @@ const pool = new Pool({
   password: 'zFi2JRnG9cX2Iig2tmuLoZdgFn7D8XK9',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
+
+
 
 async function checkDatabaseConnection() {
   try {
@@ -317,10 +311,13 @@ app.post('/insert-personaje', async (req, res) => {
       historia,
       usuarioId,
       tecEspecial,
+     
+      conviccion,
+      cicatriz,
       
    } = req.body;
-   // console.log("llego la peticion de insert!!")
-    //console.log(req.body)
+    console.log("llego la peticion de insert!!")
+    console.log(req.body)
   
 
   try {
@@ -404,8 +401,11 @@ app.post('/insert-personaje', async (req, res) => {
       iniciativa,
       historia,
       "tecEspecial",
-      "usuarioId")
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71)
+      conviccion,
+      cicatriz,
+      "usuarioId"
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73)
       RETURNING idpersonaje
     `;
 
@@ -492,7 +492,10 @@ app.post('/insert-personaje', async (req, res) => {
       iniciativa,
       historia,
       tecEspecial,
+      conviccion,
+      cicatriz,
       usuarioId,
+     
       
       ];
     const result = await pool.query(query, values);
@@ -594,6 +597,9 @@ app.put('/update-personaje/:id', async (req, res) => {
       historia,
       usuarioId,
       tecEspecial,
+
+      conviccion,
+      cicatriz,
       
    } = req.body;
    // console.log("llego la peticion del update personaje!")
@@ -673,8 +679,10 @@ app.put('/update-personaje/:id', async (req, res) => {
       iniciativa = $68,
       historia = $69,
       "usuarioId" = $70,
-      "tecEspecial" = $71
-    WHERE idpersonaje = $72
+      "tecEspecial" = $71,
+      conviccion= $72,
+      cicatriz= $73
+    WHERE idpersonaje = $74
   `;
     const values = [
       nombre,
@@ -760,6 +768,10 @@ app.put('/update-personaje/:id', async (req, res) => {
       historia,
       usuarioId,
       tecEspecial,
+      
+      conviccion,
+      cicatriz,
+
       idpersonaje
       
       ];

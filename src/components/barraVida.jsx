@@ -11,7 +11,7 @@ import 'animate.css';
 
 
 
-export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
+export const BarraVida = ({cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
   const faseSalud = parseInt(kiN) + parseInt(fortalezaN);
   const vidaTotalPositiva = faseSalud * parseInt(positivaN);
   const vidaTotalNegativa = faseSalud * parseInt(negativaN);
@@ -36,6 +36,33 @@ export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, nega
   const [animacionActiva, setAnimacionActiva] = useState(true);
   
 
+
+
+
+
+  useEffect(() => {
+    const cicatrizValue = parseInt(cicatrizN, 10);
+
+    if (cicatrizValue > 0 && damageActualN < cicatrizValue) {
+      setDamageActualN(cicatrizValue);
+    }
+  }, [cicatrizN, damageActualN]);
+
+  useEffect(() => {
+    if (parseInt(cicatrizN) > 0) {
+      if (damageActualN < parseInt(cicatrizN)) {
+        setDamageActualN(parseInt(cicatrizN));
+      }
+    }
+  }, [cicatrizN, damageActualN]);
+
+
+  const handleChangeCicatrizN=(event)=>{
+    setCicatrizN(event.target.value);
+ 
+   }
+
+
   const agregarDamage = async () => {
     let newValue = parseInt(consumirVida)|| 0;;
     //daño acumulado
@@ -52,6 +79,13 @@ export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, nega
     if (newDamage < 0) {
       newDamage = 0; // Establecer el daño a cero si es negativo
     }
+
+
+     // Ajustar damageActualN para no ser menor que cicatrizN
+     const cicatrizValue = parseInt(cicatrizN, 10);
+     if (cicatrizValue > 0 && newDamage < cicatrizValue) {
+       newDamage = cicatrizValue;
+     }
   
     setDamageActualN(newDamage);
     console.log(damageActualN)
@@ -207,31 +241,38 @@ export const BarraVida = ({nombreN,fortalezaN, kiN, positivaN,setPositivaN, nega
     }
    
   }
+ 
+
+  
   
   return (
     <div className="col1" >
       <div className='colBarraVida'>
-      <div className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
-      <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"5px"}}>Daño: {damageActualN}/{vidaTotal}</p>
-      </div>  
+        <div className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
+        <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"5px", textAlign:"right", width: "100%", display: "block"}}>Daño: {damageActualN}/{vidaTotal}</p>
+        </div>  
         <div className="col2">
-        <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"5px"}} >+ Daño</button>
-        <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen'/>
+          <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"5px"}} >+ Daño</button>
+          <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen'/>
         </div>
-        <div className="col5" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
+        <div className="col6" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
             <p style={{color:"aliceblue"}}>fases +</p>
             <input type="number" value={positivaN} onChange={handlePos} className='inputKen' />
             <p style={{color:"aliceblue"}}>fases -</p>
             <input type="number" value={negativaN} onChange={handleNeg} className='inputKen' />
-            <div>
-          <img 
+            <img 
           alt=""
           src="/salud.svg"
           width="60px"
           height="60px"
           className="boton-imagen  d-inline-block align-top"
-           onClick={curarFase} 
-           style={{ marginLeft: "3em", cursor: "pointer" }} ></img>
+            onClick={curarFase} 
+            style={{ marginLeft: "3em", cursor: "pointer" }} ></img>
+            <input   style={{ marginLeft: "2em"}} type="number" value={cicatrizN} onChange={handleChangeCicatrizN} className='inputCicatriz' placeholder="cicatriz" />
+            <div>
+          
+
+
         </div>
         </div> 
       </div>

@@ -1,6 +1,4 @@
 
-
-
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -185,12 +183,7 @@ export const CartaNarrador = ({
   apCombate2, 
   valCombate2,
   ventajas,
-
   inventario,
-
-
-
-
   dominios,
   hechizos,
   kenActual,
@@ -212,6 +205,8 @@ export const CartaNarrador = ({
   historia,  
   naturaleza,
   tecEspecial,
+  conviccion,
+  cicatriz,
 }) => {
 
 console.log("TECNICA ESPECIAL ",tecEspecial)
@@ -270,6 +265,7 @@ return (
           <p style={{textAlign:"center"}}>Dominio: {dominio}</p>
           <p style={{textAlign:"center"}}>Ken: {ken}</p>
           <p style={{textAlign:"center"}}>Naturaleza: {naturaleza}</p>
+          <p style={{textAlign:"center"}}>Conviccion: {conviccion}</p>
          </div>
         
 
@@ -313,11 +309,12 @@ return (
    </div>
 
 
-    <div class="filaDeCuatro">
+    <div class="filaDeCuatroMasCicatriz">
       <p>Consumision: {consumision}</p>
       <p>iniciativa: {iniciativa}</p>
       <p>Fases +: {positiva}</p>
       <p>Fases -: {negativa}</p>
+      <p>Cicatrices: {cicatriz}</p>
 
     </div>
   
