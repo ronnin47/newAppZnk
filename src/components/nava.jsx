@@ -13,7 +13,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-import { setPersonajesDB } from './indexedDB'; // Asegúrate de importar las funciones correctas
+import { setPersonajesDB } from './indexedDB'; 
 
 export const Nava= ({setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
@@ -73,7 +73,7 @@ const handleSubmit = (e) => {
       });
   
       const { idusuario, personajes, estatus } = response.data;
-//*********Estatus***************** */
+
       setEstatus(estatus);
       console.log("Estatus de sesion: ",estatus)
   
@@ -109,7 +109,6 @@ const handleSubmit = (e) => {
 
   loginUsuario();
 
-  //console.log('Login submitted');
   desaparecer();
 };
 

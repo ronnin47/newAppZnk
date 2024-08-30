@@ -639,3 +639,24 @@ padding: 10px; /* Opcional: añade padding para el contenido */
 box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Efecto de brillo */
 transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
 }
+
+
+.buscador{
+    border: 2px solid aliceblue;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    padding: 3px;
+    background-color: black;
+    color: #00FF00;
+}
+.tecnicasEspeciales{
+    padding: 1em;
+    border:3px solid red;
+    border-radius: 10px;
+    background-color: black;
+    margin-top: 2em;
+}
+.tabNarrador{
+    color:#00FF00
+}

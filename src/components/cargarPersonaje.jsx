@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { Ventajas } from './ventajas.jsx';

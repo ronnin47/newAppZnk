@@ -10,19 +10,13 @@ import {BarraVida} from "./barraVida.jsx";
 import { Hechizos } from './hechizos.jsx';
 import { Historia } from './historia.jsx';
 import Button from 'react-bootstrap/Button';
-
 import Accordion from 'react-bootstrap/Accordion';
-
 import axios from 'axios';
 
 import Badge from 'react-bootstrap/Badge';
 
-
 import { TecnicaEspecial } from './tecEspecial.jsx';
-/*
-<div className='col1'>
-    <button className="btn btn-success" style={{width:"150px", marginTop:"10px"}} onClick={btnGuardarCambios}>Guardar cambios</button>
-</div>*/
+
 
 export const FichaPersonaje = ({
   personaje,
@@ -34,12 +28,10 @@ export const FichaPersonaje = ({
   raza, 
   naturaleza,
   edad,
-
   ken,
   ki,
   destino,
   pDestino,
-
   fuerza, 
   fortaleza, 
   agilidad, 
@@ -49,7 +41,6 @@ export const FichaPersonaje = ({
   presencia, 
   principio, 
   sentidos, 
-
   academisismo,
   alerta,
   atletismo,
@@ -77,7 +68,6 @@ export const FichaPersonaje = ({
   veneno,
   corte,
   energia,
-
   apCombate, 
   valCombate,
   apCombate2, 
@@ -231,10 +221,8 @@ export const FichaPersonaje = ({
     const vidaTotal=(parseInt(kiN)+parseInt(fortalezaN))*(positivaN+negativaN)
     //console.log("VIDA total: ", vidaTotal)
     if (damageActualN > vidaTotal) {
-      //console.log(" el daño actual es mayor a vida total")
       setVivoMuerto(false);
     } else {
-      //console.log(" el daño actual es menor a vida total")
       setVivoMuerto(true);
     }
   }, [damageActualN,kiN,fortalezaN,positivaN,negativaN]);
@@ -412,8 +400,6 @@ export const FichaPersonaje = ({
   const handleChangeNaturaleza= (event)=>{
     setNaturalezaN(event.target.value)
   }
-
-
   const handleChangeConviccion= (event)=>{
     setConviccionN(event.target.value)
   }
@@ -612,7 +598,7 @@ const guardarCambiosBBDD = async () => {
       imagen: imagenN,
       inventario: inventarioN,//JSON
       dominios: dominiosN,//JASON
-//*************ACA VEMOS LA SOLUCION******************** */
+
       kenActual:kenActualN || 0,
       kiActual:kiActualN || 0,
       
@@ -810,7 +796,7 @@ useEffect(() => {
             <input type="text" value={naturalezaN} onChange={handleChangeNaturaleza} placeholder="ingrese naturaleza" />
             <label htmlFor="">Edad:</label>
             <input type="text" value={edadN} onChange={handleChangeEdad} placeholder="ingrese edad" />
-            <label htmlFor="">Convicicon:</label>
+            <label htmlFor="">Convicion:</label>
             <input type="text" value={conviccionN} onChange={handleChangeConviccion} placeholder="ingrese conviccion" />
           
             <div className='col4' style={{gap:"10%" ,justifyContent: "center"}}>
