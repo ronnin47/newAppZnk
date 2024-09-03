@@ -19,10 +19,10 @@ export const PowerEspeciales = ({ poderesFiltrados, nombre, idpersonaje, dominio
   return (
     <div>
       <div className='tecnicasEspeciales'>
-        <p style={{ color: "yellow", fontFamily:"cursive" }}>{nombre}</p>
+        <p style={{ color: "yellow", fontFamily:"cursive", fontSize:"1.5em"}}>{nombre}</p>
         {técnicasEspeciales.length > 0 ? (
           técnicasEspeciales.map((tecnica, index) => (
-            <div key={index} style={{marginTop:"2em"}}>
+            <div key={index} style={{marginTop:"1.5em"}}>
               <p style={{ color: "yellow" }}><strong style={{color:"orange"}}>Nombre:</strong> {tecnica.nombre}</p>
               <p style={{ color: "aliceblue" }}><strong style={{color:"orange"}}>Descripción:</strong> {tecnica.descripcion}</p>
               <p style={{ color: "aliceblue" }}><strong style={{color:"orange"}}>Sistema:</strong> {tecnica.sistema}</p>
