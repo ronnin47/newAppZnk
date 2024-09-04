@@ -458,7 +458,7 @@ const poderesFiltrados = coleccionPersonajes
 
               {personaje.tecEspecial.map((tecnica, indexTec) => (
                 <div key={indexTec} style={{ marginTop:"5px" }} className="cadaPoder">
-                  <p style={{ color: "yellow", marginTop: "0.5em", marginBottom: "0.3em" }}>
+                  <p style={{ color: "yellow", marginTop: "0.5em", marginBottom: "0.3em",fontFamily:"cursive",fontSize:"1.2em" }}>
                     <strong style={{ color: "orange" }}></strong> {tecnica.nombre || "Desconocida"}
                   </p>
                   <p style={{ color: "aliceblue", marginTop: "0.5em", marginBottom: "0.3em" }}>

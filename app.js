@@ -853,8 +853,8 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 4000;
-//const PORT = process.env.PORT || 10000;
+//onst PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

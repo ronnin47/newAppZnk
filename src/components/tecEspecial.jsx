@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from "react";
-
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 
 
@@ -16,6 +16,16 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
     handleItemChange(id, newValues);
   };
 
+
+
+
+    // Definir el tooltip
+    const renderTooltip = (props) => (
+      <Tooltip id="button-tooltip" {...props}>
+        ¿Elijes mostrar este poder especial?
+      </Tooltip>
+    );
+
   return (
     <div className="container-fluid tecnicaEspecial" style={{ marginTop: "2em" }}>
       <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
@@ -27,6 +37,10 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
           placeholder="Nombre"
           style={{ fontFamily: "cursive", fontSize: "1em", color: "yellow", marginRight: '10px' }}
         />
+          <OverlayTrigger
+          placement="left"
+        overlay={renderTooltip}
+      >
         <input
           type="checkbox"
           id="custom-checkbox"
@@ -34,6 +48,8 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
           onChange={handleToggleChange}
           style={{ margin: '0', transform: 'scale(1.5)' }} // Ajustar el tamaño y el margen si es necesario
         />
+        </OverlayTrigger>
+        
       </div>
 
       <textarea
@@ -66,10 +82,11 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
       tecEspecialN.map((item, index) => ({
         id: index,
         values: {
+          check: item.check || false,
           nombre: item.nombre || "",
           presentacion: item.presentacion || "",
           sistema: item.sistema || "",
-          check: item.check || false,
+         
         },
       }))
     );
@@ -96,11 +113,11 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
   const btnAgregarItem = () => {
     setItems([
       ...items,
-      { id: items.length, values: { nombre: "", presentacion: "", sistema: "", check: false } },
+      { id: items.length, values: { check: false, nombre: "", presentacion: "", sistema: ""} },
     ]);
     setTecEspecialN([
       ...tecEspecialN,
-      { nombre: "", presentacion: "", sistema: "", check: false },
+      { check: false, nombre: "", presentacion: "", sistema: ""  },
     ]);
   };
 

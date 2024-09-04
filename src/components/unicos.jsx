@@ -9,7 +9,8 @@ export const Unicos = () => {
   // Petición GET al servidor para obtener todas las técnicas especiales
   const consumirTecEspeciales = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/consumirTecEspeciales', {
+      //const response = await axios.get('http://localhost:4000/consumirTecEspeciales', {
+      const response = await axios.get('http://zepironokioku.onrender.com/consumirTecEspeciales', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -39,9 +40,12 @@ export const Unicos = () => {
   // Filtrar personajes que tengan técnicas que coincidan con la búsqueda
   const poderesFiltrados = coleccionTecEspeciales.map(personaje => {
       // Filtrar solo las técnicas especiales que coincidan con la búsqueda
-      const tecnicasFiltradas = personaje.tecEspecial.filter(tecnica => 
-        tecnica.nombre.toLowerCase().includes(tecBuscar.toLowerCase())
+      const tecnicasFiltradas = personaje.tecEspecial.filter(tecnica => {
+        console.log("Nombre de la técnica:", tecnica.nombre, "Valor de check:", tecnica.check)
+        return tecnica.nombre.toLowerCase().includes(tecBuscar.toLowerCase()) && tecnica.check === true
+      }
       );
+      //console.log("Técnicas filtradas para el personaje", personaje.nombre, tecnicasFiltradas);
 
       // Si alguna técnica coincide, devolvemos el personaje con solo esas técnicas
       if (tecnicasFiltradas.length > 0) {
@@ -93,15 +97,15 @@ export const Unicos = () => {
 
               {personaje.tecEspecial.map((tecnica, indexTec) => (
                 <div key={indexTec} style={{ marginTop:"5px" }} className="cadaPoder">
-                  <p style={{ color: "yellow", marginTop: "0.5em", marginBottom: "0.3em" }}>
+                  <p style={{ color: "yellow", marginTop: "0.5em", fontFamily:"cursive",fontSize:"1.2em", marginBottom: "0.3em" }}>
                     <strong style={{ color: "orange" }}></strong> {tecnica.nombre || "Desconocida"}
                   </p>
                   <p style={{ color: "aliceblue", marginTop: "0.5em", marginBottom: "0.3em" }}>
                     <strong style={{ color: "orange" }}>Descripción:</strong> {tecnica.presentacion || "No disponible"}
                   </p>
-                  <p style={{ color: "aliceblue", marginTop: "0.5em", marginBottom: "0.3em" }}>
+                    {/* <p style={{ color: "aliceblue", marginTop: "0.5em", marginBottom: "0.3em" }}>
                     <strong style={{ color: "orange" }}>Sistema:</strong> {tecnica.sistema || "No especificado"}
-                  </p>
+                  </p>*/}
                 </div>
               ))}
             </div>
