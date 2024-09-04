@@ -829,7 +829,7 @@ app.get('/consumirTecEspeciales', async (req, res) => {
  
      const poderesEspeciales = userResult.rows;
  
-     console.log("Coleccion de Poderes especiales: ",poderesEspeciales)
+    // console.log("Coleccion de Poderes especiales: ",poderesEspeciales)
      
  
      res.json({
