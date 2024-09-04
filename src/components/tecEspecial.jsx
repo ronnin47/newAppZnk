@@ -1,9 +1,8 @@
 
-//import { Direction } from "@dnd-kit/core/dist/types";
+
 import React, { useState, useEffect } from "react";
 
 
-import { Form, Container } from 'react-bootstrap';
 
 
 export const Item = ({ id, itemValues, handleItemChange }) => {
@@ -12,52 +11,42 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
     handleItemChange(id, newValues);
   };
 
-
-
-  const [isEnabled, setIsEnabled] = useState(true);
-
   const handleToggleChange = (event) => {
-    setIsEnabled(event.target.checked);
+    const newValues = { ...itemValues, check: event.target.checked };
+    handleItemChange(id, newValues);
   };
 
   return (
-    <div className="container-fluid tecnicaEspecial" style={{marginTop:"2em"}}>
-      <div style={{display:"flex", flexDirection:"row"}}>
-      <input
-        className="inputInventario"
-        type="text"
-        value={itemValues.nombre}
-        onChange={(e) => handleChange('nombre', e.target.value)}
-        placeholder="Nombre"
-        style={{fontFamily:"cursive", fontSize:"1em", color:"yellow"}}
-      />  
-      <div>
-          < input
-            type="checkbox"
-            id="custom-checkbox"
-            checked={isEnabled}
-            onChange={handleToggleChange}
-            style={{ margin: '10px',transform: 'scale(1.5)',alignItems:"center"}} // Ajustar el margen si es necesario
-          />
-        </div>
-       
+    <div className="container-fluid tecnicaEspecial" style={{ marginTop: "2em" }}>
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <input
+          className="inputInventario"
+          type="text"
+          value={itemValues.nombre}
+          onChange={(e) => handleChange('nombre', e.target.value)}
+          placeholder="Nombre"
+          style={{ fontFamily: "cursive", fontSize: "1em", color: "yellow", marginRight: '10px' }}
+        />
+        <input
+          type="checkbox"
+          id="custom-checkbox"
+          checked={itemValues.check}
+          onChange={handleToggleChange}
+          style={{ margin: '0', transform: 'scale(1.5)' }} // Ajustar el tamaño y el margen si es necesario
+        />
       </div>
-    
-        
- 
 
-
-        <textarea
+      <textarea
         className="tecnica"
-        value={itemValues.presentacion}  // Mantener la referencia correcta
+        value={itemValues.presentacion}
         onChange={(e) => handleChange('presentacion', e.target.value)}
-        placeholder="Presentacion:"  // Corregido aquí
+        placeholder="Presentacion:"
       />
       <textarea
         className="tecnica"
-        value={itemValues.sistema}  // Mantener la referencia correcta
+        value={itemValues.sistema}
         onChange={(e) => handleChange('sistema', e.target.value)}
-        placeholder="Sistema:"  // Corregido aquí
+        placeholder="Sistema:"
       />
     </div>
   );
@@ -80,6 +69,7 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
           nombre: item.nombre || "",
           presentacion: item.presentacion || "",
           sistema: item.sistema || "",
+          check: item.check || false,
         },
       }))
     );
@@ -106,11 +96,11 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
   const btnAgregarItem = () => {
     setItems([
       ...items,
-      { id: items.length, values: { nombre: "", presentacion: "", sistema: "" } },
+      { id: items.length, values: { nombre: "", presentacion: "", sistema: "", check: false } },
     ]);
     setTecEspecialN([
       ...tecEspecialN,
-      { nombre: "", presentacion: "", sistema: "" },
+      { nombre: "", presentacion: "", sistema: "", check: false },
     ]);
   };
 
@@ -131,5 +121,4 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
     </div>
   );
 };
-
 
