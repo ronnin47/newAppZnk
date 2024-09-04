@@ -16,7 +16,7 @@ export const Unicos = () => {
         },
       });
 
-      console.log('Respuesta del servidor para técnicas especiales:', response.data);
+      //console.log('Respuesta del servidor para técnicas especiales:', response.data);
       const { poderesEspeciales } = response.data;
       
       console.log("REVISANDO PODERES ESPECIALES QUE TRAE: ",poderesEspeciales)
