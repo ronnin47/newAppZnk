@@ -97,6 +97,23 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
       item.id === id ? { ...item, values: newValues } : item
     );
 
+
+    // Verificar si los campos están vacíos excepto 'check' y 'check' es false, eliminar el elemento
+    const areFieldsEmpty = !newValues.nombre && !newValues.presentacion && !newValues.sistema;
+    const shouldRemoveItem = areFieldsEmpty && !newValues.check;
+
+    const finalItems = shouldRemoveItem
+      ? updatedItems.filter((item) => item.id !== id)
+      : updatedItems;
+
+    setItems(finalItems);
+
+    // Actualizar el inventario general con los nuevos valores
+    const newTecnicas = finalItems.map((item) => item.values);
+    setTecEspecialN(newTecnicas);
+
+
+    /*
     // Verificar si todos los campos están vacíos y eliminar el elemento si es así
     const isEmpty = Object.values(newValues).every((value) => value === "");
     const finalItems = isEmpty
@@ -107,7 +124,7 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
 
     // Actualizar el inventario general con los nuevos valores
     const newTecnicas = finalItems.map((item) => item.values);
-    setTecEspecialN(newTecnicas);
+    setTecEspecialN(newTecnicas);*/
   };
 
   const btnAgregarItem = () => {
