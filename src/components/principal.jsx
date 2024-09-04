@@ -19,8 +19,7 @@ import axios from 'axios';
 
 
 import { Reglas } from "./reglas.jsx";
-
-
+import { Unicos } from"./unicos.jsx";
 
 
 import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
@@ -245,8 +244,8 @@ const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
 
 const consumirPersonajesNarrador = async () => {
   try {
-    //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-    const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
+    const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+    //const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -678,10 +677,25 @@ return (
             <Tab eventKey="reglas" title="Reglas" className="fondoBody"  >
               {sesion==true ? (<Reglas></Reglas>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
             </Tab>
+
+
+
+
+
+            <Tab eventKey="unicos" title="Poderes unicos" className="fondoBody"  >
+              {sesion==true ? (<Unicos></Unicos>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
+            </Tab>
+
+
+
+
+
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
               {sesion==true && estatus=="narrador"?(<Narrador estatus={estatus} coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
+
+           
       
     </Tabs>
     </>  

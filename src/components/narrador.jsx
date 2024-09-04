@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CartaNarrador } from "./cartaNarrador";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { PowerEspeciales } from "./powerEspeciales";
+
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
@@ -229,7 +229,7 @@ const handleInputBuscardor=(event)=>{
 
 
 
-
+/*
   const poderesFiltrados = coleccionPersonajes.filter((pj) => {
     // Verificamos si tecEspecial existe y es un array con al menos un elemento
     if (Array.isArray(pj.tecEspecial) && pj.tecEspecial.length > 0) {
@@ -251,8 +251,27 @@ const handleInputBuscardor=(event)=>{
     }
     return false; // Excluimos personajes sin técnicas especiales
   });
+*/
 
+  // Filtrar personajes que tengan técnicas que coincidan con la búsqueda
+const poderesFiltrados = coleccionPersonajes
+.map(personaje => {
+  // Verificar si tecEspecial es un array y tiene al menos un elemento
+  const tecnicasFiltradas = Array.isArray(personaje.tecEspecial) 
+    ? personaje.tecEspecial.filter(tecnica => 
+        tecnica.nombre.toLowerCase().includes(tecBuscar.toLowerCase())
+      )
+    : []; // Si no es un array, devolvemos un array vacío
 
+  // Si alguna técnica coincide, devolvemos el personaje con solo esas técnicas
+  if (tecnicasFiltradas.length > 0) {
+    return { ...personaje, tecEspecial: tecnicasFiltradas };
+  }
+
+  // Si ninguna técnica coincide, excluimos este personaje
+  return null;
+})
+.filter(personaje => personaje !== null); 
 
 
   return (
@@ -406,7 +425,7 @@ const handleInputBuscardor=(event)=>{
         className="buscador" 
         value={tecBuscar} 
         onChange={handleInputTecBuscar} 
-        placeholder="ingrese nombre de tecnica/poder espcecial" 
+        placeholder="ingrese nombre de tecnica/objeto/poder espcecial" 
         style={{
           width: "100%", 
           paddingLeft: '30px',  // Espacio para la lupa
@@ -429,17 +448,42 @@ const handleInputBuscardor=(event)=>{
         </div>
 
         <div className="container">
-        {poderesFiltrados.length> 0? (poderesFiltrados.map((pj)=>(
-          <PowerEspeciales
-          poderesFiltrados={poderesFiltrados}
-          key={pj.idpersonaje}
-          nombre={pj.nombre} 
-          idpersonaje={pj.idpersonaje} 
-          dominio={pj.dominio} 
-          tecEspecial={pj.tecEspecial}
+        
+        {poderesFiltrados.length > 0 ? (
+          poderesFiltrados.map((personaje, index) => (
+            <div key={index} style={{ marginTop: "1.5em" }} className="poderesEspecialesPj">
+              <p style={{ color: "yellow", fontFamily:"cursive", fontSize:"1.5em" }}>
+                <strong style={{ color: "orange" }}></strong> {personaje.nombre || "Desconocido"}
+              </p>
 
-          ></PowerEspeciales>
-        ))):( <p style={{textAlign:"center", fontFamily:"cursive", color:"yellow", fontSize:"1.5em"}}>No se encontraron tecncias con ese nombreN</p>)}
+              {personaje.tecEspecial.map((tecnica, indexTec) => (
+                <div key={indexTec} style={{ marginTop:"5px" }} className="cadaPoder">
+                  <p style={{ color: "yellow", marginTop: "0.5em", marginBottom: "0.3em" }}>
+                    <strong style={{ color: "orange" }}></strong> {tecnica.nombre || "Desconocida"}
+                  </p>
+                  <p style={{ color: "aliceblue", marginTop: "0.5em", marginBottom: "0.3em" }}>
+                    <strong style={{ color: "orange" }}>Descripción:</strong> {tecnica.presentacion || "No disponible"}
+                  </p>
+                  <p style={{ color: "aliceblue", marginTop: "0.5em", marginBottom: "0.3em" }}>
+                    <strong style={{ color: "orange" }}>Sistema:</strong> {tecnica.sistema || "No especificado"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ))
+        ) : (
+          <p style={{marginTop:"2em", textAlign:"center", fontFamily:"cursive", color:"yellow", fontSize:"1.5em"}}>No se encontro la tecncia especial buscada.</p>
+        )}
+        
+        
+        
+        
+    
+
+
+
+
+
 
        </div>
         

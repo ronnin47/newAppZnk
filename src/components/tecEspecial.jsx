@@ -1,5 +1,10 @@
 
+//import { Direction } from "@dnd-kit/core/dist/types";
 import React, { useState, useEffect } from "react";
+
+
+import { Form, Container } from 'react-bootstrap';
+
 
 export const Item = ({ id, itemValues, handleItemChange }) => {
   const handleChange = (field, value) => {
@@ -7,8 +12,17 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
     handleItemChange(id, newValues);
   };
 
+
+
+  const [isEnabled, setIsEnabled] = useState(true);
+
+  const handleToggleChange = (event) => {
+    setIsEnabled(event.target.checked);
+  };
+
   return (
     <div className="container-fluid tecnicaEspecial" style={{marginTop:"2em"}}>
+      <div style={{display:"flex", flexDirection:"row"}}>
       <input
         className="inputInventario"
         type="text"
@@ -16,7 +30,23 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
         onChange={(e) => handleChange('nombre', e.target.value)}
         placeholder="Nombre"
         style={{fontFamily:"cursive", fontSize:"1em", color:"yellow"}}
-      />
+      />  
+      <div>
+          < input
+            type="checkbox"
+            id="custom-checkbox"
+            checked={isEnabled}
+            onChange={handleToggleChange}
+            style={{ margin: '10px',transform: 'scale(1.5)',alignItems:"center"}} // Ajustar el margen si es necesario
+          />
+        </div>
+       
+      </div>
+    
+        
+ 
+
+
         <textarea
         className="tecnica"
         value={itemValues.presentacion}  // Mantener la referencia correcta
@@ -32,6 +62,12 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
     </div>
   );
 };
+
+
+
+
+
+
 
 export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
   const [items, setItems] = useState([]);
@@ -80,7 +116,7 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
 
   return (
     <div className="gradComp">
-      <p style={{ color: "aliceblue", fontSize: "30px", fontFamily: "inpact", margin: "10px" }}>TECNICAS ESPECIALES</p>
+      <p style={{ color: "aliceblue", fontSize: "30px", fontFamily: "inpact", margin: "10px" }}>PODERES ESPECIALES</p>
       {items.map((item) => (
         <Item
           key={item.id}
@@ -90,7 +126,7 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
         />
       ))}
       <button className="btn btn-primary" style={{ margin: "10px" }} onClick={btnAgregarItem}>
-        +Tecnica especial
+        +Tecnica-Porder-Objeto especial
       </button>
     </div>
   );

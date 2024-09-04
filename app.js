@@ -36,7 +36,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-/*
+
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -44,11 +44,11 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 
 //*************base de datos nueva de render************
-
+/*
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-cr3aaqij1k6c73dj3qs0-a',
@@ -57,7 +57,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-
+*/
 
 async function checkDatabaseConnection() {
   try {
@@ -809,8 +809,52 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
 
 
 
-//const PORT = process.env.PORT || 4000;
-const PORT = process.env.PORT || 10000;
+
+
+
+//CONSUMIR PODERES ESPECIALES
+app.get('/consumirTecEspeciales', async (req, res) => {
+  // const { email, contrasenia } = req.body;
+ 
+   //console.log("Info del cliente que se loguea: ", req.body);
+ 
+   try {
+     // Verificar si el usuario existe
+     const userQuery = 'SELECT nombre, idpersonaje, "tecEspecial" FROM personajes WHERE "tecEspecial" IS NOT NULL AND array_length("tecEspecial", 1) > 0;';
+     const userResult = await pool.query(userQuery);
+ 
+     if (userResult.rows.length === 0) {
+       return res.status(401).json({ message: 'No se recupero personajes con tecnicas/Ojetos/poderes epseciales' });
+     }
+ 
+     const poderesEspeciales = userResult.rows;
+ 
+     console.log("Coleccion de Poderes especiales: ",poderesEspeciales)
+     
+ 
+     res.json({
+       message: 'Inicio de sesión exitoso',
+       poderesEspeciales: poderesEspeciales, 
+     
+     });
+ 
+   } catch (error) {
+     console.error('Error al obtener coleccion personajes Narrador:', error);
+     res.status(500).json({ message: 'Error en el servidor' });
+   }
+ });
+
+
+
+
+
+
+
+
+
+
+const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });
