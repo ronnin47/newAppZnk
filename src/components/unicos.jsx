@@ -16,6 +16,7 @@ export const Unicos = () => {
         },
       });
 
+      console.log('Respuesta del servidor para técnicas especiales:', response.data);
       const { poderesEspeciales } = response.data;
       
       if (!Array.isArray(poderesEspeciales)) {
@@ -25,7 +26,7 @@ export const Unicos = () => {
 
       setColeccionTecEspeciales(poderesEspeciales);
     } catch (error) {
-      console.error("Cliente: Fallo al consumir personajes narrador", error.message);
+      console.error("Cliente: fallo al consumir tec especiales", error.message);
     }
   };
 

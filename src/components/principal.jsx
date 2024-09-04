@@ -251,6 +251,8 @@ const consumirPersonajesNarrador = async () => {
       },
     });
 
+   
+
     const { coleccionPersonajes } = response.data;
     if (!Array.isArray(coleccionPersonajes)) {
       console.error('El formato de datos no es un array.');

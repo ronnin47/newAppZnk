@@ -833,13 +833,13 @@ app.get('/consumirTecEspeciales', async (req, res) => {
      
  
      res.json({
-       message: 'Inicio de sesión exitoso',
+       message: 'Consumir tec especiales',
        poderesEspeciales: poderesEspeciales, 
      
      });
  
    } catch (error) {
-     console.error('Error al obtener coleccion personajes Narrador:', error);
+     console.error('Error al consumir tecnicas especiales:', error);
      res.status(500).json({ message: 'Error en el servidor' });
    }
  });
