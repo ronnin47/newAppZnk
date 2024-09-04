@@ -19,6 +19,7 @@ export const Unicos = () => {
       console.log('Respuesta del servidor para técnicas especiales:', response.data);
       const { poderesEspeciales } = response.data;
       
+      console.log("REVISANDO PODERES ESPECIALES QUE TRAE: ",poderesEspeciales)
       if (!Array.isArray(poderesEspeciales)) {
         console.error('El formato de datos no es un array.');
         return;
