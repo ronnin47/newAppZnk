@@ -394,9 +394,11 @@ export const FichaPersonaje = ({
    const handleChangeValAdd4=(event)=>{
     setValAdd4N(event.target.value)
    }
+
   const handleChangeIniciativa = (event) => {
     setIniciativaN(event.target.value)
   }
+
   const handleChangeNaturaleza= (event)=>{
     setNaturalezaN(event.target.value)
   }
@@ -607,7 +609,7 @@ const guardarCambiosBBDD = async () => {
       vidaActual:damageActualN,
       hechizos:hechizosN,//JSON
       consumision:consumisionN || 0,
-      iniciativa:(parseInt(sentidosN)+parseInt(agilidadN)) || 0,
+      iniciativa: iniciativaN || 0,
       historia:historiaN,
       usuarioId: usuarioId,
       tecEspecial: tecEspecialN,
