@@ -820,7 +820,7 @@ app.get('/consumirTecEspeciales', async (req, res) => {
  
    try {
      // Verificar si el usuario existe
-     const userQuery = 'SELECT nombre, idpersonaje, "tecEspecial" FROM personajes WHERE "tecEspecial" IS NOT NULL AND array_length("tecEspecial", 1) > 0;';
+     const userQuery = 'SELECT nombre, idpersonaje, ken, "tecEspecial" FROM personajes WHERE "tecEspecial" IS NOT NULL AND array_length("tecEspecial", 1) > 0;';
      const userResult = await pool.query(userQuery);
  
      if (userResult.rows.length === 0) {
@@ -853,7 +853,7 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 
 
 
-//onst PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 4000;
 const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);

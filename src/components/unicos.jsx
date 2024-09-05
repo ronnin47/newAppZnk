@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Estrellitas } from "./estrellitas";
 
 export const Unicos = () => {
   const [coleccionTecEspeciales, setColeccionTecEspeciales] = useState([]);
@@ -19,7 +20,7 @@ export const Unicos = () => {
       //console.log('Respuesta del servidor para técnicas especiales:', response.data);
       const { poderesEspeciales } = response.data;
       
-      console.log("REVISANDO PODERES ESPECIALES QUE TRAE: ",poderesEspeciales)
+      //console.log("REVISANDO PODERES ESPECIALES QUE TRAE: ",poderesEspeciales)
       if (!Array.isArray(poderesEspeciales)) {
         console.error('El formato de datos no es un array.');
         return;
@@ -43,7 +44,7 @@ export const Unicos = () => {
   const poderesFiltrados = coleccionTecEspeciales.map(personaje => {
       // Filtrar solo las técnicas especiales que coincidan con la búsqueda
       const tecnicasFiltradas = personaje.tecEspecial.filter(tecnica => {
-        console.log("Nombre de la técnica:", tecnica.nombre, "Valor de check:", tecnica.check)
+        //console.log("Nombre de la técnica:", tecnica.nombre, "Valor de check:", tecnica.check)
         return tecnica.nombre.toLowerCase().includes(tecBuscar.toLowerCase()) && tecnica.check === true
       }
       );
@@ -93,8 +94,10 @@ export const Unicos = () => {
         {poderesFiltrados.length > 0 ? (
           poderesFiltrados.map((personaje, index) => (
             <div key={index} style={{ marginTop: "1.5em" }} className="poderesEspecialesPj">
-              <p style={{ color: "yellow", fontFamily:"cursive", fontSize:"1.5em" }}>
+              <p style={{ color: "yellow", fontFamily:"cursive", fontSize:"1.5em" ,display:"flex",flexDirection:"row",gap:"1em"}}>
                 <strong style={{ color: "orange" }}></strong> {personaje.nombre || "Desconocido"}
+                <Estrellitas ken={personaje.ken}></Estrellitas>
+
               </p>
 
               {personaje.tecEspecial.map((tecnica, indexTec) => (

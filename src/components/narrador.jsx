@@ -475,22 +475,8 @@ const poderesFiltrados = coleccionPersonajes
           <p style={{marginTop:"2em", textAlign:"center", fontFamily:"cursive", color:"yellow", fontSize:"1.5em"}}>No se encontro la tecncia especial buscada.</p>
         )}
         
-        
-        
-        
-    
-
-
-
-
-
-
        </div>
-        
-        
         </div>
-
-
         </Tab>
       
     </Tabs>
