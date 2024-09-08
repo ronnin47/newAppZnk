@@ -195,10 +195,16 @@ background-color: rgba(0, 0, 0, 0.719);
     width:100%;
     height: 30px;
     text-align: center;
-    border: 3px solid aliceblue;
-    color:aliceblue;
-    background-color: rgba(0, 0, 0, 0.685);
-    border-radius: 15px;
+    
+   
+
+    color: #fff9c4;
+   /* padding-left: 10px;*/
+    background: rgba(0, 0, 0, 0.596);
+    border: 1px solid rgba(255, 0, 0, 0.479);
+   
+    border-radius: 5px;
+   
     align-items: center;
 }
 .items{
@@ -208,12 +214,33 @@ background-color: rgba(0, 0, 0, 0.719);
 .inputDominio{
     width:100%;
     height: 30px;
-    text-align: center;
-    border: 3px solid aliceblue;
-    color:aliceblue;
-    background-color: rgba(0, 0, 0, 0.685);
-    border-radius: 15px;
+   
+   
+    color: #fff9c4;
+    padding-left: 10px;
+    background: rgba(0, 0, 0, 0.596);
+
+ 
+   
+    border: 1px solid rgba(255, 0, 0, 0.479);
+   
+    border-radius: 5px;
     align-items: center;
+}
+
+.inputArea{
+    width:100%;
+    min-height: 50px;
+    padding-left: 10px;
+   
+    color: #fff9c4;
+    padding-left: 10px;
+    background: rgba(0, 0, 0, 0.596);
+    border: 1px solid rgba(255, 0, 0, 0.479);
+   
+    border-radius: 5px;
+    align-items: center;
+    
 }
 .dominios{
     display: grid;

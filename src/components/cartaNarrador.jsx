@@ -310,7 +310,7 @@ return (
 
 
     <div class="filaDeCuatroMasCicatriz">
-      <p>Consumision: {consumision}</p>
+      <p>Consumo ki: {consumision}</p>
       <p>iniciativa: {iniciativa}</p>
       <p>Fases +: {positiva}</p>
       <p>Fases -: {negativa}</p>
@@ -579,7 +579,7 @@ return (
 
       
 
-    <Tab eventKey="tecEspeciales" title="Tecnicas Especiales">
+    <Tab eventKey="tecEspeciales" title="Poderes Especiales">
       <div className={`modalus ${fade==true ? 'fadeOut' : 'fadeIn'}`}>
       
 

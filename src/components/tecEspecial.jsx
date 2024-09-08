@@ -150,7 +150,7 @@ export const TecnicaEspecial = ({ tecEspecialN, setTecEspecialN }) => {
         />
       ))}
       <button className="btn btn-primary" style={{ margin: "10px" }} onClick={btnAgregarItem}>
-        +Tecnica-Porder-Objeto especial
+        +Tecnica-Poder-Objeto especial
       </button>
     </div>
   );
