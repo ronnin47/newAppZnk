@@ -4,11 +4,16 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import { fileURLToPath } from 'url'; 
 import { dirname, join } from 'path'; 
-
-
 import pkg from 'pg'; 
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+
+import path from 'path'; // Asegura la importación de 'path'
+
+
+
+
+import multer from 'multer'; // Importando multer para la subida de archivos
 
 // Obtiene la ruta del directorio actual
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -16,13 +21,50 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(cors()); // Permitir CORS para todas las rutas
 
-// Servir archivos estáticos desde la carpeta 'dist'
-app.use(express.static(join(__dirname, 'dist')));
-
 
 dotenv.config();
 
 const { Pool } = pkg; 
+
+
+
+
+// Configuración de Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Directorio donde se guardarán las imágenes
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname); // Nombre del archivo
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Ruta para manejar la carga de imágenes
+app.post('/upload', upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    // Envía una respuesta al cliente con el mensaje y el nombre del archivo
+    res.status(200).json({
+      message: 'File uploaded successfully',
+      filename: req.file.filename  // Envía el nombre del archivo al frontend
+    });
+  } catch (error) {
+    console.error('Error en la carga del archivo:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+// Configurar la carpeta de archivos estáticos
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+
 
 
 // Configura el límite del tamaño del cuerpo de la solicitud
@@ -36,7 +78,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-/*
+
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -44,11 +86,11 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 
 //*************base de datos nueva de render************
-
+/*
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-cr3aaqij1k6c73dj3qs0-a',
@@ -56,7 +98,7 @@ const pool = new Pool({
   password: 'zFi2JRnG9cX2Iig2tmuLoZdgFn7D8XK9',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
+*/
 
 
 async function checkDatabaseConnection() {
@@ -853,8 +895,8 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 
 
 
-//const PORT = process.env.PORT || 4000;
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

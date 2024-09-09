@@ -22,6 +22,12 @@ import { Reglas } from "./reglas.jsx";
 import { Unicos } from"./unicos.jsx";
 
 
+
+
+
+import { PruebaImg } from "./pruebaImg.jsx";
+
+
 import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
 
 
@@ -244,8 +250,8 @@ const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
 
 const consumirPersonajesNarrador = async () => {
   try {
-    //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-    const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
+    const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+    //const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -394,6 +400,7 @@ return (
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
      </div>
+     <PruebaImg></PruebaImg>
     
     <Tabs
             defaultActiveKey="Personajes"
