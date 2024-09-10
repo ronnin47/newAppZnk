@@ -501,7 +501,8 @@ const guardarCambiosBBDD = async () => {
       formData.append('image', imagenN);  // La clave 'image' debe coincidir con lo que espera el servidor
       
       try {
-        const response = await axios.post('http://localhost:4000/upload', formData, {
+        //const response = await axios.post('http://localhost:4000/upload', formData, {
+          const response = await axios.post('https://zepironokioku.onrender.com/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -510,7 +511,9 @@ const guardarCambiosBBDD = async () => {
         // Verificamos que la imagen se haya subido correctamente
         if (response.status === 200 && response.data.filename) {
           // Obtenemos la URL de la imagen subida
-          imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+         // imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+         imagenUrl = `https://zepironokioku.onrender.com/uploads/${response.data.filename}`;
+        
         } else {
           console.error('Error al subir la imagen');
           return;
@@ -868,8 +871,8 @@ useEffect(() => {
        
        try {
        
-        const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-        //const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
+        //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+        const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
         console.error('Error al eliminar el personaje:', error);
