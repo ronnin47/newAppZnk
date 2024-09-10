@@ -380,7 +380,8 @@ export const CargarPersonaje = ({
    formData.append('image', imagen);  // La clave 'image' debe coincidir con lo que espera el servidor
 
    try {
-     const response = await axios.post('http://localhost:4000/upload', formData, {
+     //const response = await axios.post('http://localhost:4000/upload', formData, {
+      const response = await axios.post('https://zepironokioku.onrender.com/upload', formData, {
        headers: {
          'Content-Type': 'multipart/form-data',
        },
@@ -389,7 +390,8 @@ export const CargarPersonaje = ({
      // Verificamos que la imagen se haya subido correctamente
      if (response.status === 200) {
        // Obtenemos la URL de la imagen subida
-       imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+       //imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+       imagenUrl = `https://zepironokioku.onrender.com/${response.data.filename}`;
      } else {
        console.error('Error al subir la imagen');
        return;
@@ -486,8 +488,8 @@ export const CargarPersonaje = ({
 
     try {
     
-      //const response = await axios.post(`https://zepironokioku.onrender.com/insert-personaje`, pjNuevo, {   
-      const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
+      const response = await axios.post(`https://zepironokioku.onrender.com/insert-personaje`, pjNuevo, {   
+      //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
           'Content-Type': 'application/json', 
         },

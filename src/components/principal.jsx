@@ -250,8 +250,8 @@ const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
 
 const consumirPersonajesNarrador = async () => {
   try {
-    const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-    //const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
+    //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+    const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -351,8 +351,8 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if (estatus === "narrador" && sesion) {
-
+  //if (estatus === "narrador" && sesion) {
+    if ( sesion ) {
     // Primero, obtén los personajes guardados en IndexedDB
     const loadPersonajesDB = async () => {
      /* const personajesDB = await getPersonajesDB();
@@ -365,7 +365,7 @@ useEffect(() => {
     loadPersonajesDB();
     console.log("Disparo effect de consumir personajes narrador");
   }
-}, [estatus, sesion]);
+}, [ sesion ]);
 
 return (
     <>
@@ -691,17 +691,16 @@ return (
 
             
             <Tab eventKey="ranking" title="Ranking Ken" className="fondoBody">
-              {sesion==true ? (<Ranking estatus={estatus} coleccionPersonajes={coleccionPersonajes}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
+              {sesion==true ? (<Ranking coleccionPersonajes={coleccionPersonajes}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
 
             </Tab>
+
+
+
 
             <Tab eventKey="unicos" title="Poderes unicos" className="fondoBody"  >
               {sesion==true ? (<Unicos></Unicos>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
             </Tab>
-
-
-
-
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
               {sesion==true && estatus=="narrador"?(<Narrador estatus={estatus} coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}

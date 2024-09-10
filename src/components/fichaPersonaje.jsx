@@ -491,40 +491,41 @@ const handleFileChange = (e) => {
 //este es el boton de abajo que guarda cambios en la base de datos
 const guardarCambiosBBDD = async () => {
   
-  // Inicializamos la URL de la imagen
- let imagenUrl = imagenN;
+    // Inicializamos la URL de la imagen
+    let imagenUrl = imagenN;
 
- // Verificamos si hay una nueva imagen para subir
- if (imagenN && imagenN !== '/imagenBase.jpeg') {
-   // Verificar si `imagen` es un archivo
-   if (!(imagenN instanceof File)) {
-     console.error('La imagen proporcionada no es un archivo válido.');
-     return;
-   }
-
-   const formData = new FormData();
-   formData.append('image', imagenN);  // La clave 'image' debe coincidir con lo que espera el servidor
-
-   try {
-     const response = await axios.post('http://localhost:4000/upload', formData, {
-       headers: {
-         'Content-Type': 'multipart/form-data',
-       },
-     });
-
-     // Verificamos que la imagen se haya subido correctamente
-     if (response.status === 200) {
-       // Obtenemos la URL de la imagen subida
-       imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
-     } else {
-       console.error('Error al subir la imagen');
-       return;
-     }
-   } catch (error) {
-     console.error('Error en la subida de la imagen:', error);
-     return;
-   }
- }
+    // Verificamos si hay una nueva imagen para subir
+    if (imagenN && imagenN instanceof File) {
+      // Si `imagenN` es un archivo, subimos la imagen
+      const formData = new FormData();
+      formData.append('image', imagenN);  // La clave 'image' debe coincidir con lo que espera el servidor
+      
+      try {
+        const response = await axios.post('http://localhost:4000/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+ 
+        // Verificamos que la imagen se haya subido correctamente
+        if (response.status === 200 && response.data.filename) {
+          // Obtenemos la URL de la imagen subida
+          imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+        } else {
+          console.error('Error al subir la imagen');
+          return;
+        }
+      } catch (error) {
+        console.error('Error en la subida de la imagen:', error);
+        return;
+      }
+    } else if (typeof imagenN === 'string') {
+      // Si `imagenN` es una URL, usamos la URL proporcionada
+      console.log('Usando la URL de la imagen proporcionada.');
+    } else {
+      console.error('La imagen proporcionada no es válida.');
+      return;
+    }
 
 
 
@@ -618,8 +619,8 @@ const guardarCambiosBBDD = async () => {
       cicatriz: cicatrizN || 0,
     };
     
-    const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
-    //const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
+    //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -645,41 +646,33 @@ const btnGuardarCambios = async() => {
 
   let imagenUrl = imagenN;
 
-  if (imagenN && imagenN !== '/imagenBase.jpeg') {
-    if (imagenN instanceof File) {
-      const formData = new FormData();
-      formData.append('image', imagenN);
+  // Verifica si hay una nueva imagen
+  if (imagenN && imagenN instanceof File && imagenN !== '/imagenBase.jpeg') {
+    const formData = new FormData();
+    formData.append('image', imagenN);
 
-      try {
-        const response = await axios.post('http://localhost:4000/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        console.log('Respuesta del servidor:', response.data);
-
-        if (response.status === 200) {
-       
-          imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
-          console.log("URL de la imagen: ", imagenUrl);
-
-
-          console.log("esto contiene la url que quiero enviar al update: ",imagenUrl)
-         
-        } else {
-          console.error('Error al subir la imagen');
-          return;
-        }
-      } catch (error) {
-        console.error('Error en la subida de la imagen:', error);
+    try {
+      //const response = await axios.post('http://localhost:4000/upload', formData, {
+        const response = await axios.post('https://zepironokioku.onrender.com/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      if (response.status === 200) {
+        imagenUrl = `https://zepironokioku.onrender.com/uploads/${response.data.filename}`;
+        //imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+        console.log("URL de la imagen: ", imagenUrl);
+      } else {
+        console.error('Error al subir la imagen');
         return;
       }
-    } else {
-      console.error('La imagen proporcionada no es un archivo válido.');
+    } catch (error) {
+      console.error('Error en la subida de la imagen:', error);
       return;
     }
   }
+  
   // Crea una copia del array de personajes
   const nuevosPersonajes = [...personajes];
 
@@ -693,6 +686,7 @@ const btnGuardarCambios = async() => {
     raza:razaN,
     edad:edadN,
 
+    //imagen: imagenUrl,
     imagen: imagenUrl,
 
     ken:kenN,
