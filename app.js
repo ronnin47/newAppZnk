@@ -644,8 +644,8 @@ app.put('/update-personaje/:id', async (req, res) => {
       cicatriz,
       
    } = req.body;
-    //console.log("llego la peticion del update personaje!")
-    //console.log(req.body)
+    console.log("llego la peticion del update personaje!")
+    console.log(req.body)
   
   try {
     const query = `

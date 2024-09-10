@@ -21,11 +21,11 @@ import axios from 'axios';
 import { Reglas } from "./reglas.jsx";
 import { Unicos } from"./unicos.jsx";
 
+import { Ranking } from "./ranking.jsx";
 
 
 
 
-import { PruebaImg } from "./pruebaImg.jsx";
 
 
 import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
@@ -400,7 +400,7 @@ return (
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
      </div>
-     <PruebaImg></PruebaImg>
+   
     
     <Tabs
             defaultActiveKey="Personajes"
@@ -689,7 +689,11 @@ return (
 
 
 
+            
+            <Tab eventKey="ranking" title="Ranking Ken" className="fondoBody">
+              {sesion==true ? (<Ranking estatus={estatus} coleccionPersonajes={coleccionPersonajes}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
 
+            </Tab>
 
             <Tab eventKey="unicos" title="Poderes unicos" className="fondoBody"  >
               {sesion==true ? (<Unicos></Unicos>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}

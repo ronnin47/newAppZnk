@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef,useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { Ventajas } from './ventajas.jsx';
 import axios from 'axios';
@@ -142,6 +142,11 @@ export const CargarPersonaje = ({
 }) => {
  
   const inputFileRef = useRef(null);
+
+
+  const [imagenPreview, setImagenPreview] = useState('/imagenBase.jpeg'); 
+
+
 
   const handleImageUpload = () => {
     inputFileRef.current.click();
@@ -323,6 +328,29 @@ export const CargarPersonaje = ({
   
 
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    if (file) {
+      // Guardar el archivo para su posterior subida
+      setImagen(file);
+  
+      // Leer el archivo como URL de datos para vista previa
+      reader.onload = () => {
+        setImagenPreview(reader.result);
+      };
+  
+      reader.readAsDataURL(file);
+    }
+  };
+
+
+
+
+
+
+/*
  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -332,8 +360,47 @@ export const CargarPersonaje = ({
     };
     reader.readAsDataURL(file);
   };
+*/
+
 
   const agregarPersonaje = async () => {
+
+ // Inicializamos la URL de la imagen
+ let imagenUrl = imagen;
+
+ // Verificamos si hay una nueva imagen para subir
+ if (imagen && imagen !== '/imagenBase.jpeg') {
+   // Verificar si `imagen` es un archivo
+   if (!(imagen instanceof File)) {
+     console.error('La imagen proporcionada no es un archivo válido.');
+     return;
+   }
+
+   const formData = new FormData();
+   formData.append('image', imagen);  // La clave 'image' debe coincidir con lo que espera el servidor
+
+   try {
+     const response = await axios.post('http://localhost:4000/upload', formData, {
+       headers: {
+         'Content-Type': 'multipart/form-data',
+       },
+     });
+
+     // Verificamos que la imagen se haya subido correctamente
+     if (response.status === 200) {
+       // Obtenemos la URL de la imagen subida
+       imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+     } else {
+       console.error('Error al subir la imagen');
+       return;
+     }
+   } catch (error) {
+     console.error('Error en la subida de la imagen:', error);
+     return;
+   }
+ }
+
+
     const pjNuevo = {
       
       nombre: nombre,
@@ -394,7 +461,7 @@ export const CargarPersonaje = ({
       valAdd3: valAdd3 || 0,
       add4:add4,
       valAdd4: valAdd4 || 0,
-      imagen: imagen,
+      imagen: imagenUrl,
       inventario: inventario,
       dominios: dominios,
       kenActual:ken || 0,
@@ -429,21 +496,7 @@ export const CargarPersonaje = ({
       
       setPersonajes([...personajes, { ...pjNuevo, idpersonaje }]);
   
-  /*
-    //lalam a la peticion 
-        const fetchPersonajes = async () => {
-          try {
-            //const response = await axios.get('http://localhost:4000/personajes');
-            const response = await axios.get(`https://rankingznk.onrender.com/personajes`);
-            setPersonajes(response.data);
-          
-          } catch (error) {
-            console.error('Error al obtener los personajes:', error);
-          }
-        };
-      
-        fetchPersonajes();
-  */    
+  
       //console.log("Last added ID:", idpersonaje);
     } catch (error) {
       console.error('Error al insertar el personaje:', error.message);
@@ -512,7 +565,11 @@ export const CargarPersonaje = ({
     setVentajas([]);
 
     setConviccion("");
-  
+
+
+
+    setImagen(null);
+    setImagenPreview('/imagenBase.jpeg');
 
     
     Swal.fire({
@@ -525,6 +582,9 @@ export const CargarPersonaje = ({
    
   };
 
+
+
+
   return (
     <>
     <div className='container'> 
@@ -532,7 +592,7 @@ export const CargarPersonaje = ({
          <p style={{color:"aliceblue", fontSize:"50px", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombre}</p>
         <div className='row col2' >
           <div className='col1'>
-            <img src={imagen}  className="imagenPj"/>
+            <img src={imagenPreview}  className="imagenPj"/>
             <button onClick={handleImageUpload} className='btn btn-danger' style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</button>
             <input type="file" accept="image/*" ref={inputFileRef} style={{ display: 'none' }} onChange={handleFileChange} />
           </div>

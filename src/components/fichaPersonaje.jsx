@@ -103,23 +103,8 @@ export const FichaPersonaje = ({
 
 }) => {
   
-  const inputFileRef = useRef(null);
 
-  const handleImageUpload = () => {
-    inputFileRef.current.click();
-  };
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-    
-      setImagenN(reader.result);
-    };
-    reader.readAsDataURL(file);
-  
-  };
-  
-  
+ 
   const [nombreN,setNombreN]=useState(nombre)
   const [imagenN,setImagenN]=useState(imagen)
   const [dominioN,setDominioN]=useState(dominio)
@@ -408,123 +393,145 @@ export const FichaPersonaje = ({
 
 
 
+  //aca andamos trabajando en la solucion de imagen
+ //const [imagenPreview, setImagenPreview] = useState('/imagenBase.jpeg'); 
+ const [imagenPreview, setImagenPreview] = useState(imagenN); 
+ const inputFileRef = useRef(null);
 
-
-const btnGuardarCambios = () => {
+ const handleImageUpload = () => {
+   inputFileRef.current.click();
+ };
+/*
+ const handleFileChange = (e) => {
+   const file = e.target.files[0];
+   const reader = new FileReader();
+   reader.onload = () => {
    
-  const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
-
-  // Crea una copia del array de personajes
-  const nuevosPersonajes = [...personajes];
-
-  // Actualiza los valores del personaje actual en la copia del array
-  nuevosPersonajes[index] = {
-    ...nuevosPersonajes[index],
-
-    nombre: nombreN,
-    dominio: dominioN,
-    raza:razaN,
-    edad:edadN,
-    imagen: imagenN,
-
-    ken:kenN,
-    ki:kiN,
-    destino:destinoN,
-    pDestino:pDestinoN,
-
-    fuerza: fuerzaN,
-    fortaleza: fortalezaN,
-    destreza: destrezaN,
-    agilidad: agilidadN,
-    sabiduria:sabiduriaN,
-    presencia:presenciaN,
-    principio:principioN,
-    sentidos:sentidosN,
-
-    academisismo:academisismoN,
-    alerta:alertaN,
-    atletismo:atletismoN,
-    conBakemono:conBakemonoN,
-    mentir:mentirN,
-    pilotear:pilotearN,
-    artesMarciales:artesMarcialesN,
-    medicina:medicinaN,
-    conObjMagicos:conObjMagicosN,
-    sigilo:sigiloN,
-    conEsferas:conEsferasN,
-    conLeyendas:conLeyendasN,
-    forja:forjaN,
-    conDemonio:conDemonioN,
-    conEspiritual:conEspiritualN,
-    manejoBlaster:manejoBlasterN,
-    manejoSombras:manejoSombrasN,
-    tratoBakemono:tratoBakemonoN,
-    conHechiceria:conHechiceriaN,
-    medVital:medVitalN,
-    medEspiritual:medEspiritualN,
-    rayo:rayoN,
-    fuego:fuegoN,
-    frio:frioN,
-    veneno:venenoN,
-    corte:corteN,
-    energia:energiaN,
-
-    apCombate: apCombateN,
-    valCombate: valCombateN,
-    apCombate2: apCombate2N,
-    valCombate2: valCombate2N,
+     setImagenN(reader.result);
+   };
+   reader.readAsDataURL(file);
  
-    ventajas: ventajasN,
-    inventario:inventarioN,
-    dominios:dominiosN,
-    hechizos:hechizosN,
+ };
+ */
 
-    kenActual:kenActualN,
-    kiActual:kiActualN,
+/*
+ const handleFileChange = (e) => {
+   const file = e.target.files[0];
+   const reader = new FileReader();
+   
+   if (file) {
+     // Guardar el archivo para su posterior subida
+     setImagenN(file);
+ 
+     // Leer el archivo como URL de datos para vista previa
+    reader.onload = () => {
+       setImagenPreview(reader.result);
+       
+     };
+ 
+     reader.readAsDataURL(file);
+   }
+ };
+*/
+/*//FUNCION DE UPLOAD PARA LA IMAGEN
+const uploadImage = async (image) => {
+  if (!(image instanceof File) || !image) {
+    console.error('La imagen proporcionada no es un archivo válido.');
+    return null;
+  }
+
+  const formData = new FormData();
+  formData.append('image', image);
+
+  try {
+    const response = await axios.post('http://localhost:4000/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    console.log('Respuesta del servidor:', response.data); // Verifica aquí lo que devuelve el servidor
+    if (response.status === 200) {
+      return `http://localhost:4000/uploads/${response.data.filename}`;
+    } else {
+      console.error('Error al subir la imagen');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error en la subida de la imagen:', error);
+    return null;
+  }
+};
+*/
+
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+
+  // Validar si es un archivo válido (por ejemplo, que sea imagen)
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
     
-    positiva:positivaN,
-    negativa:negativaN,
-    vidaActual:damageActualN,
+    // Guardamos el archivo en el estado para luego ser subido al servidor
+    setImagenN(file);
 
-    add1:add1N,
-    valAdd1: valAdd1N,
-    add2:add2N,
-    valAdd2: valAdd2N,
-    add3:add3N,
-    valAdd3: valAdd3N,
-    add4:add4N,
-    valAdd4: valAdd4N,
-    consumision: consumisionN,
-    iniciativa:iniciativaN,
-    historia:historiaN,
-    naturaleza:naturalezaN,
-    tecEspecial:tecEspecialN,
+    // Vista previa de la imagen
+    reader.onload = () => {
+      setImagenPreview(reader.result); // Aquí guardas la URL de la vista previa
+    };
 
-    conviccion: conviccionN,
-    cicatriz: cicatrizN,
-    
-  };
+    // Leer el archivo como data URL
+    reader.readAsDataURL(file);
+  } else {
+    // Maneja el error, si el archivo no es una imagen válida
+    alert("Por favor, selecciona un archivo de imagen válido.");
+  }
+};
+ 
 
 
 
 
-
-
-  // Actualiza el estado de los personajes con la copia modificada
-  setPersonajes(nuevosPersonajes);
- /* Swal.fire({
-    position: "top-center",
-    icon: "success",
-    title: `Los cambios de ${nombre} fueron guardados`,
-    showConfirmButton: false,
-    timer: 1500
-  });*/
-}
-
+//este es el boton de abajo que guarda cambios en la base de datos
 const guardarCambiosBBDD = async () => {
+  
+  // Inicializamos la URL de la imagen
+ let imagenUrl = imagenN;
+
+ // Verificamos si hay una nueva imagen para subir
+ if (imagenN && imagenN !== '/imagenBase.jpeg') {
+   // Verificar si `imagen` es un archivo
+   if (!(imagenN instanceof File)) {
+     console.error('La imagen proporcionada no es un archivo válido.');
+     return;
+   }
+
+   const formData = new FormData();
+   formData.append('image', imagenN);  // La clave 'image' debe coincidir con lo que espera el servidor
+
+   try {
+     const response = await axios.post('http://localhost:4000/upload', formData, {
+       headers: {
+         'Content-Type': 'multipart/form-data',
+       },
+     });
+
+     // Verificamos que la imagen se haya subido correctamente
+     if (response.status === 200) {
+       // Obtenemos la URL de la imagen subida
+       imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+     } else {
+       console.error('Error al subir la imagen');
+       return;
+     }
+   } catch (error) {
+     console.error('Error en la subida de la imagen:', error);
+     return;
+   }
+ }
+
+
+
   try {
     console.log("Guardando cambios del personaje con id:", idpersonaje);
-
+     // Crear una URL para el archivo si imagenN está definido
+     //const imagenUrl = imagenN ? URL.createObjectURL(imagenN) : null;
     // Supongamos que el personaje tiene estos datos
    
     const personaje = {
@@ -533,12 +540,10 @@ const guardarCambiosBBDD = async () => {
       raza:razaN,
       naturaleza:naturalezaN,
       edad:edadN,
-
       ken:kenN || 0,
       ki:kiN || 0,
       destino:destinoN || 0,
       pDestino:pDestinoN || 0,
-
       fuerza: fuerzaN|| 0,
       fortaleza: fortalezaN || 0,
       destreza: destrezaN || 0,
@@ -547,8 +552,6 @@ const guardarCambiosBBDD = async () => {
       presencia:presenciaN || 0,
       principio:principioN ||0,
       sentidos:sentidosN ||0,
-
-
       academisismo:academisismoN ||0,
       alerta:alertaN ||0,
       atletismo:atletismoN||0,
@@ -576,18 +579,11 @@ const guardarCambiosBBDD = async () => {
       veneno:venenoN ||0,
       corte:corteN ||0,
       energia:energiaN ||0,
-
-
       ventajas:ventajasN,
-      
-
-      
       apCombate: apCombateN,
       valCombate: valCombateN ||0,
       apCombate2:apCombate2N,
       valCombate2:valCombate2N ||0,
-
-
       add1:add1N ||"",
       valAdd1: valAdd1N || 0,
       add2:add2N,
@@ -596,8 +592,12 @@ const guardarCambiosBBDD = async () => {
       valAdd3: valAdd3N || 0,
       add4:add4N,
       valAdd4: valAdd4N || 0,
+      
+      //aca estamos probando
+      imagen: imagenUrl,//aca estamos probandolo
 
-      imagen: imagenN,
+
+
       inventario: inventarioN,//JSON
       dominios: dominiosN,//JASON
 
@@ -618,8 +618,8 @@ const guardarCambiosBBDD = async () => {
       cicatriz: cicatrizN || 0,
     };
     
-    //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
-    const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
+    //const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -639,8 +639,141 @@ const guardarCambiosBBDD = async () => {
   }
 };
 
+//funcion que se dispara cuando un valor cambia
+const btnGuardarCambios = async() => {
+  const index = personajes.findIndex(pj => pj.idpersonaje === idpersonaje);
+
+  let imagenUrl = imagenN;
+
+  if (imagenN && imagenN !== '/imagenBase.jpeg') {
+    if (imagenN instanceof File) {
+      const formData = new FormData();
+      formData.append('image', imagenN);
+
+      try {
+        const response = await axios.post('http://localhost:4000/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        console.log('Respuesta del servidor:', response.data);
+
+        if (response.status === 200) {
+       
+          imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+          console.log("URL de la imagen: ", imagenUrl);
 
 
+          console.log("esto contiene la url que quiero enviar al update: ",imagenUrl)
+         
+        } else {
+          console.error('Error al subir la imagen');
+          return;
+        }
+      } catch (error) {
+        console.error('Error en la subida de la imagen:', error);
+        return;
+      }
+    } else {
+      console.error('La imagen proporcionada no es un archivo válido.');
+      return;
+    }
+  }
+  // Crea una copia del array de personajes
+  const nuevosPersonajes = [...personajes];
+
+  // Actualiza los valores del personaje actual en la copia del array
+  nuevosPersonajes[index] = {
+
+    ...nuevosPersonajes[index],
+
+    nombre: nombreN,
+    dominio: dominioN,
+    raza:razaN,
+    edad:edadN,
+
+    imagen: imagenUrl,
+
+    ken:kenN,
+    ki:kiN,
+    destino:destinoN,
+    pDestino:pDestinoN,
+    fuerza: fuerzaN,
+    fortaleza: fortalezaN,
+    destreza: destrezaN,
+    agilidad: agilidadN,
+    sabiduria:sabiduriaN,
+    presencia:presenciaN,
+    principio:principioN,
+    sentidos:sentidosN,
+    academisismo:academisismoN,
+    alerta:alertaN,
+    atletismo:atletismoN,
+    conBakemono:conBakemonoN,
+    mentir:mentirN,
+    pilotear:pilotearN,
+    artesMarciales:artesMarcialesN,
+    medicina:medicinaN,
+    conObjMagicos:conObjMagicosN,
+    sigilo:sigiloN,
+    conEsferas:conEsferasN,
+    conLeyendas:conLeyendasN,
+    forja:forjaN,
+    conDemonio:conDemonioN,
+    conEspiritual:conEspiritualN,
+    manejoBlaster:manejoBlasterN,
+    manejoSombras:manejoSombrasN,
+    tratoBakemono:tratoBakemonoN,
+    conHechiceria:conHechiceriaN,
+    medVital:medVitalN,
+    medEspiritual:medEspiritualN,
+    rayo:rayoN,
+    fuego:fuegoN,
+    frio:frioN,
+    veneno:venenoN,
+    corte:corteN,
+    energia:energiaN,
+    apCombate: apCombateN,
+    valCombate: valCombateN,
+    apCombate2: apCombate2N,
+    valCombate2: valCombate2N,
+    ventajas: ventajasN,
+    inventario:inventarioN,
+    dominios:dominiosN,
+    hechizos:hechizosN,
+    kenActual:kenActualN,
+    kiActual:kiActualN,
+    positiva:positivaN,
+    negativa:negativaN,
+    vidaActual:damageActualN,
+    add1:add1N,
+    valAdd1: valAdd1N,
+    add2:add2N,
+    valAdd2: valAdd2N,
+    add3:add3N,
+    valAdd3: valAdd3N,
+    add4:add4N,
+    valAdd4: valAdd4N,
+    consumision: consumisionN,
+    iniciativa:iniciativaN,
+    historia:historiaN,
+    naturaleza:naturalezaN,
+    tecEspecial:tecEspecialN,
+    conviccion: conviccionN,
+    cicatriz: cicatrizN,
+    
+  };
+
+
+
+  // Actualiza el estado de los personajes con la copia modificada
+  setPersonajes(nuevosPersonajes);
+   
+
+}
+
+//useEffect que se dispara cuando algun state cambia
 useEffect(() => {
  btnGuardarCambios();
 }, [ 
@@ -728,6 +861,10 @@ useEffect(() => {
 ]);
 
 
+
+
+
+
  
     const handleEliminarPj = async() => {
        eliminarPj(personaje.idpersonaje);
@@ -782,11 +919,16 @@ useEffect(() => {
           <BarraKen nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
         </div>
         <div className='row col2' style={{marginBottom:"1em", marginTop:"4.5em"}}>
+
+
           <div className='col1'>
-            <img src={imagenN} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
+            <img src={imagenPreview} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
             <Button onClick={handleImageUpload} variant="outline-danger" style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</Button>
             <input type="file" accept="image/*" ref={inputFileRef} style={{ display: 'none' }} onChange={handleFileChange} />
           </div>
+
+
+
           <div className='col1'>
             <label htmlFor="">Nombre:</label>
             <input type="text" value={nombreN} onChange={handleChangeNombre} placeholder="ingrese nombre" />
