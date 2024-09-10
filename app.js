@@ -9,7 +9,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 import path from 'path'; // Asegura la importación de 'path'
-
+import fs from 'fs'; // Importa el módulo 'fs'
 
 
 
