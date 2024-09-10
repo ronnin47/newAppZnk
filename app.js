@@ -26,9 +26,6 @@ dotenv.config();
 
 const { Pool } = pkg; 
 
-
-
-
 // Configuración de Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
