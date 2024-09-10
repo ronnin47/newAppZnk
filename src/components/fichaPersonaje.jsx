@@ -681,7 +681,7 @@ const btnGuardarCambios = async() => {
   // Crea una copia del array de personajes
   const nuevosPersonajes = [...personajes];
 
-  // Actualiza los valores del personaje actual en la copia del array
+  
   nuevosPersonajes[index] = {
 
     ...nuevosPersonajes[index],
