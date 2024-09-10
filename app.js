@@ -26,13 +26,21 @@ dotenv.config();
 
 const { Pool } = pkg; 
 
+// Verifica si la carpeta "uploads" existe; si no, la crea
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 // Configuración de Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Directorio donde se guardarán las imágenes
+    cb(null, uploadDir); // Directorio donde se guardarán las imágenes
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname); // Nombre del archivo
+    // Añade un identificador único al nombre del archivo para evitar colisiones
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname); // Nombre del archivo con sufijo único
   },
 });
 
@@ -52,15 +60,12 @@ app.post('/upload', upload.single('image'), (req, res) => {
     });
   } catch (error) {
     console.error('Error en la carga del archivo:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
 
-
 // Configurar la carpeta de archivos estáticos
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-
+app.use('/uploads', express.static(uploadDir));
 
 
 
