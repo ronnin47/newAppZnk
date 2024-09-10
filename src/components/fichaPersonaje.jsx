@@ -650,18 +650,20 @@ const btnGuardarCambios = async() => {
   if (imagenN && imagenN instanceof File && imagenN !== '/imagenBase.jpeg') {
     const formData = new FormData();
     formData.append('image', imagenN);
+    //const response = await axios.post('http://localhost:4000/upload', formData, {
 
     try {
-      //const response = await axios.post('http://localhost:4000/upload', formData, {
+      
         const response = await axios.post('https://zepironokioku.onrender.com/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       
+          //imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
       if (response.status === 200) {
         imagenUrl = `https://zepironokioku.onrender.com/uploads/${response.data.filename}`;
-        //imagenUrl = `http://localhost:4000/uploads/${response.data.filename}`;
+    
         console.log("URL de la imagen: ", imagenUrl);
       } else {
         console.error('Error al subir la imagen');
