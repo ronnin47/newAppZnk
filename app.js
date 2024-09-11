@@ -46,6 +46,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
+console.log("Directorio de uploads:", uploadDir);
+
 // Ruta para manejar la carga de imágenes
 app.post('/upload', upload.single('image'), (req, res) => {
   try {
