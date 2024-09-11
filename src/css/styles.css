@@ -486,11 +486,44 @@ padding: 10px; /* Opcional: añade padding para el contenido */
     margin: 10px;
     flex-direction: row;
 }
+
+.cartaR {
+    display: flex;
+    border: 3px solid red;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 500px;
+
+    flex-direction: row;
+}
+.tresCartas{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2em;
+}
+
 .cartita-image {
     width: 60px;
     height: 60px;
     object-fit: cover;
 }
+.cartaImagenRanking {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.cartitaElementos {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: aliceblue;
+    flex: 1; /* Esto hace que .cartita-info ocupe el espacio restante */
+    height: 100px; /* Asegura que .cartita-info tenga la misma altura que .cartita-image */
+}
+
 .cartita-info {
     padding: 15px;
     display: flex;
@@ -726,3 +759,41 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     grid-template-columns: 1fr 1fr;
 
 }
+
+
+
+
+.cartaR {
+    position: relative; /* Para que z-index funcione */
+    transition: transform 0.5s, box-shadow 0.5s;
+    z-index: 1; /* Valor base */
+  }
+  
+  .cartaR:hover {
+    transform: scale(1.1);
+    box-shadow: 
+      0 0 15px rgba(255, 69, 58, 0.9),   /* Rojo intenso */
+      0 0 30px rgba(255, 87, 34, 0.8),   /* Naranja brillante */
+      0 0 45px rgba(255, 99, 71, 0.7),   /* Rojo tomate */
+      0 0 60px rgba(255, 140, 0, 0.6),   /* Naranja oscuro */
+      0 0 90px rgba(255, 69, 58, 0.5);   /* Rojo intenso más suave */
+    z-index: 10; /* Aumenta el z-index para traerlo al frente */
+  }
+
+  .classCardDestino{
+  
+    box-shadow: 
+    0px 0px 15px 5px rgba(255, 215, 0, 0.9), /* Resplandor dorado intenso */
+    0px 0px 30px 10px rgba(255, 215, 0, 0.7), /* Brillo dorado cálido */
+    0px 0px 45px 15px rgba(255, 223, 0, 0.5), /* Brillo dorado expandido */
+    0px 0px 60px 20px rgba(255, 223, 0, 0.4), /* Resplandor dorado suave */
+    0px 0px 80px 25px rgba(255, 239, 0, 0.3); /* Resplandor dorado adicional */
+  }
+
+ 
+  .shadowBody:hover{
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.705);
+    border-radius: 15px;
+  
+  }
