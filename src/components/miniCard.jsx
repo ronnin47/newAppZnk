@@ -41,6 +41,8 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
     transition
   }
 
+  console.log("verificacion de la ruta de la imagen:",imagen)
+
   return (
     
     <div className='col1' >
@@ -49,7 +51,12 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
        <div className='container' {...attributes} {...listeners} ref={setNodeRef} style={style}>
        <div   className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
           <Card  style={{ width: '8em', border: "8px solid black" }} className={cardClassName}>
-          <Card.Img   variant="top" src={imagen} style={{ maxWidth: "100%", maxHeight: "100%",   opacity: !vivoMuerto && id === pjSeleccionado ? 0.3 : 1}} />
+          <Card.Img   variant="top" src={imagen} style={{ maxWidth: "100%", maxHeight: "100%",   opacity: !vivoMuerto && id === pjSeleccionado ? 0.3 : 1}} 
+            onError={(e) => {
+              console.error("Error al cargar la imagen:", e.target.src);
+              e.target.src = "/imagenBase.jpeg"; // Puedes proporcionar una imagen de reemplazo
+            }}
+          />
           <Card.Body 
           
           

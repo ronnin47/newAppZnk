@@ -8,43 +8,26 @@ import { Tiradas } from "./tiradas.jsx";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy, arrayMove,verticalListSortingStrategy} from "@dnd-kit/sortable";
 import { Panel } from "./panel.jsx";
-
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Narrador } from "./narrador.jsx";
 import Swal from 'sweetalert2';
-import Badge from 'react-bootstrap/Badge';
 import { Nava } from "./nava.jsx";
 import axios from 'axios';
-
-
 import { Reglas } from "./reglas.jsx";
 import { Unicos } from"./unicos.jsx";
-
 import { Ranking } from "./ranking.jsx";
-
-
-
-
-
-
 import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
-
 
 export const Principal= ()=> {
 
   const [personajes, setPersonajes] = useState([]);
   
-
-
     const [pjSeleccionado,setPjSeleccionado]=useState("")
     console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
     useEffect(() => {
       console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
     }, [pjSeleccionado]);
-
-
-
 
     const [nombre,setNombre]=useState("");
     const [imagen,setImagen]=useState("/imagenBase.jpeg");
@@ -114,12 +97,8 @@ export const Principal= ()=> {
     const [vidaActual,setVidaActual]=useState("");
     const [naturaleza,setNaturaleza]=useState("");
     const [consumision,setConsumision]=useState("");
-
-    
-
     const [cicatriz,setCicatriz]=useState("");
     const [conviccion,setConviccion]=useState("");
-
 
 
     const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
@@ -128,26 +107,22 @@ export const Principal= ()=> {
     const [message, setMessage] = useState('');
     const [sock, setSock] = useState([]);
 
-
     const [tecEspecial, setTecEspecial] = useState([]);
     
    const handleDragEnd=(event)=>{
-    //console.log("orden original: ",personajes)
+    
       const {active, over}=event
       const oldIndex= personajes.findIndex( pj=>pj.idpersonaje===active.id)
       const newIndex= personajes.findIndex( pj=>pj.idpersonaje===over.id)
-      //console.log("oldIndex ",oldIndex);
-      //console.log("newIndex ",newIndex);
+     
       const newOrder= arrayMove(personajes,oldIndex,newIndex) 
-      //console.log("nuevo orden: ",newOrder)
+    
       setPersonajes(newOrder)
       const orderedIds = newOrder.map(pj => pj.idpersonaje);
       localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
     };
 
   
-
-
   const eliminarPj = (idpersonaje) => {
     Swal.fire({
         title: '¿quieres eliminar el personaje?',
@@ -170,8 +145,6 @@ export const Principal= ()=> {
         }
     });
 };
-
-
 
   const [sesion, setSesion] = useState(() => {
     const savedSesion = localStorage.getItem('sesion');
@@ -209,30 +182,6 @@ const cerrarSesion = async() => {
     //console.error('Error al limpiar IndexedDB:', error);
   }
 };
-
-
-
-//aca trabajamos con los badge
-/*
-const [fuerzaBadge,setFuerzaBadge]=useState("");
-
-const subirFuerzaBadge=()=>{
-  console.log("funciona subir fuerza badge");
-  if (fuerzaBadge === "") {
-    setFuerzaBadge(1);
-  } else {
-    setFuerzaBadge(prevFuerzaBadge => Number(prevFuerzaBadge) + 1);
-  }
-}
-
-const bajarFuerzaBadge = (event) => {
-  event.stopPropagation();
-  setFuerzaBadge(prevFuerzaBadge => {
-    const newValue = prevFuerzaBadge - 1;
-    return newValue <= 0 ? "" : newValue;
-  });
-};
-*/
 
 
 const textareaRef = useRef(null);
@@ -280,12 +229,6 @@ useEffect(() => {
     const personajesNarrador = await getAllPersonajes();
     setColeccionPersonajes(personajesNarrador);
     console.log(personajesNarrador)
-
-/*
-    //recupera los personajes del usuario y guardarlos en el state personajes
-    const personajesDbUsuario = await getPersonajesDB();
-    console.log("persoanjes del usuario: ",personajesDbUsuario)
-    setPersonajes(personajesDbUsuario);*/
   };
 
   loadPersonajes();
@@ -328,15 +271,10 @@ useEffect(() => {
 
 
 
-
 useEffect(() => {
   if (sesion) {
     const updateIndexedDB = async () => {
       try {
-        //console.log("Personajes antes de la actualización:", personajes);
-        //console.log("Limpieza de 'personajesDB' antes de la actualización");
-        //await clearPersonajesDB();
-        //console.log("Añadiendo personajes a 'personajesDB'");
         await setPersonajesDB(personajes);
         console.log("Personajes actualizados en IndexedDB");
       } catch (error) {
@@ -347,7 +285,6 @@ useEffect(() => {
     updateIndexedDB();
   }
 }, [personajes, sesion]);
-
 
 
 useEffect(() => {

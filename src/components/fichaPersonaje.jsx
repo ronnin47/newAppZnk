@@ -12,9 +12,6 @@ import { Historia } from './historia.jsx';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
-
-import Badge from 'react-bootstrap/Badge';
-
 import { TecnicaEspecial } from './tecEspecial.jsx';
 
 
@@ -379,11 +376,9 @@ export const FichaPersonaje = ({
    const handleChangeValAdd4=(event)=>{
     setValAdd4N(event.target.value)
    }
-
   const handleChangeIniciativa = (event) => {
     setIniciativaN(event.target.value)
   }
-
   const handleChangeNaturaleza= (event)=>{
     setNaturalezaN(event.target.value)
   }
@@ -401,65 +396,6 @@ export const FichaPersonaje = ({
  const handleImageUpload = () => {
    inputFileRef.current.click();
  };
-/*
- const handleFileChange = (e) => {
-   const file = e.target.files[0];
-   const reader = new FileReader();
-   reader.onload = () => {
-   
-     setImagenN(reader.result);
-   };
-   reader.readAsDataURL(file);
- 
- };
- */
-
-/*
- const handleFileChange = (e) => {
-   const file = e.target.files[0];
-   const reader = new FileReader();
-   
-   if (file) {
-     // Guardar el archivo para su posterior subida
-     setImagenN(file);
- 
-     // Leer el archivo como URL de datos para vista previa
-    reader.onload = () => {
-       setImagenPreview(reader.result);
-       
-     };
- 
-     reader.readAsDataURL(file);
-   }
- };
-*/
-/*//FUNCION DE UPLOAD PARA LA IMAGEN
-const uploadImage = async (image) => {
-  if (!(image instanceof File) || !image) {
-    console.error('La imagen proporcionada no es un archivo válido.');
-    return null;
-  }
-
-  const formData = new FormData();
-  formData.append('image', image);
-
-  try {
-    const response = await axios.post('http://localhost:4000/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    console.log('Respuesta del servidor:', response.data); // Verifica aquí lo que devuelve el servidor
-    if (response.status === 200) {
-      return `http://localhost:4000/uploads/${response.data.filename}`;
-    } else {
-      console.error('Error al subir la imagen');
-      return null;
-    }
-  } catch (error) {
-    console.error('Error en la subida de la imagen:', error);
-    return null;
-  }
-};
-*/
 
 const handleFileChange = (e) => {
   const file = e.target.files[0];
@@ -691,7 +627,6 @@ const btnGuardarCambios = async() => {
     raza:razaN,
     edad:edadN,
 
-    //imagen: imagenUrl,
     imagen: imagenUrl,
 
     ken:kenN,
@@ -764,12 +699,8 @@ const btnGuardarCambios = async() => {
     
   };
 
-
-
   // Actualiza el estado de los personajes con la copia modificada
   setPersonajes(nuevosPersonajes);
-   
-
 }
 
 //useEffect que se dispara cuando algun state cambia
@@ -861,52 +792,18 @@ useEffect(() => {
 
 
 
-
-
-
- 
     const handleEliminarPj = async() => {
        eliminarPj(personaje.idpersonaje);
-
        
-       try {
-       
+       try {      
         //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
         const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
         console.error('Error al eliminar el personaje:', error);
       }
-
-
     };
 
-
-/*
-    const subirFuerzaBadge=()=>{
-      console.log("funciona subir fuerza badge");
-      if (fuerzaBadge === "") {
-        setFuerzaBadge(1);
-      } else {
-        setFuerzaBadge(prevFuerzaBadge => Number(prevFuerzaBadge) + 1);
-      }
-    }
-    
-    const bajarFuerzaBadge = (event) => {
-      event.stopPropagation();
-      setFuerzaBadge(prevFuerzaBadge => {
-        const newValue = prevFuerzaBadge - 1;
-        return newValue <= 0 ? "" : newValue;
-      });
-    };
- 
-    aca tenemos el label con el badge
- <label htmlFor="" onClick={subirFuerzaBadge} >Fuerza: <Badge onClick={bajarFuerzaBadge}>{fuerzaBadge}</Badge> </label>
-*/
-
-
-
- 
 
   return (
     <>
