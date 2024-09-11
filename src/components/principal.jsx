@@ -346,7 +346,7 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if (estatus === "narrador" && sesion) {
+  if ( sesion ) {
 
     // Primero, obtén los personajes guardados en IndexedDB
     const loadPersonajesDB = async () => {
@@ -360,7 +360,7 @@ useEffect(() => {
     loadPersonajesDB();
     console.log("Disparo effect de consumir personajes narrador");
   }
-}, [estatus, sesion]);
+}, [sesion]);
 
 return (
     <>
