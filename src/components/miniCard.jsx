@@ -59,7 +59,6 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
           />
           <Card.Body 
           
-          
           style={{
             display: "flex",
             flexDirection: "column",
