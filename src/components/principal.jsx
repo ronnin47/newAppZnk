@@ -20,6 +20,7 @@ import axios from 'axios';
 
 import { Reglas } from "./reglas.jsx";
 import { Unicos } from"./unicos.jsx";
+import { Ranking } from "./ranking.jsx";
 
 
 import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
@@ -681,15 +682,19 @@ return (
             </Tab>
 
 
-
-
+            
+               
 
             <Tab eventKey="unicos" title="Poderes unicos" className="fondoBody"  >
               {sesion==true ? (<Unicos></Unicos>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
             </Tab>
 
 
+               
+            <Tab eventKey="ranking" title="Ranking Ken" className="fondoBody">
+              {sesion==true ?(<Ranking coleccionPersonajes={coleccionPersonajes}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
+            </Tab>
 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
