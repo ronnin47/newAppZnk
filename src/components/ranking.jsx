@@ -86,10 +86,12 @@ export const CartaUnica = ({
             />
   
            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-            <p style={{textAlign:"center"}}>Dominio: {dominio}</p>
-            <p style={{textAlign:"center"}}>Ken: {ken}</p>
-            <p style={{textAlign:"center"}}>Naturaleza: {naturaleza}</p>
-            <p style={{textAlign:"center"}}>Conviccion: {conviccion}</p>
+            <p style={{textAlign:"center", marginTop:"5px"}}>Dominio: <span style={{ color: "yellow" }}>{dominio}</span></p>
+            <p style={{textAlign:"center"}}>Ken: <span style={{ color: "yellow" }}>{ken}</span></p>
+            <p style={{textAlign:"center"}}>Naturaleza: <span style={{ color: "yellow" }}>{naturaleza}</span></p>
+            <p style={{ textAlign: "center" }}>
+              Conviccion: <span style={{ color: "yellow" }}>{conviccion}</span>
+            </p>
            </div>
   
         </Modal.Body>
@@ -117,7 +119,7 @@ export const CartaUnica = ({
       <div style={{ flex: 1, padding: '10px', overflow: 'hidden' }}>
       
         <h3>Historia:</h3>
-        <textarea className='historia'>
+        <textarea className='historia' readOnly>
         {historia}
         </textarea>
       
@@ -304,7 +306,7 @@ const handleInputBuscardor=(event)=>{
         </div>
 
 
-        <div  className="container tresCartas" style={{marginTop:"1em"}}>
+        <div  className="container tresCartas" style={{marginTop:"3em"}}>
 
 {personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj, index)=>(
   <Cartita

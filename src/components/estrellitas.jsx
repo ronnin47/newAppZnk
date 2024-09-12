@@ -34,8 +34,8 @@ export const Estrellitas = ({ ken }) => {
             alt="estrella dorada"
 
             src={getEstrellaSrc(ken)}
-            width="30"
-            height="30"
+            width="24"
+            height="24"
             className="d-inline-block align-top barrelRoll"      
         />
     ));
