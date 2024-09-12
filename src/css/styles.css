@@ -501,7 +501,7 @@ padding: 10px; /* Opcional: añade padding para el contenido */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2em;
-    transform: scale(0.9);
+   
 }
 
 .cartita-image {
