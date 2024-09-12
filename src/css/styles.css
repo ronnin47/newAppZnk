@@ -803,3 +803,17 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     border:5px solid red;
     border-radius: 10px;
   }
+  .mensajeNoResultados {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* O el tamaño del contenedor que quieras */
+  }
+  
+  .mensajeNoResultados p {
+    text-align: center;
+    font-family: cursive;
+    color: yellow;
+    font-size: 1.5em;
+  }
+  

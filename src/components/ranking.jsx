@@ -308,23 +308,25 @@ const handleInputBuscardor=(event)=>{
 
         <div  className="container tresCartas" style={{marginTop:"3em"}}>
 
-{personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj, index)=>(
-  <Cartita
-  rank={index + 1} 
-  key={pj.idpersonaje} 
-  nombre={pj.nombre} 
-  idpersonaje={pj.idpersonaje} 
-  dominio={pj.dominio} 
-  imagen={pj.imagen} 
-  ken={pj.ken} 
-  historia={pj.historia}
-  naturaleza={pj.naturaleza}
-  conviccion={pj.conviccion}
-  ></Cartita>
-))
-) : (
-<p style={{textAlign:"center", fontFamily:"cursive", color:"yellow", fontSize:"1.5em"}}>No se encontraron personajes con ese nombre</p>
-)}
+              {personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj, index)=>(
+                <Cartita
+                rank={index + 1} 
+                key={pj.idpersonaje} 
+                nombre={pj.nombre} 
+                idpersonaje={pj.idpersonaje} 
+                dominio={pj.dominio} 
+                imagen={pj.imagen} 
+                ken={pj.ken} 
+                historia={pj.historia}
+                naturaleza={pj.naturaleza}
+                conviccion={pj.conviccion}
+                ></Cartita>
+              ))
+              ) : (
+                <div  className="mensajeNoResultados">
+              <p style={{textAlign:"center", fontFamily:"cursive", color:"yellow", fontSize:"1.5em"}}>No se encontraron personajes con ese nombre</p>
+              </div>
+              )}  
 
 
         </div>
