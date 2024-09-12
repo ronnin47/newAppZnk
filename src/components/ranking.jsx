@@ -306,7 +306,7 @@ const handleInputBuscardor=(event)=>{
         </div>
 
 
-        <div  className="container tresCartas" style={{marginTop:"1em"}}>
+        <div  className="container tresCartas" style={{marginTop:"3em"}}>
 
 {personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj, index)=>(
   <Cartita
