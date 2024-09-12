@@ -323,9 +323,7 @@ const handleInputBuscardor=(event)=>{
                 ></Cartita>
               ))
               ) : (
-                <div  className="mensajeNoResultados">
               <p style={{textAlign:"center", fontFamily:"cursive", color:"yellow", fontSize:"1.5em"}}>No se encontraron personajes con ese nombre</p>
-              </div>
               )}  
 
 
