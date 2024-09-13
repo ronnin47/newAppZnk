@@ -5,7 +5,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
+import Swal from 'sweetalert2';
+import axios from 'axios';
+
+
 const Cartita=({
+  eliminarPj,
   idpersonaje,
   nombre,
   dominio,
@@ -79,6 +84,7 @@ const Cartita=({
 
   conviccion,
   cicatriz,
+ 
 })=>{
 
   const [showCartaPj, setShowCartaPj] = useState(false);
@@ -105,6 +111,7 @@ const Cartita=({
            </div>
            {showCartaPj && (
           <CartaNarrador
+            eliminarPj={eliminarPj}
             onClose={handleCloseCartaPj}
             idpersonaje={idpersonaje}
             imagen={imagen}
@@ -199,11 +206,8 @@ const Cartita=({
 
 
 
-export const Narrador = ({estatus,coleccionPersonajes}) => {
+export const Narrador = ({estatus,setColeccionPersonajes,coleccionPersonajes}) => {
 
- //console.log("lo que hay en componente narrador ",coleccionPersonajes)
- // vamos a colocar un imput para el filter con includes 
- // y luego renderizar el resultado con 
 
 
 const [pjBuscado, setPjBuscado]=useState("");
@@ -228,31 +232,6 @@ const handleInputBuscardor=(event)=>{
 
 
 
-
-/*
-  const poderesFiltrados = coleccionPersonajes.filter((pj) => {
-    // Verificamos si tecEspecial existe y es un array con al menos un elemento
-    if (Array.isArray(pj.tecEspecial) && pj.tecEspecial.length > 0) {
-      // Iteramos sobre las técnicas especiales
-      return pj.tecEspecial.some(tecnica => {
-        // Depuramos el valor de tecnica.nombre
-        const nombre = tecnica?.nombre;
-  
-        // Imprimimos en consola para verificar los valores
-        console.log("Nombre de técnica especial:", nombre);
-  
-        // Verificamos que nombre sea una cadena no vacía
-        if (typeof nombre === 'string' && nombre.trim() !== '') {
-          return nombre.toLowerCase().includes(tecBuscar.toLowerCase());
-        }
-  
-        return false; // Excluimos técnicas con nombres vacíos o no válidos
-      });
-    }
-    return false; // Excluimos personajes sin técnicas especiales
-  });
-*/
-
   // Filtrar personajes que tengan técnicas que coincidan con la búsqueda
 const poderesFiltrados = coleccionPersonajes
 .map(personaje => {
@@ -273,6 +252,44 @@ const poderesFiltrados = coleccionPersonajes
 })
 .filter(personaje => personaje !== null); 
 
+
+const eliminarPj = (idpersonaje,nombre) => {
+  Swal.fire({
+      title: `¿Narrador quieres eliminar el personaje ${nombre} ?`,
+      html: '<p style="color: red;">A razón de mantener la coherencia narrativa de un personaje y de las tramas de las sagas, aquel personaje que fuera abortado por un jugador quedará borrado. ZNK es un juego que busca mantenerse como una obra compuesta de historias únicas, y la obra debe ser mayor que una mala decisión de un jugador.</p>' +
+      '<p style="color: red;">¡Se borrará completamente de la base de datos, no se podrá revertir una vez hecho!</p>',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo'
+  }).then((result) => {
+      if (result.isConfirmed) {
+          const listaNueva = coleccionPersonajes.filter((pj) => pj.idpersonaje !== idpersonaje);
+          
+          destruirPj(idpersonaje);
+          setColeccionPersonajes(listaNueva);
+          Swal.fire(
+              '¡Eliminado!',
+              'Tu personaje ha sido eliminado.',
+              'success'
+          );
+      }
+  });
+};
+
+const destruirPj=async(idpersonaje)=>{
+  try {
+  
+    //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+    const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
+    console.log('Personaje eliminado:', response.data);
+  } catch (error) {
+    console.error('Error al eliminar el personaje:', error);
+  }
+ 
+ console.log("*****************Este es el id de personaje:",idpersonaje)
+}
 
   return (
     <>
@@ -323,6 +340,7 @@ const poderesFiltrados = coleccionPersonajes
 
 {personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj)=>(
   <Cartita
+  eliminarPj={eliminarPj}
   key={pj.idpersonaje} 
   nombre={pj.nombre} 
   idpersonaje={pj.idpersonaje} 

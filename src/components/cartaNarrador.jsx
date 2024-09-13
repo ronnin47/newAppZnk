@@ -12,9 +12,9 @@ import Tabs from 'react-bootstrap/Tabs';
 
 import { Estrellitas } from './estrellitas';
 
+import Swal from 'sweetalert2';
 
-
-
+import axios from 'axios';
 
 
 
@@ -134,6 +134,7 @@ export const TecnicasEspeciales = ({ ID, itemValues }) => {
 
 
 export const CartaNarrador = ({ 
+  eliminarPj,
   onClose,
   nombre,
   dominio,
@@ -207,6 +208,7 @@ export const CartaNarrador = ({
   tecEspecial,
   conviccion,
   cicatriz,
+  idpersonaje,
 }) => {
 
 console.log("TECNICA ESPECIAL ",tecEspecial)
@@ -229,6 +231,16 @@ const cerrar=()=>{
 
 const [key, setKey] = useState('personaje');
   
+
+
+
+
+
+const handleEliminarPj = async() => {
+  eliminarPj(idpersonaje,nombre);
+};
+
+
 
 return (
     <>
@@ -261,18 +273,23 @@ return (
             className='imagenCartaPj'
           />
 
-         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-          <p style={{textAlign:"center"}}>Dominio: {dominio}</p>
-          <p style={{textAlign:"center"}}>Ken: {ken}</p>
-          <p style={{textAlign:"center"}}>Naturaleza: {naturaleza}</p>
-          <p style={{textAlign:"center"}}>Conviccion: {conviccion}</p>
-         </div>
+           <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+            <p style={{textAlign:"center", marginTop:"5px"}}>Dominio: <span style={{ color: "yellow" }}>{dominio}</span></p>
+            <p style={{textAlign:"center"}}>Ken: <span style={{ color: "yellow" }}>{ken}</span></p>
+            <p style={{textAlign:"center"}}>Naturaleza: <span style={{ color: "yellow" }}>{naturaleza}</span></p>
+            <p style={{ textAlign: "center" }}>
+              Conviccion: <span style={{ color: "yellow" }}>{conviccion}</span>
+            </p>
+           </div>
         
 
 
       </Modal.Body>
       
       <Modal.Footer style={{backgroundColor:"black", color:"aliceblue"}}> 
+      <Button variant="outline-warning" onClick={handleEliminarPj}>
+          Destruir personaje
+      </Button>
         <Button variant="outline-danger" onClick={cerrar}>
           Cerrar
         </Button>
@@ -280,6 +297,25 @@ return (
       </Modal.Footer>
         
        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </Tab>
 
 
@@ -606,6 +642,8 @@ return (
   </div>
 </Modal.Body>
       <Modal.Footer style={{backgroundColor:"black", color:"aliceblue"}}> 
+
+
         <Button variant="outline-danger" onClick={cerrar}>
           Cerrar
         </Button>

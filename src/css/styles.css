@@ -803,5 +803,13 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     border:5px solid red;
     border-radius: 10px;
   }
+
+
+  .tresCartas.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+  }
   
   

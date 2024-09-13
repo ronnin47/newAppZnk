@@ -46,7 +46,6 @@ const pool = new Pool({
 });
 */
 
-
 //*************base de datos nueva de render************
 
 const pool = new Pool({
@@ -808,10 +807,6 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
 });
 
 
-
-
-
-
 //CONSUMIR PODERES ESPECIALES
 app.get('/consumirTecEspeciales', async (req, res) => {
   // const { email, contrasenia } = req.body;
@@ -843,14 +838,6 @@ app.get('/consumirTecEspeciales', async (req, res) => {
      res.status(500).json({ message: 'Error en el servidor' });
    }
  });
-
-
-
-
-
-
-
-
 
 
 //const PORT = process.env.PORT || 4000;

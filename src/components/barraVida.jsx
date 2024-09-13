@@ -270,9 +270,6 @@ export const BarraVida = ({cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, pos
             style={{ marginLeft: "3em", cursor: "pointer" }} ></img>
             <input   style={{ marginLeft: "2em"}} type="number" value={cicatrizN} onChange={handleChangeCicatrizN} className='inputCicatriz' placeholder="cicatriz" />
             <div>
-          
-
-
         </div>
         </div> 
       </div>
