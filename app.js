@@ -59,7 +59,7 @@ const pool = new Pool({
 //base septiembre
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
-  host: 'dpg-crkt1688fa8c738l0hlg-a.oregon-postgres.render.com',
+  host: 'dpg-crkt1688fa8c738l0hlg-a',
   database: 'baseseptiembre', // Reemplaza con el nombre de tu base de datos
   password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
