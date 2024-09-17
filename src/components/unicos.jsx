@@ -10,7 +10,7 @@ export const Unicos = () => {
   const consumirTecEspeciales = async () => {
     try {
       //const response = await axios.get('http://localhost:4000/consumirTecEspeciales', {
-      const response = await axios.get('https://zepironokioku.onrender.com/consumirTecEspeciales', {
+      const response = await axios.get('https://znk.onrender.com/consumirTecEspeciales', {
         headers: {
           'Content-Type': 'application/json',
         },

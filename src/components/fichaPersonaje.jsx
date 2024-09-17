@@ -619,7 +619,7 @@ const guardarCambiosBBDD = async () => {
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
-    const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`https://znk.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -736,7 +736,7 @@ useEffect(() => {
        try {
        
         //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-        const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
+        const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
         console.error('Error al eliminar el personaje:', error);

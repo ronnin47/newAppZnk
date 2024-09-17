@@ -246,7 +246,7 @@ const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
 const consumirPersonajesNarrador = async () => {
   try {
     //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-    const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
+    const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
       headers: {
         'Content-Type': 'application/json',
       },
