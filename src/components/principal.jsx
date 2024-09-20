@@ -283,7 +283,7 @@ useEffect(() => {
       if (sesion) {
         // Fetch personajes if the session is active
         //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-        const response = await axios.get('http://znk.onrender.com/consumirPersonajesNarrador', {
+        const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',
           },
