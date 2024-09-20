@@ -11,7 +11,6 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-import { setPersonajesDB } from './indexedDB'; 
 
 export const Nava= ({setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
@@ -70,7 +69,7 @@ const handleSubmit = (e) => {
         },
       });
   
-      const { idusuario, personajes, estatus } = response.data;
+      const { idusuario, estatus } = response.data;
 
       setEstatus(estatus);
       console.log("Estatus de sesion: ",estatus)
@@ -81,12 +80,13 @@ const handleSubmit = (e) => {
         //text: `Se han recuperado ${personajes.length} personajes.`,
       });
   
-      console.log('Personajes recuperados:', personajes);
+      //console.log('Personajes recuperados:', personajes);
       console.log("IDUSUARIO ES: ",idusuario)
       
        //localStorage.setItem('personajes', JSON.stringify(personajes));
-        await setPersonajesDB(personajes);
-        setPersonajes(personajes);
+        //await setPersonajesDB(personajes);
+        
+      //  setPersonajes(personajes);
 
        localStorage.setItem('estatus', estatus);
        localStorage.setItem('loginEmail', loginEmail);

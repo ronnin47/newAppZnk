@@ -55,8 +55,13 @@ const pool = new Pool({
   password: 'zFi2JRnG9cX2Iig2tmuLoZdgFn7D8XK9',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
+
+
+
+
 */
-//base septiembre
+//***************** base septiembre ****************************
+
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-crkt1688fa8c738l0hlg-a',
@@ -179,15 +184,15 @@ app.post('/loginUsuario', async (req, res) => {
 
     // Si se necesita obtener los personajes del usuario, descomenta el siguiente código
     
-    const personajesQuery = 'SELECT * FROM personajes WHERE "usuarioId" = $1';
+   /* const personajesQuery = 'SELECT * FROM personajes WHERE "usuarioId" = $1';
     const personajesResult = await pool.query(personajesQuery, [user.idusuario]);
-    
+    */
 
    // console.log("Inicio de sesión exitoso para el usuario:", user.idusuario);
 
     res.json({
       message: 'Inicio de sesión exitoso',
-      personajes: personajesResult.rows, 
+      //personajes: personajesResult.rows, 
       idusuario: idusuario,
       estatus: estatus,
     });

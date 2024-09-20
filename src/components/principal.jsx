@@ -23,7 +23,7 @@ import { Unicos } from"./unicos.jsx";
 import { Ranking } from "./ranking.jsx";
 
 
-import { getPersonajesDB, setPersonajesDB,getAllPersonajes, setAllPersonajes,clearIndexedDB,clearPersonajesDB } from './indexedDB'; 
+
 
 
 export const Principal= ()=> {
@@ -197,12 +197,7 @@ const cerrarSesion = async() => {
   setPersonajes([]);
   setSesion(false);
 
-  try {
-    await clearIndexedDB();
-    //console.log('IndexedDB ha sido limpiado.');
-  } catch (error) {
-    //console.error('Error al limpiar IndexedDB:', error);
-  }
+ 
 };
 
 
@@ -239,52 +234,9 @@ const [estatus,setEstatus]=useState(()=>{
 })
 
 
-//INDEXEDDB
+
 const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
 
-
-const consumirPersonajesNarrador = async () => {
-  try {
-    //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-    const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-   
-
-    const { coleccionPersonajes } = response.data;
-    if (!Array.isArray(coleccionPersonajes)) {
-      console.error('El formato de datos no es un array.');
-      return;
-    }
-
-    console.log('Colección de personajes:', coleccionPersonajes);
-
-    await setAllPersonajes(coleccionPersonajes);
-    setColeccionPersonajes(coleccionPersonajes);
-
-  } catch (error) {
-    console.error("Cliente: Fallo al consumir personajes narrador", error.message);
-  }
-};
-
-useEffect(() => {
-  const loadPersonajes = async () => {
-    const personajesNarrador = await getAllPersonajes();
-    setColeccionPersonajes(personajesNarrador);
-    console.log(personajesNarrador)
-
-/*
-    //recupera los personajes del usuario y guardarlos en el state personajes
-    const personajesDbUsuario = await getPersonajesDB();
-    console.log("persoanjes del usuario: ",personajesDbUsuario)
-    setPersonajes(personajesDbUsuario);*/
-  };
-
-  loadPersonajes();
-}, []); 
 
 useEffect(() => {
   const loadPersonajes = async () => {
@@ -292,7 +244,7 @@ useEffect(() => {
     const orderedIds = storedOrder ? JSON.parse(storedOrder) : [];
 
     try {
-      const personajesDbUsuario = await getPersonajesDB();
+      const personajesDbUsuario = personajes;
       if (personajesDbUsuario.length > 0) {
         const personajesMap = new Map(personajesDbUsuario.map(pj => [pj.idpersonaje, pj]));
 
@@ -324,43 +276,71 @@ useEffect(() => {
 
 
 
+
 useEffect(() => {
-  if (sesion) {
-    const updateIndexedDB = async () => {
-      try {
-        //console.log("Personajes antes de la actualización:", personajes);
-        //console.log("Limpieza de 'personajesDB' antes de la actualización");
-        //await clearPersonajesDB();
-        //console.log("Añadiendo personajes a 'personajesDB'");
-        await setPersonajesDB(personajes);
-        console.log("Personajes actualizados en IndexedDB");
-      } catch (error) {
-        console.error("Fallo al actualizar IndexedDB", error.message);
+  const loadPersonajes = async () => {
+    try {
+      if (sesion) {
+        // Fetch personajes if the session is active
+        //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+        const response = await axios.get('http://znk.onrender.com/consumirPersonajesNarrador', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const { coleccionPersonajes } = response.data;
+
+        if (!Array.isArray(coleccionPersonajes)) {
+          console.error('El formato de datos no es un array.');
+          return;
+        }
+
+        console.log("***trae los personajes efectivamente", coleccionPersonajes);
+
+        // Set the fetched collection to state
+        setColeccionPersonajes(coleccionPersonajes);
+        console.log("usuario id: ", usuarioId);
+    
+        const personajesFiltrados = coleccionPersonajes.filter(pj => pj.usuarioId == usuarioId);
+        console.log('Personajes filtrados por usuario:', personajesFiltrados);
+
+        // Cargar el orden de personajes desde localStorage
+        const storedOrder = localStorage.getItem('personajesOrder');
+        const orderedIds = storedOrder ? JSON.parse(storedOrder) : [];
+
+        // Crear un mapa de personajes filtrados
+        const personajesMap = new Map(personajesFiltrados.map(pj => [pj.idpersonaje, pj]));
+
+        // Asignar un valor de orden a personajes que no lo tienen
+        personajesFiltrados.forEach((pj, index) => {
+          if (!orderedIds.includes(pj.idpersonaje)) {
+            orderedIds.push(pj.idpersonaje); // Asigna un nuevo orden
+          }
+        });
+
+        // Actualizar el localStorage con el nuevo orden
+        localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
+
+        // Reordena los personajes filtrados basado en los IDs almacenados
+        const orderedPersonajes = orderedIds.map(id => personajesMap.get(id)).filter(pj => pj);
+
+        // Solo actualiza el estado si el orden ha cambiado
+        if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
+          setPersonajes(orderedPersonajes);
+        } else {
+          setPersonajes(personajesFiltrados); // Si no hay cambios, establece el estado con los filtrados
+        }
       }
-    };
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir personajes narrador", error.message);
+    }
+  };
 
-    updateIndexedDB();
-  }
-}, [personajes, sesion]);
-
-
-
-useEffect(() => {
-  if ( sesion ) {
-
-    // Primero, obtén los personajes guardados en IndexedDB
-    const loadPersonajesDB = async () => {
-     /* const personajesDB = await getPersonajesDB();
-      setPersonajes(personajesDB);*/
-
-      // Luego, actualiza IndexedDB con los personajes del servidor
-      consumirPersonajesNarrador();
-    };
-
-    loadPersonajesDB();
-    console.log("Disparo effect de consumir personajes narrador");
-  }
+  loadPersonajes();
 }, [sesion]);
+
+
 
 return (
     <>
@@ -374,6 +354,10 @@ return (
      
      setEstatus={setEstatus}
      />
+
+
+
+
      <div>
      {pjSeleccionado ? (
                 <Panel

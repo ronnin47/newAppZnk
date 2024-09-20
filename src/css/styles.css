@@ -627,8 +627,8 @@ padding: 10px; /* Opcional: añade padding para el contenido */
     transform: scale(1.01);
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.7);
     border-radius: 10px;
-    transition: box-shadow 0.3s ease-in-out;
-    background-color: rgba(255, 255, 0, 0.63); 
+    transition: box-shadow 0.6s ease-in-out;
+    background-color: rgba(144, 238, 144, 0.712);
 }
 .topCanvas{
     background-color: #d0f0c0;
@@ -711,6 +711,18 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     background-color: black;
     color: #00FF00;
 }
+.buscador:focus {
+    border: 2px solid #4CAF50; /* Cambia el color del borde cuando está enfocado */
+    outline: none; /* Elimina el borde predeterminado del navegador */
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
+  }
+
+
 .tecnicasEspeciales{
     padding: 1em;
     border:3px solid red;
