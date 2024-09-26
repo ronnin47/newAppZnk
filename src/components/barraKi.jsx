@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
-export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN, setKiActualN }) => {
+export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN, setKiActualN,idpersonaje}) => {
     
     const [animacionActiva, setAnimacionActiva] = useState(true);
     const [consumir,setConsumir]=useState("")
@@ -49,10 +49,14 @@ export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN,
            
             const nombre=nombreN
       
-            const msgEnviar={
-            nombre:nombre,
-            mensaje:message
-            }
+             // Emitiendo el objeto con idpersonaje, kenActual y ken
+             const msgEnviar = {
+                idpersonaje: idpersonaje,   
+                nombre:nombre,
+                kiActual: newValue,        
+                ki: kiN,                   
+                mensaje: message            
+            };
             
             socket.emit('message', msgEnviar);
             

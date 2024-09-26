@@ -11,7 +11,7 @@ import 'animate.css';
 
 
 
-export const BarraVida = ({cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
+export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
   const faseSalud = parseInt(kiN) + parseInt(fortalezaN);
   const vidaTotalPositiva = faseSalud * parseInt(positivaN);
   const vidaTotalNegativa = faseSalud * parseInt(negativaN);
@@ -201,10 +201,15 @@ export const BarraVida = ({cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, pos
    
     const nombre=nombreN
 
-    const msgEnviar={
-    nombre:nombre,
-    mensaje:message
-    }
+    
+      // Emitiendo el objeto con idpersonaje, kenActual y ken
+      const msgEnviar = {
+        idpersonaje: idpersonaje,    
+        nombre:nombre,
+        vidaActual: newDamage,         
+        vidaTotal: vidaTotal,                   
+        mensaje: message            
+    };
     
     socket.emit('message', msgEnviar);
    

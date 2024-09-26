@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
-export const BarraKen = ({ nombreN, kenN, kenActualN, setKenActualN }) => {
+export const BarraKen = ({ nombreN, kenN, kenActualN, setKenActualN,idpersonaje }) => {
 
     const [animacionActiva, setAnimacionActiva] = useState(true);
 
@@ -50,12 +50,16 @@ export const BarraKen = ({ nombreN, kenN, kenActualN, setKenActualN }) => {
           // ESTAMOS ACA EMITIENDO EL MENSAJE DE PRUEBA
            
             const nombre=nombreN
+           
       
-            const msgEnviar={
-            nombre:nombre,
-            mensaje:message
-            }
-            
+            // Emitiendo el objeto con idpersonaje, kenActual y ken
+            const msgEnviar = {
+              idpersonaje: idpersonaje,    // Agregamos el idpersonaje
+              nombre:nombre,
+              kenActual: newValue,         // Valor actualizado de kenActual
+              ken: kenN,                   // Valor de kenN
+              mensaje: message             // Mensaje de texto
+          };
             socket.emit('message', msgEnviar);
         }
        

@@ -508,6 +508,9 @@ padding: 10px; /* Opcional: añade padding para el contenido */
     width: 60px;
     height: 60px;
     object-fit: cover;
+    border:2px solid rgba(3, 250, 36, 0.788);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
 }
 .cartaImagenRanking {
     width: 100px;
@@ -525,6 +528,23 @@ padding: 10px; /* Opcional: añade padding para el contenido */
     height: 100px; /* Asegura que .cartita-info tenga la misma altura que .cartita-image */
 }
 
+  
+.btn-transparent {
+    background-color: rgba(40, 167, 69, 0.5); /* Verde con transparencia */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    width: 25px;
+    height: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 0px;
+    display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  padding: 0;      
+  }
+
 .cartita-info {
     padding: 15px;
     display: flex;
@@ -535,13 +555,23 @@ padding: 10px; /* Opcional: añade padding para el contenido */
     height: 60px; /* Asegura que .cartita-info tenga la misma altura que .cartita-image */
 }
 .cartita-name {
-    font-size: 1.5em;
+    font-size: 1.1em;
     margin: 0;
+    color: yellow;
+    font-family: cursive;
 }
 .cartita-description {
     font-size: 1em;
     color: aliceblue;
 }
+.cartita-description {
+    margin-bottom: 5px; /* Reducir espacio debajo del párrafo */
+  }
+  
+  .btn-transparent {
+    margin-top: 0px; /* Quitar cualquier espacio extra en el botón */
+    padding: 5px 10px; /* Ajusta el padding interno del botón si es necesario */
+  }
 .cartita-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dos columnas */
@@ -824,4 +854,75 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
    
   }
   
+  .grupo-container {
+    display: flex; /* Alinea todas las tarjetas en línea */
+    flex-direction: row; /* Asegura que las tarjetas estén en una fila */
+    flex-wrap: nowrap; /* Evita que las tarjetas se envuelvan a la siguiente línea */
+  }
   
+  .grupo-card { 
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Espacio entre las tarjetas */
+    color: aliceblue;
+  }
+  .grupo-card:hover{
+    color: greenyellow;
+
+  }
+  
+  .grupo-card-image {
+    width: 50px; /* Tamaño pequeño */
+    height: 50px; /* Tamaño pequeño */
+    border-radius: 50%; /* Hace la imagen circular */
+    object-fit: cover; /* Asegura que la imagen mantenga su proporción dentro del círculo */
+    border:2px solid rgba(3, 250, 36, 0.788);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+  }
+  .grupo-card-image:hover{
+    transform: scale(1.4);
+    transform-origin: bottom; /* El crecimiento ocurre hacia arriba */
+   
+  }
+  
+
+
+
+  .grupo-card p {
+    margin: 0; /* Elimina el margen por defecto del párrafo */
+    font-size: 1em; /* Ajusta el tamaño del texto */
+  }
+
+  .cuadroGrupo{
+    border:3px solid red;
+    border-radius: 15px;
+    padding: 1em;
+    margin-top: 1em;
+    min-height: 200px;
+  }
+
+  .bordeRev{
+    border: 3px solid greenyellow;
+   
+    background: linear-gradient(135deg, #081923, #1B3A4B);
+ 
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1);
+  }
+  .tipInfo {
+    background-color: #333; /* Fondo oscuro o del color que prefieras */
+    color: aliceblue; /* Texto claro */
+    border: 2px solid #fff; /* Borde blanco */
+    padding: 10px; /* Espaciado interno */
+    font-size: 14px; /* Ajusta el tamaño de la fuente */
+    max-width: 200px; /* Tamaño máximo del tooltip */
+    border-radius: 8px; /* Bordes redondeados */
+  }

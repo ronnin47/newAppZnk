@@ -618,8 +618,8 @@ const guardarCambiosBBDD = async () => {
       cicatriz: cicatrizN || 0,
     };
     
-    //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
-    const response = await axios.put(`https://znk.onrender.com/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
+    //const response = await axios.put(`https://znk.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -735,8 +735,8 @@ useEffect(() => {
        
        try {
        
-        //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-        const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
+        const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+        //const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {
         console.error('Error al eliminar el personaje:', error);
@@ -777,9 +777,9 @@ useEffect(() => {
     <div className='container'>
          <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombreN}</p>
          <div style={{marginLeft:"20px"}}>  
-          <BarraVida cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
-          <BarraKi nombreN={nombreN} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={kiN} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
-          <BarraKen nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
+          <BarraVida idpersonaje={idpersonaje} cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
+          <BarraKi idpersonaje={idpersonaje} nombreN={nombreN} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={kiN} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
+          <BarraKen idpersonaje={idpersonaje} nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
         </div>
         <div className='row col2' style={{marginBottom:"1em", marginTop:"4.5em"}}>
           <div className='col1'>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CartaNarrador } from "./cartaNarrador";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -7,6 +7,16 @@ import Tabs from 'react-bootstrap/Tabs';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Sagas } from "./sagas";
+
+
+
+
+
+
+
 
 
 const Cartita=({
@@ -84,7 +94,8 @@ const Cartita=({
 
   conviccion,
   cicatriz,
- 
+ grupo,
+ setGrupo,
 })=>{
 
   const [showCartaPj, setShowCartaPj] = useState(false);
@@ -99,16 +110,60 @@ const Cartita=({
 
 
 
+
+
+  const handleAgregarClick = () => {
+    console.log("Funciona botón de agregar a grupo");
+    console.log(`Id personaje: ${idpersonaje}, Nombre: ${nombre}`);
+  
+    // Verifica si el personaje ya está en el grupo por su idpersonaje
+    setGrupo(prevGrupo => {
+      // Si el personaje ya está en el grupo, no lo agrega
+      const personajeExiste = prevGrupo.some(personaje => personaje.idpersonaje === idpersonaje);
+  
+      if (personajeExiste) {
+        console.log("El personaje ya está en el grupo");
+        return prevGrupo;  // Retorna el grupo sin cambios
+      }
+  
+      // Si no existe, lo agrega al grupo
+      return [
+        ...prevGrupo,
+        { idpersonaje, nombre, imagen }
+      ];
+    });
+  };
+
+
+
+
   return(
         <>
-           <div className="cartita"  onClick={handleCardClick}>
-            <img src={imagen} alt={nombre} className="cartita-image" />
-            <div className="cartita-info">
-                <h3 className="cartita-name">{nombre}</h3>
-        
-                <p className="cartita-description">{dominio}</p>
-            </div>
-           </div>
+          <div className="cartita" style={{ padding: "10px", position: "relative" }} onDoubleClick={handleCardClick}>
+  <img src={imagen} alt={nombre} className="cartita-image" />
+  <div className="cartita-info">
+    <p className="cartita-name">{nombre}</p>
+    <p className="cartita-description">{dominio}</p>
+  </div>
+
+  <Button 
+    variant="outline-warning"  
+    style={{
+      height: "30px",
+      width: "30px",
+      display: "flex",
+      justifyContent: "center",  // Centra horizontalmente
+      alignItems: "center",      // Centra verticalmente
+      padding: "0",              // Elimina padding adicional
+      position: "absolute",      // Posiciona el botón de manera absoluta
+      top: "10px",               // Lo sitúa en la parte superior
+      right: "10px",             // Lo sitúa en la esquina derecha
+    }}
+    onClick={handleAgregarClick}
+  >
+    +
+  </Button>
+</div>
            {showCartaPj && (
           <CartaNarrador
             eliminarPj={eliminarPj}
@@ -196,6 +251,9 @@ const Cartita=({
 
           />
         )}
+
+
+
      
          
         </>
@@ -203,12 +261,56 @@ const Cartita=({
 
 }
 
+const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
+
+
+  console.log("id personaje CUANDO LLEGA",idpersonaje)
+  const handleEliminarPersonaje = (idpersonaje) => {
+    // Filtrar los personajes para eliminar el seleccionado
+    
+    console.log( typeof idpersonaje)
+    console.log("solucionando la eliminacion",grupo)
+    
+    const personajesActualizados = grupo.filter(pj => pj.idpersonaje !== idpersonaje);
+    
+    // Actualizar el estado del grupo con los personajes actualizados
+    setGrupo(personajesActualizados);
+    
+    // Mostrar el grupo actualizado en la consola
+    console.log("GRUPO DESPUES DE ELIMINACION", personajesActualizados);
+  };
+
+
+  
 
 
 
-export const Narrador = ({estatus,setColeccionPersonajes,coleccionPersonajes}) => {
 
 
+ 
+  return (
+    <>
+      <div className="grupo-card" key={idpersonaje}>
+        <img 
+          src={imagen} 
+          alt={nombre} 
+          className="grupo-card-image"  
+          onClick={() => handleEliminarPersonaje(idpersonaje)} // Llama a la función con el idpersonaje
+        />
+        
+      </div>
+    </>
+  );
+};
+
+
+
+
+
+
+
+
+export const Narrador = ({estatus,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
@@ -281,8 +383,8 @@ const eliminarPj = (idpersonaje,nombre) => {
 const destruirPj=async(idpersonaje)=>{
   try {
   
-    //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-    const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
+    const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+    //const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
     console.log('Personaje eliminado:', response.data);
   } catch (error) {
     console.error('Error al eliminar el personaje:', error);
@@ -291,9 +393,103 @@ const destruirPj=async(idpersonaje)=>{
  console.log("*****************Este es el id de personaje:",idpersonaje)
 }
 
+
+//coleccion grupos 
+const [grupo,setGrupo]=useState([]);
+const [coleccionGrupos,setColeccionGrupos]=useState([]);
+
+const [nameGrupo,setNameGrupo]=useState("");
+
+
+useEffect(() => {
+  const loadPersonajes = async () => {
+    try {
+      if (sesion) {
+        // Fetch personajes if the session is active
+        const response = await axios.get('http://localhost:4000/consumirGrupos', {
+        //const response = await axios.get('https://znk.onrender.com/consumirGrupos', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const { coleccionGrupos } = response.data;
+
+        if (!Array.isArray(coleccionGrupos)) {
+          console.error('El formato de datos no es un array.');
+          return;
+        }
+
+        console.log("***trae los personajes efectivamente", coleccionGrupos);
+
+        // Set the fetched collection to state
+        setColeccionGrupos(coleccionGrupos);
+      }
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir grupos", error.message);
+    }
+  };
+  loadPersonajes();
+}, [sesion]);
+//coleccionGrupos
+
+const handleChangeGrupo=(event)=>{
+  setNameGrupo(event.target.value);
+  console.log(nameGrupo);
+}
+
+const handleClickCrearGrupo = async() => {
+  if (!nameGrupo || grupo.length === 0) {
+    console.log("Debes ingresar un nombre y seleccionar personajes para el grupo.");
+    return;
+  }
+
+  const nuevoGrupo = {
+    nombre: nameGrupo,
+    idspersonajes: grupo.map((pj) => pj.idpersonaje), // Solo el ID de cada personaje
+  };
+
+  console.log("Se creó el grupo: ", nuevoGrupo);
+
+  // Aquí puedes mandar el nuevo grupo a la base de datos
+
+
+  //*******insert en la base de datos del grupo***********
+ 
+
+  try {
+    
+    //const response = await axios.post(`https://znk.onrender.com/insertGrupo`, pjNuevo, {   
+    const response = await axios.post(`http://localhost:4000/insertGrupo`, nuevoGrupo, { 
+    headers: {
+        'Content-Type': 'application/json', 
+      },
+    });
+    const { idgrupo } = response.data;
+    console.log("idGrupo: ",idgrupo)
+    
+    setColeccionGrupos([...coleccionGrupos, { ...nuevoGrupo, idgrupo }]);
+   
+
+
+  } catch (error) {
+    console.error('Error al insertar el nuevo Grupo:', error.message);
+  }
+
+ 
+
+  // Limpiar el estado
+  setNameGrupo("");
+  setGrupo([]);
+  
+};
+
+
+
+
+
   return (
     <>
-
     <Tabs
       defaultActiveKey="home"
       transition={false}
@@ -329,8 +525,66 @@ const destruirPj=async(idpersonaje)=>{
         }} 
       />
     </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div className="grupo-container" style={{ marginBottom: "2em", marginTop: "2em" }}>
+  {grupo && grupo.length > 0 ? (
+    <>
+      {grupo.map((pj) => (
+        <GrupoCard
+          key={pj.idpersonaje}
+          idpersonaje={pj.idpersonaje} 
+          nombre={pj.nombre}
+          imagen={pj.imagen}
+          grupo={grupo}
+          setGrupo={setGrupo}
         
-        
+        />
+      ))}
+    </>
+  ) : (
+    <></>
+  )}
+
+
+
+
+
+
+
+
+
+    </div>
+    {grupo.length>0 ?
+    <div className="input-container" style={{ display: "flex", alignItems: "center", marginTop: "0em" }}>
+    <input 
+      type="text" 
+      value={nameGrupo} onChange={handleChangeGrupo}
+      placeholder="Ingresa nombre del grupo" 
+      className="grupo-input buscador" 
+      style={{width:"100%"}}
+
+
+      // Añade aquí el estado y la función para manejar el input
+    />
+    <Button variant="outline-warning" style={{width:"100px", marginLeft:"3px"}}
+     
+     onClick={handleClickCrearGrupo}
+     
+      // Añade aquí la función para manejar el clic del botón
+    >
+      + Grupo
+    </Button>
+  </div>:<></>} 
         
         
         </div>
@@ -340,6 +594,8 @@ const destruirPj=async(idpersonaje)=>{
 
 {personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj)=>(
   <Cartita
+  grupo={grupo}
+  setGrupo={setGrupo}
   eliminarPj={eliminarPj}
   key={pj.idpersonaje} 
   nombre={pj.nombre} 
@@ -495,6 +751,18 @@ const destruirPj=async(idpersonaje)=>{
         
        </div>
         </div>
+        </Tab>
+
+
+        <Tab  eventKey="sagas" title="Sagas y grupos">
+          <Sagas
+          sesion={sesion}
+          grupo={grupo}
+          coleccionGrupos={coleccionGrupos}
+          setColeccionGrupos={setColeccionGrupos}
+          coleccionPersonajes={coleccionPersonajes}
+          ></Sagas>
+            
         </Tab>
       
     </Tabs>

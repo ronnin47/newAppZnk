@@ -1,15 +1,11 @@
 import { useEffect, useState, useRef } from "react"
 import 'animate.css';
 import { io } from 'socket.io-client';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Swal from 'sweetalert2';
-
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
+
+
 export const Panel = ({textareaRef, messagesEndRef,nombre,setMessage,sock,setSock}) => {
-
-
 
     useEffect(() => {
         // Escuchar mensajes del servidor y actualizar el estado
@@ -27,19 +23,6 @@ export const Panel = ({textareaRef, messagesEndRef,nombre,setMessage,sock,setSoc
           messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
         }
       }, [sock]);
-
-/*
-      useEffect(() => {
-        if (messagesEndRef.current) {
-          messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-      }, [sock]);
-*/
-/*
-      <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
-      <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
-
-*/
 
   return (
     <>

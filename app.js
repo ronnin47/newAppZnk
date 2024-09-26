@@ -36,7 +36,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-/*
+
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -44,7 +44,7 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 //*************base de datos nueva de render************
 /*
@@ -61,7 +61,7 @@ const pool = new Pool({
 
 */
 //***************** base septiembre ****************************
-
+/*
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-crkt1688fa8c738l0hlg-a',
@@ -69,7 +69,7 @@ const pool = new Pool({
   password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
+*/
 
 async function checkDatabaseConnection() {
   try {
@@ -522,6 +522,109 @@ app.post('/insert-personaje', async (req, res) => {
 });
 
 
+
+//INSERT Grupo
+app.post('/insertGrupo', async (req, res) => {
+  const { 
+    nombre,
+    idspersonajes,
+      
+   } = req.body;
+    console.log("llego la peticion de insert nuevo grupo!!")
+    console.log(req.body)
+  
+
+  try {
+    const query = `
+      INSERT INTO grupos (
+      nombre, 
+      idspersonajes 
+      )
+      VALUES ($1, $2)
+      RETURNING idgrupo
+    `;
+
+    const values = [
+      nombre,
+      idspersonajes,
+      ];
+    const result = await pool.query(query, values);
+
+    const newId = result.rows[0].idgrupo;
+    console.log("El Id GRUPO que viene de la base de datos es: "+newId)
+    res.status(201).json({ message: 'Grupo insertado exitosamente.', idgrupo: newId });
+  } catch (err) {
+    console.error('Error al insertar el nuevo Grupo:', err.message);
+    res.status(500).json({ error: 'Error al insertar el nuevo Grupo.' });
+  }
+});
+
+// CONSUMIR GRUPOS
+app.get('/consumirGrupos', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM grupos');
+    const coleccionGrupos = result.rows;
+
+    if (!Array.isArray(coleccionGrupos)) {
+      return res.status(500).json({ message: 'Error: no se encontró la colección de grupos.' });
+    }
+
+    res.status(200).json({ coleccionGrupos });
+  } catch (err) {
+    console.error('Error al consumir los grupos:', err.message);
+    res.status(500).json({ error: 'Error al consumir los grupos.' });
+  }
+});
+
+
+//*****************************************ACAAAAAAAAAAAAAA */
+// Ruta para actualizar un grupo y su array de personajes
+app.put('/update-grupos', async (req, res) => {
+  const { idgrupo, idspersonajes } = req.body; // Desestructuramos los datos recibidos del cuerpo de la solicitud
+  console.log("Datos recibidos para actualizar grupo:", { idgrupo, idspersonajes });
+
+  try {
+    // Actualizar el array `idspersonajes` en la tabla `grupos`
+    const result = await pool.query(
+      'UPDATE grupos SET idspersonajes = $1 WHERE idgrupo = $2 RETURNING *',
+      [idspersonajes, idgrupo]
+    );
+
+    // Verificar si el grupo existe
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Grupo no encontrado' });
+    }
+
+    // Respuesta con el grupo actualizado
+    res.json({ message: 'Grupo actualizado exitosamente', grupo: result.rows[0] });
+  } catch (error) {
+    console.error('Error al actualizar el grupo en la base de datos:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+
+// Ruta para eliminar un grupo por Id cuando no hay personajes
+app.delete('/delete-grupo/:idgrupo', async (req, res) => {
+  const { idgrupo } = req.params;
+
+  try {
+    // Eliminar el grupo de la base de datos por su ID
+    const resultado = await pool.query('DELETE FROM grupos WHERE idgrupo = $1', [idgrupo]);
+
+    if (resultado.rowCount > 0) {
+      res.status(200).json({ message: 'Grupo eliminado exitosamente' });
+    } else {
+      res.status(404).json({ message: 'Grupo no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar el grupo:', error);
+    res.status(500).json({ message: 'Error al eliminar el grupo' });
+  }
+});
+
+
+
 //UPDATE ok!!
 app.put('/update-personaje/:id', async (req, res) => {
   const idpersonaje = req.params.id;
@@ -853,8 +956,8 @@ app.get('/consumirTecEspeciales', async (req, res) => {
  });
 
 
-//const PORT = process.env.PORT || 4000;
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

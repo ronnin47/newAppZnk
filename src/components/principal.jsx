@@ -282,8 +282,8 @@ useEffect(() => {
     try {
       if (sesion) {
         // Fetch personajes if the session is active
-        //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-        const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
+        const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+        //const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -682,7 +682,7 @@ return (
 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 
