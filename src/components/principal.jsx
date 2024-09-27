@@ -24,6 +24,9 @@ import { Ranking } from "./ranking.jsx";
 
 
 
+import { MiGrupo } from "./migrupo.jsx";
+
+
 
 
 export const Principal= ()=> {
@@ -281,9 +284,9 @@ useEffect(() => {
   const loadPersonajes = async () => {
     try {
       if (sesion) {
-        // Fetch personajes if the session is active
-        const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-        //const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
+        
+        //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+        const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -342,6 +345,42 @@ useEffect(() => {
 
 
 
+
+const [coleccionGrupos,setColeccionGrupos]=useState([]);
+
+
+useEffect(() => {
+  const loadPersonajes = async () => {
+    try {
+      if (sesion) {
+     
+        //const response = await axios.get('http://localhost:4000/consumirGrupos', {
+        const response = await axios.get('https://znk.onrender.com/consumirGrupos', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const { coleccionGrupos } = response.data;
+
+        if (!Array.isArray(coleccionGrupos)) {
+          console.error('El formato de datos no es un array.');
+          return;
+        }
+
+        console.log("***trae los personajes efectivamente", coleccionGrupos);
+
+       
+        setColeccionGrupos(coleccionGrupos);
+      }
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir grupos", error.message);
+    }
+  };
+  loadPersonajes();
+}, [sesion]);
+
+
 return (
     <>
      <Nava 
@@ -355,7 +394,24 @@ return (
      setEstatus={setEstatus}
      />
 
+     <div  className="inicioGrupo">
+     {pjSeleccionado ? (
+                <MiGrupo
+                  personajes={personajes}
+                  setPersonajes={setPersonajes}
+                  coleccionGrupos={coleccionGrupos}
+                  coleccionPersonajes={coleccionPersonajes}
 
+
+
+                  key={pj.idpersonaje} 
+                  idpersonaje={pj.idpersonaje}
+                  nombre={pj.nombre}
+                  imagen={pj.imagen}
+                />
+              ):(<></>)}
+     </div>
+    
 
 
      <div>
@@ -377,7 +433,7 @@ return (
                   textareaRef={textareaRef }
                   messagesEndRef={messagesEndRef}
                 />
-              ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
+              ):(<></>)}
      </div>
     
     <Tabs
@@ -682,7 +738,7 @@ return (
 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 

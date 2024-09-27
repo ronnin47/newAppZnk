@@ -310,7 +310,7 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
 
 
-export const Narrador = ({estatus,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
+export const Narrador = ({estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
@@ -383,8 +383,8 @@ const eliminarPj = (idpersonaje,nombre) => {
 const destruirPj=async(idpersonaje)=>{
   try {
   
-    const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-    //const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
+    //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+    const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
     console.log('Personaje eliminado:', response.data);
   } catch (error) {
     console.error('Error al eliminar el personaje:', error);
@@ -396,42 +396,9 @@ const destruirPj=async(idpersonaje)=>{
 
 //coleccion grupos 
 const [grupo,setGrupo]=useState([]);
-const [coleccionGrupos,setColeccionGrupos]=useState([]);
+//const [coleccionGrupos,setColeccionGrupos]=useState([]);
 
 const [nameGrupo,setNameGrupo]=useState("");
-
-
-useEffect(() => {
-  const loadPersonajes = async () => {
-    try {
-      if (sesion) {
-        // Fetch personajes if the session is active
-        const response = await axios.get('http://localhost:4000/consumirGrupos', {
-        //const response = await axios.get('https://znk.onrender.com/consumirGrupos', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        const { coleccionGrupos } = response.data;
-
-        if (!Array.isArray(coleccionGrupos)) {
-          console.error('El formato de datos no es un array.');
-          return;
-        }
-
-        console.log("***trae los personajes efectivamente", coleccionGrupos);
-
-        // Set the fetched collection to state
-        setColeccionGrupos(coleccionGrupos);
-      }
-    } catch (error) {
-      console.error("Cliente: Fallo al consumir grupos", error.message);
-    }
-  };
-  loadPersonajes();
-}, [sesion]);
-//coleccionGrupos
 
 const handleChangeGrupo=(event)=>{
   setNameGrupo(event.target.value);
@@ -459,8 +426,8 @@ const handleClickCrearGrupo = async() => {
 
   try {
     
-    //const response = await axios.post(`https://znk.onrender.com/insertGrupo`, pjNuevo, {   
-    const response = await axios.post(`http://localhost:4000/insertGrupo`, nuevoGrupo, { 
+    const response = await axios.post(`https://znk.onrender.com/insertGrupo`, nuevoGrupo, {   
+    //const response = await axios.post(`http://localhost:4000/insertGrupo`, nuevoGrupo, { 
     headers: {
         'Content-Type': 'application/json', 
       },

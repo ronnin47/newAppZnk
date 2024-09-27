@@ -26,7 +26,7 @@ export const Panel = ({textareaRef, messagesEndRef,nombre,setMessage,sock,setSoc
 
   return (
     <>
-   <div style={{ display: 'flex', flexDirection: 'column', height: '200px' }}>
+   <div style={{ display: 'flex', flexDirection: 'column', height: '170px' }}>
       <div className="contChat" style={{ flex: 1, overflowY: 'auto', border: '1px solid #ccc', padding: '1em',boxSizing: 'border-box' }}>
         {console.log("Contenido de sock:", sock)}
         {sock.map((msg, index) => {

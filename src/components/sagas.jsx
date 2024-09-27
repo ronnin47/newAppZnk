@@ -12,7 +12,6 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 
 import { io } from 'socket.io-client';
-
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
@@ -21,8 +20,7 @@ export const Sagas = ({ sesion, coleccionGrupos, setColeccionGrupos, coleccionPe
   const [busquedas, setBusquedas] = useState({}); // Estado para las búsquedas por grupo
   const [resultadosBusqueda, setResultadosBusqueda] = useState({}); // Estado para los resultados de búsqueda
 
-  console.log("**********COLECCION DE GRUPOS:", coleccionGrupos);
-  console.log("**********COLECCION DE PERSONAJES:", coleccionPersonajes);
+ 
 
   useEffect(() => {
     if (coleccionGrupos && coleccionGrupos.length > 0 && coleccionPersonajes && coleccionPersonajes.length > 0) {
@@ -74,7 +72,7 @@ export const Sagas = ({ sesion, coleccionGrupos, setColeccionGrupos, coleccionPe
       if (!grupoActualizado) {
         console.log(`El grupo con id ${idgrupo} ha sido eliminado por no tener personajes restantes.`);
         // Aquí puedes realizar una acción adicional para eliminar el grupo de la base de datos si es necesario
-        eliminarGrupoDeBBDD(idgrupo); // Llamada sin await
+        eliminarGrupoDeBBDD(idgrupo); 
         setShowModal(false);
         return gruposActualizados; // Retorna los grupos actualizados
       }
@@ -82,9 +80,9 @@ export const Sagas = ({ sesion, coleccionGrupos, setColeccionGrupos, coleccionPe
       // Llamar a la función para guardar los cambios en la base de datos
       const idsPersonajes = grupoActualizado.personajes.map(personaje => personaje.idpersonaje);
       guardarCambiosBBDD(grupoActualizado.idgrupo, idsPersonajes); // Llamada sin await
-       // Cerrar el modal
+      
       setShowModal(false);
-      return gruposActualizados; // Retorna los grupos actualizados
+      return gruposActualizados; 
     });
   };
 
@@ -125,7 +123,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
   // Función para eliminar el grupo de la base de datos
   const eliminarGrupoDeBBDD = async (idgrupo) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
+      //const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
+      const response = await axios.delete(`https://znk.onrender.com/delete-grupo/${idgrupo}`);
       console.log('Grupo eliminado exitosamente:', response.data);
 /*
       Swal.fire({
@@ -143,7 +142,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
 const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
   console.log("id grupo y idspersonajes", idgrupo, idspersonajes);
   try {
-    const response = await axios.put(`http://localhost:4000/update-grupos`, {
+    //const response = await axios.put(`http://localhost:4000/update-grupos`, {
+    const response = await axios.put(`https://znk.onrender.com/update-grupos`, {
       idgrupo,
       idspersonajes
     }, {
@@ -205,20 +205,17 @@ const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
   const [idGrupoSeleccionado, setIdGrupoSeleccionado] = useState(null);
 
   const abrirPersonaje=(nombre,idpersonaje,idgrupo)=>{
-    console.log("FUNCIONA ABRIR PERSONAJE ",nombre,idpersonaje,idgrupo)
-
+    //console.log("FUNCIONA ABRIR PERSONAJE ",nombre,idpersonaje,idgrupo)
     setPersonajeSeleccionado(idpersonaje);
     setIdGrupoSeleccionado(idgrupo);
-    setShowModal(true); // Abre el modal
+    setShowModal(true); 
 
   }
 
 
 
 
-
-
-  const [values, setValues] = useState({}); // Estado para almacenar los valores de ken y ki
+const [values, setValues] = useState({}); // Estado para almacenar los valores de ken y ki
 
 
 // Función para calcular vidaTotal
@@ -296,16 +293,15 @@ useEffect(() => {
     // Retornar el tooltip con los datos del personaje
     return (
       <Tooltip className="tipInfo" id="button-tooltip" {...props}>
-        <p style={{ fontSize: "1em", margin: "0" }}>
-          Vida: {data.vidaActual} / {data.vidaTotal}
-        </p>
-        <p style={{ fontSize: "1em", margin: "0" }}>
-          Ki: {data.kiActual}/{data.ki}
-        </p>
-        <p style={{ fontSize: "1em", margin: "0" }}>
-          Ken: {data.kenActual} / {data.ken}
-        </p>
-        {/* Puedes agregar más información del personaje aquí */}
+      <p style={{ fontSize: "1em", margin: "0", color:"yellow"}}>
+        Vida: {data.vidaActual} / {data.vidaTotal}
+      </p>
+      <p style={{ fontSize: "1em", margin: "0" , color:"yellow"}}>
+        Ki: {data.kiActual} / {data.ki}
+      </p>
+      <p style={{ fontSize: "1em", margin: "0", color:"yellow"}}>
+        Ken: {data.kenActual} / {data.ken}
+      </p>
       </Tooltip>
     );
   };

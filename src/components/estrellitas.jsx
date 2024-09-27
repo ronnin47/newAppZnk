@@ -15,18 +15,6 @@ export const Estrellitas = ({ ken }) => {
     };
 
 
-/*    
-     const getEstrellaSrc = (ken) => {
-        if (ken >= 400) {
-            return "./estrellaDorada.svg"; // Estrella dorada
-        } else if (ken >= 200) {
-            return "./estrellaAzulClaro.svg"; // Estrella azul
-        } else {
-            return "./estrellaGris.svg"; // Estrella de otro color
-        }
-    };
-  */  
-
     // Genera un array de estrellas según nDestino
     const estrellas = Array.from({ length: nDestino }, (_, index) => (
         <img

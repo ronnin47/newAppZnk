@@ -36,7 +36,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-
+/*
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -44,9 +44,9 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
+*/
 
-
-//*************base de datos nueva de render************
+//*************base render Agosto************
 /*
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
@@ -55,13 +55,13 @@ const pool = new Pool({
   password: 'zFi2JRnG9cX2Iig2tmuLoZdgFn7D8XK9',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
-
-
-
 */
+
+
+
+
 //***************** base septiembre ****************************
-/*
+
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-crkt1688fa8c738l0hlg-a',
@@ -69,7 +69,7 @@ const pool = new Pool({
   password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 async function checkDatabaseConnection() {
   try {
@@ -577,11 +577,11 @@ app.get('/consumirGrupos', async (req, res) => {
 });
 
 
-//*****************************************ACAAAAAAAAAAAAAA */
-// Ruta para actualizar un grupo y su array de personajes
+
+// Update grupos OK!!
 app.put('/update-grupos', async (req, res) => {
   const { idgrupo, idspersonajes } = req.body; // Desestructuramos los datos recibidos del cuerpo de la solicitud
-  console.log("Datos recibidos para actualizar grupo:", { idgrupo, idspersonajes });
+ // console.log("Datos recibidos para actualizar grupo:", { idgrupo, idspersonajes });
 
   try {
     // Actualizar el array `idspersonajes` en la tabla `grupos`
@@ -604,7 +604,7 @@ app.put('/update-grupos', async (req, res) => {
 });
 
 
-// Ruta para eliminar un grupo por Id cuando no hay personajes
+// bORRAR GRUPO OK!!!
 app.delete('/delete-grupo/:idgrupo', async (req, res) => {
   const { idgrupo } = req.params;
 
@@ -956,14 +956,13 @@ app.get('/consumirTecEspeciales', async (req, res) => {
  });
 
 
-const PORT = process.env.PORT || 4000;
-//const PORT = process.env.PORT || 10000;
+//const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });
 
 // Ruta para manejar todas las solicitudes y devolver el archivo HTML principal
-
 app.get('/*', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });

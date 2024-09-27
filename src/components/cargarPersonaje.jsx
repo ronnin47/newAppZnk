@@ -419,8 +419,8 @@ export const CargarPersonaje = ({
 
     try {
     
-      //const response = await axios.post(`https://znk.onrender.com/insert-personaje`, pjNuevo, {   
-      const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
+      const response = await axios.post(`https://znk.onrender.com/insert-personaje`, pjNuevo, {   
+      //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
           'Content-Type': 'application/json', 
         },
@@ -429,22 +429,6 @@ export const CargarPersonaje = ({
       
       setPersonajes([...personajes, { ...pjNuevo, idpersonaje }]);
   
-  /*
-    //lalam a la peticion 
-        const fetchPersonajes = async () => {
-          try {
-            //const response = await axios.get('http://localhost:4000/personajes');
-            const response = await axios.get(`https://rankingznk.onrender.com/personajes`);
-            setPersonajes(response.data);
-          
-          } catch (error) {
-            console.error('Error al obtener los personajes:', error);
-          }
-        };
-      
-        fetchPersonajes();
-  */    
-      //console.log("Last added ID:", idpersonaje);
     } catch (error) {
       console.error('Error al insertar el personaje:', error.message);
     }

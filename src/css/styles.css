@@ -442,8 +442,8 @@ background-color: rgba(0, 0, 0, 0.719);
     white-space: pre-wrap;
   }
   .contChat {
-    min-height: 200px;  
-    max-height: 200px; 
+    min-height: 170px;  
+    max-height: 170px; 
     overflow-y: auto;  
     border: 1px solid #ccc;  
     padding: 10px;  
@@ -919,10 +919,42 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   }
   .tipInfo {
     background-color: #333; /* Fondo oscuro o del color que prefieras */
-    color: aliceblue; /* Texto claro */
-    border: 2px solid #fff; /* Borde blanco */
+    color: yellow; /* Texto claro */
+    
     padding: 10px; /* Espaciado interno */
-    font-size: 14px; /* Ajusta el tamaño de la fuente */
+    font-size: 12px; /* Ajusta el tamaño de la fuente */
     max-width: 200px; /* Tamaño máximo del tooltip */
     border-radius: 8px; /* Bordes redondeados */
+    border: 2px solid #4CAF50; /* Cambia el color del borde cuando está enfocado */
+    outline: none; /* Elimina el borde predeterminado del navegador */
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); 
+  }
+  .tipInfo >p{
+    color: yellow;
+  }
+
+
+  .grupoPj {
+    margin: 0px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .grupoPj.loading {
+    opacity: 0; /* Durante la carga, se desvanece */
+  }
+
+
+  .inicioGrupo {
+    min-height: 80px; /* Ajusta esta altura según el contenido típico */
+   
+    display: flex;
+   
+    justify-content:start;
+    margin-left: 20px;
   }
