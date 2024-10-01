@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-
-
-
-
 import { io } from 'socket.io-client';
+
+// Conectar al socket usando la URL del backend desde las variables de entorno
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
-
-
-
-export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes }) => {
+export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes, values, setValues }) => {
   const [gruposFiltrados, setGruposFiltrados] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Estado de carga
 
   useEffect(() => {
-    setIsLoading(true); // Indicar que está cargando
+    setIsLoading(true); // Inicia el estado de carga
     if (coleccionGrupos?.length > 0 && coleccionPersonajes?.length > 0) {
       // Filtrar los grupos que contienen el idpersonaje
       const gruposConPersonaje = coleccionGrupos.filter(grupo =>
@@ -34,71 +29,25 @@ export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes }) =
         };
       });
 
+      // Establecer grupos filtrados con un pequeño retardo para suavizar la transición
       setTimeout(() => {
         setGruposFiltrados(gruposConPersonajes);
-        setIsLoading(false); // Terminar carga después del procesamiento
-      }, 100); // Un pequeño retardo suaviza la transición
+        setIsLoading(false); // Finaliza el estado de carga
+      }, 100);
     }
   }, [idpersonaje, coleccionGrupos, coleccionPersonajes]);
 
-
-  const [values, setValues] = useState({}); // Estado para almacenar los valores de ken y ki
-
-
-// Función para calcular vidaTotal
-const calcularVidaTotal = (personaje) => {
-  return (personaje.ki + personaje.fortaleza) * (personaje.positiva + personaje.negativa);
-};
-
-useEffect(() => {
-  // Función para manejar los mensajes recibidos
-  const handleMessage = (data) => {
-    setValues((prevValues) => {
-      // Buscar el personaje correspondiente en coleccionPersonajes
-      const personajeEnColeccion = coleccionPersonajes.find((p) => p.idpersonaje === data.idpersonaje);
-      
-      // Si no se encuentra el personaje, no hacemos nada
-      if (!personajeEnColeccion) return prevValues;
-
-      // Calcular vidaTotal si no viene en los datos del mensaje
-      const vidaTotalCalculada = calcularVidaTotal(personajeEnColeccion);
-
-      return {
-        ...prevValues,
-        [data.idpersonaje]: {
-          kenActual: data.kenActual !== undefined ? data.kenActual : 
-            (prevValues[data.idpersonaje]?.kenActual || personajeEnColeccion.kenActual || 0),
-          ken: data.ken !== undefined ? data.ken : 
-            (prevValues[data.idpersonaje]?.ken || personajeEnColeccion.ken || 0),
-          kiActual: data.kiActual !== undefined ? data.kiActual : 
-            (prevValues[data.idpersonaje]?.kiActual || personajeEnColeccion.kiActual || 0),
-          ki: data.ki !== undefined ? data.ki : 
-            (prevValues[data.idpersonaje]?.ki || personajeEnColeccion.ki || 0),
-          vidaActual: data.vidaActual !== undefined ? data.vidaActual : 
-            (prevValues[data.idpersonaje]?.vidaActual || personajeEnColeccion.vidaActual || 0),
-          // Usamos el valor de vidaTotal del mensaje si está presente, sino lo calculamos
-          vidaTotal: data.vidaTotal !== undefined ? data.vidaTotal : 
-            (prevValues[data.idpersonaje]?.vidaTotal || vidaTotalCalculada),
-        },
-      };
-    });
+  // Función para calcular la vida total de un personaje
+  const calcularVidaTotal = (personaje) => {
+    return (personaje.ki + personaje.fortaleza) * (personaje.positiva + personaje.negativa);
   };
-    // Escuchar los eventos del socket
-    socket.on('message', handleMessage);
-
-    // Limpiar la suscripción al socket cuando el componente se desmonte
-    return () => {
-      socket.off('message', handleMessage);
-    };
-  }, [socket, coleccionPersonajes]);
-  
 
   // Función para renderizar el tooltip
   const renderTooltip = (idpersonaje) => (props) => {
-    // Buscar el personaje seleccionado por idpersonaje
+    // Buscar el personaje correspondiente por id
     const personaje = coleccionPersonajes.find((p) => p.idpersonaje === idpersonaje);
     
-    // Si no se encuentra el personaje, retornar un mensaje de error o similar
+    // Si no se encuentra el personaje, retornar un mensaje de error
     if (!personaje) {
       return (
         <Tooltip className="tipInfo" id="button-tooltip" {...props}>
@@ -112,33 +61,34 @@ useEffect(() => {
       kenActual: personaje.kenActual || 0, 
       ken: personaje.ken || 0, 
       kiActual: personaje.kiActual || 0, 
-      ki: personaje.ki || 0 ,
+      ki: personaje.ki || 0,
       vidaActual: personaje.vidaActual || 0, 
-      vidaTotal: calcularVidaTotal(personaje) // Calculamos vidaTotal
+      vidaTotal: calcularVidaTotal(personaje) // Calcular vidaTotal
     };
 
     // Retornar el tooltip con los datos del personaje
     return (
       <Tooltip className="tipInfo" id="button-tooltip" {...props}>
-        <p style={{ fontSize: "1em", margin: "0", color:"yellow"}}>
+        <p style={{ fontSize: "1em", margin: "0", color: "yellow" }}>
           Vida: {data.vidaActual} / {data.vidaTotal}
         </p>
-        <p style={{ fontSize: "1em", margin: "0" , color:"yellow"}}>
+        <p style={{ fontSize: "1em", margin: "0", color: "yellow" }}>
           Ki: {data.kiActual} / {data.ki}
         </p>
-        <p style={{ fontSize: "1em", margin: "0", color:"yellow"}}>
+        <p style={{ fontSize: "1em", margin: "0", color: "yellow" }}>
           Ken: {data.kenActual} / {data.ken}
         </p>
-        {/* Puedes agregar más información del personaje aquí */}
       </Tooltip>
     );
   };
 
   return (
     <div>
-      {gruposFiltrados.length > 0 ? (
+      {isLoading ? ( // Mostrar un estado de carga mientras se procesan los grupos
+        <p>Cargando...</p>
+      ) : gruposFiltrados.length > 0 ? (
         gruposFiltrados.map(grupo => (
-          <div key={grupo.idgrupo} className={`grupoPj ${isLoading ? 'loading' : ''}`}>
+          <div key={grupo.idgrupo} className="grupoPj">
             <div style={{ display: "flex", flexDirection: "row" }}>
               {grupo.personajes.length > 0 ? (
                 grupo.personajes.map(({ nombre, imagen, idpersonaje }) => (
@@ -161,13 +111,13 @@ useEffect(() => {
                   </div>
                 ))
               ) : (
-                <></>
+                <p>No hay personajes en este grupo.</p>
               )}
             </div>
           </div>
         ))
       ) : (
-        <></>
+        <p>No se encontraron grupos.</p>
       )}
     </div>
   );

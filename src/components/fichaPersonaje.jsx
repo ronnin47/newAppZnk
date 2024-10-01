@@ -735,7 +735,7 @@ useEffect(() => {
        
        try {
        
-       // const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+      //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
       const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
         console.log('Personaje eliminado:', response.data);
       } catch (error) {

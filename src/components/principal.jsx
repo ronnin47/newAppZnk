@@ -26,7 +26,8 @@ import { Ranking } from "./ranking.jsx";
 
 import { MiGrupo } from "./migrupo.jsx";
 
-
+import { io } from 'socket.io-client';
+const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
 export const Principal= ()=> {
@@ -381,6 +382,66 @@ useEffect(() => {
 }, [sesion]);
 
 
+
+
+
+
+
+
+
+
+
+const [values, setValues] = useState({});
+
+// Función para calcular vidaTotal
+const calcularVidaTotal = (personaje) => {
+  return (personaje.ki + personaje.fortaleza) * (personaje.positiva + personaje.negativa);
+};
+
+useEffect(() => {
+  // Función para manejar los mensajes recibidos
+  const handleMessage = (data) => {
+    setValues((prevValues) => {
+      // Buscar el personaje correspondiente en coleccionPersonajes
+      const personajeEnColeccion = coleccionPersonajes.find((p) => p.idpersonaje === data.idpersonaje);
+      
+      // Si no se encuentra el personaje, no hacemos nada
+      if (!personajeEnColeccion) return prevValues;
+
+      // Calcular vidaTotal si no viene en los datos del mensaje
+      const vidaTotalCalculada = calcularVidaTotal(personajeEnColeccion);
+
+      return {
+        ...prevValues,
+        [data.idpersonaje]: {
+          kenActual: data.kenActual !== undefined ? data.kenActual : 
+            (prevValues[data.idpersonaje]?.kenActual || personajeEnColeccion.kenActual || 0),
+          ken: data.ken !== undefined ? data.ken : 
+            (prevValues[data.idpersonaje]?.ken || personajeEnColeccion.ken || 0),
+          kiActual: data.kiActual !== undefined ? data.kiActual : 
+            (prevValues[data.idpersonaje]?.kiActual || personajeEnColeccion.kiActual || 0),
+          ki: data.ki !== undefined ? data.ki : 
+            (prevValues[data.idpersonaje]?.ki || personajeEnColeccion.ki || 0),
+          vidaActual: data.vidaActual !== undefined ? data.vidaActual : 
+            (prevValues[data.idpersonaje]?.vidaActual || personajeEnColeccion.vidaActual || 0),
+          // Usamos el valor de vidaTotal del mensaje si está presente, sino lo calculamos
+          vidaTotal: data.vidaTotal !== undefined ? data.vidaTotal : 
+            (prevValues[data.idpersonaje]?.vidaTotal || vidaTotalCalculada),
+        },
+      };
+    });
+  };
+    // Escuchar los eventos del socket
+    socket.on('message', handleMessage);
+
+    // Limpiar la suscripción al socket cuando el componente se desmonte
+    return () => {
+      socket.off('message', handleMessage);
+    };
+  }, [socket, coleccionPersonajes]);
+
+
+
 return (
     <>
      <Nava 
@@ -402,7 +463,8 @@ return (
                   coleccionGrupos={coleccionGrupos}
                   coleccionPersonajes={coleccionPersonajes}
 
-
+                  values={values} // Pasar el estado
+                  setValues={setValues} // Pasar la función
 
                   key={pj.idpersonaje} 
                   idpersonaje={pj.idpersonaje}
