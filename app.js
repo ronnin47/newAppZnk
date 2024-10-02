@@ -34,7 +34,7 @@ app.use(express.static(join(__dirname, 'dist')));
 
 const server = http.createServer(app);
 
-
+/*
 //LOCAL HOST
 
 const pool = new Pool({
@@ -44,24 +44,15 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
-
-//*************base render Agosto************
-/*
-const pool = new Pool({
-  user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
-  host: 'dpg-cr3aaqij1k6c73dj3qs0-a',
-  database: 'baseagosto', // Reemplaza con el nombre de tu base de datos
-  password: 'zFi2JRnG9cX2Iig2tmuLoZdgFn7D8XK9',   // Reemplaza con tu contraseña de PostgreSQL
-  port: 5432,
-});
 */
 
 
 
 
+
+
 //***************** base septiembre ****************************
-/*
+
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-crkt1688fa8c738l0hlg-a',
@@ -69,7 +60,7 @@ const pool = new Pool({
   password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 async function checkDatabaseConnection() {
   try {
@@ -1008,8 +999,8 @@ app.get('/consumirTecEspeciales', async (req, res) => {
  });
 
 
- const PORT = process.env.PORT || 4000;
-//const PORT = process.env.PORT || 10000;
+//const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

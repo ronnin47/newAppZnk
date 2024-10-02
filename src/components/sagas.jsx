@@ -123,8 +123,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
   // Función para eliminar el grupo de la base de datos
   const eliminarGrupoDeBBDD = async (idgrupo) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
-      //const response = await axios.delete(`https://znk.onrender.com/delete-grupo/${idgrupo}`);
+      //const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
+      const response = await axios.delete(`https://znk.onrender.com/delete-grupo/${idgrupo}`);
       console.log('Grupo eliminado exitosamente:', response.data);
 /*
       Swal.fire({
@@ -142,8 +142,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
 const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
   console.log("id grupo y idspersonajes", idgrupo, idspersonajes);
   try {
-    const response = await axios.put(`http://localhost:4000/update-grupos`, {
-    //const response = await axios.put(`https://znk.onrender.com/update-grupos`, {
+    //const response = await axios.put(`http://localhost:4000/update-grupos`, {
+    const response = await axios.put(`https://znk.onrender.com/update-grupos`, {
       idgrupo,
       idspersonajes
     }, {
