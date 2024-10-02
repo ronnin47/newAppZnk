@@ -310,7 +310,7 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
 
 
-export const Narrador = ({estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
+export const Narrador = ({usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
@@ -383,8 +383,8 @@ const eliminarPj = (idpersonaje,nombre) => {
 const destruirPj=async(idpersonaje)=>{
   try {
   
-    //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-    const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
+    const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+    //const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
     console.log('Personaje eliminado:', response.data);
   } catch (error) {
     console.error('Error al eliminar el personaje:', error);
@@ -426,8 +426,8 @@ const handleClickCrearGrupo = async() => {
 
   try {
     
-    const response = await axios.post(`https://znk.onrender.com/insertGrupo`, nuevoGrupo, {   
-    //const response = await axios.post(`http://localhost:4000/insertGrupo`, nuevoGrupo, { 
+    //const response = await axios.post(`https://znk.onrender.com/insertGrupo`, nuevoGrupo, {   
+    const response = await axios.post(`http://localhost:4000/insertGrupo`, nuevoGrupo, { 
     headers: {
         'Content-Type': 'application/json', 
       },
@@ -723,6 +723,7 @@ const handleClickCrearGrupo = async() => {
 
         <Tab  eventKey="sagas" title="Sagas y grupos">
           <Sagas
+          usuariosConectados={usuariosConectados} 
           sesion={sesion}
           grupo={grupo}
           coleccionGrupos={coleccionGrupos}

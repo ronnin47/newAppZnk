@@ -5,12 +5,30 @@ import { io } from 'socket.io-client';
 // Conectar al socket usando la URL del backend desde las variables de entorno
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
-export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes, values, setValues }) => {
+export const MiGrupo = ({
+  usuariosConectados,
+  idusuario,
+  pjUsuarioId,
+  idpersonaje,
+  coleccionGrupos,
+  coleccionPersonajes,
+  values,
+  sesion,
+  setValues
+}) => {
   const [gruposFiltrados, setGruposFiltrados] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Estado de carga
 
+/*
+  // Efecto para escuchar cambios en usuariosConectados
+  useEffect(() => {
+    console.log("***********Usuarios conectados: ", usuariosConectados); // Console log de usuarios conectados
+  }, [usuariosConectados,sesion]); // Ejecutar cuando usuariosConectados cambie
+*/
+
   useEffect(() => {
     setIsLoading(true); // Inicia el estado de carga
+
     if (coleccionGrupos?.length > 0 && coleccionPersonajes?.length > 0) {
       // Filtrar los grupos que contienen el idpersonaje
       const gruposConPersonaje = coleccionGrupos.filter(grupo =>
@@ -46,7 +64,7 @@ export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes, val
   const renderTooltip = (idpersonaje) => (props) => {
     // Buscar el personaje correspondiente por id
     const personaje = coleccionPersonajes.find((p) => p.idpersonaje === idpersonaje);
-    
+
     // Si no se encuentra el personaje, retornar un mensaje de error
     if (!personaje) {
       return (
@@ -57,12 +75,12 @@ export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes, val
     }
 
     // Obtener los valores de ken y ki para el personaje actual
-    const data = values[idpersonaje] || { 
-      kenActual: personaje.kenActual || 0, 
-      ken: personaje.ken || 0, 
-      kiActual: personaje.kiActual || 0, 
+    const data = values[idpersonaje] || {
+      kenActual: personaje.kenActual || 0,
+      ken: personaje.ken || 0,
+      kiActual: personaje.kiActual || 0,
       ki: personaje.ki || 0,
-      vidaActual: personaje.vidaActual || 0, 
+      vidaActual: personaje.vidaActual || 0,
       vidaTotal: calcularVidaTotal(personaje) // Calcular vidaTotal
     };
 
@@ -91,25 +109,39 @@ export const MiGrupo = ({ idpersonaje, coleccionGrupos, coleccionPersonajes, val
           <div key={grupo.idgrupo} className="grupoPj">
             <div style={{ display: "flex", flexDirection: "row" }}>
               {grupo.personajes.length > 0 ? (
-                grupo.personajes.map(({ nombre, imagen, idpersonaje }) => (
-                  <div
-                    className="grupo-card"
-                    key={idpersonaje}
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center"
-                    }}
-                  >
-                    <OverlayTrigger
-                      placement="right"
-                      overlay={renderTooltip(idpersonaje)}
+                grupo.personajes.map(({ nombre, imagen, idpersonaje, usuarioId }) => { // Asegúrate de que `usuarioId` está incluido en cada personaje
+                  console.log(`Personaje ID: ${idpersonaje}, Usuario ID: ${usuarioId}`); // Console log para el id de personaje y usuario
+                  
+                  return (
+                    <div
+                      className="grupo-card"
+                      key={idpersonaje}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
                     >
-                      <img src={imagen} alt={nombre} className="grupo-card-image" />
-                    </OverlayTrigger>
-                    <p>{nombre}</p>
-                  </div>
-                ))
+                      <OverlayTrigger
+                        placement="right"
+                        overlay={renderTooltip(idpersonaje)}
+                      >
+                        <img
+                          src={imagen}
+                          alt={nombre}
+                          className="grupo-card-image"
+                          style={{
+                           
+                            boxShadow: usuariosConectados.includes(Number(usuarioId)) 
+                            ? '0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(0, 191, 255, 0.9), 0 0 60px rgba(0, 191, 255, 0.6)' // Sombra brillante azul y blanco
+                            : 'none',
+                          }}
+                        />
+                      </OverlayTrigger>
+                      <p>{nombre}</p>
+                    </div>
+                  );
+                })
               ) : (
                 <p>No hay personajes en este grupo.</p>
               )}

@@ -36,7 +36,7 @@ const server = http.createServer(app);
 
 
 //LOCAL HOST
-/*
+
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -44,7 +44,7 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
+
 
 //*************base render Agosto************
 /*
@@ -61,7 +61,7 @@ const pool = new Pool({
 
 
 //***************** base septiembre ****************************
-
+/*
 const pool = new Pool({
   user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
   host: 'dpg-crkt1688fa8c738l0hlg-a',
@@ -69,7 +69,7 @@ const pool = new Pool({
   password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
+*/
 
 async function checkDatabaseConnection() {
   try {
@@ -93,6 +93,14 @@ async function checkDatabaseConnection() {
 // Llama a la función de verificación de conexión al iniciar el servidor
 checkDatabaseConnection();
 
+
+
+
+
+
+
+
+
 app.use(express.json());
 
 const io = new Server(server, {
@@ -101,17 +109,61 @@ const io = new Server(server, {
   },
 });
 
-io.on('connection', (socket) => {
-  console.log('Socket: un usuario se conecto');
 
-  socket.on('message', (message) => {
-    io.emit('message', message);
+
+const connectedUsers = new Map();
+
+io.on('connection', (socket) => {
+  console.log('Socket: un usuario se conectó');
+
+  // Manejar el evento de conexión de usuario
+  socket.on('user-connected', (userData) => {
+    const { usuarioId, sesion } = userData;
+    if(usuarioId && sesion){
+      connectedUsers.set(socket.id, usuarioId);
+      console.log(`Usuario ${usuarioId} conectado.`);
+      
+      // Emitir a todos los clientes la lista de usuarios conectados
+      io.emit('connected-users', Array.from(connectedUsers.values()));
+
+    }
+   
   });
 
+  // Manejar los mensajes enviados por los usuarios
+  socket.on('message', (message) => {
+    io.emit('message', message); // Emitir el mensaje a todos los clientes
+  });
+
+  socket.on('user-disconnect', (data) => {
+    const { usuarioId } = data; // Obtener el usuarioId del evento
+    const socketId = [...connectedUsers.entries()].find(([key, value]) => value === usuarioId)?.[0];
+  
+    if (socketId) {
+      connectedUsers.delete(socketId); // Eliminar el usuario del mapa
+      console.log(`Usuario ${usuarioId} se desconectó por cierre de sesión.`);
+  
+      // Emitir la lista actualizada de usuarios conectados
+      io.emit('connected-users', Array.from(connectedUsers.values()));
+    }
+  });
+
+  // Manejar la desconexión del usuario
   socket.on('disconnect', () => {
-    console.log('Socket: un usuario se desconecto');
+    const usuarioId = connectedUsers.get(socket.id);
+    if (usuarioId) {
+      connectedUsers.delete(socket.id);
+      console.log(`Usuario ${usuarioId} se desconectó.`);
+      
+      // Emitir la lista actualizada de usuarios conectados
+      io.emit('connected-users', Array.from(connectedUsers.values()));
+    }
+    console.log('Socket: un usuario se desconectó');
   });
 });
+
+
+
 
 // INSERTAR USUARIO ok!!
 app.post('/insert-usuario', async (req, res) => {
@@ -956,8 +1008,8 @@ app.get('/consumirTecEspeciales', async (req, res) => {
  });
 
 
-//const PORT = process.env.PORT || 4000;
-const PORT = process.env.PORT || 10000;
+ const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

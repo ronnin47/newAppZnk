@@ -34,7 +34,7 @@ export const Principal= ()=> {
 
   const [personajes, setPersonajes] = useState([]);
   
-
+  const [usuariosConectados, setUsuariosConectados] = useState([]); // Almacena los usuarios conectados
 
     const [pjSeleccionado,setPjSeleccionado]=useState("")
     console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
@@ -182,11 +182,54 @@ export const Principal= ()=> {
     return savedUsuarioId ? savedUsuarioId : null;
   });
 
+
+  useEffect(() => {
+    if (usuarioId) {
+      socket.emit('user-connected', { usuarioId });
+      console.log("Usuario conectado emitido:", usuarioId); // Verifica que se emita correctamente
+    }
+  }, [usuarioId,sesion]);
+
  
+ 
+
+
+  useEffect(() => {
+    // Emitir el evento de 'user-connected' si el usuario está en localStorage
+    if (usuarioId && sesion) {
+      socket.emit('user-connected', { usuarioId, sesion });
+    }
+
+    // Escuchar los usuarios conectados del servidor
+    const handleConnectedUsers = (users) => {
+      console.log("Usuarios conectados recibidos:", users);
+
+      const idsConectados = users.map(user => Number(user));
+      setUsuariosConectados(idsConectados); // Actualiza la lista de usuarios conectados
+    };
+
+    socket.on('connected-users', handleConnectedUsers);
+
+    // Limpieza al desmontar el componente
+    return () => {
+      socket.off('connected-users', handleConnectedUsers);
+    };
+  }, [usuarioId,sesion]);
+
+
+
+
+
+
+
+
+
   useEffect(() => {
     localStorage.setItem('sesion', sesion);
   }, [sesion]);
- 
+
+  
+
 
   // Función para cerrar sesión
 const cerrarSesion = async() => {
@@ -200,6 +243,8 @@ const cerrarSesion = async() => {
   setPjSeleccionado("");
   setPersonajes([]);
   setSesion(false);
+
+  socket.emit('user-disconnect', { usuarioId }); 
 
  
 };
@@ -286,8 +331,8 @@ useEffect(() => {
     try {
       if (sesion) {
         
-        //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-        const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
+        const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+        //const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -355,8 +400,8 @@ useEffect(() => {
     try {
       if (sesion) {
      
-        //const response = await axios.get('http://localhost:4000/consumirGrupos', {
-        const response = await axios.get('https://znk.onrender.com/consumirGrupos', {
+        const response = await axios.get('http://localhost:4000/consumirGrupos', {
+        //const response = await axios.get('https://znk.onrender.com/consumirGrupos', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -431,6 +476,8 @@ useEffect(() => {
       };
     });
   };
+
+
     // Escuchar los eventos del socket
     socket.on('message', handleMessage);
 
@@ -439,7 +486,6 @@ useEffect(() => {
       socket.off('message', handleMessage);
     };
   }, [socket, coleccionPersonajes]);
-
 
 
 return (
@@ -470,6 +516,10 @@ return (
                   idpersonaje={pj.idpersonaje}
                   nombre={pj.nombre}
                   imagen={pj.imagen}
+                  pjUsuarioId={pj.usuarioId}
+                  idusuario={usuarioId}
+                  usuariosConectados={usuariosConectados} 
+                  sesion={sesion}
                 />
               ):(<></>)}
      </div>
@@ -800,7 +850,7 @@ return (
 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 

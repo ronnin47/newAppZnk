@@ -11,6 +11,10 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+import { io } from 'socket.io-client';
+const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+
 
 export const Nava= ({setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
@@ -59,8 +63,8 @@ const handleSubmit = (e) => {
   const loginUsuario = async () => {
     try {
       
-      //const response = await axios.post('http://localhost:4000/loginUsuario', {    
-      const response = await axios.post('https://znk.onrender.com/loginUsuario', {
+      const response = await axios.post('http://localhost:4000/loginUsuario', {    
+      //const response = await axios.post('https://znk.onrender.com/loginUsuario', {
         email:loginEmail,
         contrasenia: loginPassword
       }, {
@@ -73,6 +77,8 @@ const handleSubmit = (e) => {
 
       setEstatus(estatus);
       console.log("Estatus de sesion: ",estatus)
+
+       
   
       Swal.fire({
         icon: 'success',
@@ -80,21 +86,24 @@ const handleSubmit = (e) => {
         //text: `Se han recuperado ${personajes.length} personajes.`,
       });
   
+      // Si el inicio de sesión es exitoso, emite el evento de conexión
+      socket.emit('user-connected', { usuarioId: idusuario });
       //console.log('Personajes recuperados:', personajes);
-      console.log("IDUSUARIO ES: ",idusuario)
+      //console.log("IDUSUARIO ES: ",idusuario)
       
-       //localStorage.setItem('personajes', JSON.stringify(personajes));
-        //await setPersonajesDB(personajes);
+    
+    
         
-      //  setPersonajes(personajes);
+    
 
        localStorage.setItem('estatus', estatus);
        localStorage.setItem('loginEmail', loginEmail);
        localStorage.setItem('loginPassword', loginPassword);
-       localStorage.setItem('idusuario', idusuario);
+       //localStorage.setItem('idusuario', idusuario);
+       localStorage.setItem('idusuario', String(idusuario));
        setUSuarioId(idusuario)
        setSesion(true)
-      // console.log("Personajes recien cargados: ",personajes)
+     
   
     } catch (error) {
       Swal.fire({
@@ -136,8 +145,8 @@ const cargarNuevoUsuario = async () => {
   };
   try {
     
-    //const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
-    const response = await axios.post(`https://znk.onrender.com/insert-usuario`, newUsuario, { 
+    const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
+    //const response = await axios.post(`https://znk.onrender.com/insert-usuario`, newUsuario, { 
     headers: {
         'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
       },

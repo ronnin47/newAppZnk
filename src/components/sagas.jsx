@@ -15,7 +15,7 @@ import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
-export const Sagas = ({ sesion, coleccionGrupos, setColeccionGrupos, coleccionPersonajes }) => {
+export const Sagas = ({ sesion,usuariosConectados, coleccionGrupos, setColeccionGrupos, coleccionPersonajes }) => {
   const [gruposConPersonajes, setGruposConPersonajes] = useState([]);
   const [busquedas, setBusquedas] = useState({}); // Estado para las búsquedas por grupo
   const [resultadosBusqueda, setResultadosBusqueda] = useState({}); // Estado para los resultados de búsqueda
@@ -123,8 +123,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
   // Función para eliminar el grupo de la base de datos
   const eliminarGrupoDeBBDD = async (idgrupo) => {
     try {
-      //const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
-      const response = await axios.delete(`https://znk.onrender.com/delete-grupo/${idgrupo}`);
+      const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
+      //const response = await axios.delete(`https://znk.onrender.com/delete-grupo/${idgrupo}`);
       console.log('Grupo eliminado exitosamente:', response.data);
 /*
       Swal.fire({
@@ -142,8 +142,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
 const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
   console.log("id grupo y idspersonajes", idgrupo, idspersonajes);
   try {
-    //const response = await axios.put(`http://localhost:4000/update-grupos`, {
-    const response = await axios.put(`https://znk.onrender.com/update-grupos`, {
+    const response = await axios.put(`http://localhost:4000/update-grupos`, {
+    //const response = await axios.put(`https://znk.onrender.com/update-grupos`, {
       idgrupo,
       idspersonajes
     }, {
@@ -325,7 +325,7 @@ useEffect(() => {
             <div style={{ display: "flex", flexDirection: "row" }}>
               {grupo.personajes.length > 0 ? (
                     
-                 grupo.personajes.map(({ nombre, imagen, idpersonaje }) => (
+                 grupo.personajes.map(({ nombre, imagen, idpersonaje, usuarioId }) => (
                   
                   <div
                     className="grupo-card"
@@ -341,7 +341,14 @@ useEffect(() => {
                         placement="right"
                         overlay={renderTooltip(idpersonaje)}
                     >
-                    <img src={imagen} alt={nombre} className="grupo-card-image"   onClick={()=>{abrirPersonaje(nombre,idpersonaje,grupo.idgrupo)}} />
+                    <img src={imagen} alt={nombre} className="grupo-card-image" 
+                      style={{
+                           
+                        boxShadow: usuariosConectados.includes(Number(usuarioId)) 
+                        ? '0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(0, 191, 255, 0.9), 0 0 60px rgba(0, 191, 255, 0.6)' // Sombra brillante azul y blanco
+                        : 'none',
+                      }} 
+                     onClick={()=>{abrirPersonaje(nombre,idpersonaje,grupo.idgrupo)}} />
                     </OverlayTrigger>
                    
                   
