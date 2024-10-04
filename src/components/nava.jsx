@@ -16,7 +16,7 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
 
-export const Nava= ({setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
+export const Nava= ({ isVisible,toggleFlotante, setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
 
 //visible o no visible
@@ -226,6 +226,14 @@ console.log("estado de sesion en el nav: ",sesion)
             <Nav.Link href="#" disabled>
               
             </Nav.Link>
+            <div style={{ marginLeft: 'auto' }}>
+            <Button variant="outline-warning" style={{borderRadius:"50%" }} onClick={toggleFlotante} >
+            {isVisible ? 'Off' : 'on'}
+              </Button>
+            </div>
+           
+
+           
           </Nav>
         </Navbar.Collapse>
       </Container>

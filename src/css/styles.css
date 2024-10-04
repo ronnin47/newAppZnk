@@ -958,3 +958,52 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     justify-content:start;
     margin-left: 20px;
   }
+
+  .floating-component {
+    min-width: 22em;
+    min-height: 7em;
+  max-width: 40em;
+  background: linear-gradient(145deg, #1e3c72, #2a5298);
+    border: 4px solid aliceblue;
+    border-radius: 20px;
+    cursor: move;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    box-shadow: 
+      0 0 15px rgba(0, 255, 255, 0.7),
+      0 0 25px rgba(0, 255, 255, 0.5),
+      0 0 35px rgba(0, 255, 255, 0.3),
+      0 0 45px rgba(0, 0, 255, 0.2),
+      0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
+    
+    position: fixed; /* Permite que se mantenga flotando incluso cuando se hace scroll */
+    z-index: 9999;   /* Asegura que siempre estará por encima de otros elementos */
+    text-align: center;
+    padding: 5px;
+  }
+
+  .floating-component p {
+    margin: 0;
+    word-wrap: break-word;   /* Permite que el texto se divida en varias líneas */
+    white-space: normal;     /* Asegura que el texto haga salto de línea automáticamente */
+    font-family: 'cursive';
+    color:aliceblue;
+}
+  
+  .imagenFlotante {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-left: 5px;
+    border: 4px solid aliceblue;
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
+  
+ 
+  }

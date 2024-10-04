@@ -34,9 +34,9 @@ app.use(express.static(join(__dirname, 'dist')));
 
 const server = http.createServer(app);
 
-/*
-//LOCAL HOST
 
+//LOCAL HOST
+/*
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -44,8 +44,8 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
 
+*/
 
 
 
@@ -965,7 +965,6 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
   }
 });
 
-
 //CONSUMIR PODERES ESPECIALES
 app.get('/consumirTecEspeciales', async (req, res) => {
   // const { email, contrasenia } = req.body;
@@ -997,6 +996,119 @@ app.get('/consumirTecEspeciales', async (req, res) => {
      res.status(500).json({ message: 'Error en el servidor' });
    }
  });
+
+
+
+
+
+
+
+ app.get('/saberes', async (req, res) => {
+  try {
+    // Realiza la consulta a la base de datos para obtener los saberes
+    const userQuery = 'SELECT * FROM saberes';
+    const userResult = await pool.query(userQuery);
+
+    if (userResult.rows.length === 0) {
+      // Cambiar a 404 si no se encontraron saberes
+      return res.status(404).json({ message: 'No se recuperaron saberes' });
+    }
+
+    const saberes = userResult.rows;
+
+    // Registro de los saberes recuperados
+    console.log("Colección saberes: ", saberes);
+
+    // Envía los saberes como respuesta
+    res.json(saberes); // Devuelve solo el array de saberes, sin mensaje adicional
+
+  } catch (error) {
+    console.error('Error al obtener saberes:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
+
+app.post('/insertSaber', async (req, res) => {
+  const { frase, imagen } = req.body; // Obtiene frase e imagen de la solicitud
+
+  //console.log(" esto viene desde el saber del cliente ",req.body)
+
+  // Verifica que se haya proporcionado una imagen
+  if (!imagen) {
+    return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
+  }
+
+  try {
+    // Inserta en la base de datos
+    const result = await pool.query(
+      'INSERT INTO saberes (frase, imagensaber) VALUES ($1, $2) RETURNING *',
+      [frase, imagen] // Guarda la imagen en formato Base64
+    );
+    const nuevoSaber = result.rows[0]; // Obtener el saber insertado
+
+    res.status(201).json(nuevoSaber); // Devuelve el nuevo saber
+  } catch (error) {
+    console.error('Error al insertar el saber:', error);
+    res.status(500).json({ error: 'Error al insertar el saber' });
+  }
+});
+
+
+// Ruta para actualizar un saber existente
+app.put('/updateSaber', async (req, res) => {
+  const { id, frase, imagen } = req.body; // Obtiene el ID, frase e imagen de la solicitud
+
+  //console.log("Datos recibidos para actualizar el saber:", req.body);
+
+  // Verifica que se haya proporcionado un ID
+  if (!id) {
+    return res.status(400).json({ error: 'No se ha proporcionado un ID de saber' });
+  }
+
+  try {
+    // Actualiza en la base de datos
+    const result = await pool.query(
+      'UPDATE saberes SET frase = $1, imagensaber = $2 WHERE idsaber = $3 RETURNING *',
+      [frase, imagen, id] // Actualiza los campos en la base de datos
+    );
+
+    // Verifica si se actualizó algún saber
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Saber no encontrado' });
+    }
+
+    const saberActualizado = result.rows[0]; // Obtener el saber actualizado
+    res.status(200).json(saberActualizado); // Devuelve el saber actualizado
+  } catch (error) {
+    console.error('Error al actualizar el saber:', error);
+    res.status(500).json({ error: 'Error al actualizar el saber' });
+  }
+});
+
+
+
+// Ruta para eliminar un saber
+app.delete('/deleteSaber/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query('DELETE FROM saberes WHERE idsaber = $1 RETURNING *', [id]);
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Saber no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Saber eliminado con éxito', deletedSaber: result.rows[0] });
+  } catch (error) {
+    console.error('Error al eliminar el saber:', error);
+    res.status(500).json({ message: 'Error en el servidor', error });
+  }
+});
+
+
+
+
+
 
 
 //const PORT = process.env.PORT || 4000;

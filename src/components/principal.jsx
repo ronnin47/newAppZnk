@@ -30,6 +30,10 @@ import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
+
+import { Flotante } from "./flotante.jsx";
+
+
 export const Principal= ()=> {
 
   const [personajes, setPersonajes] = useState([]);
@@ -487,6 +491,36 @@ useEffect(() => {
     };
   }, [socket, coleccionPersonajes]);
 
+  const [saberes, setSaberes] = useState([]); // Estado inicial vacío
+ 
+  // Cargar los saberes existentes cuando el componente se monta
+  useEffect(() => {
+    const fetchSaberes = async () => {
+      try {
+        const response = await axios.get('https://znk.onrender.com/saberes');
+        //const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
+
+        // Verificar si hay datos y asignar o establecer un array vacío
+        if (response.data && response.data.length > 0) {
+          setSaberes(response.data);
+          console.log("saberes del servidor*****", response.data);
+        } else {
+          setSaberes([]); // Si no hay saberes, establecer un array vacío
+        }
+      } catch (error) {
+        console.error('Error al cargar los saberes:', error);
+        setSaberes([]); // En caso de error, también establecer un array vacío
+      }
+    };
+
+    fetchSaberes();
+  }, []);    
+
+
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleFlotante = () => {
+    setIsVisible(!isVisible); // Cambia el estado de visibilidad
+  };
 
 return (
     <>
@@ -499,7 +533,17 @@ return (
      cerrarSesion={cerrarSesion}
      
      setEstatus={setEstatus}
+     toggleFlotante={toggleFlotante}
+     isVisible={isVisible}
+
+    
      />
+     
+     <div>
+
+     {isVisible && <Flotante saberes={saberes} />} {/* Renderiza el componente solo si es visible */}
+   </div>
+
 
      <div  className="inicioGrupo">
      {pjSeleccionado ? (
@@ -850,7 +894,7 @@ return (
 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 
