@@ -1,19 +1,12 @@
-
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
-
 import 'animate.css';
-
-
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
 import { Estrellitas } from './estrellitas';
-
 import Swal from 'sweetalert2';
-
 import axios from 'axios';
 
 
@@ -22,9 +15,6 @@ export const ElementoVentaja = ({  itemVentaja }) => {
   if (!itemVentaja) {
     return <div>Item values no disponibles</div>;
   }
-
-  console.log(itemVentaja)
-
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
       <ul>
@@ -38,9 +28,6 @@ export const Item = ({ id, itemValues }) => {
   if (!itemValues) {
     return <div>Item values no disponibles</div>;
   }
-
- 
-
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
       <ul>
@@ -52,14 +39,10 @@ export const Item = ({ id, itemValues }) => {
   );
 };
 
-
 export const TecnicasDominio = ({ ID, itemValues }) => {
   if (!itemValues) {
     return <div>Item values no disponibles</div>;
   }
-
- 
-
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
       <ul>
@@ -79,9 +62,6 @@ export const Hechizos = ({ ID, itemValues }) => {
   if (!itemValues) {
     return <div>Item values no disponibles</div>;
   }
-
-  
-
   return (
     <div style={{ marginBottom: '5px', padding: '5px', border: '1px solid gray', borderRadius: '5px' }}>
       <ul>
@@ -101,12 +81,7 @@ export const TecnicasEspeciales = ({ ID, itemValues }) => {
   if (!itemValues) {
     return <div>Item values no disponibles</div>;
   }
-
- 
-
   return (
-
-
 <div className="container-fluid tecnicaEspecial" style={{marginTop:"1em"}}>
 <input
   className="inputInventario"
@@ -129,10 +104,6 @@ export const TecnicasEspeciales = ({ ID, itemValues }) => {
   );
 };
 
-
-
-
-
 export const CartaNarrador = ({ 
   eliminarPj,
   onClose,
@@ -149,7 +120,6 @@ export const CartaNarrador = ({
   presencia, 
   principio, 
   sentidos, 
-
   academisismo,
   alerta,
   atletismo,
@@ -163,7 +133,6 @@ export const CartaNarrador = ({
   conEsferas,
   conLeyendas,
   forja,
-
   conDemonio,
   conEspiritual,
   manejoBlaster,
@@ -178,7 +147,6 @@ export const CartaNarrador = ({
   veneno,
   corte,
   energia,
-
   apCombate, 
   valCombate,
   apCombate2, 
@@ -192,7 +160,6 @@ export const CartaNarrador = ({
   positiva,
   negativa,
   vidaActual,
-
   add1,
   valAdd1,
   add2,
@@ -211,19 +178,13 @@ export const CartaNarrador = ({
   idpersonaje,
 }) => {
 
-console.log("TECNICA ESPECIAL ",tecEspecial)
-
 const [fade,setFade]=useState(false)
 const [animacion,setAnimacion]=useState("")
 
-
-
 const cerrar=()=>{
-  
   setFade(true)
-  //setAnimacion("animate__animated animate__flipOutY");
   setTimeout(() => {
-    //setAnimacion("");
+
     setFade(false); 
     onClose()
   }, 700);
@@ -231,10 +192,6 @@ const cerrar=()=>{
 
 const [key, setKey] = useState('personaje');
   
-
-
-
-
 
 const handleEliminarPj = async() => {
   eliminarPj(idpersonaje,nombre);
@@ -245,7 +202,6 @@ const handleEliminarPj = async() => {
 return (
     <>
       <Modal show={true} onHide={cerrar} className={`${animacion}`}>
-
           <Tabs
           id="controlled-tab-example"
           activeKey={key}

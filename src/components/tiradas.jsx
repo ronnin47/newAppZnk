@@ -12,7 +12,7 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
   var numeros = [];
   for (var i = 0; i < cantidad; i++) {
-      var numero = Math.floor(Math.random() * rangoMax) + 1; // Genera un número aleatorio entre 1 y rangoMax
+      var numero = Math.floor(Math.random() * rangoMax) + 1; 
       numeros.push(numero);
   }
   return numeros;
@@ -29,12 +29,9 @@ const[valTiradaD12,setValTiradaD12]=useState("");
 const [valTiradaD10,setValTiradaD10]=useState("");
 const [valTiradaD20,setValTiradaD20]=useState("");
 const [valTiradaD10Bono,setValTiradaD10Bono]=useState("");
-
 const[principal,setPrincipal]=useState("");
 const[secundaria,setSecundaria]=useState("");
 const [animacionActiva, setAnimacionActiva] = useState(false);
-
-
 
  const tirarDados=()=>{
   const principalValue = principal === "" ? 0 : parseInt(principal);
@@ -88,7 +85,6 @@ const [animacionActiva, setAnimacionActiva] = useState(false);
   let imprimirBonoD20;
   let imprimirBonoKen;
 
-//console.log("suma de la base ", principalValue+secundariaValue)
 const baset=principalValue+secundariaValue
 
   if(baset>0){
@@ -164,10 +160,7 @@ const[dadosD4Bono,setDadosD4Bono]=useState(0);
 const[dadosD10,setDadosD10]=useState(0);
 const[dadosD20,setDadosD20]=useState(0);
 const[dadosD10Bono,setDadosD10Bono]=useState(0);
-
 const [nombreTirada,setNombreTirada]=useState("");
-
-//SELECTOR DEL BOTON DONDE SE GUARDARA LA TIRADA
 const [selectedButton, setSelectedButton] = useState(1);
 
 
@@ -177,30 +170,20 @@ const addD10=()=>{
 const restD10=()=>{
   setDadosD10(dadosD10-1)
 }
-useEffect(() => {
- console.log(dadosD10)
-}, [dadosD10]);
+
 const addD20=()=>{
   setDadosD20(dadosD20+1)
 }
 const restD20=()=>{
   setDadosD20(dadosD20-1)
 }
-useEffect(() => {
- console.log(dadosD20)
-}, [dadosD20]);
+
 const addD10Bono=()=>{
   setDadosD10Bono(dadosD10Bono+1)
 }
 const restD10Bono=()=>{
   setDadosD10Bono(dadosD10Bono-1)
 }
-
-useEffect(() => {
- console.log(dadosD10)
-}, [dadosD10]);
-
-
 const addD12Bono=()=>{
   setDadosD12Bono(dadosD12Bono+1)
 }
@@ -225,7 +208,6 @@ const handlePrincipal=(event)=>{
 const handleSecundaria=(event)=>{
   setSecundaria(event.target.value)
 }
-
 
 const [boton1, setBoton1] = useState(() => {
   const storedValue = localStorage.getItem(`boton1_${nombre}`);
@@ -269,10 +251,8 @@ const [boton10, setBoton10] = useState(() => {
 });
 
 
-//GUARDAR TIRADA
-const guardarTiradaMacro=()=>{
- // Crear el objeto con los valores
 
+const guardarTiradaMacro=()=>{
  Swal.fire({
   title: `Deseas guardar la accion ${nombreTirada} en el boton ${selectedButton}?`,
   showDenyButton: true,
@@ -330,14 +310,11 @@ const guardarTiradaMacro=()=>{
       break
     }
     
-    
-    //LIMPIAR IMPUT 
     setNombreTirada("");
 
     Swal.fire("Accion guardada!", "", "tirada guardada");
   } else if (result.isDenied) {
     Swal.fire("La accion no se guardo", "", "info");
-    //LIMPIAR IMPUT 
     setNombreTirada("");
   }
 });
@@ -562,27 +539,13 @@ const handleNombreTirada=(event)=>{
   setNombreTirada(event.target.value)
 }
 
-///const [message, setMessage] = useState('');
-//const [sock, setSock] = useState([]);
-/*
-useEffect(() => {
-  // Escuchar mensajes del servidor y actualizar el estado
-socket.on('message', (newMessage) => {
-    const mensajeC=`${newMessage.nombre}: ${newMessage.mensaje}`
-    setSock((prevMessages) => [...prevMessages, mensajeC]);
-  });
-  return () => {
-    socket.off('message');
-  };
-}, []);
-*/
+
 const [mensajeChat,setMensajeChat]=useState("")
 
 const handleChangeM=(event)=>{
   setMensajeChat(event.target.value)
 }
 const enviar=()=>{
-//const msgEnviar=`${nombre}: ${mensajeChat}`
 const msgEnviar={
   nombre:nombre,
   mensaje:mensajeChat
@@ -602,7 +565,7 @@ useEffect(() => {
 
 const handleKeyPress = (event) => {
   if (event.key === 'Enter') {
-    event.preventDefault(); // Previene el comportamiento por defecto del Enter
+    event.preventDefault(); 
     enviar();
   }
 };
@@ -614,8 +577,7 @@ const handleKeyPress = (event) => {
       <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
       <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
       </div>
-      
-    
+        
 
       <div className="tiradas">
       

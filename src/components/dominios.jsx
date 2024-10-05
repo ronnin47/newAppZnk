@@ -93,11 +93,9 @@ export const Dominios = ({ dominiosN, setDominiosN }) => {
     const isEmpty = Object.values(newValues).every(value => value === '');
 
     if (isEmpty) {
-      // Si todos los campos están vacíos, eliminamos el ítem
       setItems(prevItems => prevItems.filter(item => item.id !== id));
       setDominiosN(prevDominios => prevDominios.filter((_, index) => index !== id));
     } else {
-      // Si no están vacíos, actualizamos el ítem
       setItems(prevItems =>
         prevItems.map(item =>
           item.id === id ? { ...item, values: newValues } : item

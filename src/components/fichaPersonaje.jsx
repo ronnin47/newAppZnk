@@ -12,9 +12,6 @@ import { Historia } from './historia.jsx';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
-
-import Badge from 'react-bootstrap/Badge';
-
 import { TecnicaEspecial } from './tecEspecial.jsx';
 
 
@@ -97,7 +94,6 @@ export const FichaPersonaje = ({
   vivoMuerto,
   tecEspecial,
   usuarioId,
-
   conviccion,
   cicatriz,
 
@@ -125,13 +121,11 @@ export const FichaPersonaje = ({
   const [dominioN,setDominioN]=useState(dominio)
   const [razaN,setRazaN]=useState(raza)
   const [naturalezaN,setNaturalezaN]=useState(naturaleza)
-  const [edadN,setEdadN]=useState(edad)
-  
+  const [edadN,setEdadN]=useState(edad) 
   const [kenN,setKenN]=useState(ken)
   const [kiN,setKiN]=useState(ki)
   const [destinoN,setDestinoN]=useState(destino)
-  const [pDestinoN,setPdestinoN]=useState(pDestino)
-  
+  const [pDestinoN,setPdestinoN]=useState(pDestino) 
   const [fuerzaN,setFuerzaN]=useState(fuerza)
   const [fortalezaN,setFortalezaN]=useState(fortaleza)
   const [destrezaN,setDestrezaN]=useState(destreza)
@@ -140,7 +134,6 @@ export const FichaPersonaje = ({
   const [presenciaN,setPresenciaN]=useState(presencia)
   const [principioN,setPrincipioN]=useState(principio)
   const [sentidosN,setSentidosN]=useState(sentidos)
-
   const [academisismoN,setAcademisismoN]=useState(academisismo)
   const [alertaN,setAlertaN]=useState(alerta)
   const [atletismoN,setAtletismoN]=useState(atletismo)
@@ -168,50 +161,35 @@ export const FichaPersonaje = ({
   const [venenoN,setVenenoN]=useState(veneno)
   const [corteN,setCorteN]=useState(corte)
   const [energiaN,setEnergiaN]=useState(energia)
-
-
   const [ventajasN, setVentajasN] = useState(ventajas);
-
   const [inventarioN, setInventarioN] = useState(inventario);
- 
   const [dominiosN, setDominiosN] = useState(dominios);
   const [hechizosN, setHechizosN] = useState(hechizos);
-  
-  const [kenActualN,setKenActualN]=useState(kenActual)
-
-  const [kiActualN,setKiActualN]=useState(kiActual)
-  const [positivaN,setPositivaN]=useState(positiva)
-  const [negativaN,setNegativaN]=useState(negativa)
-  const [damageActualN,setDamageActualN]=useState(vidaActual)
+  const [kenActualN,setKenActualN]=useState(kenActual);
+  const [kiActualN,setKiActualN]=useState(kiActual);
+  const [positivaN,setPositivaN]=useState(positiva);
+  const [negativaN,setNegativaN]=useState(negativa);
+  const [damageActualN,setDamageActualN]=useState(vidaActual);
   const [consumisionN,setConsumisionN]=useState(consumision)
-
   const [apCombateN,setApCombateN]=useState(apCombate)
   const [valCombateN,setValCombateN]=useState(valCombate)
   const [apCombate2N,setApCombate2N]=useState(apCombate2)
   const [valCombate2N,setValCombate2N]=useState(valCombate2)
-
   const [add1N,setAdd1N]=useState(add1)
   const [valAdd1N,setValAdd1N]=useState(valAdd1)
   const [add2N,setAdd2N]=useState(add2)
   const [valAdd2N,setValAdd2N]=useState(valAdd2)
   const [add3N,setAdd3N]=useState(add3)
   const [valAdd3N,setValAdd3N]=useState(valAdd3)
-  const [add4N,setAdd4N]=useState(add4)
-  const [valAdd4N,setValAdd4N]=useState(valAdd4)
-
-  
- const [iniciativaN,setIniciativaN]=useState(iniciativa) 
- const [historiaN,setHistoriaN]=useState(historia)
- 
- 
- const [tecEspecialN,setTecEspecialN]=useState(tecEspecial)
+  const [add4N,setAdd4N]=useState(add4);
+  const [valAdd4N,setValAdd4N]=useState(valAdd4);
+  const [iniciativaN,setIniciativaN]=useState(iniciativa) 
+  const [historiaN,setHistoriaN]=useState(historia);
+  const [tecEspecialN,setTecEspecialN]=useState(tecEspecial);
+  const [conviccionN,setConviccionN]=useState(conviccion);
+  const [cicatrizN,setCicatrizN]=useState(cicatriz);
 
  
- const [conviccionN,setConviccionN]=useState(conviccion);
- const [cicatrizN,setCicatrizN]=useState(cicatriz);
-
- 
-
  useEffect(()=>{
   
   },[vivoMuerto])
@@ -219,14 +197,12 @@ export const FichaPersonaje = ({
 
   useEffect(() => {
     const vidaTotal=(parseInt(kiN)+parseInt(fortalezaN))*(positivaN+negativaN)
-    //console.log("VIDA total: ", vidaTotal)
     if (damageActualN > vidaTotal) {
       setVivoMuerto(false);
     } else {
       setVivoMuerto(true);
     }
   }, [damageActualN,kiN,fortalezaN,positivaN,negativaN]);
-
 
 
   const handleChangeNombre = (event) => {
@@ -394,11 +370,9 @@ export const FichaPersonaje = ({
    const handleChangeValAdd4=(event)=>{
     setValAdd4N(event.target.value)
    }
-
   const handleChangeIniciativa = (event) => {
     setIniciativaN(event.target.value)
   }
-
   const handleChangeNaturaleza= (event)=>{
     setNaturalezaN(event.target.value)
   }
@@ -408,16 +382,14 @@ export const FichaPersonaje = ({
 
 
 
-
-
 const btnGuardarCambios = () => {
    
   const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
 
-  // Crea una copia del array de personajes
+ 
   const nuevosPersonajes = [...personajes];
 
-  // Actualiza los valores del personaje actual en la copia del array
+
   nuevosPersonajes[index] = {
     ...nuevosPersonajes[index],
 
@@ -426,12 +398,10 @@ const btnGuardarCambios = () => {
     raza:razaN,
     edad:edadN,
     imagen: imagenN,
-
     ken:kenN,
     ki:kiN,
     destino:destinoN,
     pDestino:pDestinoN,
-
     fuerza: fuerzaN,
     fortaleza: fortalezaN,
     destreza: destrezaN,
@@ -440,7 +410,6 @@ const btnGuardarCambios = () => {
     presencia:presenciaN,
     principio:principioN,
     sentidos:sentidosN,
-
     academisismo:academisismoN,
     alerta:alertaN,
     atletismo:atletismoN,
@@ -468,24 +437,19 @@ const btnGuardarCambios = () => {
     veneno:venenoN,
     corte:corteN,
     energia:energiaN,
-
     apCombate: apCombateN,
     valCombate: valCombateN,
     apCombate2: apCombate2N,
     valCombate2: valCombate2N,
- 
     ventajas: ventajasN,
     inventario:inventarioN,
     dominios:dominiosN,
     hechizos:hechizosN,
-
     kenActual:kenActualN,
     kiActual:kiActualN,
-    
     positiva:positivaN,
     negativa:negativaN,
     vidaActual:damageActualN,
-
     add1:add1N,
     valAdd1: valAdd1N,
     add2:add2N,
@@ -499,18 +463,11 @@ const btnGuardarCambios = () => {
     historia:historiaN,
     naturaleza:naturalezaN,
     tecEspecial:tecEspecialN,
-
     conviccion: conviccionN,
-    cicatriz: cicatrizN,
-    
+    cicatriz: cicatrizN,  
   };
 
 
-
-
-
-
-  // Actualiza el estado de los personajes con la copia modificada
   setPersonajes(nuevosPersonajes);
  /* Swal.fire({
     position: "top-center",
@@ -522,23 +479,17 @@ const btnGuardarCambios = () => {
 }
 
 const guardarCambiosBBDD = async () => {
-  try {
-    console.log("Guardando cambios del personaje con id:", idpersonaje);
-
-    // Supongamos que el personaje tiene estos datos
-   
+  try { 
     const personaje = {
       nombre: nombreN,
       dominio: dominioN,
       raza:razaN,
       naturaleza:naturalezaN,
       edad:edadN,
-
       ken:kenN || 0,
       ki:kiN || 0,
       destino:destinoN || 0,
       pDestino:pDestinoN || 0,
-
       fuerza: fuerzaN|| 0,
       fortaleza: fortalezaN || 0,
       destreza: destrezaN || 0,
@@ -547,8 +498,6 @@ const guardarCambiosBBDD = async () => {
       presencia:presenciaN || 0,
       principio:principioN ||0,
       sentidos:sentidosN ||0,
-
-
       academisismo:academisismoN ||0,
       alerta:alertaN ||0,
       atletismo:atletismoN||0,
@@ -576,18 +525,11 @@ const guardarCambiosBBDD = async () => {
       veneno:venenoN ||0,
       corte:corteN ||0,
       energia:energiaN ||0,
-
-
-      ventajas:ventajasN,
-      
-
-      
+      ventajas:ventajasN,    
       apCombate: apCombateN,
       valCombate: valCombateN ||0,
       apCombate2:apCombate2N,
       valCombate2:valCombate2N ||0,
-
-
       add1:add1N ||"",
       valAdd1: valAdd1N || 0,
       add2:add2N,
@@ -596,14 +538,11 @@ const guardarCambiosBBDD = async () => {
       valAdd3: valAdd3N || 0,
       add4:add4N,
       valAdd4: valAdd4N || 0,
-
       imagen: imagenN,
       inventario: inventarioN,//JSON
       dominios: dominiosN,//JASON
-
       kenActual:kenActualN || 0,
-      kiActual:kiActualN || 0,
-      
+      kiActual:kiActualN || 0,    
       positiva:positivaN,
       negativa:negativaN,
       vidaActual:damageActualN,
@@ -613,7 +552,6 @@ const guardarCambiosBBDD = async () => {
       historia:historiaN,
       usuarioId: usuarioId,
       tecEspecial: tecEspecialN,
-
       conviccion: conviccionN || "",
       cicatriz: cicatrizN || 0,
     };
@@ -649,12 +587,10 @@ useEffect(() => {
   razaN,
   edadN,
   imagenN,
-
   kenN,
   kiN,
   destinoN,
   pDestinoN,
-
   fuerzaN,
   fortalezaN,
   destrezaN,
@@ -663,7 +599,6 @@ useEffect(() => {
   presenciaN,
   principioN,
   sentidosN,
-
   academisismoN,
   alertaN,
   atletismoN,
@@ -691,23 +626,19 @@ useEffect(() => {
   venenoN,
   corteN,
   energiaN,
-
   apCombateN,
   valCombateN,
   apCombate2N,
   valCombate2N,
-
   ventajasN,
   inventarioN,
   dominiosN,
   hechizosN,
-
   kenActualN,
   kiActualN,
   positivaN,
   negativaN,
   damageActualN,
-
   add1N,
   valAdd1N,
   add2N,
@@ -721,56 +652,21 @@ useEffect(() => {
   historiaN,
   naturalezaN,
   tecEspecialN,
-
   conviccionN,
   cicatrizN,
-
 ]);
 
-
  
-    const handleEliminarPj = async() => {
-       eliminarPj(personaje.idpersonaje);
-
-       
-       try {
-       
-      //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-      const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
-        console.log('Personaje eliminado:', response.data);
-      } catch (error) {
-        console.error('Error al eliminar el personaje:', error);
-      }
-
-
-    };
-
-
-/*
-    const subirFuerzaBadge=()=>{
-      console.log("funciona subir fuerza badge");
-      if (fuerzaBadge === "") {
-        setFuerzaBadge(1);
-      } else {
-        setFuerzaBadge(prevFuerzaBadge => Number(prevFuerzaBadge) + 1);
-      }
+  const handleEliminarPj = async() => {
+      eliminarPj(personaje.idpersonaje);
+      try { 
+    //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+    const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
+    } catch (error) {
+      console.error('Error al eliminar el personaje:', error);
     }
-    
-    const bajarFuerzaBadge = (event) => {
-      event.stopPropagation();
-      setFuerzaBadge(prevFuerzaBadge => {
-        const newValue = prevFuerzaBadge - 1;
-        return newValue <= 0 ? "" : newValue;
-      });
-    };
- 
-    aca tenemos el label con el badge
- <label htmlFor="" onClick={subirFuerzaBadge} >Fuerza: <Badge onClick={bajarFuerzaBadge}>{fuerzaBadge}</Badge> </label>
-*/
+  };
 
-
-
- 
 
   return (
     <>
@@ -824,10 +720,6 @@ useEffect(() => {
 
           </div>
         </div>
-         
-    
-     
-
         </div>
 
       <Accordion defaultActiveKey={['0']} alwaysOpen>

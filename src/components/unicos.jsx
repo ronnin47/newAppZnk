@@ -5,8 +5,6 @@ import { Estrellitas } from "./estrellitas";
 export const Unicos = () => {
   const [coleccionTecEspeciales, setColeccionTecEspeciales] = useState([]);
   const [tecBuscar, setTectBuscar] = useState("");
-
-  // Petición GET al servidor para obtener todas las técnicas especiales
   const consumirTecEspeciales = async () => {
     try {
      //const response = await axios.get('http://localhost:4000/consumirTecEspeciales', {
@@ -16,10 +14,10 @@ export const Unicos = () => {
         },
       });
 
-      //console.log('Respuesta del servidor para técnicas especiales:', response.data);
+      
       const { poderesEspeciales } = response.data;
       
-      //console.log("REVISANDO PODERES ESPECIALES QUE TRAE: ",poderesEspeciales)
+     
       if (!Array.isArray(poderesEspeciales)) {
         console.error('El formato de datos no es un array.');
         return;
@@ -39,25 +37,25 @@ export const Unicos = () => {
     setTectBuscar(event.target.value);
   };
 
-  // Filtrar personajes que tengan técnicas que coincidan con la búsqueda
+ 
   const poderesFiltrados = coleccionTecEspeciales.map(personaje => {
-      // Filtrar solo las técnicas especiales que coincidan con la búsqueda
+   
       const tecnicasFiltradas = personaje.tecEspecial.filter(tecnica => {
-        //console.log("Nombre de la técnica:", tecnica.nombre, "Valor de check:", tecnica.check)
+       
         return tecnica.nombre.toLowerCase().includes(tecBuscar.toLowerCase()) && tecnica.check === true
       }
       );
-      //console.log("Técnicas filtradas para el personaje", personaje.nombre, tecnicasFiltradas);
+     
 
-      // Si alguna técnica coincide, devolvemos el personaje con solo esas técnicas
+     
       if (tecnicasFiltradas.length > 0) {
         return { ...personaje, tecEspecial: tecnicasFiltradas };
       }
 
-      // Si ninguna técnica coincide, excluimos este personaje
+
       return null;
     })
-    .filter(personaje => personaje !== null);  // Filtrar personajes sin técnicas coincidentes
+    .filter(personaje => personaje !== null);
 
   return (
     <div>

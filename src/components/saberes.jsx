@@ -27,20 +27,19 @@ export const Saberes = ({ saberes, setSaberes }) => {
     };
 
     try {
-      //const response = await axios.post('http://localhost:4000/insertSaber', nuevoSaber, {
+        //const response = await axios.post('http://localhost:4000/insertSaber', nuevoSaber, {
         const response = await axios.post('https://znk.onrender.com/insertSaber', nuevoSaber, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      console.log("Respuesta de la API:", response);
 
       if (response.data) {
         const { idsaber, frase, imagensaber } = response.data;
 
         if (frase && imagensaber) {
-          // Agrega el nuevo saber al estado
+    
           setSaberes((prevSaberes) => [
             ...prevSaberes,
             {
@@ -77,17 +76,15 @@ export const Saberes = ({ saberes, setSaberes }) => {
 
     try {
 
-      //const response = await axios.put('http://localhost:4000/updateSaber', updatedSaber, {
+        //const response = await axios.put('http://localhost:4000/updateSaber', updatedSaber, {
         const response = await axios.put('https://znk.onrender.com/updateSaber', updatedSaber, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      console.log("Respuesta de la API al actualizar:", response);
 
       if (response.data) {
-        // Actualiza el saber en el estado
         setSaberes((prevSaberes) => 
           prevSaberes.map((saber) =>
             saber.idsaber === selectedSaberId
@@ -96,7 +93,6 @@ export const Saberes = ({ saberes, setSaberes }) => {
           )
         );
 
-        // Reinicia los campos de entrada
         setFrase('');
         setImagen(null);
         setImagenFile(null);
@@ -110,19 +106,16 @@ export const Saberes = ({ saberes, setSaberes }) => {
     }
   };
 
-  const [deletedSaberId, setDeletedSaberId] = useState(null); // Estado para ID de saberes eliminados
+  const [deletedSaberId, setDeletedSaberId] = useState(null); 
 
-  // useEffect para actualizar el estado cuando se elimina un saber
   useEffect(() => {
     if (deletedSaberId) {
       setSaberes((prevSaberes) => prevSaberes.filter((saber) => saber.idsaber !== deletedSaberId));
-      console.log("Lo que queda en el ARRAY SABERES", saberes.filter((saber) => saber.idsaber !== deletedSaberId));
-      setDeletedSaberId(null); // Reinicia el estado de ID eliminado
+      setDeletedSaberId(null); 
     }
-  }, [deletedSaberId, setSaberes, saberes]); // Agregar 'saberes' como dependencia
+  }, [deletedSaberId, setSaberes, saberes]); 
 
   const deleteSaber = async (id) => {
-    console.log("ID DEL SABER:", id);
     const saberExists = saberes.some(saber => saber.idsaber === id);
 
     if (!saberExists) {
@@ -134,10 +127,8 @@ export const Saberes = ({ saberes, setSaberes }) => {
       const response = await axios.delete(`https://znk.onrender.com/deleteSaber/${id}`);
       //const response = await axios.delete(`http://localhost:4000/deleteSaber/${id}`);
       
-      if (response.status === 200) { // Verificar que la respuesta fue exitosa
-        console.log("Respuesta de la API al eliminar:", response.data);
-        // Establecer el ID del saber eliminado para que useEffect lo procese
-        setDeletedSaberId(id);
+      if (response.status === 200) { 
+          setDeletedSaberId(id);
       } else {
         console.error('Error al eliminar el saber, respuesta no exitosa', response);
       }
@@ -149,10 +140,6 @@ export const Saberes = ({ saberes, setSaberes }) => {
       }
     }
   };
-
-  useEffect(() => {
-    console.log("Saberes al cargar el componente:", saberes);
-  }, [saberes]);
 
   return (
     <>

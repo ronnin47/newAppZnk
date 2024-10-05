@@ -1,15 +1,9 @@
-
-
 import { useEffect } from "react";
-
 import React, { useState } from "react";
-
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 import 'animate.css';
-
-
 
 export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
   const faseSalud = parseInt(kiN) + parseInt(fortalezaN);
@@ -17,32 +11,23 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
   const vidaTotalNegativa = faseSalud * parseInt(negativaN);
   const vidaTotal = vidaTotalPositiva + vidaTotalNegativa;
 
-  // Calcular el porcentaje inicial, asegurándose de que no supere el 100%
+  
   let porcentajeVidaPositivaInicial = (damageActualN * 100) / vidaTotalPositiva;
   let porcentajeVidaNegativaInicial = 0;
 
   if (porcentajeVidaPositivaInicial > 100) {
     porcentajeVidaNegativaInicial = ((damageActualN - vidaTotalPositiva) * 100) / vidaTotalNegativa;
     porcentajeVidaPositivaInicial = 100;
-    // Asegurar que el porcentaje de la barra negativa no supere el 100%
     porcentajeVidaNegativaInicial = porcentajeVidaNegativaInicial > 100 ? 100 : porcentajeVidaNegativaInicial;
   }
 
   const [porcentajeVidaPositiva, setPorcentajeVidaPositiva] = useState(porcentajeVidaPositivaInicial);
   const [porcentajeVidaNegativa, setPorcentajeVidaNegativa] = useState(porcentajeVidaNegativaInicial);
-  
   const [consumirVida, setConsumirVida] = useState("");
-
   const [animacionActiva, setAnimacionActiva] = useState(true);
   
-
-
-
-
-
   useEffect(() => {
     const cicatrizValue = parseInt(cicatrizN, 10);
-
     if (cicatrizValue > 0 && damageActualN < cicatrizValue) {
       setDamageActualN(cicatrizValue);
     }
@@ -59,47 +44,39 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
 
   const handleChangeCicatrizN=(event)=>{
     setCicatrizN(event.target.value);
- 
    }
 
 
   const agregarDamage = async () => {
-    let newValue = parseInt(consumirVida)|| 0;;
-    //daño acumulado
+    let newValue = parseInt(consumirVida)|| 0;
     let newDamage = damageActualN + newValue;
   
     setAnimacionActiva(true);
     setTimeout(() => {
-      setAnimacionActiva(false); // Desactivar la animación después de un tiempo
-    }, 1000); // Duración de la animación en milisegundos
+      setAnimacionActiva(false); 
+    }, 1000); 
 
-
-    
-    // Validar que el nuevo daño no sea menor que cero
     if (newDamage < 0) {
-      newDamage = 0; // Establecer el daño a cero si es negativo
+      newDamage = 0; 
     }
 
 
-     // Ajustar damageActualN para no ser menor que cicatrizN
      const cicatrizValue = parseInt(cicatrizN, 10);
      if (cicatrizValue > 0 && newDamage < cicatrizValue) {
        newDamage = cicatrizValue;
      }
   
     setDamageActualN(newDamage);
-    console.log(damageActualN)
-  
+   
     if (newDamage <= vidaTotalPositiva) {
-      // Calcular el porcentaje de vida positiva si el daño no supera la vida positiva
       setPorcentajeVidaPositiva((newDamage * 100) / vidaTotalPositiva);
-      setPorcentajeVidaNegativa(0); // Reiniciar la barra negativa
+      setPorcentajeVidaNegativa(0); 
     } else {
-      // Si el daño supera la vida positiva, calcular el porcentaje de vida negativa
+    
       const nuevoPorcentajeNegativa = ((newDamage - vidaTotalPositiva) * 100) / vidaTotalNegativa;
       const porcentajeNegativaAjustado = nuevoPorcentajeNegativa > 100 ? 100 : nuevoPorcentajeNegativa;
-      setPorcentajeVidaPositiva(100); // La barra positiva estará llena
-      setPorcentajeVidaNegativa(porcentajeNegativaAjustado); // Establecer el porcentaje de la barra negativa
+      setPorcentajeVidaPositiva(100);
+      setPorcentajeVidaNegativa(porcentajeNegativaAjustado); 
     }
     
     let estadoDeFase=""
@@ -146,7 +123,6 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
       estadoDeFase="fase MORIBUNDO"
    }else if(negativaN==2){
      estadoDeFase="fase MORIBUNDO"
-     console.log("********entre en el moribundo de 2 fase negativas")
    }else if(negativaN>=3){
      estadoDeFase="fase INCAPACITADO"
    }
@@ -220,11 +196,7 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
     setConsumirVida(event.target.value);
   };
 
-  // Verificar si el personaje está muerto
   const estaMuerto = damageActualN > vidaTotal;
-
-
-   
 
   const handlePos=(event)=>{
     const newPos=parseInt(event.target.value)
@@ -234,10 +206,7 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
     const newNeg=parseInt(event.target.value)
     setNegativaN(newNeg)
   }
-
-
   const curarFase=async()=>{
-    console.log("CURO UNA FASE!!")
     setConsumirVida("")
     setConsumirVida(-(faseSalud))
     if(consumirVida==-(faseSalud)){
@@ -246,9 +215,6 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
     }
    
   }
- 
-
-  
   
   return (
     <div className="col1" >

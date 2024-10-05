@@ -5,18 +5,10 @@ import { Modal, Button } from 'react-bootstrap';
 
 export const ModalHorizontal = ({ idGrupoSeleccionado,eliminarPersonaje, show, onHide, idpersonaje, coleccionPersonajes, fullscreen = true }) => {
   
-
-  // Buscar el personaje seleccionado por idpersonaje
   const personaje = coleccionPersonajes.find(p => p.idpersonaje === idpersonaje);
-
-  // Si no se encuentra el personaje, no mostrar el modal (o puedes mostrar un mensaje de error)
   if (!personaje) {
     return null;
   }
-
-
-
-  console.log("Id grupo a eliminar",idGrupoSeleccionado);
 
   return (
     <Modal
@@ -24,7 +16,7 @@ export const ModalHorizontal = ({ idGrupoSeleccionado,eliminarPersonaje, show, o
       fullscreen={fullscreen}
       onHide={onHide}
       centered
-      className="bg-dark text-light" // Aplicar el tema oscuro
+      className="bg-dark text-light" 
     >
  <Modal.Header closeButton className="bg-dark text-light" style={{ display: "flex", alignItems: "center" }}>
     <img 

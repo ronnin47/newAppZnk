@@ -132,13 +132,10 @@ export const CargarPersonaje = ({
   naturaleza,
   setNaturaleza,
   usuarioId,
-
   conviccion,
   setConviccion,
-
   cicatriz,
   setCicatriz,
-
 }) => {
  
   const inputFileRef = useRef(null);
@@ -314,14 +311,9 @@ export const CargarPersonaje = ({
   const handleChangeNaturaleza=(event)=>{
     setNaturaleza(event.target.value)
   }
-
-
   const handleChangeConviccion=(event)=>{
     setConviccion(event.target.value)
   }
-
-  
-
 
  
   const handleFileChange = (e) => {
@@ -334,14 +326,12 @@ export const CargarPersonaje = ({
   };
 
   const agregarPersonaje = async () => {
-    const pjNuevo = {
-      
+    const pjNuevo = {      
       nombre: nombre,
       dominio: dominio,
       raza:raza,
       naturaleza:naturaleza,
       edad:edad,
-
       ken:ken || 0,
       ki:ki || 0,
       destino:destino || 0,
@@ -406,19 +396,13 @@ export const CargarPersonaje = ({
       consumision:consumision || 0,
       iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
       historia:"",
-
       conviccion: conviccion || "",
       cicatriz: cicatriz || 0,
-
-      usuarioId: usuarioId,  
-
-     
-
+      usuarioId: usuarioId, 
     };
 
 
-    try {
-    
+    try {  
       const response = await axios.post(`https://znk.onrender.com/insert-personaje`, pjNuevo, {   
       //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
@@ -438,12 +422,10 @@ export const CargarPersonaje = ({
     setDominio("");
     setRaza("");
     setEdad("");
-
     setKen("");
     setKi("");
     setDestino("")
-    setPdestino("")
-
+    setPdestino("");
     setFuerza("");
     setFortaleza("");
     setDestreza("");
@@ -494,7 +476,6 @@ export const CargarPersonaje = ({
     setValAdd4("");  
     setImagen("/imagenBase.jpeg");
     setVentajas([]);
-
     setConviccion("");
   
 

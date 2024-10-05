@@ -54,7 +54,7 @@ export const Inventario = ({ inventarioN, setInventarioN }) => {
       item.id === id ? { ...item, values: newValues } : item
     );
 
-    // Verificar si todos los campos están vacíos y eliminar el elemento si es así
+    
     const isEmpty = Object.values(newValues).every((value) => value === "");
     const finalItems = isEmpty
       ? updatedItems.filter((item) => item.id !== id)
@@ -62,7 +62,7 @@ export const Inventario = ({ inventarioN, setInventarioN }) => {
 
     setItems(finalItems);
 
-    // Actualizar el inventario general con los nuevos valores
+
     const newInventario = finalItems.map((item) => item.values);
     setInventarioN(newInventario);
   };

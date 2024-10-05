@@ -1,22 +1,14 @@
 import { useState, useEffect } from "react";
 import { CartaNarrador } from "./cartaNarrador";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Sagas } from "./sagas";
 import { Saberes } from "./saberes";
-
-
-
-
-
-
 
 
 
@@ -28,7 +20,6 @@ const Cartita=({
   ken,
   ki,
   imagen,
- 
   fuerza, 
   fortaleza, 
   agilidad, 
@@ -37,7 +28,6 @@ const Cartita=({
   presencia, 
   principio, 
   sentidos, 
-
   academisismo,
   alerta,
   atletismo,
@@ -65,7 +55,6 @@ const Cartita=({
   veneno,
   corte,
   energia,
-
   apCombate, 
   valCombate,
   apCombate2, 
@@ -92,7 +81,6 @@ const Cartita=({
   historia,  
   naturaleza,
   tecEspecial,
-
   conviccion,
   cicatriz,
  grupo,
@@ -113,21 +101,14 @@ const Cartita=({
 
 
 
-  const handleAgregarClick = () => {
-    console.log("Funciona botón de agregar a grupo");
-    console.log(`Id personaje: ${idpersonaje}, Nombre: ${nombre}`);
-  
-    // Verifica si el personaje ya está en el grupo por su idpersonaje
+  const handleAgregarClick = () => { 
     setGrupo(prevGrupo => {
-      // Si el personaje ya está en el grupo, no lo agrega
       const personajeExiste = prevGrupo.some(personaje => personaje.idpersonaje === idpersonaje);
   
       if (personajeExiste) {
-        console.log("El personaje ya está en el grupo");
-        return prevGrupo;  // Retorna el grupo sin cambios
+        return prevGrupo;  
       }
   
-      // Si no existe, lo agrega al grupo
       return [
         ...prevGrupo,
         { idpersonaje, nombre, imagen }
@@ -264,30 +245,10 @@ const Cartita=({
 
 const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
-
-  console.log("id personaje CUANDO LLEGA",idpersonaje)
-  const handleEliminarPersonaje = (idpersonaje) => {
-    // Filtrar los personajes para eliminar el seleccionado
-    
-    console.log( typeof idpersonaje)
-    console.log("solucionando la eliminacion",grupo)
-    
+  const handleEliminarPersonaje = (idpersonaje) => { 
     const personajesActualizados = grupo.filter(pj => pj.idpersonaje !== idpersonaje);
-    
-    // Actualizar el estado del grupo con los personajes actualizados
     setGrupo(personajesActualizados);
-    
-    // Mostrar el grupo actualizado en la consola
-    console.log("GRUPO DESPUES DE ELIMINACION", personajesActualizados);
   };
-
-
-  
-
-
-
-
-
  
   return (
     <>
@@ -324,7 +285,6 @@ const handleInputTecBuscar=(event)=>{
 
 const handleInputBuscardor=(event)=>{
  setPjBuscado(event.target.value);
- console.log("Nombre buscado: ",pjBuscado)
 }
 
 
@@ -383,47 +343,29 @@ const eliminarPj = (idpersonaje,nombre) => {
 
 const destruirPj=async(idpersonaje)=>{
   try {
-  
     //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
     const response = await axios.delete(`https://znk.onrender.com/deletePersonaje/${idpersonaje}`);
-    console.log('Personaje eliminado:', response.data);
   } catch (error) {
     console.error('Error al eliminar el personaje:', error);
   }
- 
- console.log("*****************Este es el id de personaje:",idpersonaje)
 }
 
-
-//coleccion grupos 
 const [grupo,setGrupo]=useState([]);
-//const [coleccionGrupos,setColeccionGrupos]=useState([]);
-
 const [nameGrupo,setNameGrupo]=useState("");
 
 const handleChangeGrupo=(event)=>{
   setNameGrupo(event.target.value);
-  console.log(nameGrupo);
 }
 
 const handleClickCrearGrupo = async() => {
   if (!nameGrupo || grupo.length === 0) {
-    console.log("Debes ingresar un nombre y seleccionar personajes para el grupo.");
     return;
   }
-
   const nuevoGrupo = {
     nombre: nameGrupo,
-    idspersonajes: grupo.map((pj) => pj.idpersonaje), // Solo el ID de cada personaje
+    idspersonajes: grupo.map((pj) => pj.idpersonaje), 
   };
 
-  console.log("Se creó el grupo: ", nuevoGrupo);
-
-  // Aquí puedes mandar el nuevo grupo a la base de datos
-
-
-  //*******insert en la base de datos del grupo***********
- 
 
   try {
     
@@ -434,27 +376,16 @@ const handleClickCrearGrupo = async() => {
       },
     });
     const { idgrupo } = response.data;
-    console.log("idGrupo: ",idgrupo)
-    
-    setColeccionGrupos([...coleccionGrupos, { ...nuevoGrupo, idgrupo }]);
    
-
-
+    setColeccionGrupos([...coleccionGrupos, { ...nuevoGrupo, idgrupo }]);
   } catch (error) {
     console.error('Error al insertar el nuevo Grupo:', error.message);
   }
 
- 
-
-  // Limpiar el estado
   setNameGrupo("");
   setGrupo([]);
   
 };
-
-
-
-
 
   return (
     <>

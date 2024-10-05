@@ -4,32 +4,22 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import { fileURLToPath } from 'url'; 
 import { dirname, join } from 'path'; 
-
-
 import pkg from 'pg'; 
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
-// Obtiene la ruta del directorio actual
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const app = express();
-app.use(cors()); // Permitir CORS para todas las rutas
+app.use(cors()); 
 
-// Servir archivos estáticos desde la carpeta 'dist'
 app.use(express.static(join(__dirname, 'dist')));
-
-
 dotenv.config();
-
 const { Pool } = pkg; 
 
 
-// Configura el límite del tamaño del cuerpo de la solicitud
-app.use(bodyParser.json({ limit: '50mb' }));  // Aumenta el límite a 50 MB para JSON
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Aumenta el límite a 50 MB para URL-encoded
+app.use(bodyParser.json({ limit: '50mb' }));  
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); 
 
-// Servir archivos estáticos desde la carpeta 'dist'
 app.use(express.static(join(__dirname, 'dist')));
 
 const server = http.createServer(app);
@@ -44,20 +34,16 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-
 */
-
-
-
 
 
 //***************** base septiembre ****************************
 
 const pool = new Pool({
-  user: 'gorda',          // Reemplaza con tu usuario de PostgreSQL
+  user: 'gorda',          
   host: 'dpg-crkt1688fa8c738l0hlg-a',
-  database: 'baseseptiembre', // Reemplaza con el nombre de tu base de datos
-  password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   // Reemplaza con tu contraseña de PostgreSQL
+  database: 'baseseptiembre', 
+  password: 'ZMygGfkVyzqJ5HDlshtiH96DItRPl0Ts',   
   port: 5432,
 });
 
@@ -81,16 +67,8 @@ async function checkDatabaseConnection() {
     process.exit(1); // Salir del proceso con un código de error
   }
 }
-// Llama a la función de verificación de conexión al iniciar el servidor
+
 checkDatabaseConnection();
-
-
-
-
-
-
-
-
 
 app.use(express.json());
 
@@ -100,53 +78,43 @@ const io = new Server(server, {
   },
 });
 
-
-
 const connectedUsers = new Map();
 
 io.on('connection', (socket) => {
   console.log('Socket: un usuario se conectó');
 
-  // Manejar el evento de conexión de usuario
+
   socket.on('user-connected', (userData) => {
     const { usuarioId, sesion } = userData;
     if(usuarioId && sesion){
       connectedUsers.set(socket.id, usuarioId);
-      console.log(`Usuario ${usuarioId} conectado.`);
-      
-      // Emitir a todos los clientes la lista de usuarios conectados
+      console.log(`Usuario ${usuarioId} conectado.`);  
       io.emit('connected-users', Array.from(connectedUsers.values()));
-
     }
    
   });
 
-  // Manejar los mensajes enviados por los usuarios
+ 
   socket.on('message', (message) => {
-    io.emit('message', message); // Emitir el mensaje a todos los clientes
+    io.emit('message', message); 
   });
 
   socket.on('user-disconnect', (data) => {
-    const { usuarioId } = data; // Obtener el usuarioId del evento
+    const { usuarioId } = data; 
     const socketId = [...connectedUsers.entries()].find(([key, value]) => value === usuarioId)?.[0];
   
     if (socketId) {
-      connectedUsers.delete(socketId); // Eliminar el usuario del mapa
+      connectedUsers.delete(socketId); 
       console.log(`Usuario ${usuarioId} se desconectó por cierre de sesión.`);
-  
-      // Emitir la lista actualizada de usuarios conectados
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
   });
 
-  // Manejar la desconexión del usuario
   socket.on('disconnect', () => {
     const usuarioId = connectedUsers.get(socket.id);
     if (usuarioId) {
       connectedUsers.delete(socket.id);
-      console.log(`Usuario ${usuarioId} se desconectó.`);
-      
-      // Emitir la lista actualizada de usuarios conectados
+     console.log(`Usuario ${usuarioId} se desconectó.`);
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
     console.log('Socket: un usuario se desconectó');
@@ -155,16 +123,10 @@ io.on('connection', (socket) => {
 
 
 
-
-// INSERTAR USUARIO ok!!
 app.post('/insert-usuario', async (req, res) => {
   const { email, contrasenia } = req.body;
-    //console.log("llego la peticion de insert de usuario")
-    //console.log(req.body)
-
     const estatus="jugador"
   
-
   try {
     const query = `
       INSERT INTO usuarios (email, contrasenia, estatus)
@@ -178,14 +140,10 @@ app.post('/insert-usuario', async (req, res) => {
     const newId = result.rows[0].idusuario;
     const newEstatus = result.rows[0].estatus;
 
-    //console.log("El Id que viene de la base de datos es: "+newId)
-    //console.log("El Id que viene de la base de datos es: "+newEstatus)
-
     res.status(201).json({ message: `Bienvenido ${email}.`, idusuario: newId, estatus: newEstatus });
   } catch (err) {
 
-    if (err.code === '23505') { // Código de error para violación de restricción de unicidad
-      //console.error('El email ya existe.');
+    if (err.code === '23505') { 
       res.json({ message: 'El mail ya se encuentra registrado.' });
     } else {
       console.error('Error al insertar el usuario:', err.message);
@@ -196,14 +154,9 @@ app.post('/insert-usuario', async (req, res) => {
   }
 });
 
-//LOGIN USUARIO OK!!
 app.post('/loginUsuario', async (req, res) => {
   const { email, contrasenia } = req.body;
-
-  //console.log("Info del cliente que se loguea: ", req.body);
-
   try {
-    // Verificar si el usuario existe
     const userQuery = 'SELECT * FROM usuarios WHERE email = $1';
     const userResult = await pool.query(userQuery, [email]);
 
@@ -211,28 +164,14 @@ app.post('/loginUsuario', async (req, res) => {
       console.log("No se encontró el usuario con el email proporcionado.");
       return res.status(401).json({ message: 'Email o contraseña incorrectos' });
     }
-
+ 
     const user = userResult.rows[0];
     const idusuario = userResult.rows[0].idusuario;
     const estatus = userResult.rows[0].estatus;
 
-    //console.log("IDUSUARIO ES: ",idusuario)
-    //console.log("SU ESTATUS ES: ",estatus)
-    // Verificar la contraseña directamente
     if (user.contrasenia !== contrasenia) {
-      //console.log("Contraseña proporcionada no coincide con la almacenada.");
-      //console.log("Contraseña de la base de datos: ", user.contrasenia);
       return res.status(401).json({ message: 'Email o contraseña incorrectos' });
     }
-
-    // Si se necesita obtener los personajes del usuario, descomenta el siguiente código
-    
-   /* const personajesQuery = 'SELECT * FROM personajes WHERE "usuarioId" = $1';
-    const personajesResult = await pool.query(personajesQuery, [user.idusuario]);
-    */
-
-   // console.log("Inicio de sesión exitoso para el usuario:", user.idusuario);
-
     res.json({
       message: 'Inicio de sesión exitoso',
       //personajes: personajesResult.rows, 
@@ -246,15 +185,8 @@ app.post('/loginUsuario', async (req, res) => {
   }
 });
 
-
-//CONSUMIR PERSONAJES NARRADOR
 app.get('/consumirPersonajesNarrador', async (req, res) => {
- // const { email, contrasenia } = req.body;
-
-  //console.log("Info del cliente que se loguea: ", req.body);
-
   try {
-    // Verificar si el usuario existe
     const userQuery = 'SELECT * FROM personajes';
     const userResult = await pool.query(userQuery);
 
@@ -263,14 +195,9 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
     }
 
     const coleccionPersonajes = userResult.rows;
-
-    //console.log("Coleccion personajes para el Narrador: ",coleccionPersonajes)
-    
-
     res.json({
       message: 'Inicio de sesión exitoso',
-      coleccionPersonajes: coleccionPersonajes, 
-    
+      coleccionPersonajes: coleccionPersonajes,   
     });
 
   } catch (error) {
@@ -279,8 +206,6 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
   }
 });
 
-
-//INSERT ok!!
 app.post('/insert-personaje', async (req, res) => {
   const { 
     nombre,
@@ -288,12 +213,10 @@ app.post('/insert-personaje', async (req, res) => {
       raza,
       naturaleza,
       edad,
-
       ken,
       ki,
       destino,
       pDestino,
-
       fuerza,
       fortaleza,
       destreza,
@@ -302,8 +225,6 @@ app.post('/insert-personaje', async (req, res) => {
       presencia,
       principio,
       sentidos,
-
-
       academisismo,
       alerta,
       atletismo,
@@ -331,18 +252,11 @@ app.post('/insert-personaje', async (req, res) => {
       veneno,
       corte,
       energia,
-
-
-      ventajas,
-      
-
-      
+      ventajas,  
       apCombate,
       valCombate,
       apCombate2,
       valCombate2,
-
-
       add1,
       valAdd1,
       add2,
@@ -351,7 +265,6 @@ app.post('/insert-personaje', async (req, res) => {
       valAdd3,
       add4,
       valAdd4,
-
       imagen,
       inventario,
       dominios,
@@ -365,16 +278,11 @@ app.post('/insert-personaje', async (req, res) => {
       iniciativa,
       historia,
       usuarioId,
-      tecEspecial,
-     
+      tecEspecial,   
       conviccion,
-      cicatriz,
-      
+      cicatriz,     
    } = req.body;
-    console.log("llego la peticion de insert!!")
-    console.log(req.body)
-  
-
+   
   try {
     const query = `
       INSERT INTO personajes (
@@ -422,18 +330,11 @@ app.post('/insert-personaje', async (req, res) => {
       veneno,
       corte,
       energia,
-
-
       ventajas,
-      
-
-      
       "apCombate",
       "valCombate",
       "apCombate2",
       "valCombate2",
-
-
       add1,
       "valAdd1",
       add2,
@@ -442,7 +343,6 @@ app.post('/insert-personaje', async (req, res) => {
       "valAdd3",
       add4,
       "valAdd4",
-
       imagen,
       inventario,
       dominios,
@@ -470,12 +370,10 @@ app.post('/insert-personaje', async (req, res) => {
       raza,
       naturaleza,
       edad,
-
       ken,
       ki,
       destino,
       pDestino,
-
       fuerza,
       fortaleza,
       destreza,
@@ -484,8 +382,6 @@ app.post('/insert-personaje', async (req, res) => {
       presencia,
       principio,
       sentidos,
-
-
       academisismo,
       alerta,
       atletismo,
@@ -513,18 +409,11 @@ app.post('/insert-personaje', async (req, res) => {
       veneno,
       corte,
       energia,
-
-
-      ventajas,
-      
-
-      
+      ventajas,    
       apCombate,
       valCombate,
       apCombate2,
       valCombate2,
-
-
       add1,
       valAdd1,
       add2,
@@ -533,7 +422,6 @@ app.post('/insert-personaje', async (req, res) => {
       valAdd3,
       add4,
       valAdd4,
-
       imagen,
       inventario,
       dominios,
@@ -549,14 +437,10 @@ app.post('/insert-personaje', async (req, res) => {
       tecEspecial,
       conviccion,
       cicatriz,
-      usuarioId,
-     
-      
+      usuarioId,   
       ];
     const result = await pool.query(query, values);
-
     const newId = result.rows[0].idpersonaje;
-    //console.log("El Id que viene de la base de datos es: "+newId)
     res.status(201).json({ message: 'Personaje insertado exitosamente.', idpersonaje: newId });
   } catch (err) {
     console.error('Error al insertar el personaje:', err.message);
@@ -564,19 +448,11 @@ app.post('/insert-personaje', async (req, res) => {
   }
 });
 
-
-
-//INSERT Grupo
 app.post('/insertGrupo', async (req, res) => {
   const { 
     nombre,
-    idspersonajes,
-      
+    idspersonajes,    
    } = req.body;
-    console.log("llego la peticion de insert nuevo grupo!!")
-    console.log(req.body)
-  
-
   try {
     const query = `
       INSERT INTO grupos (
@@ -592,9 +468,7 @@ app.post('/insertGrupo', async (req, res) => {
       idspersonajes,
       ];
     const result = await pool.query(query, values);
-
     const newId = result.rows[0].idgrupo;
-    console.log("El Id GRUPO que viene de la base de datos es: "+newId)
     res.status(201).json({ message: 'Grupo insertado exitosamente.', idgrupo: newId });
   } catch (err) {
     console.error('Error al insertar el nuevo Grupo:', err.message);
@@ -602,12 +476,10 @@ app.post('/insertGrupo', async (req, res) => {
   }
 });
 
-// CONSUMIR GRUPOS
 app.get('/consumirGrupos', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM grupos');
     const coleccionGrupos = result.rows;
-
     if (!Array.isArray(coleccionGrupos)) {
       return res.status(500).json({ message: 'Error: no se encontró la colección de grupos.' });
     }
@@ -619,26 +491,16 @@ app.get('/consumirGrupos', async (req, res) => {
   }
 });
 
-
-
-// Update grupos OK!!
 app.put('/update-grupos', async (req, res) => {
-  const { idgrupo, idspersonajes } = req.body; // Desestructuramos los datos recibidos del cuerpo de la solicitud
- // console.log("Datos recibidos para actualizar grupo:", { idgrupo, idspersonajes });
-
+  const { idgrupo, idspersonajes } = req.body; 
   try {
-    // Actualizar el array `idspersonajes` en la tabla `grupos`
     const result = await pool.query(
       'UPDATE grupos SET idspersonajes = $1 WHERE idgrupo = $2 RETURNING *',
       [idspersonajes, idgrupo]
     );
-
-    // Verificar si el grupo existe
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Grupo no encontrado' });
     }
-
-    // Respuesta con el grupo actualizado
     res.json({ message: 'Grupo actualizado exitosamente', grupo: result.rows[0] });
   } catch (error) {
     console.error('Error al actualizar el grupo en la base de datos:', error);
@@ -646,15 +508,11 @@ app.put('/update-grupos', async (req, res) => {
   }
 });
 
-
-// bORRAR GRUPO OK!!!
 app.delete('/delete-grupo/:idgrupo', async (req, res) => {
   const { idgrupo } = req.params;
 
   try {
-    // Eliminar el grupo de la base de datos por su ID
     const resultado = await pool.query('DELETE FROM grupos WHERE idgrupo = $1', [idgrupo]);
-
     if (resultado.rowCount > 0) {
       res.status(200).json({ message: 'Grupo eliminado exitosamente' });
     } else {
@@ -667,8 +525,6 @@ app.delete('/delete-grupo/:idgrupo', async (req, res) => {
 });
 
 
-
-//UPDATE ok!!
 app.put('/update-personaje/:id', async (req, res) => {
   const idpersonaje = req.params.id;
   const { 
@@ -677,12 +533,10 @@ app.put('/update-personaje/:id', async (req, res) => {
       raza,
       naturaleza,
       edad,
-
       ken,
       ki,
       destino,
       pDestino,
-
       fuerza,
       fortaleza,
       destreza,
@@ -691,8 +545,6 @@ app.put('/update-personaje/:id', async (req, res) => {
       presencia,
       principio,
       sentidos,
-
-
       academisismo,
       alerta,
       atletismo,
@@ -720,18 +572,11 @@ app.put('/update-personaje/:id', async (req, res) => {
       veneno,
       corte,
       energia,
-
-
-      ventajas,
-      
-
-      
+      ventajas,   
       apCombate,
       valCombate,
       apCombate2,
       valCombate2,
-
-
       add1,
       valAdd1,
       add2,
@@ -740,7 +585,6 @@ app.put('/update-personaje/:id', async (req, res) => {
       valAdd3,
       add4,
       valAdd4,
-
       imagen,
       inventario,
       dominios,
@@ -755,14 +599,11 @@ app.put('/update-personaje/:id', async (req, res) => {
       historia,
       usuarioId,
       tecEspecial,
-
       conviccion,
       cicatriz,
       
    } = req.body;
-    //console.log("llego la peticion del update personaje!")
-    //console.log(req.body)
-  
+ 
   try {
     const query = `
     UPDATE personajes
@@ -848,12 +689,10 @@ app.put('/update-personaje/:id', async (req, res) => {
       raza,
       naturaleza,
       edad,
-
       ken,
       ki,
       destino,
       pDestino,
-
       fuerza,
       fortaleza,
       destreza,
@@ -891,18 +730,11 @@ app.put('/update-personaje/:id', async (req, res) => {
       veneno,
       corte,
       energia,
-
-
-      ventajas,
-      
-
-      
+      ventajas,      
       apCombate,
       valCombate,
       apCombate2,
       valCombate2,
-
-
       add1,
       valAdd1,
       add2,
@@ -911,7 +743,6 @@ app.put('/update-personaje/:id', async (req, res) => {
       valAdd3,
       add4,
       valAdd4,
-
       imagen,
       inventario,
       dominios,
@@ -925,18 +756,13 @@ app.put('/update-personaje/:id', async (req, res) => {
       iniciativa,
       historia,
       usuarioId,
-      tecEspecial,
-      
+      tecEspecial,    
       conviccion,
       cicatriz,
-
       idpersonaje
-      
       ];
     const result = await pool.query(query, values);
-
-    
-   
+ 
     res.status(201).json({ message: 'Personaje modificado exitosamente.', idpersonaje});
   } catch (err) {
     console.error('Error al modificar el personaje:', err.message);
@@ -945,15 +771,11 @@ app.put('/update-personaje/:id', async (req, res) => {
   
 });
 
-//DELETE ok!!
+
 app.delete('/deletePersonaje/:id', async (req, res) => {
   const idpersonaje = parseInt(req.params.id, 10);
-  console.log("IDPERSOANJE QUE VIENEDEL CLIENTE: ",idpersonaje)
-
   try {
-  
     const result = await pool.query('DELETE FROM personajes WHERE idpersonaje = $1 RETURNING *', [idpersonaje]);
-
     if (result.rowCount > 0) {
       res.status(200).json({ message: 'Personaje eliminado exitosamente.', deletedPersonaje: result.rows[0] });
     } else {
@@ -965,26 +787,16 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
   }
 });
 
-//CONSUMIR PODERES ESPECIALES
+
 app.get('/consumirTecEspeciales', async (req, res) => {
-  // const { email, contrasenia } = req.body;
- 
-   //console.log("Info del cliente que se loguea: ", req.body);
- 
    try {
-     // Verificar si el usuario existe
      const userQuery = 'SELECT nombre, idpersonaje, ken, "tecEspecial" FROM personajes WHERE "tecEspecial" IS NOT NULL AND array_length("tecEspecial", 1) > 0;';
      const userResult = await pool.query(userQuery);
  
      if (userResult.rows.length === 0) {
        return res.status(401).json({ message: 'No se recupero personajes con tecnicas/Ojetos/poderes epseciales' });
      }
- 
      const poderesEspeciales = userResult.rows;
- 
-    // console.log("Coleccion de Poderes especiales: ",poderesEspeciales)
-     
- 
      res.json({
        message: 'Consumir tec especiales',
        poderesEspeciales: poderesEspeciales, 
@@ -999,28 +811,16 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 
 
 
-
-
-
-
  app.get('/saberes', async (req, res) => {
   try {
-    // Realiza la consulta a la base de datos para obtener los saberes
     const userQuery = 'SELECT * FROM saberes';
     const userResult = await pool.query(userQuery);
 
     if (userResult.rows.length === 0) {
-      // Cambiar a 404 si no se encontraron saberes
       return res.status(404).json({ message: 'No se recuperaron saberes' });
     }
-
     const saberes = userResult.rows;
-
-    // Registro de los saberes recuperados
-    console.log("Colección saberes: ", saberes);
-
-    // Envía los saberes como respuesta
-    res.json(saberes); // Devuelve solo el array de saberes, sin mensaje adicional
+    res.json(saberes); 
 
   } catch (error) {
     console.error('Error al obtener saberes:', error);
@@ -1029,68 +829,53 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 });
 
 app.post('/insertSaber', async (req, res) => {
-  const { frase, imagen } = req.body; // Obtiene frase e imagen de la solicitud
+  const { frase, imagen } = req.body; 
 
-  //console.log(" esto viene desde el saber del cliente ",req.body)
-
-  // Verifica que se haya proporcionado una imagen
   if (!imagen) {
     return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
   }
 
   try {
-    // Inserta en la base de datos
     const result = await pool.query(
       'INSERT INTO saberes (frase, imagensaber) VALUES ($1, $2) RETURNING *',
-      [frase, imagen] // Guarda la imagen en formato Base64
+      [frase, imagen] 
     );
-    const nuevoSaber = result.rows[0]; // Obtener el saber insertado
+    const nuevoSaber = result.rows[0]; 
 
-    res.status(201).json(nuevoSaber); // Devuelve el nuevo saber
+    res.status(201).json(nuevoSaber); 
   } catch (error) {
     console.error('Error al insertar el saber:', error);
     res.status(500).json({ error: 'Error al insertar el saber' });
   }
 });
 
-
-// Ruta para actualizar un saber existente
 app.put('/updateSaber', async (req, res) => {
-  const { id, frase, imagen } = req.body; // Obtiene el ID, frase e imagen de la solicitud
+  const { id, frase, imagen } = req.body; 
 
-  //console.log("Datos recibidos para actualizar el saber:", req.body);
-
-  // Verifica que se haya proporcionado un ID
   if (!id) {
     return res.status(400).json({ error: 'No se ha proporcionado un ID de saber' });
   }
 
   try {
-    // Actualiza en la base de datos
     const result = await pool.query(
       'UPDATE saberes SET frase = $1, imagensaber = $2 WHERE idsaber = $3 RETURNING *',
-      [frase, imagen, id] // Actualiza los campos en la base de datos
+      [frase, imagen, id] 
     );
 
-    // Verifica si se actualizó algún saber
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Saber no encontrado' });
     }
 
-    const saberActualizado = result.rows[0]; // Obtener el saber actualizado
-    res.status(200).json(saberActualizado); // Devuelve el saber actualizado
+    const saberActualizado = result.rows[0]; 
+    res.status(200).json(saberActualizado); 
   } catch (error) {
     console.error('Error al actualizar el saber:', error);
     res.status(500).json({ error: 'Error al actualizar el saber' });
   }
 });
 
-
-
-// Ruta para eliminar un saber
 app.delete('/deleteSaber/:id', async (req, res) => {
   const { id } = req.params;
-
   try {
     const result = await pool.query('DELETE FROM saberes WHERE idsaber = $1 RETURNING *', [id]);
     
@@ -1105,19 +890,13 @@ app.delete('/deleteSaber/:id', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
 //const PORT = process.env.PORT || 4000;
 const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });
 
-// Ruta para manejar todas las solicitudes y devolver el archivo HTML principal
+
 app.get('/*', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });

@@ -1,19 +1,11 @@
 import { useState,useEffect} from "react";
-
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
 import { Estrellitas } from './estrellitas';
-
-
-
-
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
-
 import 'animate.css';
 
 
@@ -31,17 +23,14 @@ export const CartaUnica = ({
  
   }) => {
   
-  console.log("TECNICA ESPECIAL ",tecEspecial)
   
   const [fade,setFade]=useState(false)
   const [animacion,setAnimacion]=useState("")
   
   
   
-  const cerrar=()=>{
-    
+  const cerrar=()=>{ 
     setFade(true)
-    //setAnimacion("animate__animated animate__flipOutY");
     setTimeout(() => {
       //setAnimacion("");
       setFade(false); 
@@ -177,7 +166,6 @@ export const CartaUnica = ({
       if (ken >= 400) {
         setClassBrillosDestino("numeroRanking classEstrella");
         setClassCardDestino("classCardDestino");
-        console.log("es una estrella del destino")
       } else {
         setClassBrillosDestino("numeroRanking");
         setClassCardDestino("shadowBody");
@@ -244,11 +232,6 @@ export const CartaUnica = ({
 
 export const Ranking = ({coleccionPersonajes}) => {
 
- //console.log("lo que hay en componente narrador ",coleccionPersonajes)
- // vamos a colocar un imput para el filter con includes 
- // y luego renderizar el resultado con 
-
-
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
 
@@ -260,7 +243,6 @@ const handleInputTecBuscar=(event)=>{
 
 const handleInputBuscardor=(event)=>{
  setPjBuscado(event.target.value);
- console.log("Nombre buscado: ",pjBuscado)
 }
 
 

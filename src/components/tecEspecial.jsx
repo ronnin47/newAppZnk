@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
-
-
 export const Item = ({ id, itemValues, handleItemChange }) => {
   const handleChange = (field, value) => {
     const newValues = { ...itemValues, [field]: value };
@@ -17,9 +15,6 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
   };
 
 
-
-
-    // Definir el tooltip
     const renderTooltip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
         ¿Elijes mostrar este poder especial?

@@ -1,5 +1,3 @@
-
-
 export const Historia = ({historiaN,setHistoriaN}) => { 
  
   const handleChange=(event)=>{

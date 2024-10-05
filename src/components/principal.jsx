@@ -8,7 +8,6 @@ import { Tiradas } from "./tiradas.jsx";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy, arrayMove,verticalListSortingStrategy} from "@dnd-kit/sortable";
 import { Panel } from "./panel.jsx";
-
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Narrador } from "./narrador.jsx";
@@ -16,16 +15,10 @@ import Swal from 'sweetalert2';
 import Badge from 'react-bootstrap/Badge';
 import { Nava } from "./nava.jsx";
 import axios from 'axios';
-
-
 import { Reglas } from "./reglas.jsx";
 import { Unicos } from"./unicos.jsx";
 import { Ranking } from "./ranking.jsx";
-
-
-
 import { MiGrupo } from "./migrupo.jsx";
-
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
@@ -36,18 +29,15 @@ import { Flotante } from "./flotante.jsx";
 
 export const Principal= ()=> {
 
-  const [personajes, setPersonajes] = useState([]);
-  
-  const [usuariosConectados, setUsuariosConectados] = useState([]); // Almacena los usuarios conectados
+  const [personajes, setPersonajes] = useState([]); 
+  const [usuariosConectados, setUsuariosConectados] = useState([]);
 
     const [pjSeleccionado,setPjSeleccionado]=useState("")
-    console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
-    useEffect(() => {
+ 
+   /* useEffect(() => {
       console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
     }, [pjSeleccionado]);
-
-
-
+*/
 
     const [nombre,setNombre]=useState("");
     const [imagen,setImagen]=useState("/imagenBase.jpeg");
@@ -117,21 +107,12 @@ export const Principal= ()=> {
     const [vidaActual,setVidaActual]=useState("");
     const [naturaleza,setNaturaleza]=useState("");
     const [consumision,setConsumision]=useState("");
-
-    
-
     const [cicatriz,setCicatriz]=useState("");
     const [conviccion,setConviccion]=useState("");
-
-
-
     const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
     const [vivoMuerto,setVivoMuerto]=useState(true)
-
     const [message, setMessage] = useState('');
     const [sock, setSock] = useState([]);
-
-
     const [tecEspecial, setTecEspecial] = useState([]);
     
    const handleDragEnd=(event)=>{
@@ -190,42 +171,23 @@ export const Principal= ()=> {
   useEffect(() => {
     if (usuarioId) {
       socket.emit('user-connected', { usuarioId });
-      console.log("Usuario conectado emitido:", usuarioId); // Verifica que se emita correctamente
     }
   }, [usuarioId,sesion]);
 
- 
- 
-
 
   useEffect(() => {
-    // Emitir el evento de 'user-connected' si el usuario está en localStorage
     if (usuarioId && sesion) {
       socket.emit('user-connected', { usuarioId, sesion });
     }
-
-    // Escuchar los usuarios conectados del servidor
     const handleConnectedUsers = (users) => {
-      console.log("Usuarios conectados recibidos:", users);
-
       const idsConectados = users.map(user => Number(user));
       setUsuariosConectados(idsConectados); // Actualiza la lista de usuarios conectados
     };
-
     socket.on('connected-users', handleConnectedUsers);
-
-    // Limpieza al desmontar el componente
     return () => {
       socket.off('connected-users', handleConnectedUsers);
     };
   }, [usuarioId,sesion]);
-
-
-
-
-
-
-
 
 
   useEffect(() => {
@@ -233,9 +195,6 @@ export const Principal= ()=> {
   }, [sesion]);
 
   
-
-
-  // Función para cerrar sesión
 const cerrarSesion = async() => {
   localStorage.setItem('loginEmail', "");
   localStorage.setItem('loginPassword', "");
@@ -254,30 +213,6 @@ const cerrarSesion = async() => {
 };
 
 
-
-//aca trabajamos con los badge
-/*
-const [fuerzaBadge,setFuerzaBadge]=useState("");
-
-const subirFuerzaBadge=()=>{
-  console.log("funciona subir fuerza badge");
-  if (fuerzaBadge === "") {
-    setFuerzaBadge(1);
-  } else {
-    setFuerzaBadge(prevFuerzaBadge => Number(prevFuerzaBadge) + 1);
-  }
-}
-
-const bajarFuerzaBadge = (event) => {
-  event.stopPropagation();
-  setFuerzaBadge(prevFuerzaBadge => {
-    const newValue = prevFuerzaBadge - 1;
-    return newValue <= 0 ? "" : newValue;
-  });
-};
-*/
-
-
 const textareaRef = useRef(null);
 const messagesEndRef = useRef(null);
 
@@ -286,10 +221,7 @@ const [estatus,setEstatus]=useState(()=>{
   return savedEstatus || '';
 })
 
-
-
 const [coleccionPersonajes, setColeccionPersonajes] = useState([]);
-
 
 useEffect(() => {
   const loadPersonajes = async () => {
@@ -302,22 +234,16 @@ useEffect(() => {
         const personajesMap = new Map(personajesDbUsuario.map(pj => [pj.idpersonaje, pj]));
 
         if (orderedIds.length === 0) {
-          // Si no hay un orden almacenado, se crea uno basado en el orden de los personajes en la base de datos
           const defaultOrder = personajesDbUsuario.map(pj => pj.idpersonaje);
           localStorage.setItem('personajesOrder', JSON.stringify(defaultOrder));
           setPersonajes(personajesDbUsuario); // Se establece el estado con el orden por defecto
         } else {
-          // Reordena los personajes basado en los IDs almacenados
           const orderedPersonajes = orderedIds.map(id => personajesMap.get(id)).filter(pj => pj);
-
-          // Solo actualiza el estado si el orden ha cambiado
           if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
             setPersonajes(orderedPersonajes);
           }
         }
-      } else {
-        console.log("No hay personajes en IndexedDB.");
-      }
+      } 
     } catch (error) {
       console.error("Error al recuperar personajes de IndexedDB:", error.message);
     }
@@ -328,13 +254,10 @@ useEffect(() => {
 
 
 
-
-
 useEffect(() => {
   const loadPersonajes = async () => {
     try {
-      if (sesion) {
-        
+      if (sesion) {       
         //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
         const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
           headers: {
@@ -349,36 +272,28 @@ useEffect(() => {
           return;
         }
 
-        console.log("***trae los personajes efectivamente", coleccionPersonajes);
-
-        // Set the fetched collection to state
+      
         setColeccionPersonajes(coleccionPersonajes);
-        console.log("usuario id: ", usuarioId);
+       
     
         const personajesFiltrados = coleccionPersonajes.filter(pj => pj.usuarioId == usuarioId);
-        console.log('Personajes filtrados por usuario:', personajesFiltrados);
-
-        // Cargar el orden de personajes desde localStorage
+    
         const storedOrder = localStorage.getItem('personajesOrder');
         const orderedIds = storedOrder ? JSON.parse(storedOrder) : [];
 
-        // Crear un mapa de personajes filtrados
+ 
         const personajesMap = new Map(personajesFiltrados.map(pj => [pj.idpersonaje, pj]));
 
-        // Asignar un valor de orden a personajes que no lo tienen
+
         personajesFiltrados.forEach((pj, index) => {
           if (!orderedIds.includes(pj.idpersonaje)) {
-            orderedIds.push(pj.idpersonaje); // Asigna un nuevo orden
+            orderedIds.push(pj.idpersonaje);
           }
         });
 
-        // Actualizar el localStorage con el nuevo orden
+     
         localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
-
-        // Reordena los personajes filtrados basado en los IDs almacenados
         const orderedPersonajes = orderedIds.map(id => personajesMap.get(id)).filter(pj => pj);
-
-        // Solo actualiza el estado si el orden ha cambiado
         if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
           setPersonajes(orderedPersonajes);
         } else {
@@ -417,10 +332,7 @@ useEffect(() => {
           console.error('El formato de datos no es un array.');
           return;
         }
-
-        console.log("***trae los personajes efectivamente", coleccionGrupos);
-
-       
+    
         setColeccionGrupos(coleccionGrupos);
       }
     } catch (error) {
@@ -434,15 +346,9 @@ useEffect(() => {
 
 
 
-
-
-
-
-
-
 const [values, setValues] = useState({});
 
-// Función para calcular vidaTotal
+
 const calcularVidaTotal = (personaje) => {
   return (personaje.ki + personaje.fortaleza) * (personaje.positiva + personaje.negativa);
 };
@@ -493,23 +399,21 @@ useEffect(() => {
 
   const [saberes, setSaberes] = useState([]); // Estado inicial vacío
  
-  // Cargar los saberes existentes cuando el componente se monta
   useEffect(() => {
     const fetchSaberes = async () => {
       try {
         const response = await axios.get('https://znk.onrender.com/saberes');
         //const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
 
-        // Verificar si hay datos y asignar o establecer un array vacío
+        
         if (response.data && response.data.length > 0) {
           setSaberes(response.data);
-          console.log("saberes del servidor*****", response.data);
         } else {
-          setSaberes([]); // Si no hay saberes, establecer un array vacío
+          setSaberes([]); 
         }
       } catch (error) {
         console.error('Error al cargar los saberes:', error);
-        setSaberes([]); // En caso de error, también establecer un array vacío
+        setSaberes([]); 
       }
     };
 

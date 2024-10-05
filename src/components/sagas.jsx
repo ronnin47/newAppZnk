@@ -86,41 +86,37 @@ export const Sagas = ({ sesion,usuariosConectados, coleccionGrupos, setColeccion
     });
   };
 
-  // Función para agregar un personaje a un grupo
+
 const agregarPersonaje = async (idgrupo, idpersonaje) => {
-  // Encuentra el grupo en el que se va a agregar el personaje
+  
   const gruposActualizados = gruposConPersonajes.map(grupo => {
     if (grupo.idgrupo === idgrupo) {
-      // Verifica si el personaje ya está en el grupo para evitar duplicados
+     
       const personajeYaEnGrupo = grupo.personajes.some(personaje => personaje.idpersonaje === idpersonaje);
       
       if (!personajeYaEnGrupo) {
-        // Agrega el personaje al array de personajes del grupo
+       
         const personajeAgregado = coleccionPersonajes.find(personaje => personaje.idpersonaje === idpersonaje);
         
         return {
           ...grupo,
-          personajes: [...grupo.personajes, personajeAgregado] // Añade el nuevo personaje
+          personajes: [...grupo.personajes, personajeAgregado]
         };
       }
     }
-    return grupo; // Retorna los grupos sin cambios
+    return grupo; 
   });
 
-  // Actualiza el estado con los nuevos datos (grupo con personaje añadido)
   setGruposConPersonajes(gruposActualizados);
-
-  // Llamar a la función para guardar los cambios en la base de datos
   const grupoActualizado = gruposActualizados.find(grupo => grupo.idgrupo === idgrupo);
 
-  // Si el grupo actualizado no es null, guarda los cambios en la base de datos
   if (grupoActualizado) {
     const idsPersonajes = grupoActualizado.personajes.map(personaje => personaje.idpersonaje);
     await guardarCambiosBBDD(idgrupo, idsPersonajes);
   }
 };
 
-  // Función para eliminar el grupo de la base de datos
+  
   const eliminarGrupoDeBBDD = async (idgrupo) => {
     try {
       //const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
@@ -138,9 +134,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
     }
   };
 
-  // Función para guardar cambios en la base de datos
+
 const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
-  console.log("id grupo y idspersonajes", idgrupo, idspersonajes);
   try {
     //const response = await axios.put(`http://localhost:4000/update-grupos`, {
     const response = await axios.put(`https://znk.onrender.com/update-grupos`, {
@@ -151,8 +146,6 @@ const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
         'Content-Type': 'application/json',
       }
     });
-
-    console.log('Cambios guardados exitosamente:', response.data);
 /*
     Swal.fire({
       icon: 'success',
@@ -169,11 +162,9 @@ const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
   }
 };
 
-  // Función para manejar la búsqueda de personajes en un grupo específico
+
   const handleBuscarPersonaje = (idgrupo, e) => {
     const nuevaBusqueda = e.target.value;
-
-    // Actualizar el estado de búsqueda para el grupo correspondiente
     setBusquedas(prevBusquedas => ({
       ...prevBusquedas,
       [idgrupo]: nuevaBusqueda
@@ -182,7 +173,7 @@ const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
     if (nuevaBusqueda.trim() === '') {
       setResultadosBusqueda(prevResultados => ({
         ...prevResultados,
-        [idgrupo]: [] // Limpiar los resultados de búsqueda si el input está vacío
+        [idgrupo]: [] 
       }));
     } else {
       const resultados = coleccionPersonajes.filter(personaje =>
@@ -190,50 +181,35 @@ const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
       );
       setResultadosBusqueda(prevResultados => ({
         ...prevResultados,
-        [idgrupo]: resultados // Guardar los resultados de búsqueda para el grupo correspondiente
+        [idgrupo]: resultados 
       }));
     }
   };
-
-
-
-
-
  
   const [showModal, setShowModal] = useState(false);
   const [personajeSeleccionado, setPersonajeSeleccionado] = useState(null);
   const [idGrupoSeleccionado, setIdGrupoSeleccionado] = useState(null);
 
   const abrirPersonaje=(nombre,idpersonaje,idgrupo)=>{
-    //console.log("FUNCIONA ABRIR PERSONAJE ",nombre,idpersonaje,idgrupo)
     setPersonajeSeleccionado(idpersonaje);
     setIdGrupoSeleccionado(idgrupo);
     setShowModal(true); 
-
   }
 
 
 
 
-const [values, setValues] = useState({}); // Estado para almacenar los valores de ken y ki
+const [values, setValues] = useState({});
 
-
-// Función para calcular vidaTotal
 const calcularVidaTotal = (personaje) => {
   return (personaje.ki + personaje.fortaleza) * (personaje.positiva + personaje.negativa);
 };
 
 useEffect(() => {
-  // Función para manejar los mensajes recibidos
   const handleMessage = (data) => {
     setValues((prevValues) => {
-      // Buscar el personaje correspondiente en coleccionPersonajes
       const personajeEnColeccion = coleccionPersonajes.find((p) => p.idpersonaje === data.idpersonaje);
-      
-      // Si no se encuentra el personaje, no hacemos nada
       if (!personajeEnColeccion) return prevValues;
-
-      // Calcular vidaTotal si no viene en los datos del mensaje
       const vidaTotalCalculada = calcularVidaTotal(personajeEnColeccion);
 
       return {
@@ -249,29 +225,25 @@ useEffect(() => {
             (prevValues[data.idpersonaje]?.ki || personajeEnColeccion.ki || 0),
           vidaActual: data.vidaActual !== undefined ? data.vidaActual : 
             (prevValues[data.idpersonaje]?.vidaActual || personajeEnColeccion.vidaActual || 0),
-          // Usamos el valor de vidaTotal del mensaje si está presente, sino lo calculamos
           vidaTotal: data.vidaTotal !== undefined ? data.vidaTotal : 
             (prevValues[data.idpersonaje]?.vidaTotal || vidaTotalCalculada),
         },
       };
     });
   };
-    // Escuchar los eventos del socket
+
     socket.on('message', handleMessage);
 
-    // Limpiar la suscripción al socket cuando el componente se desmonte
+  
     return () => {
       socket.off('message', handleMessage);
     };
   }, [socket, coleccionPersonajes]);
   
 
-  // Función para renderizar el tooltip
   const renderTooltip = (idpersonaje) => (props) => {
-    // Buscar el personaje seleccionado por idpersonaje
     const personaje = coleccionPersonajes.find((p) => p.idpersonaje === idpersonaje);
-    
-    // Si no se encuentra el personaje, retornar un mensaje de error o similar
+     
     if (!personaje) {
       return (
         <Tooltip className="tipInfo" id="button-tooltip" {...props}>
@@ -280,17 +252,17 @@ useEffect(() => {
       );
     }
 
-    // Obtener los valores de ken y ki para el personaje actual
+ 
     const data = values[idpersonaje] || { 
       kenActual: personaje.kenActual || 0, 
       ken: personaje.ken || 0, 
       kiActual: personaje.kiActual || 0, 
       ki: personaje.ki || 0 ,
       vidaActual: personaje.vidaActual || 0, 
-      vidaTotal: calcularVidaTotal(personaje) // Calculamos vidaTotal
+      vidaTotal: calcularVidaTotal(personaje)
     };
 
-    // Retornar el tooltip con los datos del personaje
+   
     return (
       <Tooltip className="tipInfo" id="button-tooltip" {...props}>
       <p style={{ fontSize: "1em", margin: "0", color:"yellow"}}>
@@ -306,18 +278,8 @@ useEffect(() => {
     );
   };
 
-
-
-
   return (
     <div>
-
-
-      
-
-
-
-
       {gruposConPersonajes.length > 0 ? (
         gruposConPersonajes.map(grupo => (
           <div key={grupo.idgrupo} className="cuadroGrupo">

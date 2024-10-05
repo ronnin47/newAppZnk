@@ -6,8 +6,6 @@ export const Item = ({ id, itemValues, handleItemChange }) => {
     handleItemChange(id, newValues);
   };
 
- 
-
   return (
     <div className="container-fluid dominios">
       <div className="gridTecnicas">
@@ -100,7 +98,7 @@ export const Hechizos = ({ hechizosN, setHechizosN }) => {
       item.id === id ? { ...item, values: newValues } : item
     );
 
-    // Verificar si todos los campos están vacíos
+  
     const areFieldsEmpty =
       !newValues.ryu &&
       !newValues.nombre &&
@@ -110,7 +108,7 @@ export const Hechizos = ({ hechizosN, setHechizosN }) => {
       !newValues.costeKi &&
       !newValues.invo;
 
-    // Si los campos están vacíos, eliminamos el ítem
+  
     const finalItems = areFieldsEmpty
       ? updatedItems.filter((item) => item.id !== id)
       : updatedItems;

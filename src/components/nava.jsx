@@ -6,11 +6,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
-
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
@@ -18,48 +15,26 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 export const Nava= ({ isVisible,toggleFlotante, setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
-
-//visible o no visible
  const [modalLogin,setModalLogin]=useState(false);
 
 const mostrar=()=>setModalLogin(true);
 const desaparecer=()=>setModalLogin(false);
 
 const [loginEmail, setLoginEmail] = useState(() => {
-  // Leer el email de localStorage si existe
   const savedEmail = localStorage.getItem('loginEmail');
   return savedEmail || '';
 });
 
 const [loginPassword, setLoginPassword] = useState(() => {
-  // Leer la contraseña de localStorage si existe
   const savedPassword = localStorage.getItem('loginPassword');
   return savedPassword || '';
 });
 
 
-/*
-// Función para cerrar sesión
-const cerrarSesion = () => {
-  localStorage.setItem('loginEmail', "");
-  localStorage.setItem('loginPassword', "");
-  localStorage.setItem('idusuario', "");
-  setPersonajes([])
-  setSesion(false);
-};
-*/
 
-
-
- //UINICIAR SESION Y RECUPERA TODOS LO PERSONAJES DE LA BASE Y LOS GUARDA EN EL STORAGE Y LOS SETEA EN USE
 const handleSubmit = (e) => {
   e.preventDefault();
 
-  console.log("boton de login funciona");
-  console.log("Email: ",loginEmail);
-  console.log("Contraseña: ",loginPassword);
-
-  
   const loginUsuario = async () => {
     try {
       
@@ -76,25 +51,15 @@ const handleSubmit = (e) => {
       const { idusuario, estatus } = response.data;
 
       setEstatus(estatus);
-      console.log("Estatus de sesion: ",estatus)
-
-       
-  
+    
       Swal.fire({
         icon: 'success',
         title: 'Inicio de sesión exitoso',
         //text: `Se han recuperado ${personajes.length} personajes.`,
       });
   
-      // Si el inicio de sesión es exitoso, emite el evento de conexión
       socket.emit('user-connected', { usuarioId: idusuario });
-      //console.log('Personajes recuperados:', personajes);
-      //console.log("IDUSUARIO ES: ",idusuario)
-      
-    
-    
-        
-    
+  
 
        localStorage.setItem('estatus', estatus);
        localStorage.setItem('loginEmail', loginEmail);
@@ -123,21 +88,13 @@ const handleSubmit = (e) => {
 const [modalRegistarme,setModalRegistrarme]=useState(false);
 const mostrarRegistrar=()=>setModalRegistrarme(true);
 const desaparecerRegistrar=()=>setModalRegistrarme(false);
-
- 
- // Estados para los campos del formulario de registro
  const [registroEmail, setRegistroEmail] = useState('');
  const [registroPassword, setRegistroPassword] = useState('');
 
- //REGISTRARSE OK!!
+
 const handleSubmitRegistro = (e) => {
   e.preventDefault();
-  console.log('funciona registarse');
-  
-  console.log('Email:', registroEmail);
-  console.log('Password:', registroPassword);
-
-//CARGAR NUEVO USUARIO OK!!
+ 
 const cargarNuevoUsuario = async () => {
   const newUsuario = {
     email: registroEmail,
@@ -152,12 +109,6 @@ const cargarNuevoUsuario = async () => {
       },
     });
     const { idusuario, message, estatus } = response.data;
-    
-  
-    console.log("El ID de usuario es:", idusuario);
-    console.log("el estatus de usuario es: ",estatus)
-
-  
 
     if (idusuario) {
       Swal.fire({
@@ -185,17 +136,13 @@ const cargarNuevoUsuario = async () => {
   }
 };
 
-  cargarNuevoUsuario();
-  
+  cargarNuevoUsuario(); 
   setLoginEmail(registroEmail);
-  setLoginPassword(registroPassword);
-  
+  setLoginPassword(registroPassword);  
   setRegistroEmail("");
   setRegistroPassword("");
   desaparecerRegistrar();
 };
-
-console.log("estado de sesion en el nav: ",sesion)
 
   return (
     <>
@@ -226,8 +173,8 @@ console.log("estado de sesion en el nav: ",sesion)
             <Nav.Link href="#" disabled>
               
             </Nav.Link>
-            <div style={{ marginLeft: 'auto' }}>
-            <Button variant="outline-warning" style={{borderRadius:"50%" }} onClick={toggleFlotante} >
+            <div>
+            <Button variant="outline-warning" style={{ borderRadius: "50%", border: "2px solid goldenrod", boxShadow: "0 4px 15px rgba(255, 223, 0, 0.6)" }} onClick={toggleFlotante} >
             {isVisible ? 'Off' : 'on'}
               </Button>
             </div>

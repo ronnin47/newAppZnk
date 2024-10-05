@@ -6,8 +6,6 @@ export const Flotante = ({ saberes }) => {
   const [relPosition, setRelPosition] = useState({ x: 0, y: 0 });
   const [contentIndex, setContentIndex] = useState(0);
 
-
-
   const handleMouseDown = (e) => {
     setDragging(true);
     setRelPosition({
@@ -22,7 +20,7 @@ export const Flotante = ({ saberes }) => {
 
   const handleMouseMove = (e) => {
     if (dragging) {
-      e.preventDefault(); // Evitar comportamientos no deseados mientras se arrastra
+      e.preventDefault(); 
       setPosition({
         x: e.clientX - relPosition.x,
         y: e.clientY - relPosition.y,
@@ -31,8 +29,8 @@ export const Flotante = ({ saberes }) => {
   };
 
   useEffect(() => {
-    const initialX = window.innerWidth - 160; // Ajusta según el ancho del componente
-    const initialY = 20; // Distancia desde la parte superior
+    const initialX = window.innerWidth - 160; 
+    const initialY = 20; 
     setPosition({ x: initialX, y: initialY });
   }, []);
 
@@ -42,9 +40,9 @@ export const Flotante = ({ saberes }) => {
         const randomIndex = Math.floor(Math.random() * saberes.length);
         setContentIndex(randomIndex);
       }
-    }, 30000); // Cambia cada 3 segundos
+    }, 30000); 
 
-    return () => clearInterval(interval); // Limpiar el intervalo cuando se desmonte el componente
+    return () => clearInterval(interval);
   }, [saberes.length]);
 
   return (
@@ -64,12 +62,12 @@ export const Flotante = ({ saberes }) => {
       onMouseLeave={handleMouseUp}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-        {saberes.length > 0 ? ( // Comprobar si hay saberes
+        {saberes.length > 0 ? ( 
           <>
             <p style={{ marginLeft: '1em', textAlign: 'center' }}>{saberes[contentIndex].frase}</p>
 
 
-            {saberes[contentIndex].imagensaber ? ( // Comprobar si hay una imagen
+            {saberes[contentIndex].imagensaber ? ( 
               <img
                 src={saberes[contentIndex].imagensaber}
                 alt="Imagen aleatoria"
@@ -78,7 +76,7 @@ export const Flotante = ({ saberes }) => {
               />
             ) : (
               <img
-                src="/imagenBase.jpeg" // Imagen predeterminada si no hay imagen
+                src="/imagenBase.jpeg" 
                 alt="Imagen por defecto"
                 className="imagenFlotante"
               

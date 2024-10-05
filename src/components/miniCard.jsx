@@ -24,10 +24,8 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
 
 
   const seleccionar = () => {
-    console.log("funciona seleccionar pj ", nombre)
     setPjSeleccionado(id)
     setActiveKey("2")
-
     setAnimacionActiva(true);
     setTimeout(() => {
       setAnimacionActiva(false); 
@@ -43,9 +41,7 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
 
   return (
     
-    <div className='col1' >
-
-     
+    <div className='col1' >    
        <div className='container' {...attributes} {...listeners} ref={setNodeRef} style={style}>
        <div   className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
           <Card  style={{ width: '8em', border: "8px solid black" }} className={cardClassName}>
