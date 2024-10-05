@@ -20,7 +20,7 @@ export const Flotante = ({ saberes }) => {
 
   const handleMouseMove = (e) => {
     if (dragging) {
-      e.preventDefault(); 
+      e.preventDefault();
       setPosition({
         x: e.clientX - relPosition.x,
         y: e.clientY - relPosition.y,
@@ -29,18 +29,23 @@ export const Flotante = ({ saberes }) => {
   };
 
   useEffect(() => {
-    const initialX = window.innerWidth - 160; 
-    const initialY = 20; 
+    const initialX = window.innerWidth - 160;
+    const initialY = 20;
     setPosition({ x: initialX, y: initialY });
   }, []);
 
+  const changeContentRandomly = () => {
+    if (saberes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * saberes.length);
+      setContentIndex(randomIndex);
+    }
+  };
+
+  // Cambia el contenido cada 30 segundos
   useEffect(() => {
     const interval = setInterval(() => {
-      if (saberes.length > 0) { // Solo si hay saberes disponibles
-        const randomIndex = Math.floor(Math.random() * saberes.length);
-        setContentIndex(randomIndex);
-      }
-    }, 30000); 
+      changeContentRandomly();
+    }, 30000); // 30 segundos
 
     return () => clearInterval(interval);
   }, [saberes.length]);
@@ -51,35 +56,31 @@ export const Flotante = ({ saberes }) => {
       style={{
         position: 'absolute',
         top: `${position.y}px`,
-        left: `auto`,
-        right: `${window.innerWidth - position.x}px`, // Para asegurar que esté alineado a la derecha
+        left: 'auto',
+        right: `${window.innerWidth - position.x}px`, // Asegurar alineado a la derecha
         cursor: dragging ? 'grabbing' : 'grab',
-        
       }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onClick={changeContentRandomly} // Cambia el contenido cuando haces clic en el componente
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-        {saberes.length > 0 ? ( 
+        {saberes.length > 0 ? (
           <>
             <p style={{ marginLeft: '1em', textAlign: 'center' }}>{saberes[contentIndex].frase}</p>
-
-
-            {saberes[contentIndex].imagensaber ? ( 
+            {saberes[contentIndex].imagensaber ? (
               <img
                 src={saberes[contentIndex].imagensaber}
                 alt="Imagen aleatoria"
                 className="imagenFlotante"
-               
               />
             ) : (
               <img
-                src="/imagenBase.jpeg" 
+                src="/imagenBase.jpeg"
                 alt="Imagen por defecto"
                 className="imagenFlotante"
-              
               />
             )}
           </>
@@ -90,7 +91,6 @@ export const Flotante = ({ saberes }) => {
               src="/imagenBase.jpeg"
               alt="Imagen por defecto"
               className="imagenFlotante"
-            
             />
           </>
         )}
