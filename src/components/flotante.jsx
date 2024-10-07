@@ -41,7 +41,6 @@ export const Flotante = ({ saberes }) => {
     }
   };
 
-  // Cambia el contenido cada 30 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       changeContentRandomly();
@@ -69,7 +68,26 @@ export const Flotante = ({ saberes }) => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
         {saberes.length > 0 ? (
           <>
-            <p style={{ marginLeft: '1em', textAlign: 'center' }}>{saberes[contentIndex].frase}</p>
+           
+          
+            <p
+            className='tituloFlotante'   
+            style={{
+                  position: 'absolute',
+                  top: '-15px', // Ajusta la posición vertical del título
+                  left: '20px', // Ajusta la posición horizontal del título
+                  backgroundColor: 'rgb(10, 7, 45)', // Color de fondo adaptado
+                  color: '#FFEA00', // Color amarillo chillón
+                  padding: '0 10px', // Espaciado interno
+                  fontWeight: 'bold',
+                  fontSize: '1.2em',
+                  textAlign: 'center',
+                }}>
+                  {saberes[contentIndex].titulo || "titulo desconocido"}
+                </p>
+            
+
+            <p style={{ marginLeft: '1em',marginTop:"1.5em", textAlign: 'center' }}>{saberes[contentIndex].frase}</p>
             {saberes[contentIndex].imagensaber ? (
               <img
                 src={saberes[contentIndex].imagensaber}

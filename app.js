@@ -828,8 +828,13 @@ app.get('/consumirTecEspeciales', async (req, res) => {
   }
 });
 
+
+
+
+
 app.post('/insertSaber', async (req, res) => {
-  const { frase, imagen } = req.body; 
+  const { titulo, frase, imagen } = req.body; 
+  console.log(" Lo que viene del req: ",req.body)
 
   if (!imagen) {
     return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
@@ -837,8 +842,8 @@ app.post('/insertSaber', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'INSERT INTO saberes (frase, imagensaber) VALUES ($1, $2) RETURNING *',
-      [frase, imagen] 
+      'INSERT INTO saberes (titulo, frase, imagensaber) VALUES ($1, $2, $3) RETURNING *',
+      [titulo, frase, imagen] 
     );
     const nuevoSaber = result.rows[0]; 
 
@@ -850,7 +855,7 @@ app.post('/insertSaber', async (req, res) => {
 });
 
 app.put('/updateSaber', async (req, res) => {
-  const { id, frase, imagen } = req.body; 
+  const { id, titulo, frase, imagen } = req.body; 
 
   if (!id) {
     return res.status(400).json({ error: 'No se ha proporcionado un ID de saber' });
@@ -858,8 +863,8 @@ app.put('/updateSaber', async (req, res) => {
 
   try {
     const result = await pool.query(
-      'UPDATE saberes SET frase = $1, imagensaber = $2 WHERE idsaber = $3 RETURNING *',
-      [frase, imagen, id] 
+      'UPDATE saberes SET titulo = $1, frase = $2, imagensaber = $3 WHERE idsaber = $4 RETURNING *',
+      [titulo, frase, imagen, id] 
     );
 
     if (result.rowCount === 0) {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
 export const Saberes = ({ saberes, setSaberes }) => {
+  const [titulo, setTitulo] = useState('');
   const [frase, setFrase] = useState('');
   const [imagen, setImagen] = useState(null);
   const [imagenFile, setImagenFile] = useState(null);
@@ -22,6 +23,7 @@ export const Saberes = ({ saberes, setSaberes }) => {
 
   const insertSaber = async () => {
     const nuevoSaber = {
+      titulo:titulo,
       frase: frase,
       imagen: imagen,
     };
@@ -36,15 +38,16 @@ export const Saberes = ({ saberes, setSaberes }) => {
 
 
       if (response.data) {
-        const { idsaber, frase, imagensaber } = response.data;
+        const { idsaber, titulo, frase, imagensaber } = response.data;
 
-        if (frase && imagensaber) {
+        if (titulo && frase && imagensaber) {
     
           setSaberes((prevSaberes) => [
             ...prevSaberes,
             {
               idsaber: idsaber,
-              frase: frase || "desconocida",
+              titulo: titulo || "desconocido",
+              frase: frase || "desconocido",
               imagensaber: imagensaber,
             },
           ]);
@@ -56,6 +59,7 @@ export const Saberes = ({ saberes, setSaberes }) => {
       }
 
       // Reinicia los campos de entrada
+      setTitulo("");
       setFrase('');
       setImagen(null);
       setImagenFile(null);
@@ -70,6 +74,7 @@ export const Saberes = ({ saberes, setSaberes }) => {
   const updateSaber = async () => {
     const updatedSaber = {
       id: selectedSaberId,
+      titulo:titulo,
       frase: frase,
       imagen: imagen,
     };
@@ -88,11 +93,12 @@ export const Saberes = ({ saberes, setSaberes }) => {
         setSaberes((prevSaberes) => 
           prevSaberes.map((saber) =>
             saber.idsaber === selectedSaberId
-              ? { ...saber, frase: response.data.frase, imagensaber: response.data.imagensaber }
+              ? { ...saber, titulo: response.data.titulo, frase: response.data.frase, imagensaber: response.data.imagensaber }
               : saber
           )
         );
 
+        setTitulo("");
         setFrase('');
         setImagen(null);
         setImagenFile(null);
@@ -144,105 +150,151 @@ export const Saberes = ({ saberes, setSaberes }) => {
   return (
     <>
       <div className='container' style={{ marginBottom: '2em', transform: "scale(0.9)" }}>
-      {saberes.length > 0 ? (
-  saberes.map((saber) => {
-    // Comprobar si 'saber' tiene los campos esperados y renderizar un valor por defecto si no existen
-    const fraseRenderizada = saber.frase || "Frase desconocida";
-    const imagenRenderizada = saber.imagensaber || "/imagenBase.jpeg";
-
-    return (
-      <div
-        key={saber.idsaber || Math.random()} // Usa 'idsaber' si está disponible, de lo contrario usa una clave aleatoria
-        style={{
+        {saberes.length > 0 ? (
+          saberes.map((saber) => {
+            // Comprobar si 'saber' tiene los campos esperados y renderizar un valor por defecto si no existen
+            const tituloRenderizada = saber.titulo || "Titulo desconocido";
+            const fraseRenderizada = saber.frase || "Frase desconocida";
+            const imagenRenderizada = saber.imagensaber || "/imagenBase.jpeg";
+  
+            return (
+              <div
+                key={saber.idsaber || Math.random()}
+                style={{
+                  position: 'relative', // Hacemos el contenedor relativo
+                  marginBottom: '1em',
+                  padding: '1em',
+                  border: "4px solid aliceblue",
+                  borderRadius: "15px",
+                }}
+              >
+                {/* Título del saber */}
+                <p style={{
+                  position: 'absolute',
+                  top: '-15px', // Ajusta la posición vertical del título
+                  left: '20px', // Ajusta la posición horizontal del título
+                  backgroundColor: 'black', // Fondo del título para que resalte
+                  color: 'yellow',
+                  padding: '0 10px', // Espaciado interno para que el texto no esté pegado a los bordes
+                  fontWeight: 'bold',
+                  fontSize: '1.1em'
+                }}>
+                  {tituloRenderizada}
+                </p>
+  
+                {/* Contenido del saber */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ marginRight: '1em' }}>
+                    <img
+                      src={imagenRenderizada}
+                      alt="Imagen del saber"
+                      className='imagenFlotante'
+                    />
+                  </div>
+                  <div>
+                    <p style={{ color: "yellow", marginLeft: "2em" }}>{fraseRenderizada}</p>
+                  </div>
+                  <Button
+                    variant="outline-info"
+                    onClick={() => {
+                      setTitulo(tituloRenderizada);
+                      setFrase(fraseRenderizada);
+                      setImagen(imagenRenderizada);
+                      setSelectedSaberId(saber.idsaber);
+                    }}
+                    style={{ marginLeft: 'auto' }}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => deleteSaber(saber.idsaber)}
+                    style={{ marginLeft: '1em' }}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p>No hay saberes disponibles.</p>
+        )}
+  
+        {/* Formulario para agregar o actualizar saber */}
+        <div style={{
           display: 'flex',
-          alignItems: 'center',
-          marginBottom: '1em',
-          padding: '1em',
+          flexDirection: 'row',
+          gap: '1em',
+          width: '100%',
+          padding: '3em',
           border: "4px solid aliceblue",
-          borderRadius: "15px"
-        }}
-      >
-        <div style={{ marginRight: '1em' }}>
-          <img
-            src={imagenRenderizada}
-            alt="Imagen del saber"
-            className='imagenFlotante'
-          />
-        </div>
-        <p style={{ color: "yellow", marginLeft: "2em" }}>{fraseRenderizada}</p>
-        <Button
-          variant="outline-info"
-          onClick={() => {
-            setFrase(fraseRenderizada);
-            setImagen(imagenRenderizada);
-            setSelectedSaberId(saber.idsaber);
-          }}
-          style={{ marginLeft: 'auto' }}
-        >
-          Editar
-        </Button>
-        <Button
-          variant="outline-danger"
-          onClick={() => deleteSaber(saber.idsaber)}
-          style={{ marginLeft: '1em' }}
-        >
-          Eliminar
-        </Button>
-      </div>
-    );
-  })
-) : (
-  <p>No hay saberes disponibles.</p>
-)}
-
-
-<div style={{ display: 'flex', flexDirection: 'row', gap: '1em', width: '100%', padding: '3em', border:"4px solid aliceblue", borderRadius:"15px"}}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <img
-            src={imagen || '/imagenBase.jpeg'}
-            alt="Previsualización"
-           
-            className='imagenFlotante'
-          />
-          <Button variant="outline-warning" onClick={() => document.getElementById('imagen').click()} style={{ marginTop: '10px' }}>
-            Seleccionar Imagen
-          </Button>
-          <input
-            type="file"
-            id="imagen"
-            accept="image/*"
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-           
-            required
-          />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-          <textarea
-            id="frase"
-            placeholder="Ingresa el saber del juego"
-            value={frase}
-            onChange={(e) => setFrase(e.target.value)}
-            required
-            style={{ width: '100%', height:"8.5em", boxSizing: 'border-box', padding:"1em", backgroundColor:"black", color:"yellow" }}
-          />
-          <div style={{display:"flex", flexDirection:"row", gap:"1em"}}>
-          <Button variant="outline-success" onClick={insertSaber} style={{ marginTop: '10px', width: '10em' }}>
-            Agregar Saber
-          </Button>
-          {selectedSaberId && (
-              <Button variant="outline-primary" onClick={updateSaber} style={{ marginTop: '10px', width: '10em' }}>
-                Actualizar Saber
-              </Button>
-            )}
+          borderRadius: "15px",
+          position: 'relative' // Hacemos este contenedor relativo también
+        }}>
+          {/* Título en la parte superior del borde */}
+          <p style={{
+            position: 'absolute',
+            top: '-15px', // Ajusta la posición vertical
+            left: '20px', // Ajusta la posición horizontal
+            backgroundColor: 'black',
+            color: 'yellow',
+            padding: '0 10px',
+            fontWeight: 'bold',
+            fontSize: '1.1em'
+          }}>
+            {titulo || 'Ingresar Título'}
+          </p>
+  
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={imagen || '/imagenBase.jpeg'}
+              alt="Previsualización"
+              className='imagenFlotante'
+            />
+            <Button variant="outline-warning" onClick={() => document.getElementById('imagen').click()} style={{ marginTop: '10px' }}>
+              Seleccionar Imagen
+            </Button>
+            <input
+              type="file"
+              id="imagen"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+              required
+            />
           </div>
-         
+  
+          <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+            <input
+              type="text"
+              placeholder="ingresa el titulo"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              required
+              style={{ width: '100%', marginBottom: '5px', padding: '0.5em', borderRadius: '5px', backgroundColor: "black", color: "yellow" }}
+            />
+            <textarea
+              id="frase"
+              placeholder="Ingresa el saber del juego"
+              value={frase}
+              onChange={(e) => setFrase(e.target.value)}
+              required
+              style={{ width: '100%', height: "5.5em", boxSizing: 'border-box', padding: "0.5em", backgroundColor: "black", color: "yellow" }}
+            />
+            <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+              <Button variant="outline-success" onClick={insertSaber} style={{ marginTop: '10px', width: '10em' }}>
+                Agregar Saber
+              </Button>
+              {selectedSaberId && (
+                <Button variant="outline-primary" onClick={updateSaber} style={{ marginTop: '10px', width: '10em' }}>
+                  Actualizar Saber
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-
-      
     </>
   );
 };
