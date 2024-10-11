@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+
+
 
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 //REACT_APP_BACKEND_URL=https://tu-backend-en-render.onrender.com
@@ -19,7 +22,7 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 }
 
 
-export const Tiradas = ({ textareaRef, messagesEndRef,nombre,setMessage,sock,setSock}) => {
+export const Tiradas = ({ isChecked, setIsChecked,textareaRef, messagesEndRef,nombre,setMessage,sock,setSock}) => {
 
 const [valTirada,setValTirada]=useState("");
 const [sumaTirada,setSumaTirada]=useState("");
@@ -151,15 +154,28 @@ const baset=principalValue+secundariaValue
   setMessage('');
   setNombreTirada("");
 
+
+  if(isChecked){
+    setDadosD12Bono(0);
+    setDadosD6Bono(0);
+    setDadosD4Bono(0);
+    setDadosD10(0);
+    setDadosD20(0);
+    setDadosD10Bono(0);
+    setPrincipal("");
+    setSecundaria("");
+  }
+
+
 }
 
 
-const[dadosD12Bono,setDadosD12Bono]=useState(0);
-const[dadosD6Bono,setDadosD6Bono]=useState(0);
-const[dadosD4Bono,setDadosD4Bono]=useState(0);
-const[dadosD10,setDadosD10]=useState(0);
-const[dadosD20,setDadosD20]=useState(0);
-const[dadosD10Bono,setDadosD10Bono]=useState(0);
+const [dadosD12Bono,setDadosD12Bono]=useState(0);
+const [dadosD6Bono,setDadosD6Bono]=useState(0);
+const [dadosD4Bono,setDadosD4Bono]=useState(0);
+const [dadosD10,setDadosD10]=useState(0);
+const [dadosD20,setDadosD20]=useState(0);
+const [dadosD10Bono,setDadosD10Bono]=useState(0);
 const [nombreTirada,setNombreTirada]=useState("");
 const [selectedButton, setSelectedButton] = useState(1);
 
@@ -170,14 +186,12 @@ const addD10=()=>{
 const restD10=()=>{
   setDadosD10(dadosD10-1)
 }
-
 const addD20=()=>{
   setDadosD20(dadosD20+1)
 }
 const restD20=()=>{
   setDadosD20(dadosD20-1)
 }
-
 const addD10Bono=()=>{
   setDadosD10Bono(dadosD10Bono+1)
 }
@@ -321,12 +335,9 @@ const guardarTiradaMacro=()=>{
 
 }
 
-
 const handleInputChange = (event) => {
   setSelectedButton(parseInt(event.target.value, 10));
 };
-
-
 const cargarTirada1=()=>{
   //presenta el nombre de la tirada que queria coco
   // acaaaaaaaaaaaa
@@ -349,7 +360,6 @@ const cargarTirada1=()=>{
    const dadosD121=parseInt(boton1.dadosD12Bono) || 0;
    setDadosD12Bono(dadosD121); 
 }
-
 const cargarTirada2=()=>{
   setSelectedButton(2);
   setNombreTirada(boton2.nombreTirada || "Accion-2")
@@ -450,7 +460,6 @@ const cargarTirada6=()=>{
   const dadosD126=parseInt(boton6.dadosD12Bono) || 0;
   setDadosD12Bono(dadosD126); 
 }
-
 const cargarTirada7=()=>{
   setSelectedButton(7);
   setNombreTirada(boton7.nombreTirada || "Accion-7")
@@ -471,7 +480,6 @@ const cargarTirada7=()=>{
   const dadosD127=parseInt(boton7.dadosD12Bono) || 0;
   setDadosD12Bono(dadosD127); 
 }
-
 const cargarTirada8=()=>{
   setSelectedButton(8);
   setNombreTirada(boton8.nombreTirada|| "Accion-8")
@@ -492,7 +500,6 @@ const cargarTirada8=()=>{
   const dadosD128=parseInt(boton8.dadosD12Bono) || 0;
   setDadosD12Bono(dadosD128);  
 }
-
 const cargarTirada9=()=>{
   setSelectedButton(9);
   setNombreTirada(boton9.nombreTirada || "Accion-9")
@@ -513,7 +520,6 @@ const cargarTirada9=()=>{
   const dadosD129=parseInt(boton9.dadosD12Bono) || 0;
   setDadosD12Bono(dadosD129); 
 }
-
 const cargarTirada10=()=>{
   setSelectedButton(10);
   setNombreTirada(boton10.nombreTirada || "Accion-10")
@@ -571,6 +577,19 @@ const handleKeyPress = (event) => {
 };
 
 
+
+
+  // Maneja el cambio del checkbox
+  const handleToggleChange = (event) => {
+    setIsChecked(event.target.checked); // Actualiza el estado a true o false
+  };
+
+const renderTooltip = (props) => (
+  <Tooltip id="button-tooltip" {...props}>
+    Limpiar dados
+  </Tooltip>
+);
+
   return (
     <>
       <div >
@@ -583,7 +602,26 @@ const handleKeyPress = (event) => {
       
         <div className="container">
             <h1>{nombre}</h1>
+            <div>
+            <OverlayTrigger
+                placement="right"
+              overlay={renderTooltip}
+            >
+              <input
+                type="checkbox"
+                id="custom-checkbox"
+                checked={isChecked} // Usa el estado booleano
+                onChange={handleToggleChange} // Actualiza el estado cuando cambia
+                style={{ marginRight: '1em', transform: 'scale(1.5)' }} // Ajustar el tamaño y el margen si es necesario
+              />
+            </OverlayTrigger>
             <button className="btn btn-primary" onClick={tirarDados} style={{marginTop:"1em",marginBottom:"1em", width:"8em", placeItems:"center"}}>tirar</button>
+           
+            </div>
+            
+            
+            
+            
             <div style={{display:"grid", gridTemplateColumns:"1fr", marginBottom:"1em"}}>
             <input type="number" placeholder="caracteristica principal" value={principal} onChange={handlePrincipal} className="cajaTirada" style={{width:"50%"}}/>
             <input type="number" placeholder="caracteristica secundaria" value={secundaria} onChange={handleSecundaria} className="cajaTirada" style={{width:"50%"}}/>

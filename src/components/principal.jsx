@@ -34,7 +34,7 @@ export const Principal= ()=> {
 
     const [pjSeleccionado,setPjSeleccionado]=useState("")
     
-//spiner que vamos a armar
+
 const [loading, setLoading] = useState(true); 
 
    /* useEffect(() => {
@@ -435,6 +435,10 @@ useEffect(() => {
     setIsVisible(!isVisible); // Cambia el estado de visibilidad
   };
 
+
+
+  const [isChecked, setIsChecked] = useState(true);
+
 return (
     <>
      <Nava 
@@ -811,8 +815,11 @@ return (
                   setMessage={setMessage}
                   sock={sock}
                   setSock={setSock}
-                  textareaRef={textareaRef }
+                  textareaRef={textareaRef}
                   messagesEndRef={messagesEndRef}
+
+                  isChecked={isChecked}
+                  setIsChecked={setIsChecked}
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>
