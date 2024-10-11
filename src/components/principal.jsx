@@ -25,7 +25,7 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 
 import { Flotante } from "./flotante.jsx";
-
+import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
 
 export const Principal= ()=> {
 
@@ -33,7 +33,10 @@ export const Principal= ()=> {
   const [usuariosConectados, setUsuariosConectados] = useState([]);
 
     const [pjSeleccionado,setPjSeleccionado]=useState("")
- 
+    
+//spiner que vamos a armar
+const [loading, setLoading] = useState(true); 
+
    /* useEffect(() => {
       console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
     }, [pjSeleccionado]);
@@ -300,8 +303,14 @@ useEffect(() => {
           setPersonajes(personajesFiltrados); // Si no hay cambios, establece el estado con los filtrados
         }
       }
+/*
+      setTimeout(() => {
+        setLoading(false);  // Oculta el spinner después del retraso
+      }, 10000);*/
     } catch (error) {
       console.error("Cliente: Fallo al consumir personajes narrador", error.message);
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -655,18 +664,49 @@ return (
               setNaturaleza={setNaturaleza}             
               ></CargarPersonaje>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
           
-            </Tab>
+            </Tab> 
             <Tab eventKey="personajes" title="personajes" className="container-fluid fondoBody">
-            <DndContext collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}>
-                      <SortableContext items={personajes} strategy={horizontalListSortingStrategy}>
-                      <div className="miniCartas">
-                      { personajes.length>0 ?(
-                        personajes.map(pj=><MiniCard vivoMuerto={vivoMuerto} setVivoMuerto={setVivoMuerto} setActiveKey={setActiveKey} personajes={personajes} setPersonajes={setPersonajes} key={pj.idpersonaje} id={pj.idpersonaje} nombre={pj.nombre} dominio={pj.dominio} imagen={pj.imagen} setPjSeleccionado={setPjSeleccionado} pjSeleccionado={pjSeleccionado}></MiniCard>)):(<p style={{color:"aliceblue"}}>No exiten personajes cargados</p>)} 
-                      </div>
-                      </SortableContext>     
-                  </DndContext>
-            </Tab>
+      {loading ? (
+        <div className="spinner-container">
+          <DNA
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
+        </div>
+      ) : (
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={personajes} strategy={horizontalListSortingStrategy}>
+            <div className="miniCartas">
+              {personajes.length > 0 ? (
+                personajes.map(pj => (
+                  <MiniCard
+                    vivoMuerto={vivoMuerto}
+                    setVivoMuerto={setVivoMuerto}
+                    setActiveKey={setActiveKey}
+                    personajes={personajes}
+                    setPersonajes={setPersonajes}
+                    key={pj.idpersonaje}
+                    id={pj.idpersonaje}
+                    nombre={pj.nombre}
+                    dominio={pj.dominio}
+                    imagen={pj.imagen}
+                    setPjSeleccionado={setPjSeleccionado}
+                    pjSeleccionado={pjSeleccionado}
+                  />
+                ))
+              ) : (
+                <p style={{color:"aliceblue"}}>No existen personajes cargados</p>
+              )}
+            </div>
+          </SortableContext>
+        </DndContext>
+      )}
+    </Tab>
+
             <Tab eventKey="ficha" title="Ficha" className="fondoBody">
             {pjSeleccionado ? (
                 <FichaPersonaje

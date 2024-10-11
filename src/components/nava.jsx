@@ -17,6 +17,9 @@ export const Nava= ({ isVisible,toggleFlotante, setEstatus,cerrarSesion,setUSuar
 
  const [modalLogin,setModalLogin]=useState(false);
 
+
+
+
 const mostrar=()=>setModalLogin(true);
 const desaparecer=()=>setModalLogin(false);
 
@@ -102,7 +105,7 @@ const cargarNuevoUsuario = async () => {
   };
   try {
     
-    //const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
+   // const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
     const response = await axios.post(`https://znk.onrender.com/insert-usuario`, newUsuario, { 
     headers: {
         'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
