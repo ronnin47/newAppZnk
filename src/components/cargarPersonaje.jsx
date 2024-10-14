@@ -403,7 +403,7 @@ export const CargarPersonaje = ({
 
 
     try {  
-      const response = await axios.post(`https://znk.onrender.com/insert-personaje`, pjNuevo, {   
+      const response = await axios.post(`https://zepironokioku.onrender.com/insert-personaje`, pjNuevo, {   
       //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
           'Content-Type': 'application/json', 

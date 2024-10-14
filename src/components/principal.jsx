@@ -262,7 +262,7 @@ useEffect(() => {
     try {
       if (sesion) {       
         //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-        const response = await axios.get('https://znk.onrender.com/consumirPersonajesNarrador', {
+        const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -329,7 +329,7 @@ useEffect(() => {
       if (sesion) {
      
         //const response = await axios.get('http://localhost:4000/consumirGrupos', {
-        const response = await axios.get('https://znk.onrender.com/consumirGrupos', {
+        const response = await axios.get('https://zepironokioku.onrender.com/consumirGrupos', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -411,7 +411,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchSaberes = async () => {
       try {
-        const response = await axios.get('https://znk.onrender.com/saberes');
+        const response = await axios.get('https://zepironokioku.onrender.com/saberes');
         //const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
 
         
