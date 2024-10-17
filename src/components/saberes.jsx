@@ -29,8 +29,8 @@ export const Saberes = ({ saberes, setSaberes }) => {
     };
 
     try {
-        const response = await axios.post('http://localhost:4000/insertSaber', nuevoSaber, {
-        //const response = await axios.post('https://zepironokioku.onrender.com/insertSaber', nuevoSaber, {
+        //const response = await axios.post('http://localhost:4000/insertSaber', nuevoSaber, {
+        const response = await axios.post('https://zepironokioku.onrender.com/insertSaber', nuevoSaber, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -81,8 +81,8 @@ export const Saberes = ({ saberes, setSaberes }) => {
 
     try {
 
-        const response = await axios.put('http://localhost:4000/updateSaber', updatedSaber, {
-        //const response = await axios.put('https://zepironokioku.onrender.com/updateSaber', updatedSaber, {
+        //const response = await axios.put('http://localhost:4000/updateSaber', updatedSaber, {
+        const response = await axios.put('https://zepironokioku.onrender.com/updateSaber', updatedSaber, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -130,8 +130,8 @@ export const Saberes = ({ saberes, setSaberes }) => {
     }
     
     try {
-      //const response = await axios.delete(`https://zepironokioku.onrender.com/deleteSaber/${id}`);
-      const response = await axios.delete(`http://localhost:4000/deleteSaber/${id}`);
+      const response = await axios.delete(`https://zepironokioku.onrender.com/deleteSaber/${id}`);
+      //const response = await axios.delete(`http://localhost:4000/deleteSaber/${id}`);
       
       if (response.status === 200) { 
           setDeletedSaberId(id);

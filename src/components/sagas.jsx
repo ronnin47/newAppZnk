@@ -119,8 +119,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
   
   const eliminarGrupoDeBBDD = async (idgrupo) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
-      //const response = await axios.delete(`https://zepironokioku.onrender.com/delete-grupo/${idgrupo}`);
+      //const response = await axios.delete(`http://localhost:4000/delete-grupo/${idgrupo}`);
+      const response = await axios.delete(`https://zepironokioku.onrender.com/delete-grupo/${idgrupo}`);
       console.log('Grupo eliminado exitosamente:', response.data);
 /*
       Swal.fire({
@@ -137,8 +137,8 @@ const agregarPersonaje = async (idgrupo, idpersonaje) => {
 
 const guardarCambiosBBDD = async (idgrupo, idspersonajes) => {
   try {
-    const response = await axios.put(`http://localhost:4000/update-grupos`, {
-    //const response = await axios.put(`https://zepironokioku.onrender.com/update-grupos`, {
+    //const response = await axios.put(`http://localhost:4000/update-grupos`, {
+    const response = await axios.put(`https://zepironokioku.onrender.com/update-grupos`, {
       idgrupo,
       idspersonajes
     }, {
