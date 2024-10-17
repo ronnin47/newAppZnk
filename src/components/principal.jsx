@@ -21,11 +21,13 @@ import { Ranking } from "./ranking.jsx";
 import { MiGrupo } from "./migrupo.jsx";
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
-
-
-
 import { Flotante } from "./flotante.jsx";
 import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
+
+
+//import { GeneradorBakemono } from "./generadorBakemono.jsx";
+
+import { GeneradorBake } from "./generadorBake.jsx";
 
 export const Principal= ()=> {
 
@@ -261,8 +263,8 @@ useEffect(() => {
   const loadPersonajes = async () => {
     try {
       if (sesion) {       
-        //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
-        const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
+        const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+        //const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -328,8 +330,8 @@ useEffect(() => {
     try {
       if (sesion) {
      
-        //const response = await axios.get('http://localhost:4000/consumirGrupos', {
-        const response = await axios.get('https://zepironokioku.onrender.com/consumirGrupos', {
+        const response = await axios.get('http://localhost:4000/consumirGrupos', {
+        //const response = await axios.get('https://zepironokioku.onrender.com/consumirGrupos', {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -411,8 +413,8 @@ useEffect(() => {
   useEffect(() => {
     const fetchSaberes = async () => {
       try {
-        const response = await axios.get('https://zepironokioku.onrender.com/saberes');
-        //const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
+        //const response = await axios.get('https://zepironokioku.onrender.com/saberes');
+        const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
 
         
         if (response.data && response.data.length > 0) {
@@ -669,6 +671,8 @@ return (
               ></CargarPersonaje>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
           
             </Tab> 
+
+            
             <Tab eventKey="personajes" title="personajes" className="container-fluid fondoBody">
       {loading ? (
         <div className="spinner-container">
@@ -709,7 +713,7 @@ return (
           </SortableContext>
         </DndContext>
       )}
-    </Tab>
+            </Tab>
 
             <Tab eventKey="ficha" title="Ficha" className="fondoBody">
             {pjSeleccionado ? (
@@ -827,22 +831,172 @@ return (
             <Tab eventKey="reglas" title="Reglas" className="fondoBody"  >
               {sesion==true ? (<Reglas></Reglas>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
             </Tab>
-
-
-            
-               
-
+              
             <Tab eventKey="unicos" title="Poderes unicos" className="fondoBody"  >
               {sesion==true ? (<Unicos></Unicos>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere inicio de sesion</p>)}
             </Tab>
-
-
-               
+              
             <Tab eventKey="ranking" title="Ranking Ken" className="fondoBody">
               {sesion==true ?(<Ranking coleccionPersonajes={coleccionPersonajes}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 
+            <Tab eventKey="cargarBakemono" title="Generar Kaiju" className="fondoBody"  >
+            {sesion==true ? (
+            <GeneradorBake 
+              usuarioId={usuarioId}
+
+              setActiveKey={setActiveKey}
+              personajes={personajes} 
+              setPersonajes={setPersonajes} 
+              setNombre={setNombre} 
+              setRaza={setRaza} 
+              raza={raza} 
+              setEdad={setEdad} 
+              edad={edad} 
+              setDominio={setDominio} 
+              dominio={dominio} 
+              ken={ken}
+              setKen={setKen}
+              ki={ki}
+              setKi={setKi}
+              destino={destino}
+              setDestino={setDestino}
+              pDestino={pDestino}
+              setPdestino={setPdestino}
+              setFuerza={setFuerza} 
+              setFortaleza={setFortaleza} 
+              setAgilidad={setAgilidad}
+              setSabiduria={setSabiduria}
+              setPresencia={setPresencia}
+              setPrincipio={setPrincipio}
+              setSentidos={setSentidos}
+              sabiduria={sabiduria}
+              presencia={presencia}
+              principio={principio}
+              sentidos={sentidos}
+              setImagen={setImagen} 
+              setDestreza={setDestreza} 
+              setApCombate={setApCombate} 
+              setValCombate={setValCombate} 
+              setApCombate2={setApCombate2} 
+              setValCombate2={setValCombate2}
+              nombre={nombre} 
+              fuerza={fuerza} 
+              fortaleza={fortaleza} 
+              agilidad={agilidad}  
+              imagen={imagen} 
+              destreza={destreza} 
+              apCombate={apCombate} 
+              valCombate={valCombate}
+              apCombate2={apCombate2} 
+              valCombate2={valCombate2}
+              academisismo={academisismo}
+              alerta={alerta}
+              atletismo={atletismo}
+              conBakemono={conBakemono}
+              mentir={mentir}
+              pilotear={pilotear}
+              artesMarciales={artesMarciales}
+              medicina={medicina}
+              conObjMagicos={conObjMagicos}
+              sigilo={sigilo}
+              conEsferas={conEsferas}
+              conLeyendas={conLeyendas}
+              forja={forja}
+              conDemonio={conDemonio}
+              conEspiritual={conEspiritual}
+              manejoBlaster={manejoBlaster}
+              manejoSombras={manejoSombras}
+              tratoBakemono={tratoBakemono}
+              conHechiceria={conHechiceria}
+              medVital={medVital}
+              medEspiritual={medEspiritual}
+              rayo={rayo}
+              fuego={fuego}
+              frio={frio}
+              veneno={veneno}
+              corte={corte}
+              energia={energia}
+              setAcademisismo={setAcademisismo}
+              setAlerta={setAlerta}
+              setAtletismo={setAtletismo}
+              setConBakemono={setConBakemono}
+              setMentir={setMentir}
+              setPilotear={setPilotear}
+              setArtesMarciales={setArtesMarciales}
+              setMedicina={setMedicina}
+              setConObjMagicos={setConObjMagicos}
+              setSigilo={setSigilo}
+              setConEsferas={setConEsferas}
+              setConLeyendas={setConLeyendas}
+              setForja={setForja}
+              setConDemonio={setConDemonio}
+              setConEspiritual={setConEspiritual}
+              setManejoBlaster={setManejoBlaster}
+              setManejoSombras={setManejoSombras}
+              setTratoBakemono={setTratoBakemono}
+              setConHechiceria={setConHechiceria}
+              setMedVital={setMedVital}
+              setMedEspiritual={setMedEspiritual}
+              setRayo={setRayo}
+              setFuego={setFuego}
+              setFrio={setFrio}
+              setVeneno={setVeneno}
+              setCorte={setCorte}
+              setEnergia={setEnergia}
+
+              ventajas={ventajas}
+              setVentajas={setVentajas}
+
+              inventario={inventario}
+              
+              dominios={dominios}
+
+              hechizos={hechizos}
+
+              kenActual={kenActual}
+              kiActual={kiActual}
+              positiva={positiva}
+              negativa={negativa}
+              setPositivaActual={setPositivaActual}
+              setNegativaActual={setNegativaActual}
+              
+              vidaActual={vidaActual}
+              add1={add1}
+              setAdd1={setAdd1}
+              valAdd1={valAdd1}
+              setValAdd1={setValAdd1}
+
+              add2={add2}
+              setAdd2={setAdd2}
+              valAdd2={valAdd2}
+              setValAdd2={setValAdd2}
+              
+              add3={add3}
+              setAdd3={setAdd3}
+              valAdd3={valAdd3}
+              setValAdd3={setValAdd3}
+              
+              add4={add4}
+              setAdd4={setAdd4}
+              valAdd4={valAdd4}
+              setValAdd4={setValAdd4}
+              consumision={consumision}
+              
+
+              conviccion={conviccion}
+              setConviccion={setConviccion}
+              
+              cicatriz={cicatriz}
+              setCicatriz={setCicatriz}
+
+
+              naturaleza={naturaleza}
+              setNaturaleza={setNaturaleza}             
+              ></GeneradorBake>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
+          
+            </Tab> 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
               {sesion==true && estatus=="narrador"?(<Narrador saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}

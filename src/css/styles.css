@@ -116,6 +116,12 @@ background-color: rgba(0, 0, 0, 0.719);
     max-width: 80%;
     border-radius: 15px;   
 }
+.imagenBakemono{
+  border: 3px solid red;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;   
+}
 .col2{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1025,4 +1031,11 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     display: flex;
     justify-content: center;
   }
-  
+  .select{
+    text-align: center;
+    width: 60%;
+    border: 3px solid aliceblue;
+    border-radius: 15px;
+    color: aliceblue;
+    background-color: black;
+  }
