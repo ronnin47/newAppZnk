@@ -658,13 +658,21 @@ useEffect(() => {
 
  
   const handleEliminarPj = async() => {
-      eliminarPj(personaje.idpersonaje);
-      try { 
-    //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-    const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
-    } catch (error) {
-      console.error('Error al eliminar el personaje:', error);
-    }
+
+      const eliminar= await eliminarPj(personaje.idpersonaje);
+
+      
+
+      if(eliminar===true){
+        try { 
+          //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
+          const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
+          } catch (error) {
+            console.error('Error al eliminar el personaje:', error);
+          }
+      }
+
+    
   };
 
 

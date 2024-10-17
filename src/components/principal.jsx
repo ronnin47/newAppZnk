@@ -136,9 +136,9 @@ const [loading, setLoading] = useState(true);
 
   
 
-
-  const eliminarPj = (idpersonaje) => {
-    Swal.fire({
+    const eliminarPj = (idpersonaje) => {
+      // Retornamos la promesa de Swal.fire para manejarla después
+      return Swal.fire({
         title: '¿quieres eliminar el personaje?',
         text: '¡No podrás revertir esto!',
         icon: 'warning',
@@ -146,20 +146,23 @@ const [loading, setLoading] = useState(true);
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sí, eliminarlo'
-    }).then((result) => {
+      }).then((result) => {
         if (result.isConfirmed) {
-            const listaNueva = personajes.filter((pj) => pj.idpersonaje !== idpersonaje);
-            setPjSeleccionado("");
-            setPersonajes(listaNueva);
-            Swal.fire(
-                '¡Eliminado!',
-                'Tu personaje ha sido eliminado.',
-                'success'
-            );
+          const listaNueva = personajes.filter((pj) => pj.idpersonaje !== idpersonaje);
+          setPjSeleccionado("");
+          setPersonajes(listaNueva);
+          
+          Swal.fire(
+            '¡Eliminado!',
+            'Tu personaje ha sido eliminado.',
+            'success'
+          );
         }
-    });
-};
-
+    
+        // Aquí retornamos el resultado de la confirmación (true o false)
+        return result.isConfirmed;
+      });
+    };
 
 
   const [sesion, setSesion] = useState(() => {

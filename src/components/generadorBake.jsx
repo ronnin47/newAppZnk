@@ -975,10 +975,10 @@ switch (dificultad) {
       kiBono=140-kiBase-1
     }
       fuerzaBono = 50 + getRandomBonusD100();
-      destrezaBono = 50 + getRandomBonusD80();
-      agilidadBono = 50 + getRandomBonusD50();
-      sabiduriaBono = 50 + getRandomBonusD50();
       fortalezaBono = 50 + getRandomBonusD100();
+      destrezaBono = 50 + getRandomBonusD80();
+      agilidadBono = 20 + getRandomBonusD50();
+      sabiduriaBono = 10 + getRandomBonusD50();
       presenciaBono = 80 + getRandomBonusD50();
       sentidosBono = 50 + getRandomBonusD50();
       principioBono = 50 + getRandomBonusD50();
@@ -1123,7 +1123,7 @@ switch (dificultad) {
     
         try {
           //const response = await axios.post("http://localhost:4000/insert-personaje", pjNuevo, {
-            const response = await axios.post("https://zepironokioku.onrender.com/insert-personaje", pjNuevo, {
+           const response = await axios.post("https://zepironokioku.onrender.com/insert-personaje", pjNuevo, {
             headers: {
               'Content-Type': 'application/json',
             },
