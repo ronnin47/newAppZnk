@@ -193,7 +193,7 @@ export const GeneradorBake = ({
           break;
       
         case "Kriak":
-          setImagen("/Kriak.jfif");       
+          setImagen("/kriak.jfif");       
           break;
       
         case "Bagu":
