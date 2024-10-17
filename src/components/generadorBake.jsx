@@ -760,7 +760,7 @@ break;
           atletismoBase = 0;
           frioBase = 40;
           positivaBase = 3;
-          negativaBase = 3;
+          negativaBase = 0;
           break;
 
          case "Licano":
@@ -820,6 +820,10 @@ switch (dificultad) {
       alertaBono = 0;
       sigiloBono = 0;
       atletismoBono = 0;
+      
+
+
+
       break;
   
     case "entrenamiento":
@@ -1104,9 +1108,9 @@ switch (dificultad) {
             inventario: inventario,
             dominios: dominios,
             kenActual:ken || 0,
-            kiActual:ki || 0,
+            kiActual:kiFinal || 0,
             positiva: positivaFinal || 3,
-            negativa: negativaFinal || 3,
+            negativa: negativaFinal === 0 ? 0 : (negativaFinal ?? 3),
             vidaActual:0,
             hechizos:hechizos,
             consumision:consumision || 0,
