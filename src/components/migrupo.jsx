@@ -140,7 +140,7 @@ export const MiGrupo = ({
           </div>
         ))
       ) : (
-        <p>No se encontraron grupos.</p>
+        <></>
       )}
     </div>
   );

@@ -1039,3 +1039,31 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
     color: aliceblue;
     background-color: black;
   }
+  .imagenEnemigos{
+    border: 3px solid aliceblue;
+    border-radius: 50%;
+    box-shadow: 
+    0 0 15px rgba(255, 69, 58, 0.9),   /* Rojo intenso */
+    0 0 30px rgba(255, 87, 34, 0.8),   /* Naranja brillante */
+    0 0 45px rgba(255, 99, 71, 0.7),   /* Rojo tomate */
+    0 0 60px rgba(255, 140, 0, 0.6),   /* Naranja oscuro */
+    0 0 90px rgba(255, 69, 58, 0.5);   /* Rojo intenso más suave */
+  }
+  .imagenEnemigos:hover{
+    transform: scale(1.3);
+    border: 4px solid aliceblue;
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
+
+  }
+  .border-verde {
+    opacity: 0.4; /* Ajusta la opacidad según lo que necesites */
+
+    border: 5px solid black;
+   
+  }
+

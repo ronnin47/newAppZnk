@@ -465,8 +465,8 @@ export const GeneradorBake = ({
         alertaBase = 20;
         sigiloBase = 0;
         atletismoBase = 20;
-        corteBase=20;
-        fuegoBase=20;
+        corteBase=0;
+        fuegoBase=0;
        
 
         positivaBase = 6;

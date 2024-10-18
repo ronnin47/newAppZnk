@@ -25,7 +25,7 @@ import { Flotante } from "./flotante.jsx";
 import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
 
 
-//import { GeneradorBakemono } from "./generadorBakemono.jsx";
+import { Enemigos } from "./enemigos.jsx";
 
 import { GeneradorBake } from "./generadorBake.jsx";
 
@@ -368,6 +368,33 @@ const calcularVidaTotal = (personaje) => {
 };
 
 useEffect(() => {
+  // Función para manejar los mensajes recibidos del socket
+  const handleMessage = (data) => {
+    setValues((prevValues) => ({
+      ...prevValues,
+      [data.idpersonaje]: {
+        kenActual: data.kenActual !== undefined ? data.kenActual : (prevValues[data.idpersonaje]?.kenActual || 0),
+        ken: data.ken !== undefined ? data.ken : (prevValues[data.idpersonaje]?.ken || 0),
+        kiActual: data.kiActual !== undefined ? data.kiActual : (prevValues[data.idpersonaje]?.kiActual || 0),
+        ki: data.ki !== undefined ? data.ki : (prevValues[data.idpersonaje]?.ki || 0),
+        vidaActual: data.vidaActual !== undefined ? data.vidaActual : (prevValues[data.idpersonaje]?.vidaActual || 0),
+        vidaTotal: data.vidaTotal !== undefined ? data.vidaTotal : (prevValues[data.idpersonaje]?.vidaTotal || 0),
+      },
+    }));
+  };
+
+  // Escuchar los eventos del socket
+  socket.on('message', handleMessage);
+
+  // Limpiar la suscripción al socket cuando el componente se desmonte
+  return () => {
+    socket.off('message', handleMessage);
+  };
+}, []);
+/*
+//este es el inicio
+
+useEffect(() => {
   // Función para manejar los mensajes recibidos
   const handleMessage = (data) => {
     setValues((prevValues) => {
@@ -379,6 +406,7 @@ useEffect(() => {
 
       // Calcular vidaTotal si no viene en los datos del mensaje
       const vidaTotalCalculada = calcularVidaTotal(personajeEnColeccion);
+      
 
       return {
         ...prevValues,
@@ -410,6 +438,8 @@ useEffect(() => {
       socket.off('message', handleMessage);
     };
   }, [socket, coleccionPersonajes]);
+*/
+
 
   const [saberes, setSaberes] = useState([]); // Estado inicial vacío
  
@@ -464,7 +494,26 @@ return (
      <div>
 
      {isVisible && <Flotante saberes={saberes} />} {/* Renderiza el componente solo si es visible */}
-   </div>
+     </div>
+
+     <div>
+     {sesion ? (
+                <Enemigos
+                coleccionPersonajes={coleccionPersonajes}
+                values={values}
+                setValues={setValues} // Pasar la función
+                estatus={estatus}
+                usuarioId={usuarioId}
+                  
+                />
+              ):(<></>)}
+     </div>
+
+     
+     
+
+
+
 
 
      <div  className="inicioGrupo">
@@ -803,6 +852,7 @@ return (
 
                   conviccion={pj.conviccion}
                   cicatriz={pj.cicatriz}
+                  estatus={estatus}
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>

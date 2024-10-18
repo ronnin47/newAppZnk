@@ -47,6 +47,7 @@ export const BarraKen = ({ nombreN, kenN, kenActualN, setKenActualN,idpersonaje 
               mensaje: message            
           };
             socket.emit('message', msgEnviar);
+            
         }
        
     }

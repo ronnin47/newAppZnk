@@ -14,6 +14,9 @@ import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
 import { TecnicaEspecial } from './tecEspecial.jsx';
 
+import { io } from 'socket.io-client';
+const socket = io(process.env.REACT_APP_BACKEND_URL);
+
 
 export const FichaPersonaje = ({
   personaje,
@@ -96,6 +99,7 @@ export const FichaPersonaje = ({
   usuarioId,
   conviccion,
   cicatriz,
+  estatus,
 
 }) => {
   
@@ -676,6 +680,27 @@ useEffect(() => {
   };
 
 
+
+  const presentar=()=>{
+
+
+
+  console.log("Usuario id presnetado: ",usuarioId)
+  
+    // Calcula vidaPositiva
+    const vidaPositivaMensaje = (fortalezaN + kiN) * positivaN;
+
+  let msgEnviar = {
+      image: imagenN, 
+      idpersonaje: idpersonaje,
+      usuarioId: usuarioId,
+      vidaPositiva: vidaPositivaMensaje
+    };
+  
+    // Enviar la imagen y el idpersonaje a través del socket
+    socket.emit('image', msgEnviar);
+  }
+
   return (
     <>
     <div className='container'>
@@ -923,7 +948,9 @@ useEffect(() => {
       <Button variant="outline-danger" onClick={handleEliminarPj} style={{width:"150px", marginTop:"10px", marginRight:"1em"}}>Eliminar Pj</Button>
    
 
-      <Button variant="outline-success"  onClick={guardarCambiosBBDD} style={{width:"150px", marginTop:"10px"}}>Guardar Cambios</Button>
+      <Button variant="outline-success"  onClick={guardarCambiosBBDD} style={{width:"150px", marginTop:"10px", marginRight:"1em"}}>Guardar Cambios</Button>
+      {estatus=="narrador"?(<Button variant="outline-warning"  onClick={presentar} style={{width:"150px", marginTop:"10px"}}>Presentar</Button>):(<></>)}
+      
     </div>
        
     </div>

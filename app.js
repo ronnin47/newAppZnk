@@ -95,6 +95,22 @@ io.on('connection', (socket) => {
    
   });
 
+
+  socket.on('image', (imageData) => {
+    io.emit('image', imageData); 
+  });
+
+
+   // Escuchar evento 'removeImage' cuando un cliente quiere eliminar una imagen
+  socket.on('removeImage', (idpersonaje) => {
+    console.log(`Eliminando personaje con id: ${idpersonaje}`);
+    
+    // Emitir el evento 'removeImage' a todos los clientes (incluido el que lo emitió)
+    io.emit('removeImage', idpersonaje);
+    
+    // Si deseas que solo se emita a los demás clientes y no al que hizo la solicitud:
+    // socket.broadcast.emit('removeImage', idpersonaje);
+  });
  
   socket.on('message', (message) => {
     io.emit('message', message); 
@@ -110,16 +126,24 @@ io.on('connection', (socket) => {
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
   });
+  
 
   socket.on('disconnect', () => {
     const usuarioId = connectedUsers.get(socket.id);
     if (usuarioId) {
       connectedUsers.delete(socket.id);
-     console.log(`Usuario ${usuarioId} se desconectó.`);
+      console.log(`Usuario ${usuarioId} se desconectó.`);
+      
+      // Emitir evento de desconexión para eliminar las imágenes del usuario
+      io.emit('user-disconnect', { usuarioId }); // Aquí se envía el usuarioId al cliente
+      
+      // Emitir la lista actualizada de usuarios conectados
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
-    console.log('Socket: un usuario se desconectó');
   });
+
+
+  
 });
 
 
