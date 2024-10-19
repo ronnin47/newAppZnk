@@ -694,7 +694,8 @@ useEffect(() => {
       image: imagenN, 
       idpersonaje: idpersonaje,
       usuarioId: usuarioId,
-      vidaPositiva: vidaPositivaMensaje
+      vidaPositiva: vidaPositivaMensaje,
+      nombre:nombreN,
     };
   
     // Enviar la imagen y el idpersonaje a través del socket

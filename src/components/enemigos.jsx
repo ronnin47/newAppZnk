@@ -6,65 +6,58 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 export const Enemigos = ({ values, estatus, usuarioId }) => {
   const [images, setImages] = useState([]);
-  const [borderClasses, setBorderClasses] = useState({}); // Cambiado a borderClasses
-  const [imagenData, setImagenData] = useState({}); // Estado para almacenar imagenData
+  const [borderClasses, setBorderClasses] = useState({});
+  const [imagenData, setImagenData] = useState({});
 
   useEffect(() => {
-    // Escuchar evento para nuevas imágenes
     socket.on('image', (imageData) => {
       setImages((prevImages) => [...prevImages, imageData]);
 
-      // Guardar vidaPositiva para cada personaje individualmente
       setImagenData((prevData) => ({
         ...prevData,
-        [imageData.idpersonaje]: imageData.vidaPositiva // Almacenar vidaPositiva con idpersonaje como clave
+        [imageData.idpersonaje]: imageData.vidaPositiva
       }));
 
       console.log("VIDA POSITIVA ", imageData.vidaPositiva);
     });
 
-    // Escuchar evento para remover una imagen
     socket.on('removeImage', (idpersonaje) => {
       setImages((prevImages) => prevImages.filter(image => image.idpersonaje !== idpersonaje));
       setImagenData((prevData) => {
         const newData = { ...prevData };
-        delete newData[idpersonaje]; // Eliminar vidaPositiva al remover la imagen
+        delete newData[idpersonaje];
         return newData;
       });
     });
 
-    // Escuchar evento de desconexión de usuario
     socket.on('user-disconnect', (data) => {
-      const { usuarioId: disconnectedUserId } = data; // Obtener el usuarioId del que se desconectó
+      const { usuarioId: disconnectedUserId } = data;
       console.log(`Usuario desconectado: ${disconnectedUserId}`);
-      setImages((prevImages) => prevImages.filter(image => image.usuarioId !== disconnectedUserId)); // Filtra las imágenes de este usuario
+      setImages((prevImages) => prevImages.filter(image => image.usuarioId !== disconnectedUserId));
       setImagenData((prevData) => {
         const newData = { ...prevData };
-        delete newData[disconnectedUserId]; // Eliminar vidaPositiva al desconectarse
+        delete newData[disconnectedUserId];
         return newData;
       });
     });
 
-    // Limpiar los eventos al desmontar el componente
     return () => {
       socket.off('image');
       socket.off('removeImage');
-      socket.off('user-disconnect'); // Limpia el evento de desconexión
+      socket.off('user-disconnect');
     };
-  }, [usuarioId]); // Agrega usuarioId como dependencia
+  }, [usuarioId]);
 
-  // useEffect para actualizar classNames según la vidaActual de cada personaje
   useEffect(() => {
     const newBorderClasses = {};
     Object.keys(values).forEach((idpersonaje) => {
       const vidaActual = values[idpersonaje]?.vidaActual;
-      const vidaPositiva = imagenData[idpersonaje]; // Obtener vidaPositiva específica del personaje
-      // Verificamos si vidaActual y vidaPositiva están definidos antes de comparar
+      const vidaPositiva = imagenData[idpersonaje];
       newBorderClasses[idpersonaje] = (vidaActual !== undefined && vidaPositiva !== undefined && vidaActual > vidaPositiva) ?
-        'border-verde' : ''; // Asigna la clase de borde verde si es necesario
+        'border-verde' : '';
     });
     setBorderClasses(newBorderClasses);
-  }, [values, imagenData]); // Añadir imagenData como dependencia
+  }, [values, imagenData]);
 
   const renderTooltip = (idpersonaje) => (props) => {
     const data = values[idpersonaje] || {
@@ -102,22 +95,24 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
       {[...new Map(images.map(item => [item.idpersonaje, item])).values()].map((imageObj) => {
-        const { image, idpersonaje } = imageObj;
-  
+        const { image, idpersonaje, nombre } = imageObj;
+
         return (
-          <OverlayTrigger
-            key={idpersonaje}
-            placement="right"
-            overlay={renderTooltip(idpersonaje)}
-          >
-            <img
-              src={image || "/imagenBase"}
-              alt={`imagen-${idpersonaje}`}
-              style={{ width: '100px', height: 'auto', margin: '10px', cursor: 'pointer' }}
-              className={`imagenEnemigos ${borderClasses[idpersonaje]}`} // Asignar las clases
-              onDoubleClick={estatus === "narrador" ? () => handleDoubleClick(idpersonaje) : undefined}
-            />
-          </OverlayTrigger>
+          <div key={idpersonaje} style={{ textAlign: 'center', margin: '10px' }}>
+            <OverlayTrigger
+              placement="right"
+              overlay={renderTooltip(idpersonaje)}
+            >
+              <img
+                src={image || "/imagenBase"}
+                alt={`imagen-${idpersonaje}`}
+                style={{ width: '100px', height: 'auto', cursor: 'pointer' }}
+                className={`imagenEnemigos ${borderClasses[idpersonaje]}`}
+                onDoubleClick={estatus === "narrador" ? () => handleDoubleClick(idpersonaje) : undefined}
+              />
+            </OverlayTrigger>
+            <p style={{ color: "yellow", fontFamily:"cursive" }}>{nombre}</p> {/* Mostrar el nombre debajo de la imagen */}
+          </div>
         );
       })}
     </div>

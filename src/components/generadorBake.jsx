@@ -298,8 +298,7 @@ export const GeneradorBake = ({
     
     let positivaBase, negativaBase;
     
-    switch (dominio) {
-       
+    switch (dominio) {      
 
         case "Trasgo":
         
