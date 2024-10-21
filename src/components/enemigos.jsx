@@ -92,7 +92,10 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
   };
 
   const handleDoubleClick = (idpersonaje) => {
-    socket.emit('removeImage', idpersonaje);
+    if(estatus==="narrador"){
+      socket.emit('removeImage', idpersonaje);
+    }
+  
   };
 
   const handleClick = (image, idpersonaje) => {
