@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { io } from 'socket.io-client';
 import { Tooltip, OverlayTrigger, Modal } from 'react-bootstrap';
 
-
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 export const Enemigos = ({ values, estatus, usuarioId }) => {
@@ -11,6 +10,7 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
   const [imagenData, setImagenData] = useState({});
   const [showModal, setShowModal] = useState(false); // Estado para mostrar u ocultar el modal
   const [selectedImage, setSelectedImage] = useState(null); // Imagen seleccionada
+  const [clickTimeout, setClickTimeout] = useState(null); // Para controlar el clic simple
 
   useEffect(() => {
     socket.on('image', (imageData) => {
@@ -95,9 +95,19 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
     socket.emit('removeImage', idpersonaje);
   };
 
-  const handleClick = (image) => {
-    setSelectedImage(image); // Establece la imagen seleccionada
-    setShowModal(true); // Muestra el modal
+  const handleClick = (image, idpersonaje) => {
+    if (clickTimeout) {
+      clearTimeout(clickTimeout); // Cancelar el temporizador de clic simple si hay un doble clic
+      setClickTimeout(null);
+      handleDoubleClick(idpersonaje); // Ejecutar la lógica del doble clic
+    } else {
+      const timeout = setTimeout(() => {
+        setSelectedImage(image); // Mostrar la imagen en el modal
+        setShowModal(true);
+        setClickTimeout(null); // Limpiar el estado del temporizador
+      }, 300); // Esperar 300ms para ver si se hace doble clic
+      setClickTimeout(timeout);
+    }
   };
 
   const handleCloseModal = () => {
@@ -120,11 +130,10 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
                 alt={`imagen-${idpersonaje}`}
                 style={{ width: '100px', height: 'auto', cursor: 'pointer' }}
                 className={`imagenEnemigos ${borderClasses[idpersonaje]}`}
-                onClick={() => handleClick(image)} // Abre el modal al hacer clic
-                onDoubleClick={estatus === "narrador" ? () => handleDoubleClick(idpersonaje) : undefined}
+                onClick={() => handleClick(image, idpersonaje)} // Diferenciar entre clic simple y doble clic
               />
             </OverlayTrigger>
-            <p style={{ color: "yellow", fontFamily:"cursive" }}>{nombre}</p> {/* Mostrar el nombre debajo de la imagen */}
+            <p style={{ color: "yellow", fontFamily: "cursive" }}>{nombre}</p>
           </div>
         );
       })}
@@ -134,7 +143,7 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
         show={showModal}
         onHide={handleCloseModal}
         centered
-        backdropClassName="custom-backdrop" // Aplica la clase personalizada para opacar el fondo
+        backdropClassName="custom-backdrop"
       >
         <Modal.Body>
           {selectedImage && (
