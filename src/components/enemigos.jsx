@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { io } from 'socket.io-client';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Tooltip, OverlayTrigger, Modal } from 'react-bootstrap';
+
 
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
@@ -8,6 +9,8 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
   const [images, setImages] = useState([]);
   const [borderClasses, setBorderClasses] = useState({});
   const [imagenData, setImagenData] = useState({});
+  const [showModal, setShowModal] = useState(false); // Estado para mostrar u ocultar el modal
+  const [selectedImage, setSelectedImage] = useState(null); // Imagen seleccionada
 
   useEffect(() => {
     socket.on('image', (imageData) => {
@@ -92,6 +95,15 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
     socket.emit('removeImage', idpersonaje);
   };
 
+  const handleClick = (image) => {
+    setSelectedImage(image); // Establece la imagen seleccionada
+    setShowModal(true); // Muestra el modal
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // Oculta el modal
+  };
+
   return (
     <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
       {[...new Map(images.map(item => [item.idpersonaje, item])).values()].map((imageObj) => {
@@ -108,6 +120,7 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
                 alt={`imagen-${idpersonaje}`}
                 style={{ width: '100px', height: 'auto', cursor: 'pointer' }}
                 className={`imagenEnemigos ${borderClasses[idpersonaje]}`}
+                onClick={() => handleClick(image)} // Abre el modal al hacer clic
                 onDoubleClick={estatus === "narrador" ? () => handleDoubleClick(idpersonaje) : undefined}
               />
             </OverlayTrigger>
@@ -115,6 +128,24 @@ export const Enemigos = ({ values, estatus, usuarioId }) => {
           </div>
         );
       })}
+
+      {/* Modal para mostrar la imagen seleccionada */}
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered
+        backdropClassName="custom-backdrop" // Aplica la clase personalizada para opacar el fondo
+      >
+        <Modal.Body>
+          {selectedImage && (
+            <img
+              src={selectedImage}
+              alt="Imagen seleccionada"
+              style={{ width: '100%', height: 'auto' }}
+            />
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
