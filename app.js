@@ -812,7 +812,6 @@ app.delete('/deletePersonaje/:id', async (req, res) => {
   }
 });
 
-
 app.get('/consumirTecEspeciales', async (req, res) => {
    try {
      const userQuery = 'SELECT nombre, idpersonaje, ken, "tecEspecial" FROM personajes WHERE "tecEspecial" IS NOT NULL AND array_length("tecEspecial", 1) > 0;';
@@ -834,8 +833,6 @@ app.get('/consumirTecEspeciales', async (req, res) => {
    }
  });
 
-
-
  app.get('/saberes', async (req, res) => {
   try {
     const userQuery = 'SELECT * FROM saberes';
@@ -852,10 +849,6 @@ app.get('/consumirTecEspeciales', async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
-
-
-
-
 
 app.post('/insertSaber', async (req, res) => {
   const { titulo, frase, imagen } = req.body; 

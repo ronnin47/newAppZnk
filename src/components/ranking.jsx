@@ -136,19 +136,19 @@ export const CartaUnica = ({
   };
   
 
-
   const Cartita = ({
     idpersonaje,
     nombre,
     dominio,
     ken,
     imagen,
-    historia,  
+    historia,
     naturaleza,
     conviccion,
-    rank, 
+    rank,
+    vidaActual,
+    vidaTotal,
   }) => {
-  
     const [showCartaPj, setShowCartaPj] = useState(false);
   
     const handleCardClick = () => {
@@ -158,50 +158,47 @@ export const CartaUnica = ({
     const handleCloseCartaPj = () => {
       setShowCartaPj(false);
     };
-
-  const [classBrillosDestino, setClassBrillosDestino] = useState("numeroRanking");
-  const [classCardDestino, setClassCardDestino] = useState("shadowBody");
-
+  
+    const [classBrillosDestino, setClassBrillosDestino] = useState("numeroRanking");
+    const [classCardDestino, setClassCardDestino] = useState("shadowBody");
+  
     useEffect(() => {
-      if (ken >= 400) {
+      if (ken >= 400 && vidaActual > vidaTotal) {  // Personaje muerto con ken >= 400
+        setClassCardDestino("shadowBody opacity-class");
+      } else if (ken >= 400) {
         setClassBrillosDestino("numeroRanking classEstrella");
         setClassCardDestino("classCardDestino");
       } else {
         setClassBrillosDestino("numeroRanking");
         setClassCardDestino("shadowBody");
       }
-    }, [ken]);
-
-
-
-
-
+    }, [ken, vidaActual, vidaTotal]);
   
     return (
       <>
         <div className={`cartaR ${classCardDestino}`} onClick={handleCardClick} style={{ position: 'relative', overflow: 'visible' }}>
           {/* El número de ranking, sobresaliendo del div */}
           <span className="ranking-number" 
-          style={{ 
-            position: 'absolute', 
-            top: '-15px',  
-            left: '-15px', 
-            width: '40px', 
-            height: '40px', 
-            backgroundColor: '#f1c40f',  // Amarillo dorado
-            color: 'aliceblue',
-            borderRadius: '50%', 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            fontSize: '1.5em', 
-            fontWeight: 'bold',
-            zIndex: 1,
-            boxShadow: '0 0 15px 5px rgba(255, 255, 0, 0.8)', // Borde brillante
-          }}
-        >
-          {rank}
-        </span>
+            style={{ 
+              position: 'absolute', 
+              top: '-15px',  
+              left: '-15px', 
+              width: '40px', 
+              height: '40px', 
+              backgroundColor: '#f1c40f',  // Amarillo dorado
+              color: 'aliceblue',
+              borderRadius: '50%', 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              fontSize: '1.5em', 
+              fontWeight: 'bold',
+              zIndex: 1,
+              boxShadow: '0 0 15px 5px rgba(255, 255, 0, 0.8)', // Borde brillante
+            }}
+          >
+            {rank}
+          </span>
           
           <img src={imagen} alt={nombre} className="cartaImagenRanking" />
           <div className="cartitaElementos">
@@ -226,95 +223,82 @@ export const CartaUnica = ({
         )}
       </>
     );
-  }
-
-
-
-export const Ranking = ({coleccionPersonajes}) => {
-
-const [pjBuscado, setPjBuscado]=useState("");
-const [tecBuscar, setTectBuscar]=useState("");
-
-
-const handleInputTecBuscar=(event)=>{
-  setTectBuscar(event.target.value);
-}
-
-
-const handleInputBuscardor=(event)=>{
- setPjBuscado(event.target.value);
-}
-
-
-  // Filtramos la colección de personajes según el valor de la búsqueda
-  const personajesFiltrados = coleccionPersonajes
-  .filter((pj) =>
-    pj.nombre.toLowerCase().includes(pjBuscado.toLowerCase()) && pj.ken >= 40
-  )
-  .sort((a, b) => b.ken - a.ken);  // Ordenamos de mayor a menor según el valor de 'ken'
-
-
-  return (
-    <>
-
-        <div style={{display:"flex", flexDirection:"column", alignItems: "center"}}>
-            <div style={{ position: "relative", width: "30%"}}>
-        <input 
-            type="text" 
-            className="buscador" 
-            value={pjBuscado} 
-            onChange={handleInputBuscardor} 
-            placeholder="ingrese nombre del pj" 
-            style={{
-            width: "100%", 
-            paddingLeft: '30px',  // Espacio para la lupa
-            backgroundImage: `url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')`,
-            backgroundPosition: '10px center',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '16px 16px' // Ajusta el tamaño del ícono de lupa
-            }}
-        />
-        <i 
-            className="fas fa-search" 
-            style={{ 
-            position: 'absolute', 
-            left: '10px', 
-            top: '50%', 
-            transform: 'translateY(-50%)', 
-            color: '#aaa' 
-            }} 
-        />
-            </div>
+  };
+  
+  export const Ranking = ({ coleccionPersonajes }) => {
+    const [pjBuscado, setPjBuscado] = useState("");
+    const handleInputBuscardor = (event) => {
+      setPjBuscado(event.target.value);
+    };
+  
+    const personajesFiltrados = coleccionPersonajes
+      .filter((pj) => {
+        const vidaTotal = (pj.ki + pj.fortaleza) * (pj.positiva + pj.negativa);
+        return (
+          pj.nombre.toLowerCase().includes(pjBuscado.toLowerCase()) &&
+          pj.ken >= 40 &&
+          (pj.vidaActual <= vidaTotal || pj.ken >= 400)
+        );
+      })
+      .sort((a, b) => b.ken - a.ken);
+  
+    return (
+      <>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ position: "relative", width: "30%" }}>
+            <input 
+              type="text" 
+              className="buscador" 
+              value={pjBuscado} 
+              onChange={handleInputBuscardor} 
+              placeholder="ingrese nombre del pj" 
+              style={{
+                width: "100%", 
+                paddingLeft: '30px',
+                backgroundImage: `url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')`,
+                backgroundPosition: '10px center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '16px 16px' 
+              }}
+            />
+            <i 
+              className="fas fa-search" 
+              style={{ 
+                position: 'absolute', 
+                left: '10px', 
+                top: '50%', 
+                transform: 'translateY(-50%)', 
+                color: '#aaa' 
+              }} 
+            />
+          </div>
         </div>
-
-
-        <div  className={`container tresCartas ${personajesFiltrados.length === 0 ? 'empty' : ''}`}  style={{ marginTop: "3em"}}>
-
-              {personajesFiltrados.length >0 ?  (personajesFiltrados.map((pj, index)=>(
-                <Cartita
-                rank={index + 1} 
-                key={pj.idpersonaje} 
-                nombre={pj.nombre} 
-                idpersonaje={pj.idpersonaje} 
-                dominio={pj.dominio} 
-                imagen={pj.imagen} 
-                ken={pj.ken} 
+  
+        <div className={`container tresCartas ${personajesFiltrados.length === 0 ? 'empty' : ''}`} style={{ marginTop: "3em" }}>
+          {personajesFiltrados.length > 0 ? (
+            personajesFiltrados.map((pj, index) => (
+              <Cartita
+                rank={index + 1}
+                key={pj.idpersonaje}
+                nombre={pj.nombre}
+                idpersonaje={pj.idpersonaje}
+                dominio={pj.dominio}
+                imagen={pj.imagen}
+                ken={pj.ken}
                 historia={pj.historia}
                 naturaleza={pj.naturaleza}
                 conviccion={pj.conviccion}
-                ></Cartita>
-              ))
-              ) : (
-                <p style={{ textAlign: "center", fontFamily: "cursive", color: "yellow", fontSize: "1.5em" }}>
-                No se encontraron personajes con ese nombre
-              </p>
-              )}  
-
-
+                vidaActual={pj.vidaActual}
+                vidaTotal={(pj.ki + pj.fortaleza) * (pj.positiva + pj.negativa)}
+              />
+            ))
+          ) : (
+            <p style={{ textAlign: "center", fontFamily: "cursive", color: "yellow", fontSize: "1.5em" }}>
+              No se encontraron personajes con ese nombre
+            </p>
+          )}
         </div>
-    
-
-    </>
-   
-  )
-}
+      </>
+    );
+  };
+  
