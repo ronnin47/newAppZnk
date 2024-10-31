@@ -873,12 +873,12 @@ switch (dificultad) {
 
       fuerzaBono = 10 + getRandomBonusD20();
       destrezaBono = 10 + getRandomBonusD20();
-      agilidadBono = 10 + getRandomBonusD10();
-      sabiduriaBono = 10 + getRandomBonusD10();
+      agilidadBono = getRandomBonusD10();
+      sabiduriaBono = 5 + getRandomBonusD10();
       fortalezaBono = 10 + getRandomBonusD20();
       presenciaBono = 10 + getRandomBonusD20();
-      sentidosBono = 10 + getRandomBonusD10();
-      principioBono = 10 + getRandomBonusD10();
+      sentidosBono = 5 + getRandomBonusD10();
+      principioBono = 5 + getRandomBonusD10();
   
      
 
