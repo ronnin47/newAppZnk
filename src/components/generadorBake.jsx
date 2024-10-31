@@ -1130,6 +1130,7 @@ switch (dificultad) {
             cicatriz: cicatriz || 0,
             usuarioId: usuarioId, 
         };
+
     
         try {
            //const response = await axios.post("http://localhost:4000/insert-personaje", pjNuevo, {
