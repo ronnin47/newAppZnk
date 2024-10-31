@@ -961,10 +961,16 @@ switch (dificultad) {
       }
   
   
-      if (positivaBase || negativaBase < 3) {
+      
+      if (positivaBase < 3) {
         positivaBase = 3;
-        negativaBase = 3;
       }
+      if (negativaBase < 3) {
+          negativaBase = 3;
+      }
+
+
+
       break;
   
     case "epica":
