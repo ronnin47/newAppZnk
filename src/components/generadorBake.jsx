@@ -905,10 +905,14 @@ switch (dificultad) {
       }
   
   
-      if (positivaBase || negativaBase < 3) {
+      if (positivaBase < 3) {
         positivaBase = 3;
+    }
+    if (negativaBase < 3) {
         negativaBase = 3;
-      }
+    }
+
+
       break;
   
     case "extraordinaria":
@@ -1043,6 +1047,7 @@ switch (dificultad) {
 
         const positivaFinal = positivaBase || 0;
         const negativaFinal = negativaBase || 0;
+
     
     
           const pjNuevo = {
@@ -1121,7 +1126,7 @@ switch (dificultad) {
         };
     
         try {
-          //const response = await axios.post("http://localhost:4000/insert-personaje", pjNuevo, {
+           //const response = await axios.post("http://localhost:4000/insert-personaje", pjNuevo, {
            const response = await axios.post("https://zepironokioku.onrender.com/insert-personaje", pjNuevo, {
             headers: {
               'Content-Type': 'application/json',
