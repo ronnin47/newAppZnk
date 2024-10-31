@@ -266,7 +266,7 @@ useEffect(() => {
   const loadPersonajes = async () => {
     try {
       if (sesion) {       
-       // const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
+      //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
       const response = await axios.get('https://zepironokioku.onrender.com/consumirPersonajesNarrador', {
           headers: {
             'Content-Type': 'application/json',

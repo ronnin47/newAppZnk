@@ -100,6 +100,11 @@ export const FichaPersonaje = ({
   conviccion,
   cicatriz,
   estatus,
+  
+
+
+
+
 
 }) => {
   
@@ -702,6 +707,167 @@ useEffect(() => {
     socket.emit('image', msgEnviar);
   }
 
+  const [contador, setContador] = useState(2);
+  
+
+
+
+
+   // Función para convertir números a romanos
+   const convertirARomanos = (numero) => {
+    const valores = [
+      { valor: 1000, simbolo: 'M' },
+      { valor: 900, simbolo: 'CM' },
+      { valor: 500, simbolo: 'D' },
+      { valor: 400, simbolo: 'CD' },
+      { valor: 100, simbolo: 'C' },
+      { valor: 90, simbolo: 'XC' },
+      { valor: 50, simbolo: 'L' },
+      { valor: 40, simbolo: 'XL' },
+      { valor: 10, simbolo: 'X' },
+      { valor: 9, simbolo: 'IX' },
+      { valor: 5, simbolo: 'V' },
+      { valor: 4, simbolo: 'IV' },
+      { valor: 1, simbolo: 'I' },
+    ];
+
+    let resultado = '';
+    for (const { valor, simbolo } of valores) {
+      while (numero >= valor) {
+        resultado += simbolo;
+        numero -= valor;
+      }
+    }
+    return resultado;
+  };
+
+  
+  const clonar=()=>{  
+    agregarPersonaje()
+  }
+
+
+  const agregarPersonaje = async () => {
+  
+    setContador(contador+1)
+
+    const pjNuevo = {      
+      nombre:`${nombre} ${convertirARomanos(contador)}`,
+      dominio: dominio,
+      raza:raza,
+      naturaleza:naturaleza,
+      edad:edad,
+      ken:ken || 0,
+      ki:ki || 0,
+      destino:destino || 0,
+      pDestino:pDestino || 0,
+      fuerza: fuerza || 0,
+      fortaleza: fortaleza || 0,
+      destreza: destreza || 0,
+      agilidad: agilidad || 0,
+      sabiduria:sabiduria || 0,
+      presencia:presencia || 0,
+      principio:principio ||0,
+      sentidos:sentidos ||0,
+      academisismo:academisismo ||0,
+      alerta:alerta ||0,
+      atletismo:atletismo ||0,
+      conBakemono:conBakemono ||0,
+      mentir:mentir||0,
+      pilotear:pilotear ||0,
+      artesMarciales:artesMarciales ||0,
+      medicina:medicina ||0,
+      conObjMagicos:conObjMagicos ||0,
+      sigilo:sigilo ||0,
+      conEsferas:conEsferas ||0,
+      conLeyendas:conLeyendas ||0,
+      forja:forja ||0,
+      conDemonio:conDemonio ||0,
+      conEspiritual:conEspiritual ||0,
+      manejoBlaster:manejoBlaster ||0,
+      manejoSombras:manejoSombras ||0,
+      tratoBakemono:tratoBakemono ||0,
+      conHechiceria:conHechiceria ||0,
+      medVital:medVital ||0,
+      medEspiritual:medEspiritual ||0,
+      rayo:rayo ||0,
+      fuego:fuego ||0,
+      frio:frio ||0,
+      veneno:veneno ||0,
+      corte:corte ||0,
+      energia:energia ||0,
+      ventajas:ventajas,
+      apCombate: apCombate,
+      valCombate: valCombate ||0,
+      apCombate2:apCombate2,
+      valCombate2:valCombate2 ||0,
+      add1:add1,
+      valAdd1: valAdd1 || 0,
+      add2:add2,
+      valAdd2: valAdd2 || 0,
+      add3:add3,
+      valAdd3: valAdd3 || 0,
+      add4:add4,
+      valAdd4: valAdd4 || 0,
+      imagen: imagen,
+      inventario: inventario,
+      dominios: dominios,
+      kenActual:ken || 0,
+      kiActual:ki || 0,
+      positiva:3,
+      negativa:3,
+      vidaActual:0,
+      hechizos:hechizos,
+      consumision:consumision || 0,
+      iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
+      historia:"",
+      conviccion: conviccion || "",
+      cicatriz: cicatriz || 0,
+      usuarioId: usuarioId, 
+    };
+
+
+    try {  
+      const response = await axios.post(`https://zepironokioku.onrender.com/insert-personaje`, pjNuevo, {   
+      //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
+      headers: {
+          'Content-Type': 'application/json', 
+        },
+      });
+      const { idpersonaje } = response.data;
+      
+      setPersonajes([...personajes, { ...pjNuevo, idpersonaje }]);
+  
+    } catch (error) {
+      console.error('Error al insertar el personaje:', error.message);
+    }
+    
+    Swal.fire({
+      position: "top-center",
+      icon: "success",
+      title: `${nombre} fue clonado`,
+      showConfirmButton: false,
+      timer: 1500
+    });
+   
+  };
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <>
     <div className='container'>
@@ -950,8 +1116,11 @@ useEffect(() => {
    
 
       <Button variant="outline-success"  onClick={guardarCambiosBBDD} style={{width:"150px", marginTop:"10px", marginRight:"1em"}}>Guardar Cambios</Button>
-      {estatus=="narrador"?(<Button variant="outline-warning"  onClick={presentar} style={{width:"150px", marginTop:"10px"}}>Presentar</Button>):(<></>)}
+      {estatus=="narrador"?(<Button variant="outline-warning"  onClick={presentar} style={{width:"150px", marginTop:"10px", marginRight:"1em"}}>Presentar</Button>):(<></>)}
       
+      
+      
+      {estatus=="narrador"?(<Button variant="outline-primary"  onClick={clonar} style={{width:"150px", marginTop:"10px"}}>Clonar</Button>):(<></>)}
     </div>
        
     </div>
