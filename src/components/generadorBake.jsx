@@ -882,7 +882,7 @@ switch (dificultad) {
   
      
 
-      valCombateBono = getRandomBonusD40();
+      valCombateBono = getRandomBonusD30();
       alertaBono = 10 + getRandomBonusD20();
       sigiloBono = 10 + getRandomBonusD30();
       atletismoBono = 10 + getRandomBonusD20();
