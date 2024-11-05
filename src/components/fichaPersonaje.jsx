@@ -566,7 +566,7 @@ const guardarCambiosBBDD = async () => {
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
-    const response = await axios.put(`https://zepironokioku.onrender.com/update-personaje/${idpersonaje}`, personaje, {
+    const response = await axios.put(`https://zepiro.onrender.com/update-personaje/${idpersonaje}`, personaje, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -675,7 +675,7 @@ useEffect(() => {
       if(eliminar===true){
         try { 
           //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-          const response = await axios.delete(`https://zepironokioku.onrender.com/deletePersonaje/${idpersonaje}`);
+          const response = await axios.delete(`https://zepiro.onrender.com/deletePersonaje/${idpersonaje}`);
           } catch (error) {
             console.error('Error al eliminar el personaje:', error);
           }
@@ -828,7 +828,7 @@ useEffect(() => {
 
 
     try {  
-      const response = await axios.post(`https://zepironokioku.onrender.com/insert-personaje`, pjNuevo, {   
+      const response = await axios.post(`https://zepiro.onrender.com/insert-personaje`, pjNuevo, {   
       //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       headers: {
           'Content-Type': 'application/json', 

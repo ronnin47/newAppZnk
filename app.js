@@ -41,7 +41,7 @@ const pool = new Pool({
 
 
 //***************** base octubre ********************/
-
+/*
 const pool = new Pool({
   user: 'gorda',          
   host: 'dpg-cs6j013tq21c73dtehvg-a',
@@ -49,7 +49,17 @@ const pool = new Pool({
   password: 'QOtuFwV2G0QdIWNHu7UsBsCQZQYJUWh2',   
   port: 5432,
 });
+*/
 
+//**************BASE NOVIEMBRE******************
+
+const pool = new Pool({
+  user: 'gorda',          
+  host: 'dpg-csl2rle8ii6s738418e0-a',
+  database: 'basenoviembre', 
+  password: 'jdLmXp4y4PnNljzYcLpZbW8oCtZGfNIT',  
+  port: 5432,
+});
 
 async function checkDatabaseConnection() {
   try {
