@@ -222,7 +222,7 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
         <div className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
         <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"5px", textAlign:"right", width: "100%", display: "block"}}>Daño: {damageActualN}/{vidaTotal}</p>
         </div>  
-        <div className="col2" style={{marginRight:"5px"}}>
+        <div className="col2" style={{marginRight:"10px"}}>
           <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"3px"}} >+ Daño</button>
           <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen' style={{marginRight:"3px"}}/>
         </div>
