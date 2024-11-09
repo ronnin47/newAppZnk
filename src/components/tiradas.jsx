@@ -4,13 +4,19 @@ import { io } from 'socket.io-client';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
-
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
+import { BarraKen } from './barraKen.jsx';
+import { BarraKi } from './barraKi.jsx';
+import {BarraVida} from "./barraVida.jsx";
+
+import Modal from 'react-bootstrap/Modal';
 
 
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 //REACT_APP_BACKEND_URL=https://tu-backend-en-render.onrender.com
+
+
 
 function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
   var numeros = [];
@@ -22,19 +28,45 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 }
 
 
-export const Tiradas = ({ isChecked, setIsChecked,textareaRef, messagesEndRef,nombre,setMessage,sock,setSock}) => {
+
+export const Tiradas = ({idpersonaje,
+  cicatriz,
+  fortaleza, 
+  ki, 
+  ken,
+  positiva,
+  negativa,                 
+  damageActual, 
+  consumision,
+  kiActual,
+  kenActual,
+  personajes,
+  setPersonajes,
+  imagen,
+  conviccion,
+  isChecked,
+  setIsChecked,
+  textareaRef, 
+  messagesEndRef,
+  nombre,
+  setMessage,
+  sock,
+  setSock}) => {
 
 const [valTirada,setValTirada]=useState("");
 const [sumaTirada,setSumaTirada]=useState("");
-const[valTiradaD6,setValTiradaD6]=useState("");
-const[valTiradaD4,setValTiradaD4]=useState("");
-const[valTiradaD12,setValTiradaD12]=useState("");
+const [valTiradaD6,setValTiradaD6]=useState("");
+const [valTiradaD4,setValTiradaD4]=useState("");
+const [valTiradaD12,setValTiradaD12]=useState("");
 const [valTiradaD10,setValTiradaD10]=useState("");
 const [valTiradaD20,setValTiradaD20]=useState("");
 const [valTiradaD10Bono,setValTiradaD10Bono]=useState("");
-const[principal,setPrincipal]=useState("");
-const[secundaria,setSecundaria]=useState("");
+const [principal,setPrincipal]=useState("");
+const [secundaria,setSecundaria]=useState("");
 const [animacionActiva, setAnimacionActiva] = useState(false);
+
+
+
 
  const tirarDados=()=>{
   const principalValue = principal === "" ? 0 : parseInt(principal);
@@ -590,18 +622,125 @@ const renderTooltip = (props) => (
   </Tooltip>
 );
 
+
+
+//aca lo vamos resolviendo
+const [cicatrizN,setCicatrizN]=useState(cicatriz);
+
+const [damageActualN,setDamageActualN]=useState(damageActual);
+const [fortalezaN,setFortalezaN]=useState(fortaleza)
+const [positivaN,setPositivaN]=useState(positiva);
+const [negativaN,setNegativaN]=useState(negativa);
+const [kenN,setKenN]=useState(ken)
+const [kiN,setKiN]=useState(ki)
+const [consumisionN,setConsumisionN]=useState(consumision)
+
+const [kenActualN,setKenActualN]=useState(kenActual);
+const [kiActualN,setKiActualN]=useState(kiActual);
+
+
+
+
+
+
+const btnGuardarCambios = () => {
+   
+  const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
+
+  const nuevosPersonajes = [...personajes];
+
+
+  nuevosPersonajes[index] = {
+    ...nuevosPersonajes[index],
+
+    
+   // ken:kenN,
+  // ki:kiN,
+   
+    //fortaleza: fortalezaN,
+   
+    kenActual:kenActualN,
+    kiActual:kiActualN,
+    positiva:positivaN,
+    negativa:negativaN,
+    vidaActual:damageActualN,
+  
+    consumision: consumisionN,
+  
+    cicatriz: cicatrizN,  
+  };
+
+
+  setPersonajes(nuevosPersonajes);
+
+}
+useEffect(() => {
+  btnGuardarCambios();
+ }, [ 
+  
+  // kenN,
+  //  kiN,
+ 
+   //fortalezaN,
+  
+   kenActualN,
+   kiActualN,
+   positivaN,
+   negativaN,
+   damageActualN,
+  
+   consumisionN,
+  
+   cicatrizN,
+   
+ ]);
+
+
+
+ const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+
   return (
     <>
-      <div >
+       <div >
       <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
       <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
       </div>
-        
+
+      <div className="container" style={{ display: "flex", alignItems: "center" }}>
+      <img 
+        src={imagen} 
+        onClick={handleShow} 
+        className='grupo-card-image' 
+        style={{ width: "60px", height: "60px", marginRight: "1em", cursor: "pointer" }} 
+      />
+    
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1 }}>
+    
+        <div style={{ textAlign: "center", marginTop: "0.5em" }}>
+        <p style={{ color: "orange", fontSize: "1.5em", margin: "0" }}>{nombre}</p>
+            <p style={{ fontFamily: "cursive", color: "yellow", margin: "0" }}>"{conviccion}"</p>
+        </div>
+    </div>
+
+    <img 
+        src={imagen} 
+        onClick={handleShow} 
+        className='grupo-card-image' 
+        style={{ width: "60px", height: "60px", marginRight: "1em", cursor: "pointer" }} 
+      />
+
+      </div>
+
+    
 
       <div className="tiradas">
       
-        <div className="container">
-            <h1>{nombre}</h1>
+        <div className="container barrasTiradasBotones">
+          
             <div>
             <OverlayTrigger
                 placement="right"
@@ -670,38 +809,21 @@ const renderTooltip = (props) => (
            </div>
            
         </div>
-      
-        <div className="cajasTirdas">
-        <div className={`animate__animated ${animacionActiva ? 'animate__bounce' : ''}`}>   
-            <input type="text" id="totalTirada" className="cajaTotal" value={sumaTirada} placeholder="total de tirada" readOnly />
-        </div>
-        <div>
-            <input type="text" id="dadosEsfuerzo" className="cajaTirada" value={valTirada} placeholder="dados de esfuerzo base" readOnly />
-        </div>
-        <div>
-            <input type="text" id="dadosD10" className="cajaTirada" value={valTiradaD10} placeholder="dados d10 de Bono "readOnly />
-        </div>
-        <div>
-            <input type="text" id="dadosD20" className="cajaTirada" value={valTiradaD20} placeholder="dados d20 de Bono"readOnly />
-        </div>  
-        <div >
-            <input type="text" id="dadosD12Bono" className="cajaTirada" value={valTiradaD12} placeholder="dados d12 de Bono"readOnly />
-        </div>    
-        <div >
-            <input type="text" id="dadosD10Bono" className="cajaTirada" value={valTiradaD10Bono} placeholder="dados d10 de KEN"readOnly />
-        </div>
 
-        <div>
-            <input type="text" id="dadosD6Bono" className="cajaTirada" value={valTiradaD6} placeholder="dados d6 de Bono"readOnly />
+
+        
+       <div className="container barrasTiradas">  
+          <BarraVida idpersonaje={idpersonaje} cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombre} fortalezaN={fortaleza} kiN={ki} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
+          <BarraKi idpersonaje={idpersonaje} nombreN={nombre} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={ki} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
+          <BarraKen idpersonaje={idpersonaje} nombreN={nombre} kenN={ken} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
         </div>
-        <div>
-            <input type="text" id="dadosD4Bono" className="cajaTirada" value={valTiradaD4} placeholder="dados d4 de Bono"readOnly />
-        </div>
-       </div>
+      
+      
 
        
  
     </div>
+
     <div className="macros">
 
         <div className="guardados">
@@ -741,6 +863,100 @@ const renderTooltip = (props) => (
             <Button variant="outline-warning" onClick={cargarTirada10}>{boton10.nombreTirada || "Accion-10"}</Button>
           </div>
     </div>
+
+   
+
+    <div>
+       
+
+      <Modal show={showModal} onHide={handleClose} centered>
+  <Modal.Header closeButton className="modal-header-custom">
+    <Modal.Title>Resultados de la Tirada</Modal.Title>
+  </Modal.Header>
+  <Modal.Body className="modal-body-custom">
+    <div className="cajasTirdas">
+      <div>
+        <input
+          type="text"
+          className="cajaTotal"
+          value={sumaTirada}
+          placeholder="Total de tirada"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTirada}
+          placeholder="Dados de esfuerzo base"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTiradaD10}
+          placeholder="Dados D10 de Bono"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTiradaD20}
+          placeholder="Dados D20 de Bono"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTiradaD12}
+          placeholder="Dados D12 de Bono"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTiradaD10Bono}
+          placeholder="Dados D10 de KEN"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTiradaD6}
+          placeholder="Dados D6 de Bono"
+          readOnly
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          className="cajaTirada"
+          value={valTiradaD4}
+          placeholder="Dados D4 de Bono"
+          readOnly
+        />
+      </div>
+    </div>
+  </Modal.Body>
+  <Modal.Footer className="modal-footer-custom">
+    <Button variant="secondary" onClick={handleClose}>
+      Cerrar
+    </Button>
+  </Modal.Footer>
+</Modal>
+    </div>
+
     
     </>
     

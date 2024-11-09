@@ -27,7 +27,6 @@ const server = http.createServer(app);
 
 //LOCAL HOST
 
-
 /*
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
@@ -39,18 +38,6 @@ const pool = new Pool({
 */
 
 
-
-//***************** base octubre ********************/
-/*
-const pool = new Pool({
-  user: 'gorda',          
-  host: 'dpg-cs6j013tq21c73dtehvg-a',
-  database: 'baseoctubre', 
-  password: 'QOtuFwV2G0QdIWNHu7UsBsCQZQYJUWh2',   
-  port: 5432,
-});
-*/
-
 //**************BASE NOVIEMBRE******************
 
 const pool = new Pool({
@@ -60,6 +47,8 @@ const pool = new Pool({
   password: 'jdLmXp4y4PnNljzYcLpZbW8oCtZGfNIT',  
   port: 5432,
 });
+
+
 
 async function checkDatabaseConnection() {
   try {
@@ -563,6 +552,8 @@ app.delete('/delete-grupo/:idgrupo', async (req, res) => {
 
 
 app.put('/update-personaje/:id', async (req, res) => {
+
+//  console.log("esto es lo que trae el req",req)
   const idpersonaje = req.params.id;
   const { 
       nombre,
@@ -927,6 +918,7 @@ app.delete('/deleteSaber/:id', async (req, res) => {
 
 //const PORT = process.env.PORT || 4000;
 const PORT = process.env.PORT || 10000;
+
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);
 });

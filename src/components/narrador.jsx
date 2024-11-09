@@ -395,7 +395,7 @@ const handleClickCrearGrupo = async() => {
       id="noanim-tab-example"
       className="mb-3"
     >
-        <Tab eventKey="personajes" title="Persoanjes ZNK">
+        <Tab eventKey="personajes" title="Personajes ZNK">
         <div style={{display:"flex", flexDirection:"column", alignItems: "center"}}>
         <div style={{ position: "relative", width: "30%"}}>
       <input 

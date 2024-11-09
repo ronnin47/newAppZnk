@@ -4,9 +4,7 @@ import Swal from 'sweetalert2';
 import { VentajasN } from './ventajasN.jsx';
 import { Inventario } from "./inventario.jsx"
 import { Dominios } from './dominios.jsx';
-import { BarraKen } from './barraKen.jsx';
-import { BarraKi } from './barraKi.jsx';
-import {BarraVida} from "./barraVida.jsx";
+
 import { Hechizos } from './hechizos.jsx';
 import { Historia } from './historia.jsx';
 import Button from 'react-bootstrap/Button';
@@ -132,7 +130,9 @@ export const FichaPersonaje = ({
   const [naturalezaN,setNaturalezaN]=useState(naturaleza)
   const [edadN,setEdadN]=useState(edad) 
   const [kenN,setKenN]=useState(ken)
+
   const [kiN,setKiN]=useState(ki)
+
   const [destinoN,setDestinoN]=useState(destino)
   const [pDestinoN,setPdestinoN]=useState(pDestino) 
   const [fuerzaN,setFuerzaN]=useState(fuerza)
@@ -203,7 +203,7 @@ export const FichaPersonaje = ({
   
   },[vivoMuerto])
 
-
+//SERA PARA REVISAR
   useEffect(() => {
     const vidaTotal=(parseInt(kiN)+parseInt(fortalezaN))*(positivaN+negativaN)
     if (damageActualN > vidaTotal) {
@@ -395,7 +395,7 @@ const btnGuardarCambios = () => {
    
   const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
 
- 
+ console.log("ultimo valores",personajes)
   const nuevosPersonajes = [...personajes];
 
 
@@ -454,11 +454,13 @@ const btnGuardarCambios = () => {
     inventario:inventarioN,
     dominios:dominiosN,
     hechizos:hechizosN,
-    kenActual:kenActualN,
-    kiActual:kiActualN,
-    positiva:positivaN,
-    negativa:negativaN,
-    vidaActual:damageActualN,
+
+    kenActual:kenActual,
+    kiActual:kiActual,
+    positiva:positiva,
+    negativa:negativa,
+    vidaActual:vidaActual,
+
     add1:add1N,
     valAdd1: valAdd1N,
     add2:add2N,
@@ -467,13 +469,15 @@ const btnGuardarCambios = () => {
     valAdd3: valAdd3N,
     add4:add4N,
     valAdd4: valAdd4N,
-    consumision: consumisionN,
+
+    consumision: consumision,
+    
     iniciativa:iniciativaN,
     historia:historiaN,
     naturaleza:naturalezaN,
     tecEspecial:tecEspecialN,
     conviccion: conviccionN,
-    cicatriz: cicatrizN,  
+    cicatriz: cicatriz,  
   };
 
 
@@ -550,19 +554,24 @@ const guardarCambiosBBDD = async () => {
       imagen: imagenN,
       inventario: inventarioN,//JSON
       dominios: dominiosN,//JASON
-      kenActual:kenActualN || 0,
-      kiActual:kiActualN || 0,    
-      positiva:positivaN,
-      negativa:negativaN,
-      vidaActual:damageActualN,
+
+      kenActual:kenActual || 0,
+      kiActual:kiActual || 0,    
+      positiva:positiva,
+      negativa:negativa,
+      vidaActual:vidaActual,
+
       hechizos:hechizosN,//JSON
-      consumision:consumisionN || 0,
+
+      consumision:consumision || 0,
+
       iniciativa: iniciativaN || 0,
       historia:historiaN,
       usuarioId: usuarioId,
       tecEspecial: tecEspecialN,
       conviccion: conviccionN || "",
-      cicatriz: cicatrizN || 0,
+
+      cicatriz: cicatriz || 0,
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
@@ -865,18 +874,14 @@ useEffect(() => {
 
 
 
-
+console.log("personajes",personajes)
 
   
   return (
     <>
     <div className='container'>
          <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombreN}</p>
-         <div style={{marginLeft:"20px"}}>  
-          <BarraVida idpersonaje={idpersonaje} cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombreN} fortalezaN={fortalezaN} kiN={kiN} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
-          <BarraKi idpersonaje={idpersonaje} nombreN={nombreN} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={kiN} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
-          <BarraKen idpersonaje={idpersonaje} nombreN={nombreN} kenN={kenN} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
-        </div>
+      
         <div className='row col2' style={{marginBottom:"1em", marginTop:"4.5em"}}>
           <div className='col1'>
             <img src={imagenN} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />

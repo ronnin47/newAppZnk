@@ -474,6 +474,9 @@ useEffect(() => {
 
   const [isChecked, setIsChecked] = useState(true);
 
+
+  
+
 return (
     <>
      <Nava 
@@ -859,10 +862,9 @@ return (
             <Tab eventKey="tiradas" title="Tiradas" className="fondoBody">
             {pjSeleccionado ? (
                 <Tiradas
-                  personajes={personajes}
-                  setPersonajes={setPersonajes}
+            
                   key={pj.idpersonaje} 
-                  idpersonaje={pj.idpersonaje}
+                  
                   nombre={pj.nombre}
                   imagen={pj.imagen}
                   destreza={pj.destreza}
@@ -877,6 +879,31 @@ return (
 
                   isChecked={isChecked}
                   setIsChecked={setIsChecked}
+
+
+                  personajes={personajes}
+                  setPersonajes={setPersonajes}
+                  
+                  idpersonaje={pj.idpersonaje}
+                  
+                  
+                  cicatriz={pj.cicatriz}
+                  
+                  fortaleza={pj.fortaleza} 
+                  ki={pj.ki} 
+                  kiActual={pj.kiActual}
+                  ken={pj.ken}
+                  kenActual={pj.kenActual}
+                  positiva={pj.positiva} 
+                  negativa={pj.negativa}                 
+                  damageActual={pj.vidaActual} 
+                  consumision={pj.consumision}
+
+
+                  conviccion={pj.conviccion}
+          
+
+
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>

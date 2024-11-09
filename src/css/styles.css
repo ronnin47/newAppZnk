@@ -436,7 +436,7 @@ background-color: rgba(0, 0, 0, 0.719);
     width: 90%;
     margin-bottom: 2em;
     padding-left: 1em;
-    margin-top: 2em;
+    margin-top: 0.5em;
     margin-left: 1em;
   }
   .green{
@@ -448,8 +448,8 @@ background-color: rgba(0, 0, 0, 0.719);
     white-space: pre-wrap;
   }
   .contChat {
-    min-height: 170px;  
-    max-height: 170px; 
+    min-height: 120px;  
+    max-height: 120px; 
     overflow-y: auto;  
     border: 1px solid #ccc;  
     padding: 10px;  
@@ -1080,4 +1080,41 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
         0 0 35px rgba(20, 20, 20, 0.3),
         0 0 45px rgba(10, 10, 10, 0.2),
         0 0 60px rgba(0, 0, 0, 0.1); /* Efecto de sombras múltiples oscuras */
+}
+.barrasTiradas{
+  transform: scale(0.8);
+}
+.barrasTiradasBotones{
+  transform: scale(0.9);
+}
+
+
+/* Estilo para el encabezado del modal */
+.modal-header-custom {
+  background-color: #000;
+  color: #fff;
+  border-bottom: 1px solid #444;
+}
+
+/* Estilo para el cuerpo del modal */
+.modal-body-custom {
+  background-color: #111;
+  color: #ddd;
+}
+
+/* Estilo para el pie del modal */
+.modal-footer-custom {
+  background-color: #000;
+  border-top: 1px solid #444;
+}
+
+/* Botón personalizado */
+.modal-footer-custom .btn-secondary {
+  background-color: #333;
+  color: #fff;
+  border: none;
+}
+
+.modal-footer-custom .btn-secondary:hover {
+  background-color: #555;
 }
