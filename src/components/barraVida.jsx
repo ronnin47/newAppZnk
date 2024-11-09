@@ -227,9 +227,9 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
           <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen' style={{marginRight:"3px"}}/>
         </div>
         <div className="col6" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
-            <p style={{color:"aliceblue"}}>F+</p>
-            <input type="number" value={positivaN} onChange={handlePos} className='inputKen' />
-            <p style={{color:"aliceblue"}}>F-</p>
+           
+            <input type="number" value={positivaN} onChange={handlePos} className='inputKen' style={{ marginLeft: "0.5em"}}/>
+         
             <input type="number" value={negativaN} onChange={handleNeg} className='inputKen' />
             <img 
           alt=""
