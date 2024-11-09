@@ -219,31 +219,87 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
   return (
     <div className="col1" >
       <div className='colBarraVida'>
-        <div className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
-        <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"5px", textAlign:"right", width: "100%", display: "block"}}>Daño: {damageActualN}/{vidaTotal}</p>
-        </div>  
-        <div className="col2">
-          <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"3px"}} >+ Daño</button>
-          <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen' style={{marginRight:"3px"}}/>
-        </div>
-        <div className="col6" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
-           
-            <input type="number" value={positivaN} onChange={handlePos} className='inputKen' style={{ marginLeft: "0.5em"}}/>
-         
-            <input type="number" value={negativaN} onChange={handleNeg} className='inputKen' />
-            <img 
-          alt=""
-          src="/salud.svg"
-          width="60px"
-          height="60px"
-          className="boton-imagen  d-inline-block align-top"
-            onClick={curarFase} 
-            style={{ marginLeft: "3em", cursor: "pointer" }} ></img>
-            <input   style={{ marginLeft: "2em"}} type="number" value={cicatrizN} onChange={handleChangeCicatrizN} className='inputCicatriz' placeholder="cicatriz" />
-            <div>
-        </div>
-        </div> 
-      </div>
+  <div className={`animate__animated ${animacionActiva ? 'animate__flip' : ''}`}>
+    <p
+      style={{
+        fontSize: "20px",
+        color: "aliceblue",
+        marginTop: "5px",
+        textAlign: "right",
+        width: "100%",
+        display: "block"
+      }}
+    >
+      Daño: {damageActualN}/{vidaTotal}
+    </p>
+  </div>
+
+  {/* Columna con el botón y el input de Daño */}
+  <div className="col2" style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+    <button className='btn btn-danger' onClick={agregarDamage} style={{ margin: "3px" }}>
+      + Daño
+    </button>
+    <input
+      type="number"
+      value={consumirVida}
+      onChange={handleConsumirVida}
+      className='inputKen'
+      style={{ marginLeft: "10px", width: "80px" }}
+    />
+  </div>
+
+  {/* Columna con los inputs de Fases */}
+  <div className="col6" id="fases" style={{ display: "flex", alignItems: "center", marginLeft: "0%", marginBottom: "15px" }}>
+    {/* Fase positiva */}
+    <div style={{ marginRight: "1em" }}>
+      <p style={{ color: "aliceblue", marginRight: "5px" }}>F+</p>
+      <input
+        type="number"
+        value={positivaN}
+        onChange={handlePos}
+        className='inputKen'
+        style={{ width: "80px" }}
+      />
+    </div>
+
+    {/* Fase negativa */}
+    <div style={{ marginRight: "1em" }}>
+      <p style={{ color: "aliceblue", marginRight: "5px" }}>F-</p>
+      <input
+        type="number"
+        value={negativaN}
+        onChange={handleNeg}
+        className='inputKen'
+        style={{ width: "80px" }}
+      />
+    </div>
+
+    {/* Imagen de curación */}
+    <div style={{ marginRight: "1em" }}>
+      <img
+        alt=""
+        src="/salud.svg"
+        width="60px"
+        height="60px"
+        className="boton-imagen d-inline-block align-top"
+        onClick={curarFase}
+        style={{ cursor: "pointer" }}
+      />
+    </div>
+
+    {/* Input de cicatriz */}
+    <div>
+      <input
+        type="number"
+        value={cicatrizN}
+        onChange={handleChangeCicatrizN}
+        className='inputCicatriz'
+        placeholder="cicatriz"
+        style={{ width: "80px", marginLeft: "10px" }}
+      />
+    </div>
+  </div>
+</div>
      
       {estaMuerto ? (
         <>
