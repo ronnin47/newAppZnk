@@ -223,7 +223,7 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
         <p style={{ fontSize: "20px", color: "aliceblue",marginTop:"5px", textAlign:"right", width: "100%", display: "block"}}>Daño: {damageActualN}/{vidaTotal}</p>
         </div>  
         <div className="col2">
-          <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"5px"}} >+ Daño</button>
+          <button className='btn btn-danger' onClick={agregarDamage} style={{margin:"5px", marginRight:"3px"}} >+ Daño</button>
           <input type="number" value={consumirVida} onChange={handleConsumirVida} className='inputKen'/>
         </div>
         <div className="col6" id="fases" style={{transform:"scale(0.7)",marginLeft:"100%"}}>
