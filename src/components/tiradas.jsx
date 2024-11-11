@@ -29,7 +29,8 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 
 
 
-export const Tiradas = ({idpersonaje,
+export const Tiradas = ({
+  idpersonaje,
   cicatriz,
   fortaleza, 
   ki, 
@@ -51,7 +52,72 @@ export const Tiradas = ({idpersonaje,
   nombre,
   setMessage,
   sock,
-  setSock}) => {
+  setSock,
+
+
+  fuerza,
+  destreza,
+  agilidad,
+  sabiduria,
+  presencia,
+  principio,
+  sentidos,
+  academisismo,
+  alerta,
+  atletismo,
+  conBakemono,
+  mentir,
+  pilotear,
+  artesMarciales,
+  medicina,
+  conObjMagicos,
+  sigilo,
+  conEsferas,
+  conLeyendas,
+  forja,
+  conDemonio,
+  conEspiritual,
+  manejoBlaster,
+  manejoSombras,
+  tratoBakemono,
+  conHechiceria,
+  medVital,
+  medEspiritual,
+  rayo,
+  fuego,
+  frio,
+  veneno,
+  corte,
+  energia,
+  apCombate,
+  valCombate,
+  apCombate2,
+  valCombate2,
+  add1,
+  valAdd1,
+  add2,
+  valAdd2,
+  add3,
+  valAdd3,
+  add4,
+  valAdd4,         
+
+
+
+
+
+
+  vidaActual,
+  
+
+  iniciativa,
+
+
+
+
+
+
+}) => {
 
 const [valTirada,setValTirada]=useState("");
 const [sumaTirada,setSumaTirada]=useState("");
@@ -700,12 +766,23 @@ useEffect(() => {
  const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
+  
   const handleShow = () => setShowModal(true);
+
+
+  //************es para el modal de ficha************
+
+  const [showModalFicha, setShowModalFicha] = useState(false);
+
+  const handleCloseFicha = () => setShowModalFicha(false);
+  
+  const handleShowFicha = () => setShowModalFicha(true);
+
 
 
   return (
     <>
-       <div >
+      <div >
       <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
       <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
       </div>
@@ -728,7 +805,7 @@ useEffect(() => {
 
     <img 
         src={imagen} 
-        onClick={handleShow} 
+        onClick={handleShowFicha} 
         className='grupo-card-image' 
         style={{ width: "60px", height: "60px", marginRight: "1em", cursor: "pointer" }} 
       />
@@ -865,102 +942,191 @@ useEffect(() => {
     </div>
 
    
-
+    {/*Modal de resultados de tiradas*/}
     <div>
        
 
       <Modal show={showModal} onHide={handleClose} centered>
-  <Modal.Header closeButton className="modal-header-custom">
-    <Modal.Title>Resultados de la Tirada</Modal.Title>
-  </Modal.Header>
-  <Modal.Body className="modal-body-custom">
-    <div className="cajasTirdas">
-      <div>
-        <input
-          type="text"
-          className="cajaTotal"
-          value={sumaTirada}
-          placeholder="Total de tirada"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTirada}
-          placeholder="Dados de esfuerzo base"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTiradaD10}
-          placeholder="Dados D10 de Bono"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTiradaD20}
-          placeholder="Dados D20 de Bono"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTiradaD12}
-          placeholder="Dados D12 de Bono"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTiradaD10Bono}
-          placeholder="Dados D10 de KEN"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTiradaD6}
-          placeholder="Dados D6 de Bono"
-          readOnly
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          className="cajaTirada"
-          value={valTiradaD4}
-          placeholder="Dados D4 de Bono"
-          readOnly
-        />
-      </div>
-    </div>
-  </Modal.Body>
-  <Modal.Footer className="modal-footer-custom">
-    <Button variant="secondary" onClick={handleClose}>
-      Cerrar
-    </Button>
-  </Modal.Footer>
-</Modal>
+      <Modal.Header closeButton className="modal-header-custom">
+        <Modal.Title>Resultados de la Tirada</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="modal-body-custom">
+        <div className="cajasTirdas">
+          <div>
+            <input
+              type="text"
+              className="cajaTotal"
+              value={sumaTirada}
+              placeholder="Total de tirada"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTirada}
+              placeholder="Dados de esfuerzo base"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTiradaD10}
+              placeholder="Dados D10 de Bono"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTiradaD20}
+              placeholder="Dados D20 de Bono"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTiradaD12}
+              placeholder="Dados D12 de Bono"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTiradaD10Bono}
+              placeholder="Dados D10 de KEN"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTiradaD6}
+              placeholder="Dados D6 de Bono"
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="cajaTirada"
+              value={valTiradaD4}
+              placeholder="Dados D4 de Bono"
+              readOnly
+            />
+          </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer className="modal-footer-custom">
+        <Button variant="secondary" onClick={handleClose}>
+          Cerrar
+        </Button>
+      </Modal.Footer>
+    </Modal>
     </div>
 
+
+
+
+   {/*Nuestro amigo el nuevo modal*/}
+   <div>
+       
+
+       <Modal show={showModalFicha} onHide={handleCloseFicha} centered size="lg">
+       <Modal.Header closeButton className="modal-header-custom">
+         <Modal.Title>Ficha {nombre}</Modal.Title>
+       </Modal.Header>
+       <Modal.Body className="bg-dark text-light">
+
+<div className='bordeRev' style={{ display: "flex", flexDirection: "row", gap: "2em", alignItems: "center", textAlign: "left" }}>
+
+  <p style={{ fontSize: "1em", margin: "0" }}>Vida: {vidaActual} /{(ki + fortaleza) * (positiva + negativa)}</p>
+  <p style={{ fontSize: "1em", margin: "0" }}>Ki: {kiActual}/{ki}</p>
+  <p style={{ fontSize: "1em", margin: "0" }}>Ken: {kenActual} /{ken}</p>
+</div>
+
+<div style={{ display: 'flex', flexDirection: 'column' }}>
+
+  <div className='bordeRev' style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+    <p>Fza: {fuerza}</p>
+    <p>Fort: {fortaleza}</p>
+    <p>Des: {destreza}</p>
+    <p>Agi: {agilidad}</p>
+    <p>Sen: {sentidos}</p>
+    <p>Sab: {sabiduria}</p>
+    <p>Pre: {presencia}</p>
+    <p>Pri: {principio}</p>
+  </div>
+
+  <div className='bordeRev' style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+    <p>Consumo ki: {consumision}</p>
+    <p>Iniciativa: {iniciativa}</p>
+    <p>Fases +: {positiva}</p>
+    <p>Fases -: {negativa}</p>
+    <p>Cicatrices: {cicatriz}</p>
+  </div>
+
+  <div className='bordeRev' style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: "0.5em", fontSize:"1em",  alignItems: "center", justifyItems: "center" }}>
+    <p>Academisismo: {academisismo}</p>
+    <p>Alerta: {alerta}</p>
+    <p>Atletismo: {atletismo}</p>
+    <p>Con. Bakemono: {conBakemono}</p>
+    <p>Mentir: {mentir}</p>
+    <p>Pilotear: {pilotear}</p>
+    <p>Artes Marciales: {artesMarciales}</p>
+    <p>Medicina: {medicina}</p>
+    <p>Con. Obj. Mágicos: {conObjMagicos}</p>
+    <p>Sigilo: {sigilo}</p>
+    <p>Con. Esferas: {conEsferas}</p>
+    <p>Con. Leyendas: {conLeyendas}</p>
+    <p>Forja: {forja}</p>
+    <p>Con Demonio: {conDemonio}</p>
+    <p>Con Espiritual: {conEspiritual}</p>
+    <p>Manejo Blaster: {manejoBlaster}</p>
+    <p>Manejo Sombras: {manejoSombras}</p>
+    <p>Trato Bakemono: {tratoBakemono}</p>
+    <p>Con Hechicería: {conHechiceria}</p>
+    <p>Med. Vital: {medVital}</p>
+    <p>Med. Espiritual: {medEspiritual}</p>
+    <p>Rayo: {rayo}</p>
+    <p>Fuego: {fuego}</p>
+    <p>Frío: {frio}</p>
+    <p>Veneno: {veneno}</p>
+    <p>Corte: {corte}</p>
+    <p>Energía: {energia}</p>
+    <p>{apCombate || "Aptitud combate"}: {valCombate}</p>
+    <p>{apCombate2 || "Aptitud combate"}: {valCombate2}</p>
+    <p>{add1 || "Aptitud nueva"}: {valAdd1}</p>
+    <p>{add2 || "Aptitud nueva"}: {valAdd2}</p>
+    <p>{add3 || "Aptitud nueva"}: {valAdd3}</p>
+    <p>{add4 || "Aptitud nueva"}: {valAdd4}</p>
+  </div>
+</div>
+
+</Modal.Body>
+      
+       </Modal>
+     </div>
     
     </>
     
   )
 }
+
+
+
+
+
+
+
 
 

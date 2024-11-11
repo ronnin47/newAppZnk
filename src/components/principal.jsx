@@ -770,6 +770,23 @@ return (
       )}
             </Tab>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Tab eventKey="ficha" title="Ficha" className="fondoBody">
             {pjSeleccionado ? (
                 <FichaPersonaje
@@ -859,6 +876,10 @@ return (
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>
+
+
+
+
             <Tab eventKey="tiradas" title="Tiradas" className="fondoBody">
             {pjSeleccionado ? (
                 <Tiradas
@@ -867,9 +888,9 @@ return (
                   
                   nombre={pj.nombre}
                   imagen={pj.imagen}
-                  destreza={pj.destreza}
-                  apCombate={pj.apCombate}
-                  valCombate={pj.valCombate}
+                
+                 
+                
                   message={message}
                   setMessage={setMessage}
                   sock={sock}
@@ -889,7 +910,7 @@ return (
                   
                   cicatriz={pj.cicatriz}
                   
-                  fortaleza={pj.fortaleza} 
+                
                   ki={pj.ki} 
                   kiActual={pj.kiActual}
                   ken={pj.ken}
@@ -898,10 +919,70 @@ return (
                   negativa={pj.negativa}                 
                   damageActual={pj.vidaActual} 
                   consumision={pj.consumision}
-
-
                   conviccion={pj.conviccion}
           
+
+
+
+
+
+                  fuerza={pj.fuerza}
+                  fortaleza={pj.fortaleza} 
+                  destreza={pj.destreza}
+                  agilidad={pj.agilidad}
+                  sabiduria={pj.sabiduria}
+                  presencia={pj.presencia}
+                  principio={pj.principio}
+                  sentidos={pj.sentidos}
+                  academisismo={pj.academisismo}
+                  alerta={pj.alerta}
+                  atletismo={pj.atletismo}
+                  conBakemono={pj.conBakemono}
+                  mentir={pj.mentir}
+                  pilotear={pj.pilotear}
+                  artesMarciales={pj.artesMarciales}
+                  medicina={pj.medicina}
+                  conObjMagicos={pj.conObjMagicos}
+                  sigilo={pj.sigilo}
+                  conEsferas={pj.conEsferas}
+                  conLeyendas={pj.conLeyendas}
+                  forja={pj.forja}
+                  conDemonio={pj.conDemonio}
+                  conEspiritual={pj.conEspiritual}
+                  manejoBlaster={pj.manejoBlaster}
+                  manejoSombras={pj.manejoSombras}
+                  tratoBakemono={pj.tratoBakemono}
+                  conHechiceria={pj.conHechiceria}
+                  medVital={pj.medVital}
+                  medEspiritual={pj.medEspiritual}
+                  rayo={pj.rayo}
+                  fuego={pj.fuego}
+                  frio={pj.frio}
+                  veneno={pj.veneno}
+                  corte={pj.corte}
+                  energia={pj.energia}
+                  apCombate={pj.apCombate}
+                  valCombate={pj.valCombate}
+                  apCombate2={pj.apCombate2}
+                  valCombate2={pj.valCombate2}
+                  add1={pj.add1}
+                  valAdd1={pj.valAdd1}
+                  add2={pj.add2}
+                  valAdd2={pj.valAdd2}
+                  add3={pj.add3}
+                  valAdd3={pj.valAdd3}
+                  add4={pj.add4}
+                  valAdd4={pj.valAdd4}                
+                  ventajas={pj.ventajas}
+                  inventario={pj.inventario} 
+                  dominios={pj.dominios}
+                
+              
+               
+                  vidaActual={pj.vidaActual}
+                  hechizos={pj.hechizos}
+                
+                  iniciativa={pj.iniciativa}
 
 
                 />
