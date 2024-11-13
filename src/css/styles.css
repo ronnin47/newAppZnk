@@ -1119,51 +1119,8 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   background-color: #555;
 }
 
-
 @media (max-width: 768px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1em;
-  }
-
-  .barrasTiradasBotones {
-    width: 100%;
-    margin-bottom: 1em;
-  }
-
-  .cajaTirada {
-    width: 100%;
-    margin-bottom: 1em;
-  }
-
-  .botoncinios {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1em;
-    width: 100%;
-  }
-
-  .botoncinios div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .btn {
-    width: 100%;
-    margin: 0.5em 0;
-  }
-
-  label.dados10 {
-    display: inline-block;
-    margin: 0 0.5em;
-    text-align: center;
-  }
-
-  input[type="checkbox"] {
-    transform: scale(1.2);
-    margin-right: 0.5em;
+  .botoncinios{
+    transform: scale(0.8em);
   }
 }
