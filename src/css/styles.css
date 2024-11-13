@@ -87,6 +87,7 @@ background-color: rgba(0, 0, 0, 0.719);
   align-items: center;   /* Centrar verticalmente */
   justify-content: center; /* Centrar horizontalmente */
   box-sizing: border-box; /* Asegura que padding no se desborde */
+  min-width: 3.5em;
 }
 .selected-card {
     box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
