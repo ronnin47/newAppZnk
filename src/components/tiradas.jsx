@@ -836,8 +836,6 @@ useEffect(() => {
             </div>
             
             
-            
-            
             <div style={{display:"grid", gridTemplateColumns:"1fr", marginBottom:"1em"}}>
             <input type="number" placeholder="caracteristica principal" value={principal} onChange={handlePrincipal} className="cajaTirada" style={{width:"50%"}}/>
             <input type="number" placeholder="caracteristica secundaria" value={secundaria} onChange={handleSecundaria} className="cajaTirada" style={{width:"50%"}}/>
@@ -849,38 +847,35 @@ useEffect(() => {
             <label htmlFor="" value={dadosD10} className="dados10">{dadosD10}</label>
             <Button variant="outline-success" style={{marginLeft:"0.5em"}}onClick={addD10}>+d10</Button> 
             </div>
+
             <div>
             <Button variant="outline-danger" onClick={restD20}>-d20</Button>
             <label htmlFor="" value={dadosD20} className="dados10">{dadosD20}</label>
-            <Button variant="outline-success" style={{marginLeft:"0.5em"}} onClick={addD20}>+d20</Button>
-            
+            <Button variant="outline-success" style={{marginLeft:"0.5em"}} onClick={addD20}>+d20</Button>            
             </div>
+
             <div>
             <Button variant="outline-danger" onClick={restD10Bono}>-d10</Button>
             <label htmlFor="" value={dadosD10Bono} className="dados10">{dadosD10Bono}</label>
-            <Button variant="outline-success"  style={{marginLeft:"0.5em"}} onClick={addD10Bono}>+d10</Button>
-          
+            <Button variant="outline-success"  style={{marginLeft:"0.5em"}} onClick={addD10Bono}>+d10</Button>         
             </div>    
 
             <div>
             <Button variant="outline-danger" onClick={restD6Bono}> -d06</Button>
             <label htmlFor="" value={dadosD6Bono} className="dados10">{dadosD6Bono}</label>
-            <Button variant="outline-success" style={{marginLeft:"0.5em"}} onClick={addD6Bono}> +d06</Button>
-           
+            <Button variant="outline-success" style={{marginLeft:"0.5em"}} onClick={addD6Bono}> +d06</Button>          
             </div>    
 
             <div>
             <Button variant="outline-danger" onClick={restD12Bono}> -d12</Button>
             <label htmlFor="" value={dadosD12Bono} className="dados10">{dadosD12Bono}</label>
-            <Button variant="outline-success" style={{marginLeft:"0.5em"}} onClick={addD12Bono}> +d12</Button>
-            
+            <Button variant="outline-success" style={{marginLeft:"0.5em"}} onClick={addD12Bono}> +d12</Button>         
             </div>     
 
             <div>
             <Button variant="outline-danger" onClick={restD4Bono}> -d04</Button>
             <label htmlFor="" value={dadosD4Bono} className="dados10">{dadosD4Bono}</label>
-            <Button variant="outline-success" style={{marginLeft:"0.5em"}}  onClick={addD4Bono}> +d04</Button>
-           
+            <Button variant="outline-success" style={{marginLeft:"0.5em"}}  onClick={addD4Bono}> +d04</Button>   
             </div>       
 
            </div>
