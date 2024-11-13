@@ -76,15 +76,15 @@ background-color: rgba(0, 0, 0, 0.719);
     border-radius: 15px;
 }
 .dados10{
-    margin-left: 10px;
-    width: 20%;
-    padding: 10px;
+    
+    width: 4em;
+    padding: 1em;
     border: 3px solid yellow;
     background-color: black;
     color: greenyellow;
     border-radius: 30px;
     text-align: center;
-    font-size: 25px;
+    font-size: 2em;
 }
 .selected-card {
     box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
