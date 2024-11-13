@@ -75,14 +75,18 @@ background-color: rgba(0, 0, 0, 0.719);
     padding: 0px;
     border-radius: 15px;
 }
-.dados10{
-    padding: 0.5em;
-    border: 3px solid yellow;
-    background-color: black;
-    color: greenyellow;
-    border-radius: 30px;
-    text-align: center;
-    font-size: 1em;
+.dados10 {
+  padding: 0.5em;
+  border: 3px solid yellow;
+  background-color: black;
+  color: greenyellow;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 1em;
+  display: flex;         /* Usar flexbox */
+  align-items: center;   /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  box-sizing: border-box; /* Asegura que padding no se desborde */
 }
 .selected-card {
     box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
