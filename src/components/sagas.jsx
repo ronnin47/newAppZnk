@@ -499,7 +499,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
       if (confirmacion.isConfirmed) {
         try {
           // Realizar la solicitud DELETE al servidor
-          const response = await axios.delete(`http://zepiro.onrender.com/deleteSaga/${idsaga}`);
+          const response = await axios.delete(`https://zepiro.onrender.com/deleteSaga/${idsaga}`);
     
           if (response.status === 200) {
             Swal.fire('Eliminado', 'La sección ha sido eliminada correctamente.', 'success');
