@@ -7,8 +7,9 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Sagas } from "./sagas";
+import { Grupos } from "./grupos";
 import { Saberes } from "./saberes";
+import { Sagas } from "./sagas";
 
 
 
@@ -272,7 +273,7 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
 
 
-export const Narrador = ({saberes,setSaberes, usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
+export const Narrador = ({coleccionSecciones,setColeccionSecciones,coleccionSagas, setColeccionSagas, saberes,setSaberes, usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
@@ -653,16 +654,32 @@ const handleClickCrearGrupo = async() => {
         </Tab>
 
 
-        <Tab  eventKey="sagas" title="Sagas y grupos">
-          <Sagas
+        <Tab  eventKey="grupos" title="Grupos">
+          <Grupos
           usuariosConectados={usuariosConectados} 
           sesion={sesion}
           grupo={grupo}
           coleccionGrupos={coleccionGrupos}
           setColeccionGrupos={setColeccionGrupos}
           coleccionPersonajes={coleccionPersonajes}
-          ></Sagas>
+          ></Grupos>
             
+        </Tab>
+
+
+        <Tab eventKey="sagas" title="Sagas ZNK">
+
+
+          <Sagas 
+          coleccionSecciones={coleccionSecciones}
+          setColeccionSecciones={setColeccionSecciones}
+          setColeccionSagas={setColeccionSagas}
+          coleccionSagas={coleccionSagas}
+
+
+          coleccionPersonajes={coleccionPersonajes}
+          >           
+          </Sagas>         
         </Tab>
 
         <Tab eventKey="Saberes" title="Saberes" >

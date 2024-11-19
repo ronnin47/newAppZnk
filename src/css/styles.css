@@ -1016,6 +1016,22 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   
  
   }
+
+  .imagenSaga {
+    border-radius: 15%;
+    width: 20em;
+    height: 20em;
+    margin-left: 5px;
+    border: 4px solid aliceblue;
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
+  
+ 
+  }
   .tituloFlotante {
     border-radius: 15px;
 
@@ -1131,4 +1147,68 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   display: flex;
   flex-direction: row;
   gap: 2px;
+}
+
+.estructuraSaga{
+  display: flex;
+  flex-direction: row;
+  gap:1em;
+  
+}
+.agrandar:hover{
+  transform: scale(1.1);
+    border: 4px solid aliceblue;
+    box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
+
+   
+}
+
+.agrandarB:hover{
+  transform: scale(1.1);
+    border: 4px solid aliceblue;
+
+
+    box-shadow: 
+    0px 0px 15px 5px rgba(255, 215, 0, 0.9), /* Resplandor dorado intenso */
+    0px 0px 30px 10px rgba(255, 215, 0, 0.7), /* Brillo dorado cálido */
+    0px 0px 45px 15px rgba(255, 223, 0, 0.5), /* Brillo dorado expandido */
+    0px 0px 60px 20px rgba(255, 223, 0, 0.4), /* Resplandor dorado suave */
+    0px 0px 80px 25px rgba(255, 239, 0, 0.3); /* Resplandor dorado adicional */
+}
+
+
+.toll{
+
+ font-size: 1em;
+  border: 4px solid aliceblue;
+  border-radius: 10px;
+
+
+  box-shadow: 
+  0px 0px 15px 5px rgba(255, 215, 0, 0.9), /* Resplandor dorado intenso */
+  0px 0px 30px 10px rgba(255, 215, 0, 0.7), /* Brillo dorado cálido */
+  0px 0px 45px 15px rgba(255, 223, 0, 0.5), /* Brillo dorado expandido */
+  0px 0px 60px 20px rgba(255, 223, 0, 0.4), /* Resplandor dorado suave */
+  0px 0px 80px 25px rgba(255, 239, 0, 0.3); /* Resplandor dorado adicional */
+
+}
+
+.agrandarC:hover {
+  font-size: 1em;
+  border: 4px solid aliceblue;
+  border-radius: 10px;
+  transform: scale(1.1);
+  transition: border 0.3s ease, box-shadow 0.5s ease; /* Transición para border y box-shadow */
+
+  box-shadow: 
+    0 0 15px rgba(0, 255, 255, 0.7),
+    0 0 25px rgba(0, 255, 255, 0.5),
+    0 0 35px rgba(0, 255, 255, 0.3),
+    0 0 45px rgba(0, 0, 255, 0.2),
+    0 0 60px rgba(255, 0, 255, 0.1); /* Efecto de sombras múltiples */
 }

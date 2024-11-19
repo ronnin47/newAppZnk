@@ -28,6 +28,8 @@ import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
 import { Enemigos } from "./enemigos.jsx";
 
 import { GeneradorBake } from "./generadorBake.jsx";
+import { SagasPre } from "./sagasPre.jsx";
+
 
 export const Principal= ()=> {
 
@@ -356,6 +358,80 @@ useEffect(() => {
   loadPersonajes();
 }, [sesion]);
 
+//*************coleccion de SAGAS ZNK */
+const [coleccionSagas,setColeccionSagas]=useState([])
+
+
+
+
+useEffect(() => {
+  const consumirSagasZnk = async () => {
+    try {
+      if (sesion) {
+     
+        //const response = await axios.get('http://localhost:4000/consumirSagas', {
+         const response = await axios.get('https://zepiro.onrender.com/consumirSagas', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        const { coleccionSagas } = response.data;
+  
+        if (!Array.isArray(coleccionSagas)) {
+          console.error('El formato de datos no es un array.');
+          return;
+        }
+        
+  
+        console.log("SAGAS ZNK: ",coleccionSagas)
+        setColeccionSagas(coleccionSagas);
+      }
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir Sagas ZNK", error.message);
+    }
+  };
+ 
+  consumirSagasZnk();
+}, [sesion]);
+
+
+//esto para consumir SECCIONES
+const [coleccionSecciones,setColeccionSecciones]=useState([])
+
+useEffect(() => {
+  const consumirSeccionesZnk = async () => {
+    try {
+      if (sesion) {
+     
+        //const response = await axios.get('http://localhost:4000/consumirSecciones', {
+        const response = await axios.get('https://zepiro.onrender.com/consumirSecciones', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        const { coleccionSecciones } = response.data;
+  
+        if (!Array.isArray(coleccionSecciones)) {
+          console.error('El formato de datos no es un array.');
+          return;
+        }
+        
+  
+        console.log("Secciones de Sagas: ",coleccionSecciones)
+        setColeccionSecciones(coleccionSecciones);
+      }
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir Secciones de Sagas", error.message);
+    }
+  };
+ 
+  consumirSeccionesZnk();
+  
+}, [sesion]);
+
+
 
 
 
@@ -573,6 +649,25 @@ return (
             fill
             style={{ marginTop: '1em'}} 
           >
+
+
+
+
+
+            <Tab eventKey="Sagas" title="Sagas ZNK" className="fondoBody" >
+              <SagasPre
+              coleccionSagas={coleccionSagas}
+              coleccionSecciones={coleccionSecciones}
+              coleccionPersonajes={coleccionPersonajes}
+              >
+              </SagasPre>
+
+ 
+            </Tab>
+
+
+
+
             <Tab eventKey="cargarPersonajes" title="Cargar pj" className="fondoBody"  >
             {sesion==true ? (
             <CargarPersonaje 
@@ -728,7 +823,7 @@ return (
             </Tab> 
 
             
-            <Tab eventKey="personajes" title="personajes" className="container-fluid fondoBody">
+            <Tab eventKey="personajes" title="Mis Personajes" className="container-fluid fondoBody">
       {loading ? (
         <div className="spinner-container">
           <DNA
@@ -1160,7 +1255,7 @@ return (
             </Tab> 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas} saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 

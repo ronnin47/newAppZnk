@@ -916,6 +916,184 @@ app.delete('/deleteSaber/:id', async (req, res) => {
   }
 });
 
+
+
+
+
+
+// SAGAS
+app.post('/insertSaga', async (req, res) => {
+  const { titulo, presentacion, imagen } = req.body; 
+  //console.log(" Lo que viene del req: ",req.body)
+
+  if (!imagen) {
+    return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
+  }
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO sagas (titulo, presentacion, imagensaga) VALUES ($1, $2, $3) RETURNING *',
+      [titulo, presentacion, imagen] 
+    );
+    const nuevoSaber = result.rows[0]; 
+
+    res.status(201).json(nuevoSaber); 
+  } catch (error) {
+    console.error('Error al insertar el saber:', error);
+    res.status(500).json({ error: 'Error al insertar el saber' });
+  }
+});
+
+app.get('/consumirSagas', async (req, res) => {
+
+  try {
+    const result = await pool.query('SELECT * FROM sagas');
+    const coleccionSagas = result.rows;
+    if (!Array.isArray(coleccionSagas)) {
+      return res.status(500).json({ message: 'Error: no se encontró la colección de Sagas ZNK.' });
+    }
+
+    res.status(200).json({ coleccionSagas });
+  } catch (err) {
+    console.error('Error al consumir los SAGAS znk:', err.message);
+    res.status(500).json({ error: 'Error al consumir SAGAS ZNK.' });
+  }
+});
+
+app.put('/updateSaga/:idsaga', async (req, res) => {
+  const { idsaga } = req.params;
+  const { presentacion} = req.body;
+
+  try {
+    await pool.query(
+      'UPDATE sagas SET presentacion = $1 WHERE idsaga = $2',
+      [presentacion,idsaga]
+    );
+
+    res.status(200).json({ message: 'Saga actualizada correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar presentacion de la saga:', error);
+    res.status(500).json({ message: 'Error al actualizar presentacion de la saga' });
+  }
+});
+
+app.delete('/deleteSaga/:idsaga', async (req, res) => {
+  const { idsaga } = req.params;
+
+  try {
+     await pool.query('DELETE FROM secciones WHERE idsaga = $1', [idsaga]);
+    await pool.query('DELETE FROM sagas WHERE idsaga = $1', [idsaga]);
+    res.status(200).json({ message: 'Saga eliminada correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar la saga:', error);
+    res.status(500).json({ message: 'Error al eliminar la saga' });
+  }
+});
+
+//SECCIONES DE SAGAS
+app.get('/consumirSecciones', async (req, res) => {
+
+  try {
+    const result = await pool.query('SELECT * FROM secciones');
+    const coleccionSecciones = result.rows;
+    if (!Array.isArray(coleccionSecciones)) {
+      return res.status(500).json({ message: 'Error: no se encontró la coleccionesSecciones.' });
+    }
+
+    res.status(200).json({ coleccionSecciones });
+  } catch (err) {
+    console.error('Error al consumir los Secciones:', err.message);
+    res.status(500).json({ error: 'Error al consumir Secciones.' });
+  }
+});
+
+app.post('/insertSeccion', async (req, res) => {
+  // Extraer las propiedades del body de la solicitud
+  const { titulo, presentacion, imagen, idsaga } = req.body;
+  console.log("Lo que viene del req: ", req.body);
+
+  // Validar si la imagen está presente
+  if (!imagen) {
+    return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
+  }
+
+  // Validar que el título y la presentación no estén vacíos
+  if (!titulo || !presentacion || !idsaga) {
+    return res.status(400).json({ error: 'Faltan campos requeridos' });
+  }
+
+  try {
+    // Insertar la nueva sección en la base de datos
+    const result = await pool.query(
+      'INSERT INTO secciones (titulo, presentacion, imagen, idsaga) VALUES ($1, $2, $3, $4) RETURNING *',
+      [titulo, presentacion, imagen, idsaga]
+    );
+    
+    // Obtener la nueva sección insertada
+    const nuevaSeccion = result.rows[0];
+
+    // Enviar la respuesta con la nueva sección
+    res.status(201).json(nuevaSeccion); 
+  } catch (error) {
+    // Manejar errores en la inserción
+    console.error('Error al insertar la sección:', error);
+    res.status(500).json({ error: 'Error al insertar la sección' });
+  }
+});
+
+app.put('/updateSeccion/:idseccion', async (req, res) => {
+  const { idseccion } = req.params;
+  const { titulo, presentacion, imagen } = req.body;
+
+  try {
+    await pool.query(
+      'UPDATE secciones SET titulo = $1, presentacion = $2, imagen = $3 WHERE idseccion = $4',
+      [titulo, presentacion, imagen, idseccion]
+    );
+
+    res.status(200).json({ message: 'Sección actualizada correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la sección:', error);
+    res.status(500).json({ message: 'Error al actualizar la sección' });
+  }
+});
+
+app.delete('/deleteSeccion/:idseccion', async (req, res) => {
+  const { idseccion } = req.params;
+
+  try {
+    await pool.query('DELETE FROM secciones WHERE idseccion = $1', [idseccion]);
+    res.status(200).json({ message: 'Sección eliminada correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar la sección:', error);
+    res.status(500).json({ message: 'Error al eliminar la sección' });
+  }
+});
+
+
+app.post('/insertPjSaga', async (req, res) => {
+  const { idpersonaje, idsaga } = req.body;
+
+  //console.log("lo que viene del cliente",req.body)
+
+  try {
+    // Usamos array_append para agregar el idpersonaje al campo 'personajes' de la saga
+    const query = `
+      UPDATE sagas
+      SET personajes = array_append(personajes, $1)
+      WHERE idsaga = $2;
+    `;
+    await pool.query(query, [idpersonaje, idsaga]);
+
+    res.status(200).json({ message: 'Personaje añadido correctamente.' });
+  } catch (error) {
+    console.error('Error al añadir personaje:', error);
+    res.status(500).json({ message: 'Hubo un error al añadir el personaje a la saga.' });
+  }
+});
+
+
+
 //const PORT = process.env.PORT || 4000;
 const PORT = process.env.PORT || 10000;
 
