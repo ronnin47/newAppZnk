@@ -174,7 +174,7 @@ const SagaUni = ({  coleccionPersonajes, setColeccionPersonajes,usuarioid,person
             {/* Botón Editar */}
             {parseInt(usuarioid) === parseInt(usuarioIdPj) && (
               <Button
-                variant="primary"
+                variant="outline-primary"
                 onClick={handleEditClick}
                 style={{
                   position: "absolute",
@@ -231,7 +231,7 @@ const SagaUni = ({  coleccionPersonajes, setColeccionPersonajes,usuarioid,person
   
             {/* Botón para guardar cambios */}
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
-              <Button variant="success" onClick={() => handleSaveChanges(idpersonaje)}>
+              <Button variant="outline-success" onClick={() => handleSaveChanges(idpersonaje)}>
                 Guardar Cambios
               </Button>
             </div>

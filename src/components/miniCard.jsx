@@ -47,8 +47,7 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
           <Card  style={{ width: '8em', border: "8px solid black" }} className={cardClassName}>
           <Card.Img   variant="top" src={imagen} style={{ maxWidth: "100%", maxHeight: "100%",   opacity: !vivoMuerto && id === pjSeleccionado ? 0.3 : 1}} />
           <Card.Body 
-          
-          
+                 
           style={{
             display: "flex",
             flexDirection: "column",
