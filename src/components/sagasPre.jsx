@@ -80,10 +80,7 @@ const SagaUni = ({  coleccionPersonajes, setColeccionPersonajes,usuarioid,person
   
     // Función para guardar los cambios en el backend
     const handleSaveChanges = async (idpersonaje) => {
-      if (!editableHistoria.trim()) {
-        alert("La nota no puede estar vacía.");
-        return;
-      }
+     
       //console.log("Este es el ID para el UPDATE:", idpersonaje);
   
       try {
