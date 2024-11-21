@@ -80,7 +80,7 @@ const SagaUni = ({  coleccionPersonajes, setColeccionPersonajes,usuarioid,person
   
     // Función para guardar los cambios en el backend
     const handleSaveChanges = async (idpersonaje) => {
-     
+    
       //console.log("Este es el ID para el UPDATE:", idpersonaje);
   
       try {

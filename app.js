@@ -1108,10 +1108,10 @@ app.put('/update-notas/:idpersonaje', async (req, res) => {
   //console.log("notas del cliente:",req.body)
   //console.log("este es el id del cliente: ",idpersonaje)
   // Validar que los datos existen
-  if (!nota || !idpersonaje) {
+ /* if (!nota || !idpersonaje) {
     return res.status(400).json({ error: 'Faltan datos requeridos.' });
   }
-
+*/
   try {
     // Actualizar la nota en la base de datos
     const result = await pool.query(
