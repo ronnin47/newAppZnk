@@ -2,9 +2,14 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
-export const SagasPre = ({ coleccionSecciones,coleccionSagas,coleccionPersonajes }) => {
+
+export const SagasPre = ({ setColeccionPersonajes,usuarioid,coleccionSecciones,coleccionSagas,coleccionPersonajes }) => {
+  
+ // console.log("este es el usuario ID que tiene: ",usuarioid)
   return (
     <div
       className='container'
@@ -25,8 +30,9 @@ export const SagasPre = ({ coleccionSecciones,coleccionSagas,coleccionPersonajes
           presentacion={saga.presentacion}
           secciones={coleccionSecciones.filter((seccion) => seccion.idsaga === saga.idsaga)} // Filtra las secciones que corresponden a la saga actual
           personajesSaga={saga.personajes}
-
           coleccionPersonajes={coleccionPersonajes}
+          setColeccionPersonajes={setColeccionPersonajes}
+          usuarioid={usuarioid}
         />
       ))}
     </div>
@@ -34,7 +40,7 @@ export const SagasPre = ({ coleccionSecciones,coleccionSagas,coleccionPersonajes
 };
 
 
-const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titulo, imagensaga, presentacion }) => {
+const SagaUni = ({  coleccionPersonajes, setColeccionPersonajes,usuarioid,personajesSaga, secciones, idsaga, titulo, imagensaga, presentacion }) => {
  
   const personajesFiltrados = (coleccionPersonajes || []).filter((personaje) =>
     (personajesSaga || []).includes(personaje.idpersonaje) // Verificar si el ID del personaje está en personajesSaga
@@ -42,14 +48,203 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
  // console.log("Personajes filtrados: ", personajesFiltrados);
   
   //console.log("PERSONAJES FILTRADISIMOS: ", personajesFiltrados);
-
+ // console.log("este es el usuario ID que tiene: ",usuarioid)
   const [showModal, setShowModal] = useState(false);
 
   // Funciones para abrir y cerrar el modal
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
-  const ImagenModal = ({ show, onHide, imagen}) => {
+
+
+  const ImagenModal = ({ setColeccionPersonajes, coleccionPersonajes, usuarioid, show, onHide, imagen, nombre, notaSaga, usuarioIdPj, idpersonaje }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [editableHistoria, setEditableHistoria] = useState(notaSaga);
+  
+    // Encontrar dinámicamente la nota actualizada del personaje
+    const personajeActual = coleccionPersonajes.find((personaje) => personaje.idpersonaje === idpersonaje);
+    const notaActualizada = personajeActual ? personajeActual.notasaga : notaSaga;
+  
+    //console.log("ID del personaje:", idpersonaje);
+    //console.log("Colección de personajes:", coleccionPersonajes);
+  
+    // Función para abrir el modal de edición
+    const handleEditClick = () => {
+      setIsEditing(true);
+    };
+  
+    // Función para manejar el cambio en el input
+    const handleInputChange = (event) => {
+      setEditableHistoria(event.target.value);
+    };
+  
+    // Función para guardar los cambios en el backend
+    const handleSaveChanges = async (idpersonaje) => {
+      if (!editableHistoria.trim()) {
+        alert("La nota no puede estar vacía.");
+        return;
+      }
+      //console.log("Este es el ID para el UPDATE:", idpersonaje);
+  
+      try {
+        const response = await axios.put(
+          //`http://localhost:4000/update-notas/${idpersonaje}`,
+          `https://zepiro.onrender.com/update-notas/${idpersonaje}`,
+          { nota: editableHistoria },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+  
+        console.log("Cambios guardados exitosamente:", response.data);
+  
+        // Actualizar la nota en el estado global
+        setColeccionPersonajes((prevPersonajes) =>
+          prevPersonajes.map((personaje) =>
+            personaje.idpersonaje === idpersonaje
+              ? { ...personaje, notasaga: editableHistoria }
+              : personaje
+          )
+        );
+  
+        Swal.fire({
+          icon: "success",
+          title: "¡Cambios guardados!",
+          text: "Las notas han sido actualizadas correctamente.",
+          confirmButtonText: "Aceptar",
+        });
+  
+        setIsEditing(false); // Cierra el modal de edición
+      } catch (error) {
+        console.error("Error al guardar cambios:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo guardar la nota. Inténtalo nuevamente.",
+        });
+      }
+    };
+  
+    return (
+      <>
+        {/* Modal principal */}
+        <Modal show={show} onHide={onHide} size="lg">
+          <Modal.Body
+            className="modalPre"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              backgroundColor: "#222",
+              color: "aliceblue",
+              padding: "20px",
+              position: "relative",
+            }}
+          >
+            {/* Imagen a la izquierda */}
+            <div>
+              <img
+                src={imagen}
+                alt={nombre}
+                style={{
+                  width: "20em",
+                  height: "20em",
+                  borderRadius: "8px",
+                  marginTop: "2em",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)",
+                }}
+              />
+            </div>
+  
+            {/* Texto a la derecha */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1em", padding: "1em" }}>
+              <h4
+                style={{
+                  fontWeight: "bold",
+                  marginBottom: "0",
+                  color: "yellow",
+                  fontFamily: "cursive",
+                  textAlign: "center",
+                }}
+              >
+                {nombre}
+              </h4>
+              <p style={{ lineHeight: "1.5", fontSize: "1em" }}>{notaActualizada}</p>
+            </div>
+  
+            {/* Botón Editar */}
+            {parseInt(usuarioid) === parseInt(usuarioIdPj) && (
+              <Button
+                variant="primary"
+                onClick={handleEditClick}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                }}
+              >
+                Editar
+              </Button>
+            )}
+          </Modal.Body>
+        </Modal>
+  
+        {/* Modal de edición */}
+        <Modal show={isEditing} onHide={() => setIsEditing(false)} size="lg">
+          <Modal.Body
+            className="modalPre"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#222",
+              color: "aliceblue",
+              padding: "20px",
+            }}
+          >
+            <h4
+              style={{
+                fontWeight: "bold",
+                marginBottom: "0",
+                color: "yellow",
+                fontFamily: "cursive",
+                textAlign: "center",
+              }}
+            >
+              Editar notas de {nombre}
+            </h4>
+  
+            {/* Campo de texto editable */}
+            <textarea
+              value={editableHistoria}
+              onChange={handleInputChange}
+              style={{
+                backgroundColor: "#333",
+                color: "aliceblue",
+                border: "none",
+                padding: "10px",
+                borderRadius: "5px",
+                fontSize: "1em",
+                width: "100%",
+                height: "200px",
+                resize: "none",
+              }}
+            />
+  
+            {/* Botón para guardar cambios */}
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+              <Button variant="success" onClick={() => handleSaveChanges(idpersonaje)}>
+                Guardar Cambios
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  };
+
+
+
+
+  const ImagenModalN = ({ show, onHide, imagen}) => {
     return (
       <Modal show={show} onHide={onHide} centered>
         <Modal.Body className="d-flex justify-content-center align-items-center">
@@ -57,7 +252,9 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
             src={imagen}
             alt="Vista ampliada"
             style={{ maxWidth: '100%', maxHeight: '80vh' }}
+
           />
+         
         
         </Modal.Body>
       </Modal>
@@ -66,15 +263,44 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
 
   const [showModalImg, setShowModalImg] = useState(false);
   const [imagenSeleccionada, setImagenSeleccionada] = useState('');
+  const [nombrePj, setNombrePj] = useState('');
+  const [notaSagaPj, setNotaSagaPj] = useState('');
+  const [usuarioIdPj, setUsuarioIdPj] = useState('');
+  const [idePj, setIdePj] = useState('');
 
-  const handleImagenClick = (imagen) => {
+  const handleImagenClick = (imagen,nombre,notasaga,usuarioid,idpersonaje) => {
+
+
+    //console.log("**********vemos que tien usaurioid",usuarioid)
+    
+    //console.log("**********vemos que teien IDPERSONAJE",idpersonaje)
     setImagenSeleccionada(imagen);
+    setNombrePj(nombre);
+    setNotaSagaPj(notasaga)
+    setUsuarioIdPj(usuarioid)
+    setIdePj(idpersonaje)
     setShowModalImg(true);
   };
 
   const handleCloseModalImg = () => {
     setShowModalImg(false);
   };
+
+
+
+  const [showModalImgN, setShowModalImgN] = useState(false);
+  const [imagenSeleccionadaN, setImagenSeleccionadaN] = useState('');
+  const handleCloseModalImgN = () => {
+    setShowModalImgN(false);
+  };
+
+  const handleImagenClickN = (imagen,nombre,notasaga) => {
+    setImagenSeleccionadaN(imagen);
+    setNombrePj(nombre);
+    setNotaSagaPj(notasaga);
+    setShowModalImgN(true);
+  };
+
 
 
   const renderTooltip = (idpersonaje,nombre) => (
@@ -165,7 +391,7 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
                     border: '2px solid yellow',
                     cursor: 'pointer',
                   }}
-                  onClick={() => handleImagenClick(personaje.imagen)}
+                  onClick={() => handleImagenClick(personaje.imagen, personaje.nombre,personaje.notasaga,personaje.usuarioId,personaje.idpersonaje)}
                 />
                 </OverlayTrigger>
               ))}
@@ -187,7 +413,7 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
             <img
               src={imagensaga}
               alt="Imagen de la saga"
-              onClick={() => handleImagenClick(imagensaga)}
+              onClick={() => handleImagenClickN(imagensaga)}
               style={{
                 width: '20em',
                 height: '20em',
@@ -209,7 +435,7 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
                   src={seccion.imagen || '/imagenBase.jpeg'}
                   alt="Previsualización"
                   style={{ width: '16em', height: '16em' }}
-                  onClick={() => handleImagenClick(seccion.imagen)}
+                  onClick={() => handleImagenClickN(seccion.imagen)}
                 />
                 <div style={{ flexGrow: 1 }}>
                   <p style={{ color: 'red' }}>{seccion.titulo}</p>
@@ -221,7 +447,9 @@ const SagaUni = ({ personajesSaga, coleccionPersonajes, secciones, idsaga, titul
         </Modal.Body>
       </Modal>
 
-      <ImagenModal show={showModalImg} onHide={handleCloseModalImg} imagen={imagenSeleccionada} />
+      <ImagenModal setColeccionPersonajes={setColeccionPersonajes} coleccionPersonajes={coleccionPersonajes} show={showModalImg} onHide={handleCloseModalImg} imagen={imagenSeleccionada} nombre={nombrePj} notaSaga={notaSagaPj} usuarioIdPj={usuarioIdPj} usuarioid={usuarioid} idpersonaje={idePj}/>
+      <ImagenModalN show={showModalImgN} onHide={handleCloseModalImgN} imagen={imagenSeleccionadaN} ></ImagenModalN>
+    
     </>
   );
 };

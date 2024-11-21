@@ -398,7 +398,9 @@ export const CargarPersonaje = ({
       historia:"",
       conviccion: conviccion || "",
       cicatriz: cicatriz || 0,
+      notaSaga:"",
       usuarioId: usuarioId, 
+    
     };
 
 

@@ -32,7 +32,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
 
       const consumirSagasZnk = async () => {
         try {
-            //const response = await axios.get('http://localhost:4000/consumirSagas', {
+           // const response = await axios.get('http://localhost:4000/consumirSagas', {
             const response = await axios.get('https://zepiro.onrender.com/consumirSagas', {
               headers: {
                 'Content-Type': 'application/json',
@@ -242,32 +242,32 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
 
 
 
-    const consumirSeccionesZnk = async () => {
-      try {
-    
-       
-          //const response = await axios.get('http://localhost:4000/consumirSecciones', {
-          const response = await axios.get('https://zepiro.onrender.com/consumirSecciones', {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          const { coleccionSecciones } = response.data;
-    
-          if (!Array.isArray(coleccionSecciones)) {
-            console.error('El formato de datos no es un array.');
-            return;
-          }
-          
-    
-          console.log("Secciones de Sagas: ",coleccionSecciones)
-          setColeccionSecciones(coleccionSecciones);
-       
-      } catch (error) {
-        console.error("Cliente: Fallo al consumir Secciones de Sagas", error.message);
-      }
-    }; 
+  const consumirSeccionesZnk = async () => {
+    try {
+  
+      
+        //const response = await axios.get('http://localhost:4000/consumirSecciones', {
+        const response = await axios.get('https://zepiro.onrender.com/consumirSecciones', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        const { coleccionSecciones } = response.data;
+  
+        if (!Array.isArray(coleccionSecciones)) {
+          console.error('El formato de datos no es un array.');
+          return;
+        }
+        
+  
+        console.log("Secciones de Sagas: ",coleccionSecciones)
+        setColeccionSecciones(coleccionSecciones);
+      
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir Secciones de Sagas", error.message);
+    }
+  }; 
 
    
 
@@ -295,7 +295,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   
 
     try {
-      //const response = await axios.post('http://localhost:4000/insertSeccion', nuevaSeccion, {
+        //const response = await axios.post('http://localhost:4000/insertSeccion', nuevaSeccion, {
         const response = await axios.post('https://zepiro.onrender.com/insertSeccion', nuevaSeccion, {  
         headers: {
           'Content-Type': 'application/json',
@@ -334,7 +334,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   
     try {
       // Realizar la solicitud PUT al servidor para actualizar la sección
-      //const response = await axios.put(`http://localhost:4000/updateSeccion/${seccion.idseccion}`, seccion, {
+        //const response = await axios.put(`http://localhost:4000/updateSeccion/${seccion.idseccion}`, seccion, {
         const response = await axios.put(`https://zepiro.onrender.com/updateSeccion/${seccion.idseccion}`, seccion, {
         headers: {
           'Content-Type': 'application/json',
@@ -439,15 +439,14 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
     };
   
     try {
-      // Realizar la solicitud PUT al servidor para actualizar la saga
       //const response = await axios.put(`http://localhost:4000/updateSaga/${idsaga}`, sagaActualizada, {
-       const response = await axios.put(`https://zepiro.onrender.com/updateSaga/${idsaga}`, sagaActualizada, {
+      const response = await axios.put(`https://zepiro.onrender.com/updateSaga/${idsaga}`, sagaActualizada, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
   
-      // Verificar si la respuesta fue exitosa
+      
       if (response.status === 200) {
         Swal.fire({
           title: 'Éxito',
@@ -479,7 +478,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   };
 
 
-//***************nos falta el ELIMINAR SAGAAAAAAAA */
+
  
     const eliminarSaga = async (index) => {
       
@@ -500,6 +499,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
         try {
           // Realizar la solicitud DELETE al servidor
           const response = await axios.delete(`https://zepiro.onrender.com/deleteSaga/${idsaga}`);
+          //const response = await axios.delete(`http://localhost/deleteSaga/${idsaga}`);
     
           if (response.status === 200) {
             Swal.fire('Eliminado', 'La sección ha sido eliminada correctamente.', 'success');
@@ -561,7 +561,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
     }
 
    
-   // const response = await axios.post('http://localhost:4000/insertPjSaga',
+     //const response = await axios.post('http://localhost:4000/insertPjSaga',
      const response = await axios.post('https://zepiro.onrender.com/insertPjSaga',
       {
         idpersonaje: idpersonaje, 
@@ -695,22 +695,20 @@ const handleCloseModalImg = () => {
                <OverlayTrigger
                placement="right"
                overlay={renderTooltip(personaje.idpersonaje,personaje.nombre)}
-           >
-
-
-<img
-            className="agrandar"
-            src={personaje.imagen}
-            alt={personaje.nombre}
-            onClick={() => handleImagenClick(personaje.imagen)}
-            style={{
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',  // Hace que la imagen sea un círculo
-              border: '2px solid aliceblue', // Borde alrededor de la imagen
-            }}
-          />
-           </OverlayTrigger>
+                >
+                <img
+                  className="agrandar"
+                  src={personaje.imagen}
+                  alt={personaje.nombre}
+                  onClick={() => handleImagenClick(personaje.imagen)}
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',  // Hace que la imagen sea un círculo
+                    border: '2px solid aliceblue', // Borde alrededor de la imagen
+                  }}
+                />
+               </OverlayTrigger>
        
           </div>
           );

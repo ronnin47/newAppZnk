@@ -121,8 +121,11 @@ const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [sock, setSock] = useState([]);
     const [tecEspecial, setTecEspecial] = useState([]);
-    
-   const handleDragEnd=(event)=>{
+    const [notasSaga,setNotasSaga]=useState("") 
+   
+   
+   
+    const handleDragEnd=(event)=>{
     //console.log("orden original: ",personajes)
       const {active, over}=event
       const oldIndex= personajes.findIndex( pj=>pj.idpersonaje===active.id)
@@ -368,9 +371,10 @@ useEffect(() => {
   const consumirSagasZnk = async () => {
     try {
       if (sesion) {
-     
+       
         //const response = await axios.get('http://localhost:4000/consumirSagas', {
-         const response = await axios.get('https://zepiro.onrender.com/consumirSagas', {
+        const response = await axios.get('https://zepiro.onrender.com/consumirSagas', {
+         // const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/consumirSagas`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -659,6 +663,8 @@ return (
               coleccionSagas={coleccionSagas}
               coleccionSecciones={coleccionSecciones}
               coleccionPersonajes={coleccionPersonajes}
+              usuarioid={usuarioId}
+              setColeccionPersonajes={setColeccionPersonajes}
               >
               </SagasPre>
 

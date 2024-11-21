@@ -273,7 +273,7 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
 
 
-export const Narrador = ({coleccionSecciones,setColeccionSecciones,coleccionSagas, setColeccionSagas, saberes,setSaberes, usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
+export const Narrador = ({usuarioid,coleccionSecciones,setColeccionSecciones,coleccionSagas, setColeccionSagas, saberes,setSaberes, usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
@@ -678,6 +678,7 @@ const handleClickCrearGrupo = async() => {
 
 
           coleccionPersonajes={coleccionPersonajes}
+          usuarioid={usuarioid}
           >           
           </Sagas>         
         </Tab>

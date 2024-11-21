@@ -233,6 +233,8 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
 });
 
 app.post('/insert-personaje', async (req, res) => {
+
+  console.log("*******NOta saga: ",req.body)
   const { 
     nombre,
       dominio,
@@ -306,7 +308,8 @@ app.post('/insert-personaje', async (req, res) => {
       usuarioId,
       tecEspecial,   
       conviccion,
-      cicatriz,     
+      cicatriz, 
+      notaSaga,    
    } = req.body;
    
   try {
@@ -384,9 +387,10 @@ app.post('/insert-personaje', async (req, res) => {
       "tecEspecial",
       conviccion,
       cicatriz,
+      notasaga,
       "usuarioId"
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74)
       RETURNING idpersonaje
     `;
 
@@ -463,6 +467,7 @@ app.post('/insert-personaje', async (req, res) => {
       tecEspecial,
       conviccion,
       cicatriz,
+      notaSaga,
       usuarioId,   
       ];
     const result = await pool.query(query, values);
@@ -1093,6 +1098,40 @@ app.post('/insertPjSaga', async (req, res) => {
 });
 
 
+
+app.put('/update-notas/:idpersonaje', async (req, res) => {
+
+  const { idpersonaje } = req.params;
+  const { nota } = req.body;
+
+
+  //console.log("notas del cliente:",req.body)
+  //console.log("este es el id del cliente: ",idpersonaje)
+  // Validar que los datos existen
+  if (!nota || !idpersonaje) {
+    return res.status(400).json({ error: 'Faltan datos requeridos.' });
+  }
+
+  try {
+    // Actualizar la nota en la base de datos
+    const result = await pool.query(
+      'UPDATE personajes SET notasaga = $1 WHERE idpersonaje = $2 RETURNING *',
+      [nota, idpersonaje]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Personaje no encontrado.' });
+    }
+
+    res.status(200).json({
+      message: 'Nota actualizada correctamente.',
+      data: result.rows[0],
+    });
+  } catch (error) {
+    console.error('Error al actualizar nota:', error);
+    res.status(500).json({ error: 'Error interno del servidor.' });
+  }
+});
 
 //const PORT = process.env.PORT || 4000;
 const PORT = process.env.PORT || 10000;
