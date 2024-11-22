@@ -1099,39 +1099,82 @@ app.post('/insertPjSaga', async (req, res) => {
 
 
 
+
+
+//ACA ESTAMOS TRABAJANDO LAS NOTAS
+
 app.put('/update-notas/:idpersonaje', async (req, res) => {
-
   const { idpersonaje } = req.params;
-  const { nota } = req.body;
+  const { nota, idsaga } = req.body;
 
+  //console.log("notas del cliente:", req.body);
+  //console.log("este es el id del cliente: ", idpersonaje);
 
-  //console.log("notas del cliente:",req.body)
-  //console.log("este es el id del cliente: ",idpersonaje)
-  // Validar que los datos existen
- /* if (!nota || !idpersonaje) {
-    return res.status(400).json({ error: 'Faltan datos requeridos.' });
-  }
-*/
+  // Crear el objeto nuevaNota con los datos recibidos
+  const nuevaNota = { nota, idsaga };
+
   try {
-    // Actualizar la nota en la base de datos
+    // Primero, obtenemos las notas actuales de la base de datos
     const result = await pool.query(
-      'UPDATE personajes SET notasaga = $1 WHERE idpersonaje = $2 RETURNING *',
-      [nota, idpersonaje]
+      'SELECT notasaga FROM personajes WHERE idpersonaje = $1',
+      [idpersonaje]
     );
 
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Personaje no encontrado.' });
     }
 
+    // Obtener las notas actuales (si las hay)
+    let notasaga = result.rows[0].notasaga;
+
+    // Si ya hay notas previas, procesarlas
+    if (notasaga) {
+      // Verificar si notasaga ya es un array o un objeto JSON
+      if (typeof notasaga === 'string') {
+        // Si es una cadena JSON, parsearla
+        notasaga = JSON.parse(notasaga);
+      }
+
+      // Asegurarnos de que sea un array
+      if (!Array.isArray(notasaga)) {
+        notasaga = [notasaga]; // Si no es un array, lo convertimos en uno
+      }
+
+      // Verificar si ya existe una nota con el mismo idsaga
+      const index = notasaga.findIndex((nota) => nota.idsaga === idsaga);
+
+      if (index !== -1) {
+        // Si ya existe una nota con el mismo idsaga, sobrescribir la nota
+        notasaga[index].nota = nota;
+      } else {
+        // Si no existe, agregar la nueva nota
+        notasaga.push(nuevaNota);
+      }
+    } else {
+      // Si no hay notas previas, crear un array con la nueva nota
+      notasaga = [nuevaNota];
+    }
+
+    // Actualizar el campo notasaga con el nuevo conjunto de notas
+    await pool.query(
+      'UPDATE personajes SET notasaga = $1 WHERE idpersonaje = $2',
+      [JSON.stringify(notasaga), idpersonaje]
+    );
+
+    // Devolver la respuesta exitosa
     res.status(200).json({
       message: 'Nota actualizada correctamente.',
-      data: result.rows[0],
+      data: notasaga, // Devolver las notas actualizadas
     });
   } catch (error) {
     console.error('Error al actualizar nota:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
+
+
+
+
 
 //const PORT = process.env.PORT || 4000;
 const PORT = process.env.PORT || 10000;

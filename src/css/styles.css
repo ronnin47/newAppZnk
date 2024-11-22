@@ -1229,3 +1229,6 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
 .custom-backdrop {
   background-color: rgba(0, 0, 0, 0.7) !important;  /* Cambia 0.7 por el nivel de opacidad que prefieras */
 }
+.bordeSeccion{
+  border: 2px solid aliceblue;
+}

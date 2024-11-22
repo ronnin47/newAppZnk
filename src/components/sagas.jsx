@@ -32,7 +32,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
 
       const consumirSagasZnk = async () => {
         try {
-           // const response = await axios.get('http://localhost:4000/consumirSagas', {
+            //const response = await axios.get('http://localhost:4000/consumirSagas', {
             const response = await axios.get('https://zepiro.onrender.com/consumirSagas', {
               headers: {
                 'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
     try {
   
       
-        //const response = await axios.get('http://localhost:4000/consumirSecciones', {
+       // const response = await axios.get('http://localhost:4000/consumirSecciones', {
         const response = await axios.get('https://zepiro.onrender.com/consumirSecciones', {
           headers: {
             'Content-Type': 'application/json',
