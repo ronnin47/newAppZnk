@@ -37,7 +37,7 @@ const pool = new Pool({
 });
 */
 
-
+/*
 //**************BASE NOVIEMBRE******************
 
 const pool = new Pool({
@@ -45,6 +45,17 @@ const pool = new Pool({
   host: 'dpg-csl2rle8ii6s738418e0-a',
   database: 'basenoviembre', 
   password: 'jdLmXp4y4PnNljzYcLpZbW8oCtZGfNIT',  
+  port: 5432,
+});
+*/
+
+//**************BASE DICIEMBRE******************
+
+const pool = new Pool({
+  user: 'gorda',          
+  host: 'dpg-ct685652ng1s738t6fo0-a',
+  database: 'basediciembre', 
+  password: 'f4TGb2SR6zpw57jdyaWA39xvyXG0TRFV',  
   port: 5432,
 });
 

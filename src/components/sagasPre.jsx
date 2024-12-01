@@ -392,7 +392,7 @@ const handleSaveChanges = async (idpersonaje) => {
   try {
     const response = await axios.put(
       //`http://localhost:4000/update-notas/${idpersonaje}`,
-      `https://zepiro.onrender.com/update-notas/${idpersonaje}`,
+      `https://znk.onrender.com/update-notas/${idpersonaje}`,
       { nota: editableHistoria, idsaga: idsaga },
       {
         headers: { "Content-Type": "application/json" },

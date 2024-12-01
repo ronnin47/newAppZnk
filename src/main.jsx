@@ -9,7 +9,6 @@ import { Principal } from "./components/principal.jsx";
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   
     <Principal/>
   </React.StrictMode>
 );
