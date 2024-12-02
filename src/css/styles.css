@@ -1232,3 +1232,9 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
 .bordeSeccion{
   border: 2px solid aliceblue;
 }
+.cadaUsuario{
+  border:2px solid aliceblue;
+  border-radius: 15px;
+  padding: 0.5em;
+
+}

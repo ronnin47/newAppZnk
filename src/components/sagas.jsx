@@ -246,7 +246,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
     try {
   
       
-       // const response = await axios.get('http://localhost:4000/consumirSecciones', {
+        //const response = await axios.get('http://localhost:4000/consumirSecciones', {
         const response = await axios.get('https://universoceleste.onrender.com/consumirSecciones', {
           headers: {
             'Content-Type': 'application/json',

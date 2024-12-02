@@ -11,6 +11,8 @@ import { Grupos } from "./grupos";
 import { Saberes } from "./saberes";
 import { Sagas } from "./sagas";
 
+import { Usuarios } from "./usuarios";
+
 
 
 const Cartita=({
@@ -244,6 +246,9 @@ const Cartita=({
 
 }
 
+
+
+
 const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
   const handleEliminarPersonaje = (idpersonaje) => { 
@@ -265,10 +270,6 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
     </>
   );
 };
-
-
-
-
 
 
 
@@ -685,6 +686,13 @@ const handleClickCrearGrupo = async() => {
 
         <Tab eventKey="Saberes" title="Saberes" >
           <Saberes saberes={saberes} setSaberes={setSaberes}></Saberes>
+        </Tab>
+
+        <Tab eventKey="Usuarios" title="Usuarios" >
+          <Usuarios
+           sesion={sesion}
+           estatus={estatus}
+          ></Usuarios>
         </Tab>
       
     </Tabs>

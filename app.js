@@ -37,17 +37,7 @@ const pool = new Pool({
 });
 */
 
-/*
-//**************BASE NOVIEMBRE******************
 
-const pool = new Pool({
-  user: 'gorda',          
-  host: 'dpg-csl2rle8ii6s738418e0-a',
-  database: 'basenoviembre', 
-  password: 'jdLmXp4y4PnNljzYcLpZbW8oCtZGfNIT',  
-  port: 5432,
-});
-*/
 
 //**************BASE DICIEMBRE******************
 
@@ -1109,9 +1099,6 @@ app.post('/insertPjSaga', async (req, res) => {
 });
 
 
-
-
-
 //ACA ESTAMOS TRABAJANDO LAS NOTAS
 
 app.put('/update-notas/:idpersonaje', async (req, res) => {
@@ -1185,6 +1172,46 @@ app.put('/update-notas/:idpersonaje', async (req, res) => {
 
 
 
+
+
+app.get('/consumirUsuarios', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM usuarios');
+    const usuarios = result.rows;
+    if (!Array.isArray(usuarios)) {
+      return res.status(500).json({ message: 'Error: no se encontró la colección de usuarios.' });
+    }
+    
+    //console.log("Estos son los usuarios de la base:", usuarios);
+    res.status(200).json(usuarios); // Devuelve directamente el array
+  } catch (err) {
+    console.error('Error al consumir los usuarios:', err.message);
+    res.status(500).json({ error: 'Error al consumir los usuarios.' });
+  }
+});
+
+
+
+
+app.put('/cambiarEstatus', async (req, res) => {
+  //const { idusuario } = req.params;
+  const { idusuario,estatus} = req.body;
+ // console.log(` idusuario: ${idusuario} estatus: ${estatus}`)
+
+
+
+  try {
+    await pool.query(
+      'UPDATE usuarios SET estatus = $1 WHERE idusuario = $2',
+      [estatus,idusuario]
+    );
+
+    res.status(200).json({ message: 'Estatus actualizado correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar Estatus del usuario:', error);
+    res.status(500).json({ message: 'Error al actualizar Estatus del usuario' });
+  }
+});
 
 
 //const PORT = process.env.PORT || 4000;
