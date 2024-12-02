@@ -87,7 +87,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
   const handleImagenClick = (imagen,nombre,notasaga,usuarioid,idpersonaje) => {
 
    
-    console.log("ACA VEMOS EL CONTENIDO DE NOTASAGA: ",notasaga)
+   // console.log("ACA VEMOS EL CONTENIDO DE NOTASAGA: ",notasaga)
 
     //aca es donde tiene que tomar notas filtrada
     //console.log("**********vemos que tien usaurioid",usuarioid)
@@ -357,10 +357,7 @@ const ImagenModal = ({
     setEditableHistoria(nuevaNota);
   }, [notaSaga, idsaga]);
 
-  // Agregar un useEffect para monitorear los cambios en editableHistoria
-  useEffect(() => {
-    console.log('Editable Historia filtrada:', editableHistoria);
-  }, [editableHistoria]);
+  
 
 
 
@@ -387,7 +384,7 @@ const ImagenModal = ({
 //INTENTAMOS SOLUCONAR EL ERROR CUANDO CARGO UN PERSONAJE
 
 const handleSaveChanges = async (idpersonaje) => {
-  console.log("*****este es el identificador de SAGA en la petición de actualización:", idsaga);
+  //console.log("*****este es el identificador de SAGA en la petición de actualización:", idsaga);
 
   try {
     const response = await axios.put(
@@ -399,7 +396,7 @@ const handleSaveChanges = async (idpersonaje) => {
       }
     );
 
-    console.log("Cambios guardados exitosamente:", response.data);
+   // console.log("Cambios guardados exitosamente:", response.data);
 
     // Actualizar la nota en el estado global
     setColeccionPersonajes((prevPersonajes) =>

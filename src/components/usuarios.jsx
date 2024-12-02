@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 const EstatusDrop = ({ estatusN, setEstatusN, idusuario }) => {
 
 
-    console.log("EL ID USUARIO:",idusuario)
+    //console.log("EL ID USUARIO:",idusuario)
     // Función que realiza la petición de actualización
     const cambiarEstatus = async (idusuario, estatus) => {
       try {
@@ -20,7 +20,7 @@ const EstatusDrop = ({ estatusN, setEstatusN, idusuario }) => {
         );
         
         // Maneja la respuesta si es necesario
-        console.log("Respuesta de la solicitud:", response.data);
+        //console.log("Respuesta de la solicitud:", response.data);
   
       } catch (error) {
         // Captura cualquier error y muestra un mensaje
@@ -110,7 +110,7 @@ export const Usuarios = ({ sesion, estatus }) => {
         //const response = await axios.get('http://localhost:4000/consumirUsuarios');
         if (response.data && response.data.length > 0) {
           setUsuarios(response.data);
-          console.log("Estado actualizado justo después de setUsuarios:", response.data);
+          //console.log("Estado actualizado justo después de setUsuarios:", response.data);
         } else {
           setUsuarios([]);
         }
@@ -125,9 +125,7 @@ export const Usuarios = ({ sesion, estatus }) => {
     }
   }, [sesion, estatus]);
 
-  useEffect(() => {
-    console.log("Estado actualizado de usuarios:", usuarios);
-  }, [usuarios]);
+
 
   return (
     <div className="container" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1em" }}>
