@@ -5,7 +5,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-
+const apiUrl =import.meta.env.VITE_API_URL;
 
 export const SagasPre = ({ setColeccionPersonajes,usuarioid,coleccionSecciones,coleccionSagas,coleccionPersonajes }) => {
   
@@ -389,7 +389,7 @@ const handleSaveChanges = async (idpersonaje) => {
   try {
     const response = await axios.put(
       //`http://localhost:4000/update-notas/${idpersonaje}`,
-      `https://universoceleste.onrender.com/update-notas/${idpersonaje}`,
+      `${apiUrl}/update-notas/${idpersonaje}`,
       { nota: editableHistoria, idsaga: idsaga },
       {
         headers: { "Content-Type": "application/json" },

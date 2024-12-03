@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
+const apiUrl =import.meta.env.VITE_API_URL;
 
 export const GeneradorBake = ({
     setActiveKey,
@@ -1134,7 +1135,7 @@ switch (dificultad) {
     
         try {
            //const response = await axios.post("http://localhost:4000/insert-personaje", pjNuevo, {
-           const response = await axios.post("https://universoceleste.onrender.com/insert-personaje", pjNuevo, {
+           const response = await axios.post(`${apiUrl}/insert-personaje`, pjNuevo, {
             headers: {
               'Content-Type': 'application/json',
             },

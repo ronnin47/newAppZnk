@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Estrellitas } from "./estrellitas";
 
+const apiUrl =import.meta.env.VITE_API_URL;
+
 export const Unicos = () => {
   const [coleccionTecEspeciales, setColeccionTecEspeciales] = useState([]);
   const [tecBuscar, setTectBuscar] = useState("");
   const consumirTecEspeciales = async () => {
     try {
      //const response = await axios.get('http://localhost:4000/consumirTecEspeciales', {
-     const response = await axios.get('https://universoceleste.onrender.com/consumirTecEspeciales', {
+     const response = await axios.get(`${apiUrl}/consumirTecEspeciales`, {
         headers: {
           'Content-Type': 'application/json',
         },

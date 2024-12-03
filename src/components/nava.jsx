@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
-
+const apiUrl =import.meta.env.VITE_API_URL;
 
 export const Nava= ({ isVisible,toggleFlotante, setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
@@ -42,7 +42,7 @@ const handleSubmit = (e) => {
     try {
       
       //const response = await axios.post('http://localhost:4000/loginUsuario', {    
-      const response = await axios.post('https://universoceleste.onrender.com/loginUsuario', {
+      const response = await axios.post(`${apiUrl}/loginUsuario`, {
         email:loginEmail,
         contrasenia: loginPassword
       }, {
@@ -106,7 +106,7 @@ const cargarNuevoUsuario = async () => {
   try {
     
     //const response = await axios.post(`http://localhost:4000/insert-usuario`, newUsuario, { 
-    const response = await axios.post(`https://universoceleste.onrender.com/insert-usuario`, newUsuario, { 
+    const response = await axios.post(`${apiUrl}/insert-usuario`, newUsuario, { 
     headers: {
         'Content-Type': 'application/json', // Asegúrate de que el encabezado Content-Type sea application/json
       },

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
+const apiUrl =import.meta.env.VITE_API_URL;
+
+
 export const Saberes = ({ saberes, setSaberes }) => {
   const [titulo, setTitulo] = useState('');
   const [frase, setFrase] = useState('');
@@ -30,7 +33,7 @@ export const Saberes = ({ saberes, setSaberes }) => {
 
     try {
         //const response = await axios.post('http://localhost:4000/insertSaber', nuevoSaber, {
-        const response = await axios.post('https://universoceleste.onrender.com/insertSaber', nuevoSaber, {
+        const response = await axios.post(`${apiUrl}/insertSaber`, nuevoSaber, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -82,7 +85,7 @@ export const Saberes = ({ saberes, setSaberes }) => {
     try {
 
         //const response = await axios.put('http://localhost:4000/updateSaber', updatedSaber, {
-        const response = await axios.put('https://universoceleste.onrender.com/updateSaber', updatedSaber, {
+        const response = await axios.put(`${apiUrl}/updateSaber`, updatedSaber, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -130,7 +133,7 @@ export const Saberes = ({ saberes, setSaberes }) => {
     }
     
     try {
-      const response = await axios.delete(`https://universoceleste.onrender.com/deleteSaber/${id}`);
+      const response = await axios.delete(`${apiUrl}/deleteSaber/${id}`);
       //const response = await axios.delete(`http://localhost:4000/deleteSaber/${id}`);
       
       if (response.status === 200) { 

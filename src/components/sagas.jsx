@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
-
+const apiUrl =import.meta.env.VITE_API_URL;
 
 export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSecciones,coleccionSagas,setColeccionSagas}) => {
 
@@ -33,7 +33,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
       const consumirSagasZnk = async () => {
         try {
             //const response = await axios.get('http://localhost:4000/consumirSagas', {
-            const response = await axios.get('https://universoceleste.onrender.com/consumirSagas', {
+            const response = await axios.get(`${apiUrl}/consumirSagas`, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -64,7 +64,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
     
         try {
             //const response = await axios.post('http://localhost:4000/insertSaga', nuevaSaga, {
-            const response = await axios.post('https://universoceleste.onrender.com/insertSaga', nuevaSaga, {
+            const response = await axios.post(`${apiUrl}/insertSaga`, nuevaSaga, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -247,7 +247,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   
       
         //const response = await axios.get('http://localhost:4000/consumirSecciones', {
-        const response = await axios.get('https://universoceleste.onrender.com/consumirSecciones', {
+        const response = await axios.get(`${apiUrl}/consumirSecciones`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -296,7 +296,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
 
     try {
         //const response = await axios.post('http://localhost:4000/insertSeccion', nuevaSeccion, {
-        const response = await axios.post('https://universoceleste.onrender.com/insertSeccion', nuevaSeccion, {  
+        const response = await axios.post(`${apiUrl}/insertSeccion`, nuevaSeccion, {  
         headers: {
           'Content-Type': 'application/json',
         },
@@ -335,7 +335,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
     try {
       // Realizar la solicitud PUT al servidor para actualizar la sección
        // const response = await axios.put(`http://localhost:4000/updateSeccion/${seccion.idseccion}`, seccion, {
-      const response = await axios.put(`https://universoceleste.onrender.com/updateSeccion/${seccion.idseccion}`, seccion, {
+      const response = await axios.put(`${apiUrl}/updateSeccion/${seccion.idseccion}`, seccion, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -387,7 +387,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
       try {
         // Realizar la solicitud DELETE al servidor
         //const response = await axios.delete(`http://localhost:4000/deleteSeccion/${seccion.idseccion}`);
-        const response = await axios.delete(`https://universoceleste.onrender.com/deleteSeccion/${seccion.idseccion}`);
+        const response = await axios.delete(`${apiUrl}/deleteSeccion/${seccion.idseccion}`);
         if (response.status === 200) {
           Swal.fire('Eliminado', 'La sección ha sido eliminada correctamente.', 'success');
   
@@ -410,7 +410,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   const consumirSagasZnk = async () => {
     try {
        // const response = await axios.get('http://localhost:4000/consumirSagas', {
-        const response = await axios.get('https://universoceleste.onrender.com/consumirSagas', {
+        const response = await axios.get(`${apiUrl}/consumirSagas`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -440,7 +440,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   
     try {
       //const response = await axios.put(`http://localhost:4000/updateSaga/${idsaga}`, sagaActualizada, {
-      const response = await axios.put(`https://universoceleste.onrender.com/updateSaga/${idsaga}`, sagaActualizada, {
+      const response = await axios.put(`${apiUrl}/updateSaga/${idsaga}`, sagaActualizada, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -498,7 +498,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
       if (confirmacion.isConfirmed) {
         try {
           // Realizar la solicitud DELETE al servidor
-          const response = await axios.delete(`https://universoceleste.onrender.com/deleteSaga/${idsaga}`);
+          const response = await axios.delete(`${apiUrl}/deleteSaga/${idsaga}`);
           //const response = await axios.delete(`http://localhost/deleteSaga/${idsaga}`);
     
           if (response.status === 200) {
@@ -562,7 +562,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
 
    
      //const response = await axios.post('http://localhost:4000/insertPjSaga',
-     const response = await axios.post('https://universoceleste.onrender.com/insertPjSaga',
+     const response = await axios.post(`${apiUrl}/insertPjSaga`,
       {
         idpersonaje: idpersonaje, 
         idsaga: idsaga            

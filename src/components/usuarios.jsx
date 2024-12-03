@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import Dropdown from 'react-bootstrap/Dropdown';
 
+const apiUrl =import.meta.env.VITE_API_URL;
+
 const EstatusDrop = ({ estatusN, setEstatusN, idusuario }) => {
 
 
@@ -9,7 +11,7 @@ const EstatusDrop = ({ estatusN, setEstatusN, idusuario }) => {
     // Función que realiza la petición de actualización
     const cambiarEstatus = async (idusuario, estatus) => {
       try {
-        const response = await axios.put(`https://universoceleste.onrender.com/cambiarEstatus`, 
+        const response = await axios.put(`${apiUrl}/cambiarEstatus`, 
         //const response = await axios.put(`http://localhost:4000/cambiarEstatus`, 
           { idusuario, estatus }, 
           { 
@@ -106,7 +108,7 @@ export const Usuarios = ({ sesion, estatus }) => {
   useEffect(() => {
     const consumirUsuarios = async () => {
       try {
-        const response = await axios.get('https://universoceleste.onrender.com/consumirUsuarios');
+        const response = await axios.get(`${apiUrl}/consumirUsuarios`);
         //const response = await axios.get('http://localhost:4000/consumirUsuarios');
         if (response.data && response.data.length > 0) {
           setUsuarios(response.data);

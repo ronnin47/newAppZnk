@@ -13,7 +13,7 @@ import { Sagas } from "./sagas";
 
 import { Usuarios } from "./usuarios";
 
-
+const apiUrl =import.meta.env.VITE_API_URL;
 
 const Cartita=({
   eliminarPj,
@@ -346,7 +346,7 @@ const eliminarPj = (idpersonaje,nombre) => {
 const destruirPj=async(idpersonaje)=>{
   try {
     //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
-    const response = await axios.delete(`https://universoceleste.onrender.com/deletePersonaje/${idpersonaje}`);
+    const response = await axios.delete(`${apiUrl}/deletePersonaje/${idpersonaje}`);
   } catch (error) {
     console.error('Error al eliminar el personaje:', error);
   }
@@ -371,7 +371,7 @@ const handleClickCrearGrupo = async() => {
 
   try {
     
-    const response = await axios.post(`https://universoceleste.onrender.com/insertGrupo`, nuevoGrupo, {   
+    const response = await axios.post(`${apiUrl}/insertGrupo`, nuevoGrupo, {   
     //const response = await axios.post(`http://localhost:4000/insertGrupo`, nuevoGrupo, { 
     headers: {
         'Content-Type': 'application/json', 

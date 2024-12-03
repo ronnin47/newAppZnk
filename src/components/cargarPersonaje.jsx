@@ -4,9 +4,6 @@ import { Ventajas } from './ventajas.jsx';
 import axios from 'axios';
 
 
-
-//import 'dotenv/config';
-
 const apiUrl =import.meta.env.VITE_API_URL;
 
 
@@ -413,7 +410,7 @@ export const CargarPersonaje = ({
 
 
     try {  
-     // const response = await axios.post(`https://universoceleste.onrender.com/insert-personaje`, pjNuevo, {   
+    
       //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
       const response = await axios.post(`${apiUrl}/insert-personaje`, pjNuevo, { 
       headers: {
