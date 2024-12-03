@@ -47,7 +47,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
             }
             
       
-            console.log("SAGAS ZNK: ",coleccionSagas)
+            //console.log("SAGAS ZNK: ",coleccionSagas)
             setColeccionSagas(coleccionSagas);
       
         } catch (error) {
@@ -107,7 +107,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
       };
 
 
-      console.log("coleecion de sagas en el compoennete sagas de Narraor",coleccionSagas)
+      //console.log("coleecion de sagas en el compoennete sagas de Narraor",coleccionSagas)
 
   return (
     <>
@@ -261,7 +261,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
         }
         
   
-        console.log("Secciones de Sagas: ",coleccionSecciones)
+        //console.log("Secciones de Sagas: ",coleccionSecciones)
         setColeccionSecciones(coleccionSecciones);
       
     } catch (error) {
@@ -334,8 +334,8 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
   
     try {
       // Realizar la solicitud PUT al servidor para actualizar la sección
-        //const response = await axios.put(`http://localhost:4000/updateSeccion/${seccion.idseccion}`, seccion, {
-        const response = await axios.put(`https://universoceleste.onrender.com/updateSeccion/${seccion.idseccion}`, seccion, {
+       // const response = await axios.put(`http://localhost:4000/updateSeccion/${seccion.idseccion}`, seccion, {
+      const response = await axios.put(`https://universoceleste.onrender.com/updateSeccion/${seccion.idseccion}`, seccion, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -409,7 +409,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
 
   const consumirSagasZnk = async () => {
     try {
-        //const response = await axios.get('http://localhost:4000/consumirSagas', {
+       // const response = await axios.get('http://localhost:4000/consumirSagas', {
         const response = await axios.get('https://universoceleste.onrender.com/consumirSagas', {
           headers: {
             'Content-Type': 'application/json',
@@ -424,7 +424,7 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
         }
         
   
-        console.log("SAGAS ZNK: ",coleccionSagas)
+        //console.log("SAGAS ZNK: ",coleccionSagas)
         setColeccionSagas(coleccionSagas);
   
     } catch (error) {
@@ -685,7 +685,7 @@ const handleCloseModalImg = () => {
 
           if (!personaje) {
           // Si no se encuentra el personaje, puedes mostrar un "loading" o simplemente retornar null
-          console.log(`No se encontró el personaje con id: ${idpersonaje}`);
+          //console.log(`No se encontró el personaje con id: ${idpersonaje}`);
           return null;
           }
 

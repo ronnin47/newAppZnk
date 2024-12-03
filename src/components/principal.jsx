@@ -388,7 +388,7 @@ useEffect(() => {
         }
         
   
-        console.log("SAGAS ZNK: ",coleccionSagas)
+       // console.log("SAGAS ZNK: ",coleccionSagas)
         setColeccionSagas(coleccionSagas);
       }
     } catch (error) {
@@ -423,7 +423,7 @@ useEffect(() => {
         }
         
   
-        console.log("Secciones de Sagas: ",coleccionSecciones)
+        //console.log("Secciones de Sagas: ",coleccionSecciones)
         setColeccionSecciones(coleccionSecciones);
       }
     } catch (error) {
