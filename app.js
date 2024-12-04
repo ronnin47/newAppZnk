@@ -78,9 +78,6 @@ app.use(express.json());
 
 
 
-
-
-//NODEMAILER
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
