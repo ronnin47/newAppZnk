@@ -147,6 +147,51 @@ const cargarNuevoUsuario = async () => {
   desaparecerRegistrar();
 };
 
+
+
+
+
+const recuperarPass = async (email) => {
+  try {
+    // Enviar la solicitud GET al servidor
+    const response = await axios.get(`${apiUrl}/recuperarPass?email=${email}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Verificar si el estado de la respuesta es exitoso (200-299)
+    if (response.status >= 200 && response.status < 300) {
+      // Si es exitoso, mostrar el mensaje de éxito
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        text: `Se envió un mail con su contraseña a ${email}.`,
+        showConfirmButton: true,
+        timer: 2500
+      });
+    } else {
+      // Si el estado no es exitoso, mostrar el mensaje de error
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        text: `No se encontró ningún resultado para el usuario ${email}.`,
+        showConfirmButton: true
+      });
+    }
+  } catch (error) {
+    // Manejar los errores de la solicitud
+    console.error('Error en la solicitud:', error.message);
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      text: `Ocurrió un error: ${error.message}`,
+      showConfirmButton: true
+    });
+  }
+}
+
+
   return (
     <>
     <Navbar expand="lg" bg="dark" variant="dark" className="mb-3">
@@ -221,8 +266,8 @@ const cargarNuevoUsuario = async () => {
              <Button variant="primary"  className="mt-3" onClick={mostrarRegistrar}>
                 Registrarme
               </Button>
-              <Button variant="danger"  className="mt-3">
-                Ups! olvide mi contraseña
+              <Button   onClick={() => recuperarPass(loginEmail)}  variant="danger"  className="mt-3">
+                ! olvide mi contraseña
               </Button>
               <Button variant="success" type="submit" className="mt-3">
                 Login

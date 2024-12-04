@@ -426,7 +426,7 @@ export const Reglas = () => {
             </tr>
 
             <tr>
-            <td>Veluntad inquebrantable</td>
+            <td>Voluntad inquebrantable</td>
             <td>----------</td>
             <td>----------</td>
             <td>una vez x escena</td>

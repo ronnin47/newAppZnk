@@ -16,7 +16,12 @@ export const Unicos = () => {
         },
       });
 
-      
+      if (response.status === 204) {
+        console.log("No hay técnicas especiales disponibles.");
+        return;  // Puedes manejar esta situación, como mostrar un mensaje o devolver una lista vacía
+     }
+
+     
       const { poderesEspeciales } = response.data;
       
      
@@ -27,7 +32,7 @@ export const Unicos = () => {
 
       setColeccionTecEspeciales(poderesEspeciales);
     } catch (error) {
-      console.error("Cliente: fallo al consumir tec especiales", error.message);
+      console.error("Cliente: fallo al consumir TECNICAS ESPECIALES", error.message);
     }
   };
 

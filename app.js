@@ -8,6 +8,9 @@ import pkg from 'pg';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
+import nodemailer from 'nodemailer';
+
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(cors()); 
@@ -24,10 +27,8 @@ app.use(express.static(join(__dirname, 'dist')));
 
 const server = http.createServer(app);
 
-
-//LOCAL HOST
-
 /*
+//LOCAL HOST
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
@@ -40,7 +41,6 @@ const pool = new Pool({
 
 
 //**************BASE DICIEMBRE******************
-
 const pool = new Pool({
   user: 'gorda',          
   host: 'dpg-ct685652ng1s738t6fo0-a',
@@ -74,6 +74,28 @@ async function checkDatabaseConnection() {
 checkDatabaseConnection();
 
 app.use(express.json());
+
+
+
+
+
+//NODEMAILER
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: process.env.EMAIL_USER,  // Usar la variable de entorno para el usuario
+    pass: process.env.EMAIL_PASS,
+  },
+});
+  
+transporter.verify().then(()=>{
+console.log("Ready for send e-mail")
+})
+
+
+
 
 const io = new Server(server, {
   cors: {
@@ -827,8 +849,8 @@ app.get('/consumirTecEspeciales', async (req, res) => {
      const userResult = await pool.query(userQuery);
  
      if (userResult.rows.length === 0) {
-       return res.status(401).json({ message: 'No se recupero personajes con tecnicas/Ojetos/poderes epseciales' });
-     }
+      return res.status(204).json({ message: 'No se recuperaron personajes con técnicas/objetos/poderes especiales.' });
+   }
      const poderesEspeciales = userResult.rows;
      res.json({
        message: 'Consumir tec especiales',
@@ -1099,7 +1121,7 @@ app.post('/insertPjSaga', async (req, res) => {
 });
 
 
-//ACA ESTAMOS TRABAJANDO LAS NOTAS
+//NOTAS
 
 app.put('/update-notas/:idpersonaje', async (req, res) => {
   const { idpersonaje } = req.params;
@@ -1170,10 +1192,6 @@ app.put('/update-notas/:idpersonaje', async (req, res) => {
   }
 });
 
-
-
-
-
 app.get('/consumirUsuarios', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM usuarios');
@@ -1189,9 +1207,6 @@ app.get('/consumirUsuarios', async (req, res) => {
     res.status(500).json({ error: 'Error al consumir los usuarios.' });
   }
 });
-
-
-
 
 app.put('/cambiarEstatus', async (req, res) => {
   //const { idusuario } = req.params;
@@ -1210,6 +1225,61 @@ app.put('/cambiarEstatus', async (req, res) => {
   } catch (error) {
     console.error('Error al actualizar Estatus del usuario:', error);
     res.status(500).json({ message: 'Error al actualizar Estatus del usuario' });
+  }
+});
+
+// Recuperar la contraseña OK!
+app.get('/recuperarPass', async (req, res) => {
+  try {
+    const email = req.query.email;
+    //console.log('Email recibido del cliente:', email);
+
+    // Verifica que el email sea válido
+    if (!email) {
+      return res.status(400).json({ message: 'Falta el parámetro email' });
+    }
+
+    // Consulta SQL utilizando parámetros preparados (para evitar inyecciones SQL)
+    const query = {
+      text: 'SELECT email, contrasenia FROM usuarios WHERE email = $1',
+      values: [email],
+    };
+
+    // Ejecutamos la consulta usando el pool
+    const result = await pool.query(query);
+
+    if (result.rows.length > 0) {
+      const contrasenia = result.rows[0].contrasenia;
+      console.log('Contraseña recuperada:', contrasenia);
+
+      try {
+        // Aquí debería obtenerse el nombre del usuario, puedes ajustarlo según tu base de datos.
+        const nombreusuario = email; // O el campo que contiene el nombre del usuario en la base de datos.
+
+        // Enviar el correo electrónico con la contraseña recuperada
+        const info = await transporter.sendMail({
+          from: '"Admim-ZNK" <tempesttempest66@gmail.com>',
+          to: email, // Asegúrate de enviar el correo al email recuperado
+          subject: 'Recuperación de contraseña ZNK',
+          text: `Su contraseña de la sesión en la página ZNK es: ${contrasenia}`,
+        });
+
+       // console.log('Mensaje enviado:', info.messageId);
+        res.json({ message: 'Correo enviado exitosamente', result });
+
+      } catch (error) {
+        console.error('Error al enviar el correo:', error);
+        return res.status(400).json({ message: 'Error al enviar el correo' });
+      }
+
+    } else {
+      console.error('Usuario no encontrado');
+      res.status(404).send('Usuario no encontrado');
+    }
+
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
