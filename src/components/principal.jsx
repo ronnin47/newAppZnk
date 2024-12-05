@@ -38,7 +38,7 @@ export const Principal= ()=> {
   const [personajes, setPersonajes] = useState([]); 
   const [usuariosConectados, setUsuariosConectados] = useState([]);
 
-    const [pjSeleccionado,setPjSeleccionado]=useState("")
+  const [pjSeleccionado,setPjSeleccionado]=useState("")
     
 
 const [loading, setLoading] = useState(true); 
@@ -125,7 +125,14 @@ const [loading, setLoading] = useState(true);
     const [tecEspecial, setTecEspecial] = useState([]);
     const [notasSaga,setNotasSaga]=useState("") 
    
+   const [pjsCombinados,setPjsCombinados]=useState([])
+
+
    
+
+
+
+
    
     const handleDragEnd=(event)=>{
     //console.log("orden original: ",personajes)
@@ -557,7 +564,18 @@ useEffect(() => {
   const [isChecked, setIsChecked] = useState(true);
 
 
-  
+  useEffect(() => {
+    // Recuperar el estado del usuario desde el localStorage
+    const storedPjs = JSON.parse(localStorage.getItem(`pjsCombinados_${usuarioId}`)) || [];
+    setPjsCombinados(storedPjs);
+  }, [usuarioId,sesion]);
+
+  // Guardar los personajes combinados en el localStorage cada vez que se actualicen
+  useEffect(() => {
+    if (usuarioId) {
+      localStorage.setItem(`pjsCombinados_${usuarioId}`, JSON.stringify(pjsCombinados));
+    }
+  }, [pjsCombinados, usuarioId, sesion]);  
 
 return (
     <>
@@ -976,6 +994,12 @@ return (
                   conviccion={pj.conviccion}
                   cicatriz={pj.cicatriz}
                   estatus={estatus}
+                
+                
+                pjsCombinados={pjsCombinados}
+                setPjsCombinados={setPjsCombinados}
+                
+                
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
             </Tab>
@@ -1086,6 +1110,13 @@ return (
                   hechizos={pj.hechizos}
                 
                   iniciativa={pj.iniciativa}
+
+
+                  pjsCombinados={pjsCombinados}
+                  setPjsCombinados={setPjsCombinados}
+
+                  pjSeleccionado={pjSeleccionado}
+                  setPjSeleccionado={setPjSeleccionado}
 
 
                 />

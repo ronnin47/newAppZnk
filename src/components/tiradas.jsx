@@ -28,6 +28,40 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 }
 
 
+const Pj = ({ idpersonaje, nombre, imagen, pjSeleccionado, setPjSeleccionado }) => {
+  
+  const seleccionar = (idpersonaje) => {
+    //console.log("funciona seleccionar pj", idpersonaje);
+    setPjSeleccionado(idpersonaje);  // Establecer el pj seleccionado
+  };
+
+  // Renderizando el Tooltip con el nombre
+  const renderTooltip = (nombre) => (
+    <Tooltip id={`tooltip-${idpersonaje}`} style={{textAlign: 'center' }}>
+      {nombre}
+    </Tooltip>
+  );
+
+  return (
+    <OverlayTrigger
+      placement="top" // Puedes elegir entre "top", "bottom", "left", "right"
+      overlay={renderTooltip(nombre)}  // Aquí se pasa el tooltip con el nombre
+    >
+      <img 
+        onClick={() => seleccionar(idpersonaje)} 
+        src={imagen} 
+        className='grupo-card-image' 
+        style={{ 
+          width: "50px", 
+          height: "50px", 
+          cursor: "pointer",
+          border: idpersonaje === pjSeleccionado ? '3px solid white' : 'none', // Borde más grueso
+          boxShadow: idpersonaje === pjSeleccionado ? '0 0 10px rgba(255, 255, 255, 0.8)' : 'none' // Efecto de sombra para hacerlo más llamativo
+        }} 
+      />
+    </OverlayTrigger>
+  );
+};
 
 export const Tiradas = ({
   idpersonaje,
@@ -113,9 +147,10 @@ export const Tiradas = ({
   iniciativa,
 
 
-
-
-
+  pjsCombinados,
+  setPjsCombinados,
+  pjSeleccionado,
+  setPjSeleccionado,
 
 }) => {
 
@@ -785,6 +820,13 @@ useEffect(() => {
       <div >
       <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
       <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
+      </div>
+
+      <div className="container" style={{display:"flex", flexDirection:"row", gap:"0.5em", color:"yellow", justifyContent:"center"}}>
+
+      {pjsCombinados.map((pj)=>(  
+        <Pj key={pj.idpersonaje} idpersonaje={pj.idpersonaje} nombre={pj.nombre} imagen={pj.imagen} pjSeleccionado={pjSeleccionado} setPjSeleccionado={setPjSeleccionado}></Pj>
+      ))}
       </div>
 
       <div className="container" style={{ display: "flex", alignItems: "center" }}>

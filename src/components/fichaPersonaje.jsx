@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
 import { TecnicaEspecial } from './tecEspecial.jsx';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -100,12 +101,10 @@ export const FichaPersonaje = ({
   conviccion,
   cicatriz,
   estatus,
-  
 
 
-
-
-
+  pjsCombinados,
+  setPjsCombinados,
 }) => {
   
   const inputFileRef = useRef(null);
@@ -397,7 +396,7 @@ const btnGuardarCambios = () => {
    
   const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
 
- console.log("ultimo valores",personajes)
+ //console.log("ultimo valores",personajes)
   const nuevosPersonajes = [...personajes];
 
 
@@ -701,7 +700,7 @@ useEffect(() => {
 
 
 
-  console.log("Usuario id presnetado: ",usuarioId)
+ // console.log("Usuario id presnetado: ",usuarioId)
   
     // Calcula vidaPositiva
     const vidaPositivaMensaje = (fortalezaN + kiN) * positivaN;
@@ -865,26 +864,62 @@ useEffect(() => {
 
 
  
+  
 
+const isChecked = pjsCombinados.some((pj) => pj.idpersonaje === idpersonaje);
 
+const combinarPjs = (idpersonaje, nombre, imagen, isAdding) => {
+  const nuevoPJ = { idpersonaje, nombre, imagen };
 
+  setPjsCombinados((prevPjs) => {
+    if (isAdding) {
+      // Agregar si no está en la lista
+      if (!prevPjs.some((pj) => pj.idpersonaje === idpersonaje)) {
+        return [...prevPjs, nuevoPJ];
+      }
+    } else {
+      // Quitar si está en la lista
+      return prevPjs.filter((pj) => pj.idpersonaje !== idpersonaje);
+    }
+    return prevPjs; // Devuelve el estado sin cambios si no se hace nada
+  });
+};
 
+const handleCheckboxChange = () => {
+  combinarPjs(idpersonaje, nombreN, imagenN, !isChecked);
+};
 
-
-
-
-
-
-
-console.log("personajes",personajes)
-
+const renderTooltipCombinados = () => (
+  <Tooltip id={`tooltip-${idpersonaje}`} style={{textAlign: 'center' }}>
+    <p>Agrega el pj a tiradas</p>
+  </Tooltip>
+);
   
   return (
     <>
     <div className='container'>
-         <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",display:"grid",justifyItems:"center"}}>{nombreN}</p>
-      
-        <div className='row col2' style={{marginBottom:"1em", marginTop:"4.5em"}}>
+         <div style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems: "center", width: "100%"}}>
+         <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",flex:"1",textAlign:"center"}}>{nombreN}</p>
+         
+         <OverlayTrigger
+              placement="top" // Puedes elegir entre "top", "bottom", "left", "right"
+              overlay={renderTooltipCombinados()}  >
+                <input 
+                  type="checkbox" 
+              
+
+                  checked={isChecked} // Maneja el estado
+                  onChange={handleCheckboxChange} // Cambia el estado y llama a la función
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    cursor: "pointer"
+                  }}
+                />
+            </OverlayTrigger>
+         </div>
+       
+        <div className='row col2' style={{marginBottom:"1em", marginTop:"2.5em"}}>
           <div className='col1'>
             <img src={imagenN} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
             <Button onClick={handleImageUpload} variant="outline-danger" style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</Button>
@@ -924,7 +959,10 @@ console.log("personajes",personajes)
               <input type="number" value={pDestinoN} onChange={handleChangePdestino} placeholder="0" />
               </div>
             </div>
-
+            ´{/*<Button onClick={()=>combinarPjs(idpersonaje,nombreN,imagenN)} variant='outline-warning'>combinar pj</Button>*/}
+         
+           
+           
           </div>
         </div>
         </div>
@@ -1128,6 +1166,7 @@ console.log("personajes",personajes)
       
       
       {estatus=="narrador"?(<Button variant="outline-primary"  onClick={clonar} style={{width:"150px", marginTop:"10px"}}>Clonar</Button>):(<></>)}
+     
     </div>
        
     </div>
