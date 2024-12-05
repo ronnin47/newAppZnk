@@ -249,38 +249,16 @@ return (
         <Button variant="outline-danger" onClick={cerrar}>
           Cerrar
         </Button>
-        
       </Modal.Footer>
-        
        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </Tab>
 
 
 
       <Tab eventKey="caracteristicas" title="Caracteristicas" className="fondoBody">
-      <div className={`modalus ${fade==true ? 'fadeOut' : 'fadeIn'}`}>
-      
 
-      <Modal.Body className='modalCartaPjBody' style={{ backgroundColor: "black", color: "aliceblue", overflow: 'auto' }}>
+      <div className={`modalus ${fade==true ? 'fadeOut' : 'fadeIn'}`}>
+      <Modal.Body className='modalCartaPjBody'  style={{ backgroundColor: "black", color: "aliceblue", overflow: 'auto' }}>
       <div className='saludNarrador'>
     <p style={{textAlign:"center"}}>VITALIDAD: {vidaActual}/{(fortaleza + ki) * (positiva + negativa)}</p>
     <p style={{textAlign:"center"}}>KI: {kiActual}/{ki}</p>
@@ -360,15 +338,15 @@ return (
     </div>
     
   </div>
-</Modal.Body>
+      </Modal.Body>
       <Modal.Footer style={{backgroundColor:"black", color:"aliceblue"}}> 
         <Button variant="outline-danger" onClick={cerrar}>
           Cerrar
         </Button>
         
-      </Modal.Footer>
-        
+      </Modal.Footer>  
        </div>
+      
       </Tab>
 
 

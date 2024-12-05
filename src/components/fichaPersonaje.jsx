@@ -968,126 +968,254 @@ const renderTooltipCombinados = () => (
         </div>
 
       <Accordion defaultActiveKey={['0']} alwaysOpen>
+      
       <Accordion.Item eventKey="0">
         <Accordion.Header style={{textAlign:"center"}}>Caracteristicas</Accordion.Header>
         <Accordion.Body style={{backgroundColor:"black", padding:"0px"}}>
        
-        <div className="col4 gradComp" style={{padding:"15px"}}>
-        
-        <div className="col1" >          
-          <label htmlFor="" >Fuerza:</label>
-          <input type="number" value={fuerzaN} onChange={handleChangeFuerza} placeholder="Fza" />
-          <label htmlFor="">Fortaleza:</label>
-          <input type="number" value={fortalezaN} onChange={handleChangeFortaleza} placeholder="Fort" />
-          <label htmlFor="">Destreza:</label>
-          <input type="number" value={destrezaN} onChange={handleChangeDestreza} placeholder="Des"/>
-          <label htmlFor="">Agilidad</label>
-          <input type="number" value={agilidadN} onChange={handleChangeAgilidad} placeholder="Agi" />          
-          <label htmlFor="">Sabiduria</label>
-          <input type="number" value={sabiduriaN} onChange={handleChangeSabiduria} placeholder="Sab" />
-          <label htmlFor="">Presencia</label>
-          <input type="number" value={presenciaN} onChange={handleChangePresencia} placeholder="Pre" />
-          <label htmlFor="">Principio</label>
-          <input type="number" value={principioN} onChange={handleChangePrincipio} placeholder="Pri" />
-          <label htmlFor="">Sentidos</label>
-          <input type="number" value={sentidosN} onChange={handleChangeSentidos} placeholder="Sen" />
 
-          <div className='col1' style={{marginTop:"20px"}}>
-          <label htmlFor="">Iniciativa</label>
-          <input type="number" style={{borderRadius:"20px", color:"yellow"}} value={iniciativaN} onChange={handleChangeIniciativa} placeholder="0" />
+       <div className='gradComp '>
+       <div className="caracTronco" style={{marginTop:"2em"}} >
+          <div className='circularContainer'>
+          <input className='inputCirculo' type="number" value={fuerzaN} onChange={handleChangeFuerza} placeholder="Fza" />
+          <label htmlFor="" >Fuerza</label>
+          </div> 
+
+          <div className='circularContainer'>
+          <input className='inputCirculo' type="number" value={fortalezaN} onChange={handleChangeFortaleza} placeholder="Fort" />
+          <label htmlFor="">Fortaleza</label>
+          </div>         
+          
+          <div className='circularContainer'>    
+          <input className='inputCirculo'  type="number" value={destrezaN} onChange={handleChangeDestreza} placeholder="Des"/>    
+          <label htmlFor="">Destreza</label>   
+          </div>
+
+          <div className='circularContainer'>     
+          <input className='inputCirculo' type="number" value={agilidadN} onChange={handleChangeAgilidad} placeholder="Agi" /> 
+          <label htmlFor="">Agilidad</label>  
+          </div>
+        
+          <div className='circularContainer'>
+          <input className='inputCirculo' type="number" value={sabiduriaN} onChange={handleChangeSabiduria} placeholder="Sab" />
+          <label   htmlFor="">Sabiduria</label>
+          </div>
+
+          <div className='circularContainer'>
+          <input className='inputCirculo'  type="number" value={presenciaN} onChange={handleChangePresencia} placeholder="Pre" />
+          <label  htmlFor="">Presencia</label>
+          </div>
+         
+         <div className='circularContainer'>
+         <input className='inputCirculo'  type="number" value={principioN} onChange={handleChangePrincipio} placeholder="Pri" />
+         <label   htmlFor="">Principio</label>
+         </div>
+      
+         <div className='circularContainer'>      
+         <input className='inputCirculo'  type="number" value={sentidosN} onChange={handleChangeSentidos} placeholder="Sen" />
+         <label  htmlFor="">Sentidos</label>
+         </div>
+         
+          
+
+          <div className='circularContainer' style={{marginLeft:"5em"}}>          
+          <input className='inputCirculo' style={{borderRadius:"15px", height:"40px"}} type="number" value={iniciativaN} onChange={handleChangeIniciativa} placeholder="0" />
+          <label htmlFor="" >Iniciativa</label>
           </div>
           
 
-          
-      
         </div>
-        <div className='col1'>
-        <label htmlFor="">Academisismo</label>
-          <input type="number" value={academisismoN} onChange={handleChangeAcademisismo} placeholder="0" />
-          <label htmlFor="">Alerta</label>
-          <input type="number" value={alertaN} onChange={handleChangeAlerta} placeholder="0" />
-          <label htmlFor="">Atletismo</label>
-          <input type="number" value={atletismoN} onChange={handleChangeAtletismo} placeholder="0" />        
-          <label htmlFor="">Con. Bakemono</label>
-          <input type="number" value={conBakemonoN} onChange={handleChangeConBakemono} placeholder="0" />
-          <label htmlFor="">Mentir</label>
-          <input type="number" value={mentirN} onChange={handleChangeMentir} placeholder="0" />
-          <label htmlFor="">Pilotear</label>
-          <input type="number" value={pilotearN} onChange={handleChangePilotear} placeholder="0" />
-          <label htmlFor="">Artes marciales</label>
-          <input type="number" value={artesMarcialesN} onChange={handleChangeArtesMarciales} placeholder="0" />
-          <input style={{border:"3px solid black",width:"80%"}} type="text" value={apCombateN} onChange={handleChangeApCombate} placeholder="ingrese Arma:"/>
-          <input type="number" value={valCombateN} onChange={handleChangeValCombate} placeholder="0"/>
-          <input style={{border:"3px solid black",width:"80%"}} type="text" value={apCombate2N} onChange={handleChangeApCombate2} placeholder="ingrese Arma:"/>
-          <input type="number" value={valCombate2N} onChange={handleChangeValCombate2} placeholder="0"/>
 
-          <input style={{border:"3px solid black",width:"80%"}} type="text" value={add1N} onChange={handleChangeAdd1} placeholder="Ap. nueva:"/>
-            <input type="number" value={valAdd1N} onChange={handleChangeValAdd1} placeholder="0"/>
-            <input style={{border:"3px solid black", width:"80%"}} type="text" value={add2N} onChange={handleChangeAdd2} placeholder="Ap. nueva:"/>
-            <input type="number" value={valAdd2N} onChange={handleChangeValAdd2} placeholder="0"/>
+       <div className="caracSecu" style={{padding:"15px"}}>
         
+       
+        <div className='circularContainer'>
+        <label htmlFor="">Academisismo</label>
+        <input type="number" value={academisismoN} onChange={handleChangeAcademisismo} placeholder="0" />
         </div>
 
-        <div className='col1'>
-          <label htmlFor="">Medicina</label>
-          <input type="number" value={medicinaN} onChange={handleChangeMedicina} placeholder="0" />
-          <label htmlFor="">Con. Obj Magicos</label>
-          <input type="number" value={conObjMagicosN} onChange={handleChangeObjMagicos} placeholder="0" />
-          <label htmlFor="">Sigilo</label>
-          <input type="number" value={sigiloN} onChange={handleChangeSigilo} placeholder="0" />
-          <label htmlFor="">Con. de Esferas</label>
-          <input type="number" value={conEsferasN} onChange={handleChangeConEsferas} placeholder="0" />  
-          <label htmlFor="">Con. de Leyendas</label>
-          <input type="number" value={conLeyendasN} onChange={handleChangeConLeyendas} placeholder="0" />
-          <label htmlFor="">Forja</label>
-          <input type="number" value={forjaN} onChange={handleChangeForja} placeholder="0" />
-          <label htmlFor="">Con. Demonio</label>
-          <input type="number" value={conDemonioN} onChange={handleChangeConDemonio} placeholder="0" />
-          <label htmlFor="">Con. Espiritual</label>
-          <input type="number" value={conEspiritualN} onChange={handleChangeConEspiritual} placeholder="0" />
-          <label htmlFor="">Manejo de Blaster</label>
-          <input type="number" value={manejoBlasterN} onChange={handleChangeManejoBlaster} placeholder="0" />
-
-          
-          <input style={{border:"3px solid black", width:"80%"}} type="text" value={add3N} onChange={handleChangeAdd3} placeholder="Ap. nueva:"/>
-            <input type="number" value={valAdd3N} onChange={handleChangeValAdd3} placeholder="0"/>
-            <input style={{border:"3px solid black", width:"80%"}} type="text" value={add4N} onChange={handleChangeAdd4} placeholder="Ap. nueva:"/>
-            <input type="number" value={valAdd4N} onChange={handleChangeValAdd4} placeholder="0"/>
-
-
-
+        <div className='circularContainer'>
+        <label htmlFor="">Alerta</label>
+        <input type="number" value={alertaN} onChange={handleChangeAlerta} placeholder="0" />
         </div>
+       
+      <div className='circularContainer'>
+      <label htmlFor="">Artes marciales</label>
+      <input type="number" value={artesMarcialesN} onChange={handleChangeArtesMarciales} placeholder="0" />
+      </div>
+       
+      <div className='circularContainer'>
+     <input className="inputLabel"  style={{border:"none"}}  type="text" value={apCombate2N} onChange={handleChangeApCombate2} placeholder="ingrese Arma:"/>
+     <input type="number" value={valCombate2N} onChange={handleChangeValCombate2} placeholder="0"/>
+     </div>
+   
+     <div className='circularContainer'>
+     <input className="inputLabel" style={{border:"none"}} type="text" value={apCombateN} onChange={handleChangeApCombate} placeholder="ingrese Arma:"/>
+     <input type="number" value={valCombateN} onChange={handleChangeValCombate} placeholder="0"/>
+     </div>
 
-        <div className='col1'>
-          <label htmlFor="">Manejo de sombras</label>
-          <input type="number" value={manejoSombrasN} onChange={handleChangeManejoSombras} placeholder="0" />
-          <label htmlFor="">Trato Bakemono</label>
-          <input type="number" value={tratoBakemonoN} onChange={handleChangeTratoBakemono} placeholder="0" />
-          <label htmlFor="">Con. de hechiceria</label>
-          <input type="number" value={conHechiceriaN} onChange={handleChangeConHechiceria} placeholder="0" />
-          <label htmlFor="">Meditacion vital</label>
-          <input type="number" value={medVitalN} onChange={handleChangeMedVital} placeholder="0" />
-          <label htmlFor="">Meditacion Espiritual</label>
-          <input type="number" value={medEspiritualN} onChange={handleChangeMedEspiritual} placeholder="0" />
-          <label htmlFor="">Res. Esp. Rayo</label>
-          <input type="number" value={rayoN} onChange={handleChangeRayo} placeholder="0" />
-          <label htmlFor="">Res. Esp. Veneno</label>
-          <input type="number" value={venenoN} onChange={handleChangeVeneno} placeholder="0" />
-          <label htmlFor="">Res. Esp. Fuego</label>
-          <input type="number" value={fuegoN} onChange={handleChangeFuego} placeholder="0" />
-          <label htmlFor="">Res Esp. Frio</label>
-          <input type="number" value={frioN} onChange={handleChangeFrio} placeholder="0" />
-          <label htmlFor="">Res. Esp. Corte</label>
-          <input type="number" value={corteN} onChange={handleChangeCorte} placeholder="0" />
-          <label htmlFor="">Res. Esp. Energia</label>
-          <input type="number" value={energiaN} onChange={handleChangeEnergia} placeholder="0" />
+       <div className='circularContainer'>
+     <label htmlFor="">Con. de Esferas</label>
+     <input type="number" value={conEsferasN} onChange={handleChangeConEsferas} placeholder="0" />  
+     </div>
 
-        </div>  
+       <div className='circularContainer'>
+       <label htmlFor="">Atletismo</label>
+       <input type="number" value={atletismoN} onChange={handleChangeAtletismo} placeholder="0" />  
+       </div>
+  
+       <div className='circularContainer'>
+     <input className="inputLabel"  style={{border:"none"}} type="text" value={add2N} onChange={handleChangeAdd2} placeholder="Ap. nueva:"/>
+     <input type="number" value={valAdd2N} onChange={handleChangeValAdd2} placeholder="0"/>
+     </div>
+   
 
-        </div>
+     <div className='circularContainer'>
+     <input className="inputLabel"  style={{border:"none"}} type="text" value={add1N} onChange={handleChangeAdd1} placeholder="Ap. nueva:"/>
+     <input type="number" value={valAdd1N} onChange={handleChangeValAdd1} placeholder="0"/>
+     </div>
+      
+  
+     <div className='circularContainer'>
+     <input  className="inputLabel" style={{border:"none"}} type="text"  value={add3N} onChange={handleChangeAdd3} placeholder="Ap. nueva:"/>
+     <input type="number" value={valAdd3N} onChange={handleChangeValAdd3} placeholder="0"/>
+     </div>
+
+
+
+
+     <div className='circularContainer'>
+       <label htmlFor="">Mentir</label>
+       <input type="number" value={mentirN} onChange={handleChangeMentir} placeholder="0" />
+       </div>
+
+     
+       
+   
+     <div className='circularContainer'>
+     <label htmlFor="">Medicina</label>
+     <input type="number" value={medicinaN} onChange={handleChangeMedicina} placeholder="0" />
+     </div>
+
+     
+     <div className='circularContainer'>
+     <label htmlFor="">Con. Obj Magicos</label>
+     <input type="number" value={conObjMagicosN} onChange={handleChangeObjMagicos} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Sigilo</label>
+     <input type="number" value={sigiloN} onChange={handleChangeSigilo} placeholder="0" />
+     </div>
+     
+     <div className='circularContainer'>
+     <input  className="inputLabel" style={{border:"none"}} type="text" value={add4N} onChange={handleChangeAdd4} placeholder="Ap. nueva:"/>
+     <input type="number" value={valAdd4N} onChange={handleChangeValAdd4} placeholder="0"/>
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Con. de Leyendas</label>
+     <input type="number" value={conLeyendasN} onChange={handleChangeConLeyendas} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Forja</label>
+     <input type="number" value={forjaN} onChange={handleChangeForja} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Con. Demonio</label>
+     <input type="number" value={conDemonioN} onChange={handleChangeConDemonio} placeholder="0" />
+     </div>  
+
+     <div className='circularContainer'>
+     <label htmlFor="">Con. Espiritual</label>
+     <input type="number" value={conEspiritualN} onChange={handleChangeConEspiritual} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Manejo de Blaster</label>
+     <input type="number" value={manejoBlasterN} onChange={handleChangeManejoBlaster} placeholder="0" />
+     </div>
+
+
+     <div className='circularContainer'>
+       <label htmlFor="">Con. Bakemono</label>
+       <input type="number" value={conBakemonoN} onChange={handleChangeConBakemono} placeholder="0" />
+       </div>
+     
+
+
+       <div className='circularContainer'>
+       <label htmlFor="">Pilotear</label>
+       <input type="number" value={pilotearN} onChange={handleChangePilotear} placeholder="0" />
+       </div>
+
+   
+      
+     <div className='circularContainer'>
+     <label htmlFor="">Manejo de sombras</label>
+     <input type="number" value={manejoSombrasN} onChange={handleChangeManejoSombras} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Trato Bakemono</label>
+     <input type="number" value={tratoBakemonoN} onChange={handleChangeTratoBakemono} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Con. de hechiceria</label>
+     <input type="number" value={conHechiceriaN} onChange={handleChangeConHechiceria} placeholder="0" />
+     </div>
+     
+     <div className='circularContainer'>
+     <label htmlFor="">Meditacion vital</label>
+     <input type="number" value={medVitalN} onChange={handleChangeMedVital} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Meditacion Espiritual</label>
+     <input type="number" value={medEspiritualN} onChange={handleChangeMedEspiritual} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Res. Esp. Rayo</label>
+     <input type="number" value={rayoN} onChange={handleChangeRayo} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Res. Esp. Veneno</label>
+     <input type="number" value={venenoN} onChange={handleChangeVeneno} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Res. Esp. Fuego</label>
+     <input type="number" value={fuegoN} onChange={handleChangeFuego} placeholder="0" />
+     </div>  
+
+     <div className='circularContainer'>
+     <label htmlFor="">Res Esp. Frio</label>
+     <input type="number" value={frioN} onChange={handleChangeFrio} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Res. Esp. Corte</label>
+     <input type="number" value={corteN} onChange={handleChangeCorte} placeholder="0" />
+     </div>
+
+     <div className='circularContainer'>
+     <label htmlFor="">Res. Esp. Energia</label>
+     <input type="number" value={energiaN} onChange={handleChangeEnergia} placeholder="0" />
+     </div>
+
+     </div>
+
+       </div>
+    
           
         </Accordion.Body>
       </Accordion.Item>
+      
       <Accordion.Item eventKey="1">
         <Accordion.Header>Ventajas y desventajas</Accordion.Header>
         <Accordion.Body  style={{backgroundColor:"black"}}>
@@ -1143,8 +1271,6 @@ const renderTooltipCombinados = () => (
         </div>
         </Accordion.Body>
       </Accordion.Item>
-
-      
 
 
     </Accordion>   

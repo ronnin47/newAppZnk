@@ -942,11 +942,6 @@ app.delete('/deleteSaber/:id', async (req, res) => {
   }
 });
 
-
-
-
-
-
 // SAGAS
 app.post('/insertSaga', async (req, res) => {
   const { titulo, presentacion, imagen } = req.body; 
@@ -1118,9 +1113,7 @@ app.post('/insertPjSaga', async (req, res) => {
   }
 });
 
-
 //NOTAS
-
 app.put('/update-notas/:idpersonaje', async (req, res) => {
   const { idpersonaje } = req.params;
   const { nota, idsaga } = req.body;
