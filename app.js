@@ -41,7 +41,6 @@ const pool = new Pool({
 
 
 //**************BASE DICIEMBRE******************
-
 const pool = new Pool({
   user: 'gorda',          
   host: 'dpg-ct685652ng1s738t6fo0-a',
@@ -255,7 +254,7 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
 
 app.post('/insert-personaje', async (req, res) => {
 
-  console.log("*******NOta saga: ",req.body)
+  //console.log("*******NOta saga: ",req.body)
   const { 
     nombre,
       dominio,
@@ -330,7 +329,8 @@ app.post('/insert-personaje', async (req, res) => {
       tecEspecial,   
       conviccion,
       cicatriz, 
-      notaSaga,    
+      notaSaga,  
+      resistencia,  
    } = req.body;
    
   try {
@@ -409,9 +409,10 @@ app.post('/insert-personaje', async (req, res) => {
       conviccion,
       cicatriz,
       notasaga,
+      resistencia,
       "usuarioId"
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75)
       RETURNING idpersonaje
     `;
 
@@ -489,6 +490,7 @@ app.post('/insert-personaje', async (req, res) => {
       conviccion,
       cicatriz,
       notaSaga,
+      resistencia,
       usuarioId,   
       ];
     const result = await pool.query(query, values);
@@ -579,7 +581,7 @@ app.delete('/delete-grupo/:idgrupo', async (req, res) => {
 
 app.put('/update-personaje/:id', async (req, res) => {
 
-//  console.log("esto es lo que trae el req",req)
+console.log("esto es lo que trae el req",req)
   const idpersonaje = req.params.id;
   const { 
       nombre,
@@ -655,6 +657,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       tecEspecial,
       conviccion,
       cicatriz,
+      resistencia,
       
    } = req.body;
  
@@ -734,8 +737,9 @@ app.put('/update-personaje/:id', async (req, res) => {
       "usuarioId" = $70,
       "tecEspecial" = $71,
       conviccion= $72,
-      cicatriz= $73
-    WHERE idpersonaje = $74
+      cicatriz= $73,
+      resistencia= $74
+    WHERE idpersonaje = $75
   `;
     const values = [
       nombre,
@@ -813,6 +817,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       tecEspecial,    
       conviccion,
       cicatriz,
+      resistencia,
       idpersonaje
       ];
     const result = await pool.query(query, values);

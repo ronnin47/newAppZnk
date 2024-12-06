@@ -404,6 +404,7 @@ export const CargarPersonaje = ({
       conviccion: conviccion || "",
       cicatriz: cicatriz || 0,
       notaSaga:[],
+      resistencia:(parseInt(fortaleza)+parseInt(fuerza)) || 0,
       usuarioId: usuarioId, 
     
     };

@@ -151,6 +151,7 @@ export const Tiradas = ({
   setPjsCombinados,
   pjSeleccionado,
   setPjSeleccionado,
+  resistencia,
 
 }) => {
 
@@ -1107,9 +1108,11 @@ useEffect(() => {
   <div className='bordeRev' style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
     <p>Consumo ki: {consumision}</p>
     <p>Iniciativa: {iniciativa}</p>
+    <p>Resistencia: {resistencia}</p>
     <p>Fases +: {positiva}</p>
     <p>Fases -: {negativa}</p>
     <p>Cicatrices: {cicatriz}</p>
+
   </div>
 
   <div className='bordeRev' style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: "0.5em", fontSize:"1em",  alignItems: "center", justifyItems: "center" }}>

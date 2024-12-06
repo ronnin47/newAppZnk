@@ -1129,6 +1129,7 @@ switch (dificultad) {
             historia:"",
             conviccion: conviccion || "",
             cicatriz: cicatriz || 0,
+            resistencia:(parseInt(fuerzaFinal)+parseInt(fortalezaFinal)) || 0,
             usuarioId: usuarioId, 
         };
 

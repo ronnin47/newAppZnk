@@ -893,21 +893,6 @@ return (
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <Tab eventKey="ficha" title="Ficha" className="fondoBody">
             {pjSeleccionado ? (
                 <FichaPersonaje
@@ -999,6 +984,7 @@ return (
                 pjsCombinados={pjsCombinados}
                 setPjsCombinados={setPjsCombinados}
                 
+                resistencia={pj.resistencia || (parseInt(pj.fuerza)+parseInt(pj.fortaleza))}
                 
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}
@@ -1117,6 +1103,8 @@ return (
 
                   pjSeleccionado={pjSeleccionado}
                   setPjSeleccionado={setPjSeleccionado}
+
+                  resistencia={pj.resistencia || (parseInt(pj.fuerza)+parseInt(pj.fortaleza))}
 
 
                 />

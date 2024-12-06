@@ -105,6 +105,9 @@ export const FichaPersonaje = ({
 
   pjsCombinados,
   setPjsCombinados,
+
+  resistencia,
+ 
 }) => {
   
   const inputFileRef = useRef(null);
@@ -198,6 +201,7 @@ export const FichaPersonaje = ({
   const [tecEspecialN,setTecEspecialN]=useState(tecEspecial);
   const [conviccionN,setConviccionN]=useState(conviccion);
   const [cicatrizN,setCicatrizN]=useState(cicatriz);
+  const [resistenciaN,setResistenciaN]=useState(resistencia);
 
  
  useEffect(()=>{
@@ -214,6 +218,18 @@ export const FichaPersonaje = ({
     }
   }, [damageActualN,kiN,fortalezaN,positivaN,negativaN]);
 
+
+  /*
+  useEffect(()=>{
+    const nuevoValorIniciativa=parseInt(agilidadN)+parseInt(sentidosN);
+    setIniciativaN(nuevoValorIniciativa);
+  },[agilidadN, sentidosN])
+
+  useEffect(()=>{
+    const nuevoValorResistencia=parseInt(fuerzaN)+parseInt(fortalezaN);
+    setResistenciaN(nuevoValorResistencia);
+  },[fuerzaN, fortalezaN])
+*/
 
   const handleChangeNombre = (event) => {
     setNombreN(event.target.value)    
@@ -380,15 +396,33 @@ export const FichaPersonaje = ({
    const handleChangeValAdd4=(event)=>{
     setValAdd4N(event.target.value)
    }
+
+
+
   const handleChangeIniciativa = (event) => {
     setIniciativaN(event.target.value)
   }
+
+ //nueva caracteristica resistencia
+ const handleChangeResistencia= (event)=>{
+  setResistenciaN(event.target.value)
+}
+
+
+
   const handleChangeNaturaleza= (event)=>{
     setNaturalezaN(event.target.value)
   }
   const handleChangeConviccion= (event)=>{
     setConviccionN(event.target.value)
   }
+
+
+
+
+
+
+
 
 
 
@@ -479,6 +513,7 @@ const btnGuardarCambios = () => {
     tecEspecial:tecEspecialN,
     conviccion: conviccionN,
     cicatriz: cicatriz,  
+    resistencia:resistenciaN,
   };
 
 
@@ -573,6 +608,7 @@ const guardarCambiosBBDD = async () => {
       conviccion: conviccionN || "",
 
       cicatriz: cicatriz || 0,
+      resistencia: resistenciaN || 0,
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
@@ -673,6 +709,7 @@ useEffect(() => {
   tecEspecialN,
   conviccionN,
   cicatrizN,
+  resistenciaN,
 ]);
 
  
@@ -833,6 +870,7 @@ useEffect(() => {
       historia:"",
       conviccion: conviccion || "",
       cicatriz: cicatriz || 0,
+      resistencia:(parseInt(fortaleza)+parseInt(fuerza)) || 0,
       usuarioId: usuarioId, 
     };
 
@@ -1021,6 +1059,11 @@ const renderTooltipCombinados = () => (
           <div className='circularContainer' style={{marginLeft:"5em"}}>          
           <input className='inputCirculo' style={{borderRadius:"15px", height:"40px"}} type="number" value={iniciativaN} onChange={handleChangeIniciativa} placeholder="0" />
           <label htmlFor="" >Iniciativa</label>
+          </div>
+
+          <div className='circularContainer' style={{marginLeft:"1em"}}>          
+          <input className='inputCirculo' style={{borderRadius:"15px", height:"40px"}} type="number" value={resistenciaN} onChange={handleChangeResistencia} placeholder="0" />
+          <label htmlFor="" >Resistencia</label>
           </div>
           
 
