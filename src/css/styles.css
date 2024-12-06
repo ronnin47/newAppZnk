@@ -1238,12 +1238,7 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   padding: 0.5em;
 }
 
-.caracTronco{
-  display: flex;;
-  flex-direction: row;
-  gap: 2em;
-  justify-content: center;
-}
+
 .inputCirculo {
   width: 60px;         /* Establecer el ancho */
   height: 60px;        /* Establecer la altura igual al ancho */
@@ -1277,6 +1272,13 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
 
 .circularContainer:hover>label{
   color: yellow;
+}
+
+.caracTronco{
+  display: flex;;
+  flex-direction: row;
+  gap: 2em;
+  justify-content: center;
 }
 .caracSecu {
   display: grid;

@@ -1069,7 +1069,7 @@ const renderTooltipCombinados = () => (
 
         </div>
 
-       <div className="caracSecu" style={{padding:"15px"}}>
+       <div className="container caracSecu" style={{padding:"15px"}}>
         
        
         <div className='circularContainer'>
@@ -1251,7 +1251,7 @@ const renderTooltipCombinados = () => (
      <input type="number" value={energiaN} onChange={handleChangeEnergia} placeholder="0" />
      </div>
 
-     </div>
+       </div>
 
        </div>
     
