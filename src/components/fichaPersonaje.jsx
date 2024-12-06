@@ -1069,7 +1069,7 @@ const renderTooltipCombinados = () => (
 
         </div>
 
-       <div className="container caracSecu" style={{padding:"15px"}}>
+       <div className="caracSecu" style={{padding:"15px"}}>
         
        
         <div className='circularContainer'>

@@ -1280,6 +1280,7 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   gap: 2em;
   justify-content: center;
 }
+
 .caracSecu {
   display: grid;
   grid-template-columns: repeat(5, 1fr); 
@@ -1288,11 +1289,17 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
 }
 
 .caracSecu div {
+  min-width: 0; /* Permite que los elementos se reduzcan si es necesario */
+  max-width: 100%; /* Evita que se desborden */
+  text-align: center; /* Centra el texto dentro de cada elemento */
+}
+/*
+.caracSecu div {
   min-width: 200px;                      
   max-width: 300px;                     
   text-align: center;                    
 }
-
+*/
 .caracSecu>div>input{
   width: 50%;
   border: 2px solid green;
