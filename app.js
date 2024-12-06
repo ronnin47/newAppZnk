@@ -581,7 +581,7 @@ app.delete('/delete-grupo/:idgrupo', async (req, res) => {
 
 app.put('/update-personaje/:id', async (req, res) => {
 
-console.log("esto es lo que trae el req",req)
+//console.log("esto es lo que trae el req",req)
   const idpersonaje = req.params.id;
   const { 
       nombre,
@@ -886,7 +886,7 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 
 app.post('/insertSaber', async (req, res) => {
   const { titulo, frase, imagen } = req.body; 
-  console.log(" Lo que viene del req: ",req.body)
+  //console.log(" Lo que viene del req: ",req.body)
 
   if (!imagen) {
     return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
@@ -1036,7 +1036,7 @@ app.get('/consumirSecciones', async (req, res) => {
 app.post('/insertSeccion', async (req, res) => {
   // Extraer las propiedades del body de la solicitud
   const { titulo, presentacion, imagen, idsaga } = req.body;
-  console.log("Lo que viene del req: ", req.body);
+  //console.log("Lo que viene del req: ", req.body);
 
   // Validar si la imagen está presente
   if (!imagen) {
@@ -1246,7 +1246,7 @@ app.get('/recuperarPass', async (req, res) => {
 
     if (result.rows.length > 0) {
       const contrasenia = result.rows[0].contrasenia;
-      console.log('Contraseña recuperada:', contrasenia);
+      //console.log('Contraseña recuperada:', contrasenia);
 
       try {
         // Aquí debería obtenerse el nombre del usuario, puedes ajustarlo según tu base de datos.
