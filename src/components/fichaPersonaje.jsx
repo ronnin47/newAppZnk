@@ -997,7 +997,7 @@ const renderTooltipCombinados = () => (
               <input type="number" value={pDestinoN} onChange={handleChangePdestino} placeholder="0" />
               </div>
             </div>
-            ´{/*<Button onClick={()=>combinarPjs(idpersonaje,nombreN,imagenN)} variant='outline-warning'>combinar pj</Button>*/}
+           
          
            
            
@@ -1012,7 +1012,7 @@ const renderTooltipCombinados = () => (
         <Accordion.Body style={{backgroundColor:"black", padding:"0px"}}>
        
 
-       <div className='gradComp '>
+       <div className='gradComp'>
        <div className="caracTronco" style={{marginTop:"2em"}} >
           <div className='circularContainer'>
           <input className='inputCirculo' type="number" value={fuerzaN} onChange={handleChangeFuerza} placeholder="Fza" />
@@ -1071,7 +1071,6 @@ const renderTooltipCombinados = () => (
 
        <div className="caracSecu" style={{padding:"15px"}}>
         
-       
         <div className='circularContainer'>
         <label htmlFor="">Academisismo</label>
         <input type="number" value={academisismoN} onChange={handleChangeAcademisismo} placeholder="0" />
