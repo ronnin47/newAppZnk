@@ -457,6 +457,7 @@ const handleSaveChanges = async (idpersonaje) => {
             color: "aliceblue",
             padding: "20px",
             position: "relative",
+            whiteSpace: "pre-line", // Asegura que se respeten los saltos de línea
           }}
         >
           {/* Imagen a la izquierda */}
