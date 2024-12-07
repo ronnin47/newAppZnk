@@ -225,7 +225,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
             </Modal.Title>
         </Modal.Header>
 
-        <Modal.Body style={{ backgroundColor: 'black', color: 'white' }}>
+        <Modal.Body style={{ backgroundColor: 'black', color: 'white', whiteSpace: "pre-line"}}>
           <div
             style={{
               display: 'flex',
@@ -233,6 +233,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
               backgroundColor: 'black',
               padding: '20px',
               borderRadius: '10px',
+              
             }}
           >
             <img
