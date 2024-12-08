@@ -350,10 +350,18 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
           confirmButtonText: 'Aceptar',
         });
   
+
+        //VAMOS A PROBAR ACA
+
+       consumirSeccionesZnk();
+         
+       /*
         // Actualizar el estado local si es necesario
         const nuevasSecciones = [...secciones];
         nuevasSecciones[index] = seccion;
         setColeccionSecciones(nuevasSecciones);
+       */
+
       } else {
         throw new Error('Error al actualizar la sección');
       }
@@ -391,11 +399,18 @@ const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecc
         if (response.status === 200) {
           Swal.fire('Eliminado', 'La sección ha sido eliminada correctamente.', 'success');
   
-          // Actualizar el estado local para eliminar la sección
+
+
+            //VAMOS A PROBAR ACA
+
+            consumirSeccionesZnk();
+          /*
+            // Actualizar el estado local para eliminar la sección
           const nuevasSecciones = [...secciones];
           nuevasSecciones.splice(index, 1);
           setColeccionSecciones(nuevasSecciones);
-        } else {
+        */
+          } else {
           throw new Error('Error al eliminar la sección');
         }
       } catch (error) {
