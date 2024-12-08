@@ -255,7 +255,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
 
           {/* Renderizar secciones */}
           {secciones.map((seccion, index) => (
-            <div key={index} style={{ marginTop: '20px' }}>
+            <div key={index} style={{ marginTop: '4em' }}>
               <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '1em', marginBottom: '20px' }}>
                 <img
                   className='bordeSeccion'
@@ -265,8 +265,8 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
                   onClick={() => handleImagenClickN(seccion.imagen)}
                 />
                 <div style={{ flexGrow: 1 }}>
-                  <p style={{ color: 'red' }}>{seccion.titulo}</p>
-                  <p style={{ color: 'white' }}>{seccion.presentacion}</p>
+                  <p style={{ color: 'orange', margin:"0px",fontFamily:"fantasy",fontSize:"1.2em"}}>{seccion.titulo}</p>
+                  <p style={{ color: 'white',margin:"3px" }}>{seccion.presentacion}</p>
                 </div>
               </div>
             </div>
