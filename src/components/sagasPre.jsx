@@ -162,7 +162,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
             }}
           />
           {/* Título justo debajo de la imagen */}
-          <p style={{ color: 'yellowgreen', marginTop: '10px', fontFamily:"cursive",fontSize:"1.5em" }}>{titulo}</p>
+          <p style={{ color: 'orange', marginTop: '10px', fontSize:"1.5em", fontFamily:"fantasy" }}>{titulo}</p>
         </div>
       </div>
 
@@ -181,8 +181,8 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
                 marginTop: '20px',
                 alignItems:"center",
                 justifyContent: 'center',
-                color:"yellowgreen",
-                fontFamily:"cursive",
+                color:"orange",
+                fontFamily:"fantasy",
                 fontSize:"1.5em",
               }}>
             {titulo}
