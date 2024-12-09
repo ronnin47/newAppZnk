@@ -29,6 +29,16 @@ import { Enemigos } from "./enemigos.jsx";
 
 import { GeneradorBake } from "./generadorBake.jsx";
 import { SagasPre } from "./sagasPre.jsx";
+//import { Casino } from "./casino.jsx";
+
+
+
+
+
+
+
+
+
 
 
 const apiUrl =import.meta.env.VITE_API_URL;
@@ -598,6 +608,13 @@ return (
 
      {isVisible && <Flotante saberes={saberes} />} {/* Renderiza el componente solo si es visible */}
      </div>
+
+
+    {/*  <div>
+      <Casino coleccionPersonajes={coleccionPersonajes}></Casino>
+    </div> */}
+   
+
 
      <div>
      {sesion ? (
