@@ -73,7 +73,10 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
               </Card>
           </div>
       </div>
-     <Button variant="outline-warning" onClick={seleccionar} style={{transform:"scale(0.7)" , marginTop:"0px"}} onMouseEnter={(e) => { e.target.style.boxShadow= "0 0 20px 5px rgba(0, 255, 0, 0.8)"  }}
+     <Button variant="outline-warning" onClick={seleccionar} style={{transform:"scale(0.7)" , marginTop:"0px",  height: "40px",
+   display: "flex",
+   alignItems: "center",
+   justifyContent: "center", }} onMouseEnter={(e) => { e.target.style.boxShadow= "0 0 20px 5px rgba(0, 255, 0, 0.8)"  }}
       onMouseLeave={(e) => { e.target.style.boxShadow = "none" }}>Seleccionar Pj</Button>
      
     </div>
