@@ -299,7 +299,7 @@ useEffect(() => {
         const { coleccionPersonajes } = response.data;
 
         if (!Array.isArray(coleccionPersonajes)) {
-          console.error('El formato de datos no es un array.');
+          console.error('El formato de datos no es un array/ aca esta el error.');
           return;
         }
 
