@@ -1334,3 +1334,86 @@ input:-ms-input-placeholder { /* IE 10+ */
   
   
 }
+
+
+/*************************************************************/
+/* Gallery.css */
+.gallery-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  perspective: 1000px; /* Añadir perspectiva para la rotación 3D */
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+}
+
+.gallery-item {
+  position: absolute;
+  width: 100px; /* Tamaño base de las imágenes */
+  height: 100px;
+  transition: transform 1s ease, z-index 0.3s ease;
+  transform-origin: center center;
+}
+
+.gallery-item.selected {
+  width: 160px; /* Tamaño base de las imágenes */
+  height: 160px;
+  border:3px solid aliceblue;
+  border-radius: 10px;
+  box-shadow: 
+    0 0 15px rgba(255, 69, 58, 0.9),   /* Rojo intenso */
+    0 0 30px rgba(255, 87, 34, 0.8),   /* Naranja brillante */
+    0 0 45px rgba(255, 99, 71, 0.7),   /* Rojo tomate */
+    0 0 60px rgba(255, 140, 0, 0.6),   /* Naranja oscuro */
+    0 0 90px rgba(255, 69, 58, 0.5);   /* Rojo intenso más suave */
+}
+
+/*
+.selected{
+opacity: 0.5;
+}
+*/
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+
+.gallery-item:hover .gallery-image {
+  transform: scale(1.1); /* Efecto hover en las imágenes */
+}
+
+.gallery-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+

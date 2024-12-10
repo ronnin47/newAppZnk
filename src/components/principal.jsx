@@ -30,8 +30,7 @@ import { Enemigos } from "./enemigos.jsx";
 import { GeneradorBake } from "./generadorBake.jsx";
 import { SagasPre } from "./sagasPre.jsx";
 //import { Casino } from "./casino.jsx";
-
-
+//import { Gallery } from "./galeria.jsx";
 
 
 
@@ -610,10 +609,13 @@ return (
      </div>
 
 
-    {/*  <div>
+{/*  <div>
       <Casino coleccionPersonajes={coleccionPersonajes}></Casino>
-    </div> */}
-   
+    </div>*/}
+
+
+  
+    
 
 
      <div>
@@ -867,6 +869,16 @@ return (
 
             
             <Tab eventKey="personajes" title="Mis Personajes" className="container-fluid fondoBody">
+     
+            {/*<Gallery  
+            personajes={personajes}
+            setPersonajes={setPersonajes}
+            pjSeleccionado={pjSeleccionado}
+            setPjSeleccionado={setPjSeleccionado}
+            setActiveKey={setActiveKey}
+
+            coleccionPersonajes={coleccionPersonajes}></Gallery>
+            */}
       {loading ? (
         <div className="spinner-container">
           <DNA
