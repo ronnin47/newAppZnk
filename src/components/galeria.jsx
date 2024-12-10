@@ -1,25 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 
-/*
-vivoMuerto={vivoMuerto}
-                    setVivoMuerto={setVivoMuerto}
-                    setActiveKey={setActiveKey}
-                    personajes={personajes}
-                    setPersonajes={setPersonajes}
-                    key={pj.idpersonaje}
-                    id={pj.idpersonaje}
-                    nombre={pj.nombre}
-                    dominio={pj.dominio}
-                    imagen={pj.imagen}
-                    setPjSeleccionado={setPjSeleccionado}
-                    pjSeleccionado={pjSeleccionado}
-*/
-
-
 export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccionado,setActiveKey, coleccionPersonajes }) => {
 
-console.log("****PERSONAJES: ",personajes)
+//console.log("****PERSONAJES: ",personajes)
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -32,12 +16,12 @@ console.log("****PERSONAJES: ",personajes)
   const handlePrev = () => {
     setSelectedIndex((prevIndex) => (prevIndex - 1 + personajes.length) % personajes.length);
   };
-
+/*
   useEffect(()=>{
     console.log("este es el personaje selecionado: ",selectedIndex)
 
   },[selectedIndex])
-
+*/
 
 
 
@@ -53,7 +37,7 @@ console.log("****PERSONAJES: ",personajes)
 
 
   return (
-    <div className="gallery-container">
+    <div className="container gallery-container" style={{marginTop:"0px"}}>
       <button onClick={handlePrev} className="gallery-btn prev">Prev</button>
 
       <div className="gallery">
@@ -66,9 +50,17 @@ console.log("****PERSONAJES: ",personajes)
               zIndex: index === selectedIndex ? 1 : 0,
             }}
             /*onClick={() => setSelectedIndex(index)}*/
-            onClick={()=>seleccionado(pj.idpersonaje)}
+    
           >
-            <img src={pj.imagen} alt={`Image ${index}`} className="gallery-image"/>
+            <img  onClick={()=>seleccionado(pj.idpersonaje)} 
+            
+            style={{
+              cursor: "pointer",
+              boxShadow: pj.idpersonaje === pjSeleccionado ? "0px 0px 15px 5px #FFFF00" : "none", // Box-shadow blanco para el seleccionado
+              transition: "box-shadow 0.3s ease", // Animación suave para el cambio de box-shadow
+            }}
+
+            src={pj.imagen} alt={`Image ${index}`} className="gallery-image"/>
             <p style={{color:"greenyellow", fontFamily:"cursive",textAlign:"center",marginTop:"10px"}}>{pj.nombre}</p>
            
           </div>

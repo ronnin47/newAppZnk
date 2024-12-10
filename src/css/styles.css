@@ -1342,7 +1342,7 @@ input:-ms-input-placeholder { /* IE 10+ */
   position: relative;
   width: 400px;
   height: 400px;
-  margin: 0 auto;
+  margin: 0px auto;
   perspective: 1000px; /* Añadir perspectiva para la rotación 3D */
 }
 
@@ -1359,15 +1359,16 @@ input:-ms-input-placeholder { /* IE 10+ */
 
 .gallery-item {
   position: absolute;
-  width: 100px; /* Tamaño base de las imágenes */
-  height: 100px;
+  width: 90px; /* Tamaño base de las imágenes */
+  height: 90px;
   transition: transform 1s ease, z-index 0.3s ease;
   transform-origin: center center;
+  margin-top: 0;
 }
 
 .gallery-item.selected {
-  width: 160px; /* Tamaño base de las imágenes */
-  height: 160px;
+  width: 140px; /* Tamaño base de las imágenes */
+  height: 140px;
   border:3px solid aliceblue;
   border-radius: 10px;
   box-shadow: 
@@ -1417,3 +1418,8 @@ opacity: 0.5;
   right: 10px;
 }
 
+/*
+.marcado{
+opacity: 0.5;
+}
+*/
