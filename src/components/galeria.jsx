@@ -61,7 +61,7 @@ export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccion
             }}
 
             src={pj.imagen} alt={`Image ${index}`} className="gallery-image"/>
-            <p style={{color:"greenyellow", fontFamily:"cursive",textAlign:"center",marginTop:"10px"}}>{pj.nombre}</p>
+            {index === selectedIndex ? (<p style={{color:"yellow", fontFamily:"cursive",textAlign:"center",marginTop:"10px"}}>{pj.nombre}</p>):(<></>)}
            
           </div>
         ))}
