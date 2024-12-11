@@ -494,7 +494,7 @@ const handleSaveChanges = async (idpersonaje) => {
                <Estrellitas ken={ken}></Estrellitas>
                </div>
 
-           <div style={{display:"flex", flexDirection:"column"}}> 
+           <div style={{display:"flex", flexDirection:"column",flexWrap: "wrap"}}> 
              
             
               {/*<p>
