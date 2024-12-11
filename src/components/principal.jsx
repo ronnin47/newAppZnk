@@ -585,7 +585,15 @@ useEffect(() => {
       localStorage.setItem(`pjsCombinados_${usuarioId}`, JSON.stringify(pjsCombinados));
     }
   }, [pjsCombinados, usuarioId, sesion]);  
-
+/*
+  useEffect(() => {
+    // Si no hay sesión activa, eliminar los datos de pjsCombinados del localStorage
+    if (!sesion && usuarioId) {
+      localStorage.removeItem(`pjsCombinados_${usuarioId}`);
+      setPjsCombinados([]); // Limpiar también el estado local
+    }
+  }, [sesion, usuarioId]);
+*/
 
   const [checkedVisual, setCheckedVisual] = useState(() => {
     const storedValue = localStorage.getItem("checkedVisual");
@@ -894,86 +902,83 @@ return (
 
 
 
-            <Tab eventKey="personajes" title="Mis Personajes" className="container-fluid fondoBody">
-    <div style={{display:"flex", flexDirection:"row",justifyContent: "flex-end"}}>
-      <OverlayTrigger
-              placement="top" // Puedes elegir entre "top", "bottom", "left", "right"
-              overlay={renderTooltipVisual()}  >
-                <input 
-                  type="checkbox" 
-              
+          <Tab eventKey="personajes" title="Mis Personajes" className="container-fluid fondoBody">
+              {sesion?(
+                <div style={{display:"flex", flexDirection:"row",justifyContent: "flex-end"}}>
+                  <OverlayTrigger
+                          placement="top" // Puedes elegir entre "top", "bottom", "left", "right"
+                          overlay={renderTooltipVisual()}  >
+                            <input 
+                              type="checkbox" 
+                          
 
-                  checked={checkedVisual} // Maneja el estado
-                  onChange={handleCheckboxVisual} // Cambia el estado y llama a la función
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    cursor: "pointer"
-                  }}
-                />
-        </OverlayTrigger>
-    </div>
-     {checkedVisual? (loading ? (
-      <div className="spinner-container">
-      </div>     
-     ): (  personajes.length>0?( <Gallery  
-      personajes={personajes}
-      setPersonajes={setPersonajes}
-      pjSeleccionado={pjSeleccionado}
-      setPjSeleccionado={setPjSeleccionado}
-      setActiveKey={setActiveKey}
-      coleccionPersonajes={coleccionPersonajes}></Gallery>):(<p style={{color:"aliceblue"}}>No existen personajes cargados</p>))
-           ):(loading ? (
-            <div className="spinner-container">
-              <DNA
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="dna-loading"
-                wrapperStyle={{}}
-                wrapperClass="dna-wrapper"
-              />
-            </div>
-          ) : (
-            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-              <SortableContext items={personajes} strategy={horizontalListSortingStrategy}>
-                <div className="miniCartas">
-                  {personajes.length > 0 ? (
-                    personajes.map(pj => (
-                      <MiniCard
-                        vivoMuerto={vivoMuerto}
-                        setVivoMuerto={setVivoMuerto}
-                        setActiveKey={setActiveKey}
-                        personajes={personajes}
-                        setPersonajes={setPersonajes}
-                        key={pj.idpersonaje}
-                        id={pj.idpersonaje}
-                        nombre={pj.nombre}
-                        dominio={pj.dominio}
-                        imagen={pj.imagen}
-                        setPjSeleccionado={setPjSeleccionado}
-                        pjSeleccionado={pjSeleccionado}
-                      />
+                              checked={checkedVisual} // Maneja el estado
+                              onChange={handleCheckboxVisual} // Cambia el estado y llama a la función
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                                cursor: "pointer"
+                              }}
+                            />
+                    </OverlayTrigger>
+                </div> ):(<></>)}  
+                
+                {sesion?(
+
+
+              checkedVisual? (loading ? (
+                <div className="spinner-container">
+                </div>     
+              ): (personajes.length>0?( <Gallery  
+                personajes={personajes}
+                setPersonajes={setPersonajes}
+                pjSeleccionado={pjSeleccionado}
+                setPjSeleccionado={setPjSeleccionado}
+                setActiveKey={setActiveKey}
+                coleccionPersonajes={coleccionPersonajes}></Gallery>):(<p style={{color:"aliceblue",textAlign:"center"}}>No existen personajes cargados</p>))
+                    ):(loading ? (
+                      <div className="spinner-container">
+                        <DNA
+                          visible={true}
+                          height="80"
+                          width="80"
+                          ariaLabel="dna-loading"
+                          wrapperStyle={{}}
+                          wrapperClass="dna-wrapper"
+                        />
+                      </div>
+                    ) : (
+                      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                        <SortableContext items={personajes} strategy={horizontalListSortingStrategy}>
+                          <div className="miniCartas">
+                            {personajes.length > 0 ? (
+                              personajes.map(pj => (
+                                <MiniCard
+                                  vivoMuerto={vivoMuerto}
+                                  setVivoMuerto={setVivoMuerto}
+                                  setActiveKey={setActiveKey}
+                                  personajes={personajes}
+                                  setPersonajes={setPersonajes}
+                                  key={pj.idpersonaje}
+                                  id={pj.idpersonaje}
+                                  nombre={pj.nombre}
+                                  dominio={pj.dominio}
+                                  imagen={pj.imagen}
+                                  setPjSeleccionado={setPjSeleccionado}
+                                  pjSeleccionado={pjSeleccionado}
+                                />
+                              ))
+                            ) : (
+                              <p style={{color:"aliceblue",textAlign:"center"}}>No existen personajes cargados</p>
+                            )}
+                          </div>
+                        </SortableContext>
+                      </DndContext>
                     ))
-                  ) : (
-                    <p style={{color:"aliceblue"}}>No existen personajes cargados</p>
-                  )}
-                </div>
-              </SortableContext>
-            </DndContext>
-          ))}
-         </Tab>
 
 
-
-
-
-
-
-
-
-
-
+                ):(<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para selecionar su personaje</p>)}              
+          </Tab>
 
 
 

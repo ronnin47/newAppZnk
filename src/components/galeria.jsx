@@ -26,7 +26,7 @@ export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccion
 
 
   const seleccionado=(idpersonaje)=>{
-   console.log("el id del personaje selecionado es: ",idpersonaje)
+  // console.log("el id del personaje selecionado es: ",idpersonaje)
    setPjSeleccionado(idpersonaje)
    setActiveKey("2")
 //   setAnimacionActiva(true);
@@ -61,6 +61,7 @@ export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccion
             }}
 
             src={pj.imagen} alt={`Image ${index}`} className="gallery-image"/>
+            
             {index === selectedIndex ? (<p style={{color:"yellow", fontFamily:"cursive",textAlign:"center",marginTop:"10px"}}>{pj.nombre}</p>):(<></>)}
            
           </div>

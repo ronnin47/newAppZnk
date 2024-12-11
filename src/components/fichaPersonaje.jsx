@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import { VentajasN } from './ventajasN.jsx';
 import { Inventario } from "./inventario.jsx"
 import { Dominios } from './dominios.jsx';
-
 import { Hechizos } from './hechizos.jsx';
 import { Historia } from './historia.jsx';
 import Button from 'react-bootstrap/Button';
@@ -12,11 +11,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
 import { TecnicaEspecial } from './tecEspecial.jsx';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
-
 const apiUrl =import.meta.env.VITE_API_URL;
+
+
 
 
 export const FichaPersonaje = ({
@@ -723,13 +722,27 @@ useEffect(() => {
         try { 
           //const response = await axios.delete(`http://localhost:4000/deletePersonaje/${idpersonaje}`);
           const response = await axios.delete(`${apiUrl}/deletePersonaje/${idpersonaje}`);
-          } catch (error) {
+
+         // Eliminar el personaje del estado de combinados
+          setPjsCombinados((prevCombinados) => {
+            const nuevosCombinados = prevCombinados.filter(pj => pj.idpersonaje !== personaje.idpersonaje);
+            
+            // Actualizar el localStorage
+            if (usuarioId) {
+              localStorage.setItem(`pjsCombinados_${usuarioId}`, JSON.stringify(nuevosCombinados));
+            }
+            
+            return nuevosCombinados;
+      });
+
+        } catch (error) {
             console.error('Error al eliminar el personaje:', error);
           }
       }
 
     
   };
+
 
 
 
