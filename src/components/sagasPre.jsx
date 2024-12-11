@@ -514,7 +514,13 @@ const handleSaveChanges = async (idpersonaje) => {
                 <span className="clave">Raza:</span> 
                 <span className="contenido">{raza || "Desconocida"}  </span>
               </p>
-              <p>
+              <p style={{
+    maxWidth: "300px", // Define el ancho máximo
+    display: "-webkit-box", // Flexbox para texto en múltiples líneas
+    WebkitBoxOrient: "vertical", // Orientación vertical
+    WebkitLineClamp: 10, // Limita a 2 líneas (ajusta este valor según necesites)
+    overflow: "hidden", // Oculta contenido adicional
+  }}>
                 <span className="clave">Convicción:</span> 
                 <span className="contenido" style={{fontFamily:"cursive", color:"yellow"}}>{`"${conviccion || "Desconocida"}"` }</span>
               </p>
@@ -564,6 +570,7 @@ const handleSaveChanges = async (idpersonaje) => {
               Editar
             </Button>
           )}
+          
         </Modal.Body>
       </Modal>
 
