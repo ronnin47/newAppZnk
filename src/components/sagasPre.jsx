@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Estrellitas } from './estrellitas';
 
 const apiUrl =import.meta.env.VITE_API_URL;
 
@@ -63,6 +64,12 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
   const [idePj, setIdePj] = useState('');
 
 
+  const [naturalezaPj,setNaturalezaPj]=useState("")
+  const [kenPj,setKenPj]=useState("")
+  const [razaPj,setRazaPj]=useState("")
+  const [conviccionPj,setConviccionPj]=useState("")
+  const [dominioPj,setDominioPj]=useState("")
+
 //MODAL DE IMAGEN PARA DARLE CLICK Y QUE SE MUESTRE LA IMAGEN EN LA PANTALLA
   const ImagenModalN = ({ show, onHide, imagen}) => {
     return (
@@ -84,7 +91,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
 
  
 
-  const handleImagenClick = (imagen,nombre,notasaga,usuarioid,idpersonaje) => {
+  const handleImagenClick = (naturaleza,ken,raza,conviccion,dominio,imagen,nombre,notasaga,usuarioid,idpersonaje) => {
 
    
    // console.log("ACA VEMOS EL CONTENIDO DE NOTASAGA: ",notasaga)
@@ -93,6 +100,11 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
     //console.log("**********vemos que tien usaurioid",usuarioid)
     
     //console.log("**********vemos que teien IDPERSONAJE",idpersonaje)
+    setNaturalezaPj(naturaleza);
+    setKenPj(ken);
+    setRazaPj(raza);
+    setConviccionPj(conviccion);
+    setDominioPj(dominio);
     setImagenSeleccionada(imagen);
     setNombrePj(nombre);
     setNotaSagaPj(notasaga)
@@ -216,7 +228,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
                     border: '2px solid yellow',
                     cursor: 'pointer',
                   }}
-                  onClick={() => handleImagenClick(personaje.imagen, personaje.nombre,personaje.notasaga,personaje.usuarioId,personaje.idpersonaje)}
+                  onClick={() => handleImagenClick(personaje.naturaleza, personaje.ken,personaje.raza,personaje.conviccion,personaje.dominio,personaje.imagen, personaje.nombre,personaje.notasaga,personaje.usuarioId,personaje.idpersonaje)}
                 />
                 </OverlayTrigger>
               ))}
@@ -291,11 +303,19 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
       usuarioIdPj={usuarioIdPj} 
       usuarioid={usuarioid} 
       idpersonaje={idePj}
+
+      naturaleza={naturalezaPj}
+      dominio={dominioPj}
+      ken={kenPj}
+      raza={razaPj}
+      conviccion={conviccionPj}
       />
 
     </>
   );
 };
+
+
 
 
 
@@ -312,10 +332,18 @@ const ImagenModal = ({
   notaSaga,
   usuarioIdPj,
   idpersonaje,
+
+naturaleza,
+  dominio,
+  ken,
+  raza,
+  conviccion,
 }) => {
 
-  //console.log(`NOTA SAGA DE ${nombre} : ${JSON.stringify(notaSaga)}`);
 
+
+  console.log("*******************DOMINIO DEL PJ: ",dominio)
+  //console.log(`NOTA SAGA DE ${nombre} : ${JSON.stringify(notaSaga)}`);
   const [isEditing, setIsEditing] = useState(false);
   const [editableHistoria, setEditableHistoria] = useState('');
 
@@ -358,15 +386,7 @@ const ImagenModal = ({
     setEditableHistoria(nuevaNota);
   }, [notaSaga, idsaga]);
 
-  
-
-
-
   const [ultimasNotas,setUltimasNotas]=useState(notasFiltradas || [])
-
-
-
-
 
   // Función para abrir el modal de edición
   const handleEditClick = () => {
@@ -377,10 +397,6 @@ const ImagenModal = ({
   const handleInputChange = (event) => {
     setEditableHistoria(event.target.value);
   };
-
-
-
-
 
 //INTENTAMOS SOLUCONAR EL ERROR CUANDO CARGO UN PERSONAJE
 
@@ -462,7 +478,7 @@ const handleSaveChanges = async (idpersonaje) => {
           }}
         >
           {/* Imagen a la izquierda */}
-          <div>
+          <div style={{display:"flex", flexDirection:"column",gap:"1em"}}>
             <img
               src={imagen}
               alt={nombre}
@@ -474,6 +490,37 @@ const handleSaveChanges = async (idpersonaje) => {
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)",
               }}
             />
+              <div style={{display:"flex", justifyContent:"center"}}>
+               <Estrellitas ken={ken}></Estrellitas>
+               </div>
+
+           <div style={{display:"flex", flexDirection:"column"}}> 
+             
+            
+              {/*<p>
+                <span className="clave" style={{marginTop:"5em"}}>Ken:</span> 
+                <span className="contenido">{ken}</span>
+              </p>*/}
+
+              <p>
+                <span className="clave">Dominio:</span> 
+                <span className="contenido">{dominio || "Desconocido"}</span>
+              </p>
+              <p>
+                <span className="clave">Naturaleza:</span> 
+                <span className="contenido">{naturaleza || "Desconocida"}</span>
+              </p>
+              <p>
+                <span className="clave">Raza:</span> 
+                <span className="contenido">{raza || "Desconocida"}  </span>
+              </p>
+              <p>
+                <span className="clave">Convicción:</span> 
+                <span className="contenido" style={{fontFamily:"cursive", color:"yellow"}}>{`"${conviccion || "Desconocida"}"` }</span>
+              </p>
+           </div>
+          
+
           </div>
 
           {/* Texto a la derecha */}

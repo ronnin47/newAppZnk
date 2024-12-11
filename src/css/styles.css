@@ -1421,8 +1421,13 @@ opacity: 0.5;
   right: 10px;
 }
 
-/*
-.marcado{
-opacity: 0.5;
+.clave {
+color: orange;
+font-family: fantasy;
+font-size: 1em;
 }
-*/
+
+.contenido {
+  color: aliceblue;
+  margin-left: 5px;
+}

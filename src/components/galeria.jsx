@@ -23,8 +23,6 @@ export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccion
   },[selectedIndex])
 */
 
-
-
   const seleccionado=(idpersonaje)=>{
   // console.log("el id del personaje selecionado es: ",idpersonaje)
    setPjSeleccionado(idpersonaje)
