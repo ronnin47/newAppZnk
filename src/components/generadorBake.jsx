@@ -264,6 +264,10 @@ export const GeneradorBake = ({
         case "Licano":
           setImagen("/licano.jfif");       
           break;
+
+          case "Hegel":
+          setImagen("/hegel.jpg");       
+          break;
       
        
       
@@ -782,6 +786,24 @@ break;
           negativaBase = 3;
           break;
 
+          case "Hegel":
+            fuerzaBase = 5;
+            fortalezaBase = 10;
+            destrezaBase = 10;
+            agilidadBase = 20;
+            sabiduriaBase = 10;
+            principioBase= 10;
+            sentidosBase = 20;
+            presenciaBase = 20;
+            kiBase = 20;
+            valCombateBase = 0;
+            alertaBase = 30;
+            sigiloBase = 0;
+            atletismoBase = 20;
+            positivaBase = 1;
+            negativaBase = 1;
+            break;
+
         default:
         // Acción por defecto si no coincide con ninguno de los casos anteriores
         break;
@@ -1201,6 +1223,7 @@ switch (dificultad) {
                 <option value="Sierpe">Sierpe</option>
                 <option value="Caballero">Caballero</option>
                 <option value="Licano">Licano</option>
+                <option value="Hegel">Hegel</option>
              
                 
               </select>

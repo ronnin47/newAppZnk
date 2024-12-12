@@ -50,7 +50,6 @@ const pool = new Pool({
 });
 
 
-
 async function checkDatabaseConnection() {
   try {
     // Verifica la conexión a la base de datos
