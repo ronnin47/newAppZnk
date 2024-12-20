@@ -27,7 +27,7 @@ app.use(express.static(join(__dirname, 'dist')));
 
 const server = http.createServer(app);
 
-/*
+
 //LOCAL HOST
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
@@ -36,10 +36,10 @@ const pool = new Pool({
   password: 'hikonometaiseno',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
-*/
 
 
 
+/*
 //**************BASE DICIEMBRE******************
 const pool = new Pool({
   user: 'gorda',          
@@ -48,7 +48,7 @@ const pool = new Pool({
   password: 'f4TGb2SR6zpw57jdyaWA39xvyXG0TRFV',  
   port: 5432,
 });
-
+*/
 
 async function checkDatabaseConnection() {
   try {
@@ -1279,8 +1279,8 @@ app.get('/recuperarPass', async (req, res) => {
 });
 
 
-//const PORT = process.env.PORT || 4000;
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 10000;
 
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);

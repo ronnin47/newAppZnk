@@ -162,17 +162,16 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
       >
         {/* Imagen y título alineados en una columna */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <img
+          
+        <div className='diagonal-box'>
+        <img
             src={imagensaga}
             alt="Imagen de la saga"
-            className='agrandarC'
-            style={{
-              width: '12em',
-              height: '12em',
-              borderRadius: '50%',
-              border: '3px solid red',
-            }}
+           
+          
           />
+        </div>
+         
           {/* Título justo debajo de la imagen */}
           <p style={{ color: 'orange', marginTop: '10px', fontSize:"1.5em", fontFamily:"fantasy" }}>{titulo}</p>
         </div>

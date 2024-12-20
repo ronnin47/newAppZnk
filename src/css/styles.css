@@ -1431,3 +1431,35 @@ font-size: 1em;
   color: aliceblue;
   margin-left: 5px;
 }
+
+
+.diagonal-box {
+  width: 200px; /* Ancho del contenedor */
+  height: 400px; /* Altura del contenedor */
+  overflow: hidden;
+  position: relative;
+  clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%);
+  opacity: 0.7; /* Opacidad inicial */
+  transition: opacity 0.3s ease, box-shadow 0.3s ease; /* Transición suave en opacidad y sombra */
+}
+
+.diagonal-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen se ajuste al recuadro */
+  transition: opacity 0.3s ease; /* Transición suave para la opacidad de la imagen */
+}
+
+.diagonal-box:hover {
+  opacity: 1; /* Restablece la opacidad del contenedor al pasar el ratón */
+  box-shadow: 0 0 15px 10px rgba(255, 255, 0, 0.8); /* Sombra amarilla brillante */
+  width: 300px;
+  transition: 0.4s;
+}
+
+.diagonal-box img:hover {
+  opacity: 1; /* Restablece la opacidad de la imagen al pasar el ratón */
+  border: 10px solid aliceblue;
+ 
+ 
+}
