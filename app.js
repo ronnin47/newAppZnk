@@ -154,16 +154,11 @@ io.on('connection', (socket) => {
       connectedUsers.delete(socket.id);
       console.log(`Usuario ${usuarioId} se desconectó.`);
       
-      // Emitir evento de desconexión para eliminar las imágenes del usuario
-      io.emit('user-disconnect', { usuarioId }); // Aquí se envía el usuarioId al cliente
-      
-      // Emitir la lista actualizada de usuarios conectados
+      io.emit('user-disconnect', { usuarioId }); 
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
   });
 
-
-  
 });
 
 
