@@ -346,7 +346,7 @@ useEffect(() => {
 }, [sesion]);
 
 
-
+const [dataIncrementos,setDataIncrementos]=useState([])
 
 const [coleccionGrupos,setColeccionGrupos]=useState([]);
 
@@ -615,6 +615,8 @@ useEffect(() => {
     </Tooltip>
   );
 
+
+  const [mostrarIncremetos,setMostrarIncrementos]=useState(false)
 
 return (
     <>
@@ -1086,7 +1088,10 @@ return (
             <Tab eventKey="tiradas" title="Tiradas" className="fondoBody">
             {pjSeleccionado ? (
                 <Tiradas
-            
+                mostrarIncremetos={mostrarIncremetos}
+                setMostrarIncrementos={setMostrarIncrementos}
+                dataIncrementos={dataIncrementos}
+                setDataIncrementos={setDataIncrementos}
                   key={pj.idpersonaje} 
                   
                   nombre={pj.nombre}

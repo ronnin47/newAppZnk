@@ -63,7 +63,14 @@ const Pj = ({ idpersonaje, nombre, imagen, pjSeleccionado, setPjSeleccionado }) 
   );
 };
 
+
+
+
+
 export const Tiradas = ({
+  dataIncrementos,setDataIncrementos,
+  mostrarIncremetos,setMostrarIncrementos,
+
   idpersonaje,
   cicatriz,
   fortaleza, 
@@ -690,11 +697,31 @@ const msgEnviar={
   nombre:nombre,
   mensaje:mensajeChat
 }
+
+  if(msgEnviar.mensaje.includes("+")){
+  
+ 
+    setDataIncrementos([...dataIncrementos,msgEnviar])
+ 
+  }  
+
   socket.emit('message', msgEnviar);
   setMessage('')
   setMensajeChat("")
 }
 
+
+/*
+
+useEffect(()=>{
+  dataIncrementos.map((pj)=>{
+  console.log(`
+    nombre: ${pj.nombre}
+    incremento: ${pj.mensaje}`)
+  })
+//console.log("",dataIncrementos)
+},[dataIncrementos])
+*/
 
 useEffect(() => {
   if (textareaRef.current) {
@@ -816,11 +843,24 @@ useEffect(() => {
 
 
 
+
+
+
+  //incrementos
+const incrementos=()=>{
+  setMostrarIncrementos(!mostrarIncremetos)
+}
+
+
   return (
     <>
-      <div >
+      {mostrarIncremetos?(
+       <FlotanteIncrementos dataIncrementos={dataIncrementos}></FlotanteIncrementos>):(<></>)}
+
+      <div className="container" style={{display:"flex", flexDirection:"row", justifyContent:"center",alignItems:"center",marginTop:"1em",marginBottom:"2em"}}>
       <input type="text" className="chatcito" value={mensajeChat} onChange={handleChangeM} onKeyPress={handleKeyPress}/>
       <button className="btn btn-primary" onClick={enviar} style={{marginLeft:"10px"}}>enviar</button>
+      <button className="btn btn-warning" onClick={()=>incrementos()} style={{marginLeft:"10px"}}>incrementos</button>
       </div>
 
       <div className="container" style={{display:"flex", flexDirection:"row", gap:"0.5em", color:"yellow", justifyContent:"center"}}>
@@ -1170,3 +1210,121 @@ useEffect(() => {
 
 
 
+
+
+export const FlotanteIncrementos = ({ dataIncrementos}) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [relPosition, setRelPosition] = useState({ x: 0, y: 0 });
+  const [contentIndex, setContentIndex] = useState(0);
+
+  const handleMouseDown = (e) => {
+    setDragging(true);
+    setRelPosition({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    });
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (dragging) {
+      e.preventDefault();
+      setPosition({
+        x: e.clientX - relPosition.x,
+        y: e.clientY - relPosition.y,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const initialX = window.innerWidth - 160;
+    const initialY = 20;
+    setPosition({ x: initialX, y: initialY });
+  }, []);
+
+
+
+  return (
+    <div
+      className="floating-component1"
+      style={{
+        position: 'absolute',
+        top: `${position.y}px`,
+        left: 'auto',
+        right: `${window.innerWidth - position.x}px`, // Asegurar alineado a la derecha
+        cursor: dragging ? 'grabbing' : 'grab',
+      }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+     
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+        
+            <p
+            className='tituloFlotante'   
+            style={{
+                  position: 'absolute',
+                  top: '-15px', // Ajusta la posición vertical del título
+                  left: '20px', // Ajusta la posición horizontal del título
+                  backgroundColor: 'rgb(10, 7, 45)', // Color de fondo adaptado
+                  color: '#FFEA00', // Color amarillo chillón
+                  padding: '0 10px', // Espaciado interno
+                  fontWeight: 'bold',
+                  fontSize: '1.2em',
+                  textAlign: 'center',
+                }}>
+                  Incrementos
+                </p>
+
+                {dataIncrementos.length > 0 ? (
+                  // Agrupamos mensajes por nombre
+                  Object.entries(
+                    dataIncrementos.reduce((acc, pj) => {
+                      if (!acc[pj.nombre]) {
+                        acc[pj.nombre] = []; // Inicializa un array para cada nombre
+                      }
+                      acc[pj.nombre].push(pj.mensaje); // Agrega el mensaje al array del nombre correspondiente
+                      return acc;
+                    }, {})
+                  ).map(([nombre, mensajes]) => (
+                    <div style={{ display: "flex", 
+                      flexWrap: "wrap", // Habilita el ajuste de los elementos a varias filas
+                      gap: "5px", // Espacio entre los elementos
+                      marginTop: "1em", 
+                      padding: "1em", 
+                      maxWidth: '100%', 
+                      wordWrap: 'break-word',
+                      }}>
+                      <div key={nombre} style={{ color: "aliceblue", marginBottom: "1em" }}>
+                      <p style={{color:"yellow"}}>{nombre}</p>
+                      {mensajes.map((mensaje, index) => (
+                        <p 
+                        style={{
+                          color: "greenYellow",  
+                          maxWidth: '100%', // Asegura que el contenedor no se salga del ancho disponible
+                          wordWrap: 'break-word', // Se asegura de que las palabras largas se quiebren
+                          wordBreak: 'break-word', // Se asegura de que el texto largo se quiebre cuando sea necesario
+                        }} 
+                          
+                          key={index} >{mensaje}</p>
+                      ))}
+                    </div>
+                    </div>
+
+                    
+                  ))
+                ) : (
+                  <p style={{ color: "aliceblue" }}>No hay incrementos</p>
+                )}
+
+            
+      </div>
+    </div>
+  );
+};
