@@ -59,6 +59,7 @@ const pool = new Pool({
   port: 5432,
 });
 
+
 async function checkDatabaseConnection() {
   try {
     // Verifica la conexión a la base de datos

@@ -573,19 +573,67 @@ useEffect(() => {
   const [isChecked, setIsChecked] = useState(true);
 
 
-  useEffect(() => {
+
+//********************************************************
+/* 
+useEffect(() => {
     // Recuperar el estado del usuario desde el localStorage
     const storedPjs = JSON.parse(localStorage.getItem(`pjsCombinados_${usuarioId}`)) || [];
     setPjsCombinados(storedPjs);
   }, [usuarioId,sesion]);
+*/
+
+useEffect(() => {
+  // Recuperar el estado del usuario desde el localStorage
+  const storedPjs = JSON.parse(localStorage.getItem(`pjsCombinados_${usuarioId}`)) || [];
+
+  // Agregar las imágenes desde la colección de personajes
+  const pjsConImagenes = storedPjs.map((pj) => {
+    const personajeConImagen = coleccionPersonajes.find(
+      (personaje) => personaje.idpersonaje === pj.idpersonaje
+    ); // Encuentra el personaje en la colección por ID
+
+    return {
+      ...pj,
+      imagen: personajeConImagen ? personajeConImagen.imagen : null, // Asigna la imagen si se encuentra
+    };
+  });
+
+  // Actualizar el estado con los personajes combinados y sus imágenes
+  setPjsCombinados(pjsConImagenes);
+}, [usuarioId, sesion, coleccionPersonajes]);
+
 
   // Guardar los personajes combinados en el localStorage cada vez que se actualicen
+  /*
   useEffect(() => {
     if (usuarioId) {
       localStorage.setItem(`pjsCombinados_${usuarioId}`, JSON.stringify(pjsCombinados));
     }
   }, [pjsCombinados, usuarioId, sesion]);  
-/*
+*/
+
+
+useEffect(() => {
+  if (usuarioId) {
+    // Filtrar las imágenes de cada objeto en pjsCombinados
+    const pjsSinImagenes = pjsCombinados.map((pj) => {
+      const { imagen, ...resto } = pj; // Excluye la propiedad "imagen"
+      return resto; // Devuelve el resto del objeto sin la imagen
+    });
+
+    // Guarda los datos sin imágenes en el localStorage
+    localStorage.setItem(
+      `pjsCombinados_${usuarioId}`,
+      JSON.stringify(pjsSinImagenes)
+    );
+  }
+}, [pjsCombinados, usuarioId, sesion]);
+
+
+
+
+  /*
   useEffect(() => {
     // Si no hay sesión activa, eliminar los datos de pjsCombinados del localStorage
     if (!sesion && usuarioId) {

@@ -863,7 +863,7 @@ const incrementos=()=>{
       <button className="btn btn-warning" onClick={()=>incrementos()} style={{marginLeft:"10px"}}>incrementos</button>
       </div>
 
-      <div className="container" style={{display:"flex", flexDirection:"row", gap:"0.5em", color:"yellow", justifyContent:"center"}}>
+      <div className="container" style={{display:"flex",   flexWrap: "wrap", gap:"0.5em", color:"yellow", justifyContent:"center", marginBottom:"1em"}}>
 
       {pjsCombinados.map((pj)=>(  
         <Pj key={pj.idpersonaje} idpersonaje={pj.idpersonaje} nombre={pj.nombre} imagen={pj.imagen} pjSeleccionado={pjSeleccionado} setPjSeleccionado={setPjSeleccionado}></Pj>
