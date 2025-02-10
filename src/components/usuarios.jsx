@@ -101,7 +101,7 @@ const UsuarioPre = ({ idusuario, email, estatus, pass }) => {
   );
 };
 
-// Componente Usuarios
+
 export const Usuarios = ({ sesion, estatus }) => {
   const [usuarios, setUsuarios] = useState([]);
 
