@@ -4,6 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/mitamaDorada.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script>
+  if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) {
+    let meta = document.querySelector('meta[name="viewport"]');
+    if (meta) {
+      meta.content = "width=1024, initial-scale=0.5, maximum-scale=0.5, user-scalable=no";
+    } else {
+      meta = document.createElement("meta");
+      meta.name = "viewport";
+      meta.content = "width=1024, initial-scale=0.5, maximum-scale=0.5, user-scalable=no";
+      document.head.appendChild(meta);
+    }
+
+  
+    document.body.style.width = "1280px";
+    document.body.style.transform = "scale(0.8)"; 
+    document.body.style.transformOrigin = "top left"; 
+  }
+</script>
+
     <title>ZNK</title>
   </head>
   <body>

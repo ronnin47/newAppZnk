@@ -1493,6 +1493,5 @@ font-size: 1em;
 .diagonal-box img:hover {
   opacity: 1; /* Restablece la opacidad de la imagen al pasar el ratón */
   border: 10px solid aliceblue;
- 
- 
 }
+
