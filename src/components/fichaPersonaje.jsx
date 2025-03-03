@@ -929,7 +929,7 @@ const renderTooltipCombinados = () => (
 
 const renderTooltipPjPnj = () => (
   <Tooltip id={`tooltip-${idpersonaje}`} style={{textAlign: 'center' }}>
-    <p>{pjPnjN ? "¿Quieres pasar a Pnj?" : "¿Quieres pasar a Pj?"}</p>
+    <p>{pjPnjN ? "Pj sin marca del destino" : "Pj marca del destino"}</p>
   </Tooltip>
 );
 
