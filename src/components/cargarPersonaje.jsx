@@ -141,6 +141,8 @@ export const CargarPersonaje = ({
   setConviccion,
   cicatriz,
   setCicatriz,
+  pjPnj,
+  setPjPnj,
 }) => {
  
   const inputFileRef = useRef(null);
@@ -405,6 +407,7 @@ export const CargarPersonaje = ({
       cicatriz: cicatriz || 0,
       notaSaga:[],
       resistencia:(parseInt(fortaleza)+parseInt(fuerza)) || 0,
+      pjPnj:true,
       usuarioId: usuarioId, 
     
     };

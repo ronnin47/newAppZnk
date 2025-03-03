@@ -137,6 +137,10 @@ const [loading, setLoading] = useState(true);
    const [pjsCombinados,setPjsCombinados]=useState([])
 
 
+// aca esta el state de pj o pnj iniciando siempre en true
+   const [pjPnj,setPjPnj]=useState(true)
+
+
    
 
 
@@ -666,6 +670,9 @@ useEffect(() => {
 
   const [mostrarIncremetos,setMostrarIncrementos]=useState(false)
 
+
+
+
 return (
     <>
      <Nava 
@@ -934,7 +941,11 @@ return (
 
 
               naturaleza={naturaleza}
-              setNaturaleza={setNaturaleza}             
+              setNaturaleza={setNaturaleza}   
+              
+              pjPnj={pjPnj}
+              setPjPnj={setPjPnj}
+              
               ></CargarPersonaje>): (<p style={{color:"aliceblue", textAlign:"center"}}>Inicie sesion para poder cargar personajes</p>)}
           
             </Tab> 
@@ -1117,6 +1128,12 @@ return (
                 setPjsCombinados={setPjsCombinados}
                 
                 resistencia={pj.resistencia || (parseInt(pj.fuerza)+parseInt(pj.fortaleza))}
+
+
+
+
+                pjPnj={pj.pjPnj ?? true}
+                
                 
                 />
               ):(<p style={{color:"aliceblue", textAlign:"center"}}>Seleccione un personaje cargado</p>)}

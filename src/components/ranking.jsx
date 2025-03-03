@@ -235,6 +235,7 @@ export const CartaUnica = ({
       .filter((pj) => {
         const vidaTotal = (pj.ki + pj.fortaleza) * (pj.positiva + pj.negativa);
         return (
+          pj.pjPnj === true && 
           pj.nombre.toLowerCase().includes(pjBuscado.toLowerCase()) &&
           pj.ken >= 40 &&
           (pj.vidaActual <= vidaTotal || pj.ken >= 400)

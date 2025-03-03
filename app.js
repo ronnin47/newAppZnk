@@ -325,6 +325,7 @@ app.post('/insert-personaje', async (req, res) => {
       cicatriz, 
       notaSaga,  
       resistencia,  
+      pjPnj,
    } = req.body;
    
   try {
@@ -404,9 +405,10 @@ app.post('/insert-personaje', async (req, res) => {
       cicatriz,
       notasaga,
       resistencia,
+      "pjPnj",
       "usuarioId"
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76)
       RETURNING idpersonaje
     `;
 
@@ -485,6 +487,7 @@ app.post('/insert-personaje', async (req, res) => {
       cicatriz,
       notaSaga,
       resistencia,
+      pjPnj,
       usuarioId,   
       ];
     const result = await pool.query(query, values);
@@ -652,6 +655,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       conviccion,
       cicatriz,
       resistencia,
+      pjPnj,
       
    } = req.body;
  
@@ -732,8 +736,9 @@ app.put('/update-personaje/:id', async (req, res) => {
       "tecEspecial" = $71,
       conviccion= $72,
       cicatriz= $73,
-      resistencia= $74
-    WHERE idpersonaje = $75
+      resistencia= $74,
+      "pjPnj"= $75
+    WHERE idpersonaje = $76
   `;
     const values = [
       nombre,
@@ -812,6 +817,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       conviccion,
       cicatriz,
       resistencia,
+      pjPnj,
       idpersonaje
       ];
     const result = await pool.query(query, values);

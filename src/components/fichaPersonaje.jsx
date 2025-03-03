@@ -102,6 +102,7 @@ export const FichaPersonaje = ({
   pjsCombinados,
   setPjsCombinados,
   resistencia,
+  pjPnj,
 }) => {
   
   const inputFileRef = useRef(null);
@@ -195,11 +196,15 @@ export const FichaPersonaje = ({
   const [conviccionN,setConviccionN]=useState(conviccion);
   const [cicatrizN,setCicatrizN]=useState(cicatriz);
   const [resistenciaN,setResistenciaN]=useState(resistencia);
-
+  const [pjPnjN,setPjPnjN]=useState(pjPnj);
+  
  
  useEffect(()=>{
   
   },[vivoMuerto])
+
+
+  
 
 //SERA PARA REVISAR
   useEffect(() => {
@@ -402,6 +407,15 @@ const handleChangeConviccion= (event)=>{
   setConviccionN(event.target.value)
 }
 
+
+// aca el handle chance
+const handleChangePjPnj = () => {
+  setPjPnjN(!pjPnjN)
+};
+
+
+
+
 const btnGuardarCambios = () => {
    
   const index = personajes.findIndex(pj => pj.idpersonaje == idpersonaje);
@@ -490,6 +504,7 @@ const btnGuardarCambios = () => {
     conviccion: conviccionN,
     cicatriz: cicatriz,  
     resistencia:resistenciaN,
+    pjPnj:pjPnjN,
   };
 
 
@@ -585,6 +600,7 @@ const guardarCambiosBBDD = async () => {
 
       cicatriz: cicatriz || 0,
       resistencia: resistenciaN || 0,
+      pjPnj:pjPnjN,
     };
     
     //const response = await axios.put(`http://localhost:4000/update-personaje/${idpersonaje}`, personaje, {
@@ -684,6 +700,7 @@ useEffect(() => {
   conviccionN,
   cicatrizN,
   resistenciaN,
+  pjPnjN,
 ]);
 
 const handleEliminarPj = async() => {
@@ -844,6 +861,7 @@ const agregarPersonaje = async () => {
     conviccion: conviccion || "",
     cicatriz: cicatriz || 0,
     resistencia:(parseInt(fortaleza)+parseInt(fuerza)) || 0,
+    pjPnj: pjPnj || true,
     usuarioId: usuarioId, 
   };
 
@@ -875,6 +893,9 @@ const agregarPersonaje = async () => {
 
 const isChecked = pjsCombinados.some((pj) => pj.idpersonaje === idpersonaje);
 
+
+
+
 const combinarPjs = (idpersonaje, nombre, imagen, isAdding) => {
   const nuevoPJ = { idpersonaje, nombre, imagen };
 
@@ -901,13 +922,43 @@ const renderTooltipCombinados = () => (
     <p>Agrega el pj a tiradas</p>
   </Tooltip>
 );
+
+
+
+
+
+const renderTooltipPjPnj = () => (
+  <Tooltip id={`tooltip-${idpersonaje}`} style={{textAlign: 'center' }}>
+    <p>{pjPnjN ? "¿Quieres pasar a Pnj?" : "¿Quieres pasar a Pj?"}</p>
+  </Tooltip>
+);
+
+
+
   
   return (
     <>
     <div className='container'>
          <div style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems: "center", width: "100%"}}>
          <p style={{color:"yellow", fontSize:"2em", fontFamily:"cursive",flex:"1",textAlign:"center"}}>{nombreN}</p>
-         
+         <div style={{display:"flex", flexDirection:"row", gap:"1em"}}>
+         <OverlayTrigger
+              placement="top" // Puedes elegir entre "top", "bottom", "left", "right"
+              overlay={renderTooltipPjPnj()}  >
+                <input 
+                  type="checkbox" 
+              
+
+                  checked={pjPnjN} // Maneja el estado
+                  onChange={handleChangePjPnj} // Cambia el estado y llama a la función
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    borderRadius:"50%",
+                    cursor: "pointer"
+                  }}
+                />
+            </OverlayTrigger>
          <OverlayTrigger
               placement="top" // Puedes elegir entre "top", "bottom", "left", "right"
               overlay={renderTooltipCombinados()}  >
@@ -924,6 +975,8 @@ const renderTooltipCombinados = () => (
                   }}
                 />
             </OverlayTrigger>
+         </div>
+        
          </div>
        
         <div className='row col2' style={{marginBottom:"1em", marginTop:"2.5em"}}>
@@ -965,6 +1018,7 @@ const renderTooltipCombinados = () => (
               <label htmlFor="">P. Destino</label>
               <input type="number" value={pDestinoN} onChange={handleChangePdestino} placeholder="0" />
               </div>
+
             </div>
            
          

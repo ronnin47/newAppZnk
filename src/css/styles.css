@@ -137,6 +137,7 @@ background-color: rgba(0, 0, 0, 0.719);
     justify-items: center;
     align-items: start;  
 }
+
 .col1{
     display: grid;
     grid-template-columns: 1fr;
