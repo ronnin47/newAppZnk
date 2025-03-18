@@ -24,20 +24,10 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 import { Flotante } from "./flotante.jsx";
 import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-
 import { Enemigos } from "./enemigos.jsx";
-
 import { GeneradorBake } from "./generadorBake.jsx";
 import { SagasPre } from "./sagasPre.jsx";
-
 import { Gallery } from "./galeria.jsx";
-
-
-
-
-
-
-
 
 
 const apiUrl =import.meta.env.VITE_API_URL;
@@ -46,16 +36,8 @@ export const Principal= ()=> {
 
   const [personajes, setPersonajes] = useState([]); 
   const [usuariosConectados, setUsuariosConectados] = useState([]);
-
   const [pjSeleccionado,setPjSeleccionado]=useState("")
-    
-
-const [loading, setLoading] = useState(true); 
-
-   /* useEffect(() => {
-      console.log("PERSONAJES SELECCIONADO ",pjSeleccionado)
-    }, [pjSeleccionado]);
-*/
+  const [loading, setLoading] = useState(true); 
 
     const [nombre,setNombre]=useState("");
     const [imagen,setImagen]=useState("/imagenBase.jpeg");
@@ -141,12 +123,6 @@ const [loading, setLoading] = useState(true);
    const [pjPnj,setPjPnj]=useState(true)
 
 
-   
-
-
-
-
-   
     const handleDragEnd=(event)=>{
     //console.log("orden original: ",personajes)
       const {active, over}=event
@@ -163,7 +139,7 @@ const [loading, setLoading] = useState(true);
 
   
 
-    const eliminarPj = (idpersonaje) => {
+    const eliminarPj =  (idpersonaje) => {
       // Retornamos la promesa de Swal.fire para manejarla después
       return Swal.fire({
         title: '¿quieres eliminar el personaje?',
@@ -493,54 +469,6 @@ useEffect(() => {
     socket.off('message', handleMessage);
   };
 }, []);
-/*
-//este es el inicio
-
-useEffect(() => {
-  // Función para manejar los mensajes recibidos
-  const handleMessage = (data) => {
-    setValues((prevValues) => {
-      // Buscar el personaje correspondiente en coleccionPersonajes
-      const personajeEnColeccion = coleccionPersonajes.find((p) => p.idpersonaje === data.idpersonaje);
-      
-      // Si no se encuentra el personaje, no hacemos nada
-      if (!personajeEnColeccion) return prevValues;
-
-      // Calcular vidaTotal si no viene en los datos del mensaje
-      const vidaTotalCalculada = calcularVidaTotal(personajeEnColeccion);
-      
-
-      return {
-        ...prevValues,
-        [data.idpersonaje]: {
-          kenActual: data.kenActual !== undefined ? data.kenActual : 
-            (prevValues[data.idpersonaje]?.kenActual || personajeEnColeccion.kenActual || 0),
-          ken: data.ken !== undefined ? data.ken : 
-            (prevValues[data.idpersonaje]?.ken || personajeEnColeccion.ken || 0),
-          kiActual: data.kiActual !== undefined ? data.kiActual : 
-            (prevValues[data.idpersonaje]?.kiActual || personajeEnColeccion.kiActual || 0),
-          ki: data.ki !== undefined ? data.ki : 
-            (prevValues[data.idpersonaje]?.ki || personajeEnColeccion.ki || 0),
-          vidaActual: data.vidaActual !== undefined ? data.vidaActual : 
-            (prevValues[data.idpersonaje]?.vidaActual || personajeEnColeccion.vidaActual || 0),
-          // Usamos el valor de vidaTotal del mensaje si está presente, sino lo calculamos
-          vidaTotal: data.vidaTotal !== undefined ? data.vidaTotal : 
-            (prevValues[data.idpersonaje]?.vidaTotal || vidaTotalCalculada),
-        },
-      };
-    });
-  };
-
-
-    // Escuchar los eventos del socket
-    socket.on('message', handleMessage);
-
-    // Limpiar la suscripción al socket cuando el componente se desmonte
-    return () => {
-      socket.off('message', handleMessage);
-    };
-  }, [socket, coleccionPersonajes]);
-*/
 
 
   const [saberes, setSaberes] = useState([]); // Estado inicial vacío
@@ -577,16 +505,6 @@ useEffect(() => {
   const [isChecked, setIsChecked] = useState(true);
 
 
-
-//********************************************************
-/* 
-useEffect(() => {
-    // Recuperar el estado del usuario desde el localStorage
-    const storedPjs = JSON.parse(localStorage.getItem(`pjsCombinados_${usuarioId}`)) || [];
-    setPjsCombinados(storedPjs);
-  }, [usuarioId,sesion]);
-*/
-
 useEffect(() => {
   // Recuperar el estado del usuario desde el localStorage
   const storedPjs = JSON.parse(localStorage.getItem(`pjsCombinados_${usuarioId}`)) || [];
@@ -608,14 +526,7 @@ useEffect(() => {
 }, [usuarioId, sesion, coleccionPersonajes]);
 
 
-  // Guardar los personajes combinados en el localStorage cada vez que se actualicen
-  /*
-  useEffect(() => {
-    if (usuarioId) {
-      localStorage.setItem(`pjsCombinados_${usuarioId}`, JSON.stringify(pjsCombinados));
-    }
-  }, [pjsCombinados, usuarioId, sesion]);  
-*/
+ 
 
 
 useEffect(() => {
@@ -635,17 +546,6 @@ useEffect(() => {
 }, [pjsCombinados, usuarioId, sesion]);
 
 
-
-
-  /*
-  useEffect(() => {
-    // Si no hay sesión activa, eliminar los datos de pjsCombinados del localStorage
-    if (!sesion && usuarioId) {
-      localStorage.removeItem(`pjsCombinados_${usuarioId}`);
-      setPjsCombinados([]); // Limpiar también el estado local
-    }
-  }, [sesion, usuarioId]);
-*/
 
   const [checkedVisual, setCheckedVisual] = useState(() => {
     const storedValue = localStorage.getItem("checkedVisual");
@@ -760,6 +660,7 @@ return (
                   setSock={setSock}
                   textareaRef={textareaRef }
                   messagesEndRef={messagesEndRef}
+                  pjSeleccionado={pjSeleccionado}
                 />
               ):(<></>)}
      </div>

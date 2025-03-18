@@ -7,23 +7,42 @@ export const Panel = ({ textareaRef, messagesEndRef, nombre, setMessage, sock, s
   const [isAtTop, setIsAtTop] = useState(true);  // Estado para saber si estamos en la parte superior de la página
 
   useEffect(() => {
-    // Verificar si estamos en la parte superior
     const checkIfAtTop = () => {
       setIsAtTop(window.scrollY === 0);  // Si el scroll es 0, estamos en la parte superior
     };
 
     window.addEventListener('scroll', checkIfAtTop);
+    checkIfAtTop();  // Llamar a la función al principio para establecer el valor correcto
     return () => {
       window.removeEventListener('scroll', checkIfAtTop);
     };
-  }, []);
+  }, []); // Solo se ejecuta una vez al montar el componente
 
-  useEffect(() => {
+   
+/*
+   // Este useEffect te informa cada vez que `isAtTop` cambia
+useEffect(() => {
+  if (isAtTop) {
+    console.log('Estás en la parte superior de la página.');
+  } else {
+    console.log('No estás en la parte superior de la página.');
+  }
+}, [isAtTop]);  // Se ejecuta cada vez que `isAtTop` cambia
+*/
+
+  /*useEffect(() => {
     // Solo hacer scroll al último mensaje si estamos en la parte superior
     if (isAtTop && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   }, [sock, isAtTop]); // Ejecutar el efecto cuando recibimos un mensaje y si estamos en la parte superior
+*/
+useEffect(() => {
+  if (isAtTop && chatContainerRef.current) {
+    // Establecer scroll al final del contenedor
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }
+}, [sock, isAtTop]);
 
   useEffect(() => {
     socket.on('message', (newMessage) => {
