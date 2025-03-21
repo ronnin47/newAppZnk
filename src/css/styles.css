@@ -1311,7 +1311,7 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
 .caracTronco{
   display: flex;;
   flex-direction: row;
-  gap: 2em;
+  gap: 1em;
   justify-content: center;
 }
 

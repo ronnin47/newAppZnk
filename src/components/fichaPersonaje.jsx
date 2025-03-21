@@ -15,7 +15,7 @@ import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 const apiUrl =import.meta.env.VITE_API_URL;
 
-
+import { Tronco } from './tronco.jsx';
 
 export const FichaPersonaje = ({
   personaje,
@@ -1036,7 +1036,7 @@ const renderTooltipPjPnj = () => (
        
 
        <div className='gradComp'>
-       <div className="caracTronco" style={{marginTop:"2em"}} >
+       <div className="caracTronco" style={{marginTop:"1em"}} >
           <div className='circularContainer'>
           <input className='inputCirculo' type="number" value={fuerzaN} onChange={handleChangeFuerza} placeholder="Fza" />
           <label htmlFor="" >Fuerza</label>
@@ -1079,7 +1079,14 @@ const renderTooltipPjPnj = () => (
          
           
 
-          <div className='circularContainer' style={{marginLeft:"5em"}}>          
+         
+          
+        <div>
+          <Tronco fza={fuerzaN} for={fortalezaN} des={destrezaN} agi={agilidadN} sab={sabiduriaN} sen={sentidosN} pre={presenciaN} pri={principioN} ></Tronco>
+        </div>
+
+
+        <div className='circularContainer' style={{marginLeft:"1em"}}>          
           <input className='inputCirculo' style={{borderRadius:"15px", height:"40px"}} type="number" value={iniciativaN} onChange={handleChangeIniciativa} placeholder="0" />
           <label htmlFor="" >Iniciativa</label>
           </div>
@@ -1088,9 +1095,12 @@ const renderTooltipPjPnj = () => (
           <input className='inputCirculo' style={{borderRadius:"15px", height:"40px"}} type="number" value={resistenciaN} onChange={handleChangeResistencia} placeholder="0" />
           <label htmlFor="" >Resistencia</label>
           </div>
-          
-
+        
+        
+    
         </div>
+
+        
 
        <div className="caracSecu" style={{padding:"15px"}}>
         
