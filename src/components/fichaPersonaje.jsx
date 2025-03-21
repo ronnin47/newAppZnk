@@ -1104,7 +1104,7 @@ const renderTooltipPjPnj = () => (
        <div className="caracSecu" style={{paddingBottom:"1em"}}>
         
         <div className='circularContainer'>
-        <label htmlFor="">Academisismo</label>
+        <label htmlFor="">Academicismo</label>
         <input type="number" value={academisismoN} onChange={handleChangeAcademisismo} placeholder="0" />
         </div>
 

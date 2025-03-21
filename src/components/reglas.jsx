@@ -89,7 +89,7 @@ export const Reglas = () => {
             <tr>
             <td>Avistar</td>
             <td>Sen + Alerta</td>
-            <td>escana dif 20/distancia 200mts dif 40/distancia 400mts o mas dif 60</td>
+            <td>escana dif 20/distancia 200mts dif 40-distancia 400mts o mas dif 60</td>
             <td>avistar a distancia sera una tirada libre una unica vez por escena</td>
             </tr>
 
@@ -97,21 +97,21 @@ export const Reglas = () => {
             <td>Medicina</td>
             <td>Sab + Medicina</td>
             <td>tirada libre</td> 
-            <td>tras 1hr restaura 1d20 cada 20 p de la tirada/una vez x dia sobre el herido</td>
+            <td>tras 1hr restaura 1d20 cada 20 p de la tirada-una vez x dia sobre el herido</td>
             </tr>
             
             <tr>
             <td>Cazar</td>
             <td>Des + Alerta</td>
-            <td>dif 20 caceria simple/dif 40 caceria normal/dif 60 o superior para dificil</td>
+            <td>dif 20 caceria simple/dif 40 caceria normal-dif 60 o superior para dificil</td>
             <td>dependiendo de la situacion de escenario la dificultad de cazar para comer</td>
             </tr>
 
             <tr>
             <td>Leer mapas</td>
-            <td>Sab + Academisimo</td>
+            <td>Sab + Academicismo</td>
             <td>dif 40</td>
-            <td>interpretara informaciones de todo tipo maapas de viaje</td>
+            <td>interpretara informaciones de todo tipo mapas de viaje</td>
             </tr>
 
             <tr>
@@ -124,50 +124,50 @@ export const Reglas = () => {
             <tr>
             <td>Elevar alerta</td>
             <td>Sen + Alerta</td>
-            <td>dif enfrentada contra objetivos ocultos/tirada libre</td> 
+            <td>dif enfrentada contra objetivos ocultos-tirada libre</td> 
             <td>el personaje elevara su alerta para percibir la escena</td>
             </tr>      
 
             <tr>
             <td>Iniciativa</td>
             <td>Sen + Agi</td>
-            <td>dependiendo de situacion/tirada libre enfrentada</td> 
+            <td>dependiendo de situacion-tirada libre enfrentada</td> 
             <td>reflejo efectivo ante una situacion especifica</td>
             </tr>
 
             <tr>
             <td>Sigilo</td>
             <td>Agi + Sigilo/M. de Sombras</td>
-            <td>dif enfrentada contra los presentes/tirada libre</td> 
+            <td>dif enfrentada contra los presentes-tirada libre</td> 
             <td>el personaje se mantendra oculto</td>
             </tr>
 
             <tr>
-            <td>Presicion de Ataque</td>
+            <td>Precisión de Ataque</td>
             <td>Des + Ap. marcial</td>
-            <td>dif enfrentada contra def del objetivo/tirada libre</td>
-            <td>mide la presicion de un ataque, y como resultado bono de daño por presicion</td>
+            <td>dif enfrentada contra def del objetivo-tirada libre</td>
+            <td>mide la precisión de un ataque, y como resultado bono de daño por precisión</td>
             </tr>
 
             <tr>
             <td>Bloqueo</td>
             <td>Fort + Ap. marcial</td>
-            <td>dif enfrentada contra presicion de ataques</td>
-            <td>defenza contra todos los ataques del turno, siendo exitosa anula resolucion de daño</td>
+            <td>dif enfrentada contra precisión de ataques</td>
+            <td>defensa contra todos los ataques del turno, siendo exitosa anula resolucion de daño</td>
             </tr>
 
             <tr>
             <td>Desvio</td>
             <td>Des + Ap. marcial</td>
-            <td>dif enfrentada contra presicion de ataques</td>
-            <td>defenza desviando contra todos los ataques del turno, siendo exitosa anula resolucion de daño</td>
+            <td>dif enfrentada contra precisión de ataques</td>
+            <td>defensa desviando contra todos los ataques del turno, siendo exitosa anula resolucion de daño</td>
             </tr>
 
             <tr>
             <td>Esquiva</td>
             <td>Agi + Ap. marcial/Atletismo</td>
-            <td>dif enfrentada contra presicion de ataques</td>
-            <td>defenza esquivando contra todos los ataques del turno, siendo exitosa anula resolucion de daño</td>
+            <td>dif enfrentada contra precisión de ataques</td>
+            <td>defensa esquivando contra todos los ataques del turno, siendo exitosa anula resolucion de daño</td>
             </tr>
 
             <tr>
@@ -178,16 +178,16 @@ export const Reglas = () => {
             </tr>  
 
             <tr>
-            <td>Metir/detectar mentiras</td>
+            <td>Mentir/detectar mentiras</td>
             <td>Sab + Mentir</td>
-            <td>dif enfrentada contra el objetivo/tirada libre</td> 
+            <td>dif enfrentada contra el objetivo-tirada libre</td> 
             <td>tras una hora obtienes visiones si existen fuerzas Yokais</td>
             </tr>          
 
             <tr>
             <td>Rezo Shintoista</td>
             <td>Sen + Con. Shinto</td>
-            <td>dif 40/tirada libre</td> 
+            <td>dif 40-tirada libre</td> 
             <td>tras una hora obtienes visiones si existen fuerzas Yokais</td>
             </tr>
             
