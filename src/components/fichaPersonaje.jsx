@@ -1036,8 +1036,10 @@ const renderTooltipPjPnj = () => (
        
 
        <div className='gradComp'>
-       <div className="caracTronco" style={{marginTop:"1em"}} >
-          <div className='circularContainer'>
+       <div className="container caracTroncoN"  >
+
+        <div style={{display:"flex", flexDirection:"row",gap:"0.5em", justifyContent:"center", alignItems:"center"}}>
+        <div className='circularContainer'>
           <input className='inputCirculo' type="number" value={fuerzaN} onChange={handleChangeFuerza} placeholder="Fza" />
           <label htmlFor="" >Fuerza</label>
           </div> 
@@ -1076,16 +1078,6 @@ const renderTooltipPjPnj = () => (
          <input className='inputCirculo'  type="number" value={sentidosN} onChange={handleChangeSentidos} placeholder="Sen" />
          <label  htmlFor="">Sentidos</label>
          </div>
-         
-          
-
-         
-          
-        <div>
-          <Tronco fza={fuerzaN} fort={fortalezaN} des={destrezaN} agi={agilidadN} sab={sabiduriaN} sen={sentidosN} pre={presenciaN} pri={principioN} ></Tronco>
-        </div>
-
-
         <div className='circularContainer' style={{marginLeft:"1em"}}>          
           <input className='inputCirculo' style={{borderRadius:"15px", height:"40px"}} type="number" value={iniciativaN} onChange={handleChangeIniciativa} placeholder="0" />
           <label htmlFor="" >Iniciativa</label>
@@ -1096,13 +1088,20 @@ const renderTooltipPjPnj = () => (
           <label htmlFor="" >Resistencia</label>
           </div>
         
-        
-    
+
         </div>
+          
+    
+           
+         <div >
+          <Tronco fza={fuerzaN} fort={fortalezaN} des={destrezaN} agi={agilidadN} sab={sabiduriaN} sen={sentidosN} pre={presenciaN} pri={principioN} ></Tronco>
+        </div>
+    
+      </div>
 
         
 
-       <div className="caracSecu" style={{padding:"15px"}}>
+       <div className="caracSecu" style={{paddingBottom:"1em"}}>
         
         <div className='circularContainer'>
         <label htmlFor="">Academisismo</label>
