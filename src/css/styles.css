@@ -1322,7 +1322,13 @@ transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el cursor */
   align-items: center; /* Alinea verticalmente los elementos */
   justify-content: center; /* Centra el contenido en la cuadrícula */
 }
-
+/* Cambiar a una sola columna en celulares */
+@media (max-width: 768px) {
+  .caracTroncoN {
+    grid-template-columns: 1fr; /* 1 columna */
+    row-gap: 1em; /* Espacio entre elementos */
+  }
+}
 .caracSecu {
   display: grid;
   grid-template-columns: repeat(5, 1fr); 
