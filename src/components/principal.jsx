@@ -470,38 +470,6 @@ useEffect(() => {
   };
 }, []);
 
-
-  const [saberes, setSaberes] = useState([]); // Estado inicial vacío
- 
-  useEffect(() => {
-    const fetchSaberes = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/saberes`);
-        //const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
-
-        
-        if (response.data && response.data.length > 0) {
-          setSaberes(response.data);
-        } else {
-          setSaberes([]); 
-        }
-      } catch (error) {
-        console.error('Error al cargar los saberes:', error);
-        setSaberes([]); 
-      }
-    };
-
-    fetchSaberes();
-  }, []);    
-
-
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleFlotante = () => {
-    setIsVisible(!isVisible); // Cambia el estado de visibilidad
-  };
-
-
-
   const [isChecked, setIsChecked] = useState(true);
 
 
@@ -584,18 +552,13 @@ return (
      cerrarSesion={cerrarSesion}
      
      setEstatus={setEstatus}
-     toggleFlotante={toggleFlotante}
-     isVisible={isVisible}
+   
+    
 
     
      />
      
-     <div>
-
-     {isVisible && <Flotante saberes={saberes} />} {/* Renderiza el componente solo si es visible */}
-     </div>
-
-
+     
 
      <div>
      {sesion ? (
@@ -1335,7 +1298,7 @@ return (
             </Tab> 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas} saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 

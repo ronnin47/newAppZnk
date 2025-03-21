@@ -15,7 +15,7 @@ import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 const apiUrl =import.meta.env.VITE_API_URL;
 
-import { Tronco } from './tronco.jsx';
+
 
 export const FichaPersonaje = ({
   personaje,
@@ -216,18 +216,6 @@ export const FichaPersonaje = ({
     }
   }, [damageActualN,kiN,fortalezaN,positivaN,negativaN]);
 
-
-  /*
-  useEffect(()=>{
-    const nuevoValorIniciativa=parseInt(agilidadN)+parseInt(sentidosN);
-    setIniciativaN(nuevoValorIniciativa);
-  },[agilidadN, sentidosN])
-
-  useEffect(()=>{
-    const nuevoValorResistencia=parseInt(fuerzaN)+parseInt(fortalezaN);
-    setResistenciaN(nuevoValorResistencia);
-  },[fuerzaN, fortalezaN])
-*/
 
 const handleChangeNombre = (event) => {
   setNombreN(event.target.value)    
@@ -509,13 +497,6 @@ const btnGuardarCambios = () => {
 
 
   setPersonajes(nuevosPersonajes);
- /* Swal.fire({
-    position: "top-center",
-    icon: "success",
-    title: `Los cambios de ${nombre} fueron guardados`,
-    showConfirmButton: false,
-    timer: 1500
-  });*/
 }
 
 const guardarCambiosBBDD = async () => {
@@ -1036,7 +1017,7 @@ const renderTooltipPjPnj = () => (
        
 
        <div className='gradComp'>
-       <div className="container caracTroncoN"  >
+       <div className="container caracTronco"  >
 
         <div style={{display:"flex", flexDirection:"row",gap:"0.5em", justifyContent:"center", alignItems:"center"}}>
         <div className='circularContainer'>
@@ -1090,13 +1071,6 @@ const renderTooltipPjPnj = () => (
         
 
         </div>
-          
-    
-           
-         <div >
-          <Tronco fza={fuerzaN} fort={fortalezaN} des={destrezaN} agi={agilidadN} sab={sabiduriaN} sen={sentidosN} pre={presenciaN} pri={principioN} ></Tronco>
-        </div>
-    
       </div>
 
         
