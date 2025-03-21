@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Tronco = ({ fza, for: fort, des, agi, sab, pre, sen, pri }) => {
+export const Tronco = ({ fza, fort, des, agi, sab, pre, sen, pri }) => {
   const inputs = {Pre: pre,Sen: sen,Sab: sab,Des: des,Pri: pri,Agi: agi,Fza: fza, For: fort };
   
   const labels = ["Pre","Sen","Sab", "Des","Pri", "Agi", "Fza", "For"];

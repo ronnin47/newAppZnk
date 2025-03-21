@@ -1082,7 +1082,7 @@ const renderTooltipPjPnj = () => (
          
           
         <div>
-          <Tronco fza={fuerzaN} for={fortalezaN} des={destrezaN} agi={agilidadN} sab={sabiduriaN} sen={sentidosN} pre={presenciaN} pri={principioN} ></Tronco>
+          <Tronco fza={fuerzaN} fort={fortalezaN} des={destrezaN} agi={agilidadN} sab={sabiduriaN} sen={sentidosN} pre={presenciaN} pri={principioN} ></Tronco>
         </div>
 
 
