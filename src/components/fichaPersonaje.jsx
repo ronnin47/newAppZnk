@@ -1228,57 +1228,57 @@ const renderTooltipPjPnj = () => (
    
       
      <div className='circularContainer'>
-     <label htmlFor="">Manejo de sombras</label>
+     <label htmlFor="" style={{ color: "yellow"}}  >Manejo de sombras</label>
      <input type="number" value={manejoSombrasN} onChange={handleChangeManejoSombras} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Trato Bakemono</label>
+     <label htmlFor="" style={{ color: "yellow"}}   >Trato Bakemono</label>
      <input type="number" value={tratoBakemonoN} onChange={handleChangeTratoBakemono} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Con. de hechiceria</label>
+     <label htmlFor="" style={{ color: "yellow"}}   >Con. de hechiceria</label>
      <input type="number" value={conHechiceriaN} onChange={handleChangeConHechiceria} placeholder="0" />
      </div>
      
      <div className='circularContainer'>
-     <label htmlFor="">Meditacion vital</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Meditacion vital</label>
      <input type="number" value={medVitalN} onChange={handleChangeMedVital} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Meditacion Espiritual</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Meditacion Espiritual</label>
      <input type="number" value={medEspiritualN} onChange={handleChangeMedEspiritual} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Res. Esp. Rayo</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Res. Esp. Rayo</label>
      <input type="number" value={rayoN} onChange={handleChangeRayo} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Res. Esp. Veneno</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Res. Esp. Veneno</label>
      <input type="number" value={venenoN} onChange={handleChangeVeneno} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Res. Esp. Fuego</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Res. Esp. Fuego</label>
      <input type="number" value={fuegoN} onChange={handleChangeFuego} placeholder="0" />
      </div>  
 
      <div className='circularContainer'>
-     <label htmlFor="">Res Esp. Frio</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Res Esp. Frio</label>
      <input type="number" value={frioN} onChange={handleChangeFrio} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Res. Esp. Corte</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Res. Esp. Corte</label>
      <input type="number" value={corteN} onChange={handleChangeCorte} placeholder="0" />
      </div>
 
      <div className='circularContainer'>
-     <label htmlFor="">Res. Esp. Energia</label>
+     <label htmlFor="" style={{ color: "yellow"}} >Res. Esp. Energia</label>
      <input type="number" value={energiaN} onChange={handleChangeEnergia} placeholder="0" />
      </div>
 
