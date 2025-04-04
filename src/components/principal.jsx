@@ -256,7 +256,7 @@ useEffect(() => {
 
 const [coleccionPersonajesTodos,setColeccionPersonajesTodos]= useState([]);
 
-
+//CONSUMIR TODOS LOS PERSONAJES
 useEffect(() => {
   const loadPersonajes = async () => {
     try {
