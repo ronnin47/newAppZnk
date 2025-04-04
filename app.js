@@ -38,27 +38,16 @@ const pool = new Pool({
 });
 */
 
-
-
-//**************BASE ENERO******************
-/*
+//BASE MARZO
 const pool = new Pool({
   user: 'gorda',          
-  host: 'dpg-ctmluupopnds73fgeus0-a',
-  database: 'baseenero', 
-  password: 'euuj1xWFh0oyyiHdIib89guQPwBuFrap',  
+  host: 'dpg-cvfe8eogph6c73bc3d5g-a',
+  database: 'basemarzo', 
+  password: 'lZIqq2HQYXgXqrC3ot1Z6AEN1mBh66lq',  
   port: 5432,
 });
-*/
 
 
-const pool = new Pool({
-  user: 'gorda',          
-  host: 'dpg-ctmluupopnds73fgeus0-a',
-  database: 'baseenero', 
-  password: 'euuj1xWFh0oyyiHdIib89guQPwBuFrap',  
-  port: 5432,
-});
 
 
 async function checkDatabaseConnection() {
