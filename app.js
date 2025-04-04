@@ -258,12 +258,12 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
 });
 
 
-// estamos trabajando acaaaaaaa
+
 app.get('/consumirPersonajesUsuario', async (req, res) => {
   try {
     
     const { usuarioId } = req.query;
-    console.log("el id del usuario es: ",usuarioId)
+    //console.log("el id del usuario es: ",usuarioId)
     const userQuery = 'SELECT * FROM personajes WHERE "usuarioId"=$1';
     const userResult = await pool.query(userQuery,[usuarioId]);
 

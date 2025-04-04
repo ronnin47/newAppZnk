@@ -254,15 +254,9 @@ useEffect(() => {
 }, []); 
 
 
-
-
-
-
-
 const [coleccionPersonajesTodos,setColeccionPersonajesTodos]= useState([]);
 
-//aca es donde vamos a comenzar a trabajar 
-//CONSUME TODOS LOS PERSONAJES
+
 useEffect(() => {
   const loadPersonajes = async () => {
     try {
@@ -283,31 +277,6 @@ useEffect(() => {
      
         setColeccionPersonajesTodos(coleccionPersonajes);
        
-    /*
-        const personajesFiltrados = coleccionPersonajes.filter(pj => pj.usuarioId == usuarioId);
-    
-        const storedOrder = localStorage.getItem('personajesOrder');
-        const orderedIds = storedOrder ? JSON.parse(storedOrder) : [];
-
- 
-        const personajesMap = new Map(personajesFiltrados.map(pj => [pj.idpersonaje, pj]));
-
-
-        personajesFiltrados.forEach((pj, index) => {
-          if (!orderedIds.includes(pj.idpersonaje)) {
-            orderedIds.push(pj.idpersonaje);
-          }
-        });
-
-     
-        localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
-        const orderedPersonajes = orderedIds.map(id => personajesMap.get(id)).filter(pj => pj);
-        if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
-          setPersonajes(orderedPersonajes);
-        } else {
-          setPersonajes(personajesFiltrados); 
-        }
-          */
       }
 
     } catch (error) {
