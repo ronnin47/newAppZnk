@@ -13,7 +13,7 @@ const socket = io(process.env.REACT_APP_BACKEND_URL);
 
 const apiUrl =import.meta.env.VITE_API_URL;
 
-export const Nava= ({ isVisible,toggleFlotante, setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
+export const Nava= ({  setEstatus,cerrarSesion,setUSuarioId,tituloNav,setPersonajes,sesion,setSesion})=> {
 
  const [modalLogin,setModalLogin]=useState(false);
 
@@ -221,13 +221,8 @@ const recuperarPass = async (email) => {
             <Nav.Link href="#" disabled>
               
             </Nav.Link>
-            <div>
-            <Button variant="outline-warning" style={{ borderRadius: "50%", border: "2px solid goldenrod", boxShadow: "0 4px 15px rgba(255, 223, 0, 0.6)" }} onClick={toggleFlotante} >
-            {isVisible ? 'Off' : 'on'}
-              </Button>
-            </div>
-           
-
+            
+    
            
           </Nav>
         </Navbar.Collapse>
