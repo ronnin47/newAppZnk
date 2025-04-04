@@ -480,28 +480,6 @@ useEffect(() => {
 }, []);
 
 
-  const [saberes, setSaberes] = useState([]); // Estado inicial vacío
- 
-  useEffect(() => {
-    const fetchSaberes = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/saberes`);
-        if (response.data && response.data.length > 0) {
-          setSaberes(response.data);
-        } else {
-          setSaberes([]); 
-        }
-      } catch (error) {
-        console.error('Error al cargar los saberes:', error);
-        setSaberes([]); 
-      }
-    };
-
-    fetchSaberes();
-  }, []);    
-
-
-
 
 
 
@@ -1329,7 +1307,7 @@ return (
             </Tab> 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas} saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajesTodos}  coleccionPersonajes={coleccionPersonajesTodos}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas}  usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajesTodos}  coleccionPersonajes={coleccionPersonajesTodos}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 

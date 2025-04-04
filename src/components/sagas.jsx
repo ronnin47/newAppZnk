@@ -70,28 +70,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
             },
           });
     
-    /*
-          if (response.data) {
-            const { idsaga, titulo, presentacion, imagensaga } = response.data;
-    
-            if (titulo && presentacion && imagensaga) {
-        
-              setSaga((prevSaberes) => [
-                ...prevSaberes,
-                {
-                  idsaga: idsaga,
-                  titulo: titulo || "desconocido",
-                  presentacion: presentacion || "desconocido",
-                  imagensaga: imagensaga,
-                },
-              ]);
-            } else {
-              console.error("La respuesta no tiene las propiedades 'presnetacion' o 'imagensaga'", response.data);
-            }
-          } else {
-            console.error("La respuesta no tiene el formato esperado", response.data);
-          }
-    */
+
           // Reinicia los campos de entrada
           setTitulo("");
           setPresentacion('');

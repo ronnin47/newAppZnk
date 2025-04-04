@@ -8,7 +8,7 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Grupos } from "./grupos";
-import { Saberes } from "./saberes";
+
 import { Sagas } from "./sagas";
 
 import { Usuarios } from "./usuarios";
@@ -274,7 +274,7 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
 
 
 
-export const Narrador = ({usuarioid,coleccionSecciones,setColeccionSecciones,coleccionSagas, setColeccionSagas, saberes,setSaberes, usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
+export const Narrador = ({usuarioid,coleccionSecciones,setColeccionSecciones,coleccionSagas, setColeccionSagas, usuariosConectados,estatus,coleccionGrupos, setColeccionGrupos,sesion,setColeccionPersonajes,coleccionPersonajes}) => {
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
@@ -684,9 +684,7 @@ const handleClickCrearGrupo = async() => {
           </Sagas>         
         </Tab>
 
-        <Tab eventKey="Saberes" title="Saberes" >
-          <Saberes saberes={saberes} setSaberes={setSaberes}></Saberes>
-        </Tab>
+    
 
         <Tab eventKey="Usuarios" title="Usuarios" >
           <Usuarios
