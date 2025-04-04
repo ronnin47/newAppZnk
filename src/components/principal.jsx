@@ -615,9 +615,6 @@ return (
      cerrarSesion={cerrarSesion}
      
      setEstatus={setEstatus}
-   
-     isVisible={isVisible}
-
     
      />
      
