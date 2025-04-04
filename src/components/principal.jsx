@@ -21,7 +21,7 @@ import { Ranking } from "./ranking.jsx";
 import { MiGrupo } from "./migrupo.jsx";
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
-import { Flotante } from "./flotante.jsx";
+
 import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Enemigos } from "./enemigos.jsx";
@@ -38,108 +38,101 @@ export const Principal= ()=> {
   const [usuariosConectados, setUsuariosConectados] = useState([]);
   const [pjSeleccionado,setPjSeleccionado]=useState("")
   const [loading, setLoading] = useState(true); 
-
-    const [nombre,setNombre]=useState("");
-    const [imagen,setImagen]=useState("/imagenBase.jpeg");
-    const [dominio,setDominio]=useState("");
-    const [raza,setRaza]=useState("");
-    const [edad,setEdad]=useState("");
-    const [ken,setKen]=useState("");
-    const [ki,setKi]=useState("");
-    const [destino,setDestino]=useState("");
-    const [pDestino,setPdestino]=useState("");
-    const [fuerza,setFuerza]=useState("");
-    const [fortaleza,setFortaleza]=useState("");
-    const [destreza,setDestreza]=useState("");
-    const [agilidad,setAgilidad]=useState("");
-    const [sabiduria,setSabiduria]=useState("");
-    const [presencia,setPresencia]=useState("");
-    const [principio,setPrincipio]=useState("");
-    const [sentidos,setSentidos]=useState("");
-    const [academisismo,setAcademisismo]=useState("");
-    const [alerta,setAlerta]=useState("");
-    const [atletismo,setAtletismo]=useState("");
-    const [conBakemono,setConBakemono]=useState("");
-    const [mentir,setMentir]=useState("");
-    const [pilotear,setPilotear]=useState("");
-    const [artesMarciales,setArtesMarciales]=useState("");
-    const [medicina,setMedicina]=useState("");
-    const [conObjMagicos,setConObjMagicos]=useState("");
-    const [sigilo,setSigilo]=useState("");
-    const [conEsferas,setConEsferas]=useState("");
-    const [conLeyendas,setConLeyendas]=useState("");
-    const [forja,setForja]=useState("");
-    const [conDemonio,setConDemonio]=useState("");
-    const [conEspiritual,setConEspiritual]=useState("");
-    const [manejoBlaster,setManejoBlaster]=useState("");
-    const [manejoSombras,setManejoSombras]=useState("");
-    const [tratoBakemono,setTratoBakemono]=useState("");
-    const [conHechiceria,setConHechiceria]=useState("");
-    const [medVital,setMedVital]=useState("");
-    const [medEspiritual,setMedEspiritual]=useState(""); 
-    const [rayo,setRayo]=useState("");
-    const [fuego,setFuego]=useState("");
-    const [frio,setFrio]=useState("");
-    const [veneno,setVeneno]=useState("");
-    const [corte,setCorte]=useState("");
-    const [energia,setEnergia]=useState("");
-    const [apCombate,setApCombate]=useState("");
-    const [valCombate,setValCombate]=useState("");
-    const [apCombate2,setApCombate2]=useState("");
-    const [valCombate2,setValCombate2]=useState("");
-    const [add1,setAdd1]=useState("");
-    const [valAdd1,setValAdd1]=useState("");
-    const [add2,setAdd2]=useState("");
-    const [valAdd2,setValAdd2]=useState("")
-    const [add3,setAdd3]=useState("");
-    const [valAdd3,setValAdd3]=useState("");
-    const [add4,setAdd4]=useState("");
-    const [valAdd4,setValAdd4]=useState("");
-    const [activeKey, setActiveKey] = useState(""); 
-    const [ventajas, setVentajas] = useState([]);
-    const [inventario, setInventario] = useState([]);
-    const [dominios, setDominios] = useState([]);
-    const [hechizos, setHechizos] = useState([]);
-    const [kenActual, setKenActual] = useState("");
-    const [kiActual, setKiActual] = useState("");
-    const [positiva, setPositivaActual] = useState("");
-    const [negativa, setNegativaActual] = useState("");
-    const [vidaActual,setVidaActual]=useState("");
-    const [naturaleza,setNaturaleza]=useState("");
-    const [consumision,setConsumision]=useState("");
-    const [cicatriz,setCicatriz]=useState("");
-    const [conviccion,setConviccion]=useState("");
-    const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
-    const [vivoMuerto,setVivoMuerto]=useState(true)
-    const [message, setMessage] = useState('');
-    const [sock, setSock] = useState([]);
-    const [tecEspecial, setTecEspecial] = useState([]);
-    const [notasSaga,setNotasSaga]=useState("") 
-   
-   const [pjsCombinados,setPjsCombinados]=useState([])
-
-
-// aca esta el state de pj o pnj iniciando siempre en true
-   const [pjPnj,setPjPnj]=useState(true)
+  const [nombre,setNombre]=useState("");
+  const [imagen,setImagen]=useState("/imagenBase.jpeg");
+  const [dominio,setDominio]=useState("");
+  const [raza,setRaza]=useState("");
+  const [edad,setEdad]=useState("");
+  const [ken,setKen]=useState("");
+  const [ki,setKi]=useState("");
+  const [destino,setDestino]=useState("");
+  const [pDestino,setPdestino]=useState("");
+  const [fuerza,setFuerza]=useState("");
+  const [fortaleza,setFortaleza]=useState("");
+  const [destreza,setDestreza]=useState("");
+  const [agilidad,setAgilidad]=useState("");
+  const [sabiduria,setSabiduria]=useState("");
+  const [presencia,setPresencia]=useState("");
+  const [principio,setPrincipio]=useState("");
+  const [sentidos,setSentidos]=useState("");
+  const [academisismo,setAcademisismo]=useState("");
+  const [alerta,setAlerta]=useState("");
+  const [atletismo,setAtletismo]=useState("");
+  const [conBakemono,setConBakemono]=useState("");
+  const [mentir,setMentir]=useState("");
+  const [pilotear,setPilotear]=useState("");
+  const [artesMarciales,setArtesMarciales]=useState("");
+  const [medicina,setMedicina]=useState("");
+  const [conObjMagicos,setConObjMagicos]=useState("");
+  const [sigilo,setSigilo]=useState("");
+  const [conEsferas,setConEsferas]=useState("");
+  const [conLeyendas,setConLeyendas]=useState("");
+  const [forja,setForja]=useState("");
+  const [conDemonio,setConDemonio]=useState("");
+  const [conEspiritual,setConEspiritual]=useState("");
+  const [manejoBlaster,setManejoBlaster]=useState("");
+  const [manejoSombras,setManejoSombras]=useState("");
+  const [tratoBakemono,setTratoBakemono]=useState("");
+  const [conHechiceria,setConHechiceria]=useState("");
+  const [medVital,setMedVital]=useState("");
+  const [medEspiritual,setMedEspiritual]=useState(""); 
+  const [rayo,setRayo]=useState("");
+  const [fuego,setFuego]=useState("");
+  const [frio,setFrio]=useState("");
+  const [veneno,setVeneno]=useState("");
+  const [corte,setCorte]=useState("");
+  const [energia,setEnergia]=useState("");
+  const [apCombate,setApCombate]=useState("");
+  const [valCombate,setValCombate]=useState("");
+  const [apCombate2,setApCombate2]=useState("");
+  const [valCombate2,setValCombate2]=useState("");
+  const [add1,setAdd1]=useState("");
+  const [valAdd1,setValAdd1]=useState("");
+  const [add2,setAdd2]=useState("");
+  const [valAdd2,setValAdd2]=useState("")
+  const [add3,setAdd3]=useState("");
+  const [valAdd3,setValAdd3]=useState("");
+  const [add4,setAdd4]=useState("");
+  const [valAdd4,setValAdd4]=useState("");
+  const [activeKey, setActiveKey] = useState(""); 
+  const [ventajas, setVentajas] = useState([]);
+  const [inventario, setInventario] = useState([]);
+  const [dominios, setDominios] = useState([]);
+  const [hechizos, setHechizos] = useState([]);
+  const [kenActual, setKenActual] = useState("");
+  const [kiActual, setKiActual] = useState("");
+  const [positiva, setPositivaActual] = useState("");
+  const [negativa, setNegativaActual] = useState("");
+  const [vidaActual,setVidaActual]=useState("");
+  const [naturaleza,setNaturaleza]=useState("");
+  const [consumision,setConsumision]=useState("");
+  const [cicatriz,setCicatriz]=useState("");
+  const [conviccion,setConviccion]=useState("");
+  const pj = personajes.find(pj => pj.idpersonaje === pjSeleccionado);
+  const [vivoMuerto,setVivoMuerto]=useState(true)
+  const [message, setMessage] = useState('');
+  const [sock, setSock] = useState([]);
+  const [tecEspecial, setTecEspecial] = useState([]);
+  const [notasSaga,setNotasSaga]=useState("");
+  const [pjsCombinados,setPjsCombinados]=useState([]);
+  const [mostrarIncremetos,setMostrarIncrementos]=useState(false);
+  const [pjPnj,setPjPnj]=useState(true);
+  const [dataIncrementos,setDataIncrementos]=useState([])
+  const [coleccionGrupos,setColeccionGrupos]=useState([]);
 
 
     const handleDragEnd=(event)=>{
-    //console.log("orden original: ",personajes)
       const {active, over}=event
       const oldIndex= personajes.findIndex( pj=>pj.idpersonaje===active.id)
       const newIndex= personajes.findIndex( pj=>pj.idpersonaje===over.id)
-      //console.log("oldIndex ",oldIndex);
-      //console.log("newIndex ",newIndex);
       const newOrder= arrayMove(personajes,oldIndex,newIndex) 
-      //console.log("nuevo orden: ",newOrder)
       setPersonajes(newOrder)
       const orderedIds = newOrder.map(pj => pj.idpersonaje);
       localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
     };
 
-  
 
-    const eliminarPj =  (idpersonaje) => {
+    const eliminarPj =  async (idpersonaje) => {
       // Retornamos la promesa de Swal.fire para manejarla después
       return Swal.fire({
         title: '¿quieres eliminar el personaje?',
@@ -217,10 +210,7 @@ const cerrarSesion = async() => {
   setPjSeleccionado("");
   setPersonajes([]);
   setSesion(false);
-
   socket.emit('user-disconnect', { usuarioId }); 
-
- 
 };
 
 
@@ -265,12 +255,79 @@ useEffect(() => {
 
 
 
+
+
+
+
+const [coleccionPersonajesTodos,setColeccionPersonajesTodos]= useState([]);
+
+//aca es donde vamos a comenzar a trabajar 
+//CONSUME TODOS LOS PERSONAJES
 useEffect(() => {
   const loadPersonajes = async () => {
     try {
       if (sesion) {       
-      //const response = await axios.get('http://localhost:4000/consumirPersonajesNarrador', {
       const response = await axios.get(`${apiUrl}/consumirPersonajesNarrador`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const { coleccionPersonajes } = response.data;
+
+        if (!Array.isArray(coleccionPersonajes)) {
+          console.error('El formato de datos no es un array/ aca esta el error.');
+          return;
+        }
+
+     
+        setColeccionPersonajesTodos(coleccionPersonajes);
+       
+    /*
+        const personajesFiltrados = coleccionPersonajes.filter(pj => pj.usuarioId == usuarioId);
+    
+        const storedOrder = localStorage.getItem('personajesOrder');
+        const orderedIds = storedOrder ? JSON.parse(storedOrder) : [];
+
+ 
+        const personajesMap = new Map(personajesFiltrados.map(pj => [pj.idpersonaje, pj]));
+
+
+        personajesFiltrados.forEach((pj, index) => {
+          if (!orderedIds.includes(pj.idpersonaje)) {
+            orderedIds.push(pj.idpersonaje);
+          }
+        });
+
+     
+        localStorage.setItem('personajesOrder', JSON.stringify(orderedIds));
+        const orderedPersonajes = orderedIds.map(id => personajesMap.get(id)).filter(pj => pj);
+        if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
+          setPersonajes(orderedPersonajes);
+        } else {
+          setPersonajes(personajesFiltrados); 
+        }
+          */
+      }
+
+    } catch (error) {
+      console.error("Cliente: Fallo al consumir personajes narrador TODOS", error.message);
+    } finally{
+      setLoading(false);
+    }
+  };
+
+  loadPersonajes();
+}, [sesion]);
+
+
+//CONSUMIR PERSONAJES USUARIO
+useEffect(() => {
+  const loadPersonajes = async () => {
+    try {
+      if (sesion) {       
+      const response = await axios.get(`${apiUrl}/consumirPersonajesUsuario`,{
+          params: { usuarioId },
           headers: {
             'Content-Type': 'application/json',
           },
@@ -308,13 +365,10 @@ useEffect(() => {
         if (JSON.stringify(orderedPersonajes) !== JSON.stringify(personajes)) {
           setPersonajes(orderedPersonajes);
         } else {
-          setPersonajes(personajesFiltrados); // Si no hay cambios, establece el estado con los filtrados
+          setPersonajes(personajesFiltrados); 
         }
       }
-/*
-      setTimeout(() => {
-        setLoading(false);  // Oculta el spinner después del retraso
-      }, 10000);*/
+
     } catch (error) {
       console.error("Cliente: Fallo al consumir personajes narrador", error.message);
     } finally{
@@ -326,17 +380,12 @@ useEffect(() => {
 }, [sesion]);
 
 
-const [dataIncrementos,setDataIncrementos]=useState([])
-
-const [coleccionGrupos,setColeccionGrupos]=useState([]);
 
 
 useEffect(() => {
   const loadPersonajes = async () => {
     try {
       if (sesion) {
-     
-        //const response = await axios.get('http://localhost:4000/consumirGrupos', {
         const response = await axios.get(`${apiUrl}/consumirGrupos`, {
           headers: {
             'Content-Type': 'application/json',
@@ -369,10 +418,7 @@ useEffect(() => {
   const consumirSagasZnk = async () => {
     try {
       if (sesion) {
-       
-        //const response = await axios.get('http://localhost:4000/consumirSagas', {
         const response = await axios.get(`${apiUrl}/consumirSagas`, {
-         // const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/consumirSagas`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -405,8 +451,6 @@ useEffect(() => {
   const consumirSeccionesZnk = async () => {
     try {
       if (sesion) {
-     
-        //const response = await axios.get('http://localhost:4000/consumirSecciones', {
         const response = await axios.get(`${apiUrl}/consumirSecciones`, {
           headers: {
             'Content-Type': 'application/json',
@@ -435,11 +479,7 @@ useEffect(() => {
 
 
 
-
-
-
 const [values, setValues] = useState({});
-
 
 const calcularVidaTotal = (personaje) => {
   return (personaje.ki + personaje.fortaleza) * (personaje.positiva + personaje.negativa);
@@ -477,9 +517,6 @@ useEffect(() => {
     const fetchSaberes = async () => {
       try {
         const response = await axios.get(`${apiUrl}/saberes`);
-        //const response = await axios.get('http://localhost:4000/saberes'); // Cambia la URL según tu API
-
-        
         if (response.data && response.data.length > 0) {
           setSaberes(response.data);
         } else {
@@ -495,10 +532,7 @@ useEffect(() => {
   }, []);    
 
 
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleFlotante = () => {
-    setIsVisible(!isVisible); // Cambia el estado de visibilidad
-  };
+
 
 
 
@@ -568,9 +602,6 @@ useEffect(() => {
   );
 
 
-  const [mostrarIncremetos,setMostrarIncrementos]=useState(false)
-
-
 
 
 return (
@@ -584,16 +615,13 @@ return (
      cerrarSesion={cerrarSesion}
      
      setEstatus={setEstatus}
-     toggleFlotante={toggleFlotante}
+   
      isVisible={isVisible}
 
     
      />
      
-     <div>
-
-     {isVisible && <Flotante saberes={saberes} />} {/* Renderiza el componente solo si es visible */}
-     </div>
+     
 
 
 
@@ -623,7 +651,7 @@ return (
                   personajes={personajes}
                   setPersonajes={setPersonajes}
                   coleccionGrupos={coleccionGrupos}
-                  coleccionPersonajes={coleccionPersonajes}
+                  coleccionPersonajes={coleccionPersonajesTodos}
 
                   values={values} // Pasar el estado
                   setValues={setValues} // Pasar la función
@@ -681,9 +709,9 @@ return (
               <SagasPre
               coleccionSagas={coleccionSagas}
               coleccionSecciones={coleccionSecciones}
-              coleccionPersonajes={coleccionPersonajes}
+              coleccionPersonajes={coleccionPersonajesTodos}
               usuarioid={usuarioId}
-              setColeccionPersonajes={setColeccionPersonajes}
+              setColeccionPersonajes={setColeccionPersonajesTodos}
               >
               </SagasPre>
 
@@ -1173,7 +1201,7 @@ return (
             </Tab>
               
             <Tab eventKey="ranking" title="Ranking Ken" className="fondoBody">
-              {sesion==true ?(<Ranking coleccionPersonajes={coleccionPersonajes}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true ?(<Ranking coleccionPersonajes={coleccionPersonajesTodos}></Ranking>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 
@@ -1335,7 +1363,7 @@ return (
             </Tab> 
 
             <Tab eventKey="narrador" title="Narrador" className="fondoBody">
-              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas} saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajes}  coleccionPersonajes={coleccionPersonajes}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
+              {sesion==true && estatus=="narrador"?(<Narrador coleccionSecciones={coleccionSecciones} setColeccionSecciones={setColeccionSecciones} coleccionSagas={coleccionSagas} setColeccionSagas={setColeccionSagas} saberes={saberes} setSaberes={setSaberes} usuariosConectados={usuariosConectados}  coleccionGrupos={coleccionGrupos} setColeccionGrupos={setColeccionGrupos} sesion={sesion} estatus={estatus} setColeccionPersonajes={setColeccionPersonajesTodos}  coleccionPersonajes={coleccionPersonajesTodos}></Narrador>):(<p  style={{color:"aliceblue", textAlign:"center"}}>Se requiere estatus Narrador</p>)}
 
             </Tab>
 

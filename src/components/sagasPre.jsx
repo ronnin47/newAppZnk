@@ -11,6 +11,9 @@ const apiUrl =import.meta.env.VITE_API_URL;
 export const SagasPre = ({ setColeccionPersonajes,usuarioid,coleccionSecciones,coleccionSagas,coleccionPersonajes }) => {
   
  // console.log("este es el usuario ID que tiene: ",usuarioid)
+
+
+ console.log(" coleccion de personajes todos: ",coleccionPersonajes)
   return (
     <div
       className='container'

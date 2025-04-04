@@ -41,6 +41,16 @@ const pool = new Pool({
 
 
 //**************BASE ENERO******************
+/*
+const pool = new Pool({
+  user: 'gorda',          
+  host: 'dpg-ctmluupopnds73fgeus0-a',
+  database: 'baseenero', 
+  password: 'euuj1xWFh0oyyiHdIib89guQPwBuFrap',  
+  port: 5432,
+});
+*/
+
 
 const pool = new Pool({
   user: 'gorda',          
@@ -246,6 +256,38 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
+
+
+// estamos trabajando acaaaaaaa
+app.get('/consumirPersonajesUsuario', async (req, res) => {
+  try {
+    
+    const { usuarioId } = req.query;
+    console.log("el id del usuario es: ",usuarioId)
+    const userQuery = 'SELECT * FROM personajes WHERE "usuarioId"=$1';
+    const userResult = await pool.query(userQuery,[usuarioId]);
+
+   
+    if (userResult.rows.length === 0) {
+      return res.status(401).json({ message: 'No se recupero personajes para Usuario' });
+    }
+
+    const coleccionPersonajes = userResult.rows;
+    res.json({
+      message: 'Inicio de sesión exitoso',
+      coleccionPersonajes: coleccionPersonajes,   
+    });
+
+  } catch (error) {
+    console.error('Error al obtener coleccion personajes del Usuario:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
+
+
+
+
+
 
 app.post('/insert-personaje', async (req, res) => {
 
