@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
+
+
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+
 import 'animate.css';
 
 export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
@@ -11,7 +15,8 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
   const vidaTotalNegativa = faseSalud * parseInt(negativaN);
   const vidaTotal = vidaTotalPositiva + vidaTotalNegativa;
 
-  
+  const [estadoDeFase, setEstadoDeFase] = useState("SIN HERIDAS");
+
   let porcentajeVidaPositivaInicial = (damageActualN * 100) / vidaTotalPositiva;
   let porcentajeVidaNegativaInicial = 0;
 
@@ -79,29 +84,29 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
       setPorcentajeVidaNegativa(porcentajeNegativaAjustado); 
     }
     
-    let estadoDeFase=""
+    //let estadoDeFase=""
 
     if(newDamage<=vidaTotalPositiva && newDamage>=(vidaTotalPositiva-faseSalud)){
       if(newDamage!==0){
-      estadoDeFase="fase MALHERIDO"
+      setEstadoDeFase("MALHERIDO")
       }
    }
    
    if(newDamage<=(vidaTotalPositiva-faseSalud) && newDamage>=(vidaTotalPositiva-faseSalud*2)){
     if(newDamage!==0){
-    estadoDeFase="fase MALTRECHO"
+    setEstadoDeFase("MALTRECHO")
     }
   }
   if(newDamage<=(vidaTotalPositiva-faseSalud*2) && newDamage>=(vidaTotalPositiva-faseSalud*3)){
     if(newDamage!==0){
-     estadoDeFase="fase RAZGADO"
+     setEstadoDeFase("RAZGADO")
     }
   }
 
   if(newDamage<=(vidaTotalPositiva-faseSalud*3)){
     if(positivaN>=3){
       if(newDamage!==0){
-        estadoDeFase="fase RAZGADO"
+        setEstadoDeFase("RAZGADO")
        }
     } 
 }
@@ -109,38 +114,44 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
    if(newDamage>vidaTotalPositiva && newDamage<=(vidaTotalPositiva+faseSalud)){    
    
     if(negativaN==1){
-       estadoDeFase="fase MORIBUNDO"
+       setEstadoDeFase("MORIBUNDO")
     }else if(negativaN==2){
-      estadoDeFase="fase INCAPACITADO"
+      setEstadoDeFase("INCAPACITADO")
     }else if(negativaN>=3){
-      estadoDeFase="fase INCONCIENTE"
+      setEstadoDeFase("INCONCIENTE")
     }
    }
 
    if(newDamage>(vidaTotalPositiva+faseSalud) && newDamage<=(vidaTotalPositiva+faseSalud*2)){
 
     if(negativaN==1){
-      estadoDeFase="fase MORIBUNDO"
+      setEstadoDeFase("MORIBUNDO")
    }else if(negativaN==2){
-     estadoDeFase="fase MORIBUNDO"
+     setEstadoDeFase("MORIBUNDO")
    }else if(negativaN>=3){
-     estadoDeFase="fase INCAPACITADO"
+     setEstadoDeFase("INCAPACITADO")
    }
     //estadoDeFase="fase iNCAPACITADO"
    }
    if(newDamage>(vidaTotalPositiva+faseSalud*2) && newDamage<=(vidaTotalPositiva+faseSalud*3)){
     
     if(negativaN==1){
-      estadoDeFase=""
+      setEstadoDeFase("")
    }else if(negativaN==2){
-     estadoDeFase=""
+     setEstadoDeFase("")
    }else if(negativaN>=3){
-     estadoDeFase="fase MORIBUNDO"
+     setEstadoDeFase("MORIBUNDO")
    }
     //estadoDeFase="fase MORIBUNDO"
    }
   
+   if(newDamage > vidaTotal){
+    setEstadoDeFase("MUERTO")
+  }
 
+  if(newDamage == 0){
+    setEstadoDeFase("SIN HERIDAS")
+  }
 
 
 
@@ -215,6 +226,14 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
     }
    
   }
+
+
+
+  const renderTooltipEstado = () => (
+    <Tooltip id={`tooltip-${idpersonaje}`} style={{textAlign: 'center' }}>
+      <p style={{textAlign: 'center', color:"white", fontSize:"1.1em" }}>{estadoDeFase}</p>
+    </Tooltip>
+  );
   
   return (
     <div className="col1" >
@@ -246,28 +265,48 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
       </div>
      
       {estaMuerto ? (
-        <>
-        
-        <div className="barraExterna">
-            <div className="barraInternaVida" style={{ width: "100%", background: "black" }}></div>
-          </div>
-          <div className="barraExterna">
-            <div className="barraInternaVidaNegativa" style={{ width: "100%", background: "black" }}></div>
-          </div>
-  
-         
-        </>
-        
-      ) : (
-        <>
-          <div className="barraExternaN"  style={{ '--divisiones': positivaN }}>
-            <div className="barraInternaVida" style={{ width: `${porcentajeVidaPositiva}%` }}></div>
-          </div>
-          <div className="barraExternaN"  style={{ '--divisiones': negativaN }}>
-            <div className="barraInternaVidaNegativa" style={{ width: `${porcentajeVidaNegativa}%` }}></div>
-          </div>
-        </>
-      )}
+  <OverlayTrigger
+    placement="top"
+    overlay={renderTooltipEstado()}
+  >
+    <div style={{ display: "inline-block", position: "relative", width: "100%" }}>
+      <div className="barraExterna">
+        <div
+          className="barraInternaVida"
+          style={{ width: "100%", background: "black" }}
+        ></div>
+      </div>
+
+      <div className="barraExterna">
+        <div
+          className="barraInternaVidaNegativa"
+          style={{ width: "100%", background: "black" }}
+        ></div>
+      </div>
+    </div>
+  </OverlayTrigger>
+) : (
+  <OverlayTrigger
+    placement="top"
+    overlay={renderTooltipEstado()}
+  >
+    <div style={{ display: "inline-block", position: "relative", width: "100%" }}>
+      <div className="barraExternaN" style={{ '--divisiones': positivaN }}>
+        <div
+          className="barraInternaVida"
+          style={{ width: `${porcentajeVidaPositiva}%` }}
+        ></div>
+      </div>
+
+      <div className="barraExternaN" style={{ '--divisiones': negativaN }}>
+        <div
+          className="barraInternaVidaNegativa"
+          style={{ width: `${porcentajeVidaNegativa}%` }}
+        ></div>
+      </div>
+    </div>
+  </OverlayTrigger>
+)}
     </div>
   );
 }
