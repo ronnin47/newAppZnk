@@ -17,6 +17,74 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
 
   const [estadoDeFase, setEstadoDeFase] = useState("SIN HERIDAS");
 
+  //solucionar el primer problema del estado incial
+  useEffect(() => {
+    calcularEstadoIncial();
+  }, []); // <- se ejecuta solo al montar
+
+  const calcularEstadoIncial = () => {
+    let newDamage = damageActualN;
+
+    if (newDamage <= vidaTotalPositiva && newDamage >= vidaTotalPositiva - faseSalud) {
+      if (newDamage !== 0) {
+        setEstadoDeFase("MALHERIDO");
+      }
+    }
+
+    if (newDamage <= vidaTotalPositiva - faseSalud && newDamage >= vidaTotalPositiva - faseSalud * 2) {
+      if (newDamage !== 0) {
+        setEstadoDeFase("MALTRECHO");
+      }
+    }
+
+    if (newDamage <= vidaTotalPositiva - faseSalud * 2 && newDamage >= vidaTotalPositiva - faseSalud * 3) {
+      if (newDamage !== 0) {
+        setEstadoDeFase("RAZGADO");
+      }
+    }
+
+    if (newDamage <= vidaTotalPositiva - faseSalud * 3) {
+      if (positivaN >= 3 && newDamage !== 0) {
+        setEstadoDeFase("RAZGADO");
+      }
+    }
+
+    if (newDamage > vidaTotalPositiva && newDamage <= vidaTotalPositiva + faseSalud) {
+      if (negativaN === 1) {
+        setEstadoDeFase("MORIBUNDO");
+      } else if (negativaN === 2) {
+        setEstadoDeFase("INCAPACITADO");
+      } else if (negativaN >= 3) {
+        setEstadoDeFase("INCONCIENTE");
+      }
+    }
+
+    if (newDamage > vidaTotalPositiva + faseSalud && newDamage <= vidaTotalPositiva + faseSalud * 2) {
+      if (negativaN === 1 || negativaN === 2) {
+        setEstadoDeFase("MORIBUNDO");
+      } else if (negativaN >= 3) {
+        setEstadoDeFase("INCAPACITADO");
+      }
+    }
+
+    if (newDamage > vidaTotalPositiva + faseSalud * 2 && newDamage <= vidaTotalPositiva + faseSalud * 3) {
+      if (negativaN >= 3) {
+        setEstadoDeFase("MORIBUNDO");
+      }
+    }
+
+    if (newDamage > vidaTotal) {
+      setEstadoDeFase("MUERTO");
+    }
+
+    if (newDamage === 0) {
+      setEstadoDeFase("SIN HERIDAS");
+    }
+  };
+
+  // el estado nunca actualizo a tiempo
+
+
   let porcentajeVidaPositivaInicial = (damageActualN * 100) / vidaTotalPositiva;
   let porcentajeVidaNegativaInicial = 0;
 
@@ -84,21 +152,24 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
       setPorcentajeVidaNegativa(porcentajeNegativaAjustado); 
     }
     
-    //let estadoDeFase=""
+    let estadoDeFaseActual=""
 
     if(newDamage<=vidaTotalPositiva && newDamage>=(vidaTotalPositiva-faseSalud)){
       if(newDamage!==0){
+      estadoDeFaseActual="MALHERIDO"
       setEstadoDeFase("MALHERIDO")
       }
    }
    
    if(newDamage<=(vidaTotalPositiva-faseSalud) && newDamage>=(vidaTotalPositiva-faseSalud*2)){
     if(newDamage!==0){
-    setEstadoDeFase("MALTRECHO")
+      estadoDeFaseActual="MALTRECHO"
+      setEstadoDeFase("MALTRECHO")
     }
   }
   if(newDamage<=(vidaTotalPositiva-faseSalud*2) && newDamage>=(vidaTotalPositiva-faseSalud*3)){
     if(newDamage!==0){
+     estadoDeFaseActual="RAZGADO"
      setEstadoDeFase("RAZGADO")
     }
   }
@@ -106,6 +177,7 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
   if(newDamage<=(vidaTotalPositiva-faseSalud*3)){
     if(positivaN>=3){
       if(newDamage!==0){
+        estadoDeFaseActual="RAZGADO"
         setEstadoDeFase("RAZGADO")
        }
     } 
@@ -116,8 +188,10 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
     if(negativaN==1){
        setEstadoDeFase("MORIBUNDO")
     }else if(negativaN==2){
+      estadoDeFaseActual="INCAPACITADO"
       setEstadoDeFase("INCAPACITADO")
     }else if(negativaN>=3){
+      estadoDeFaseActual="INCONCIENTE"
       setEstadoDeFase("INCONCIENTE")
     }
    }
@@ -125,10 +199,13 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
    if(newDamage>(vidaTotalPositiva+faseSalud) && newDamage<=(vidaTotalPositiva+faseSalud*2)){
 
     if(negativaN==1){
+      estadoDeFaseActual="MORIBUNDO"
       setEstadoDeFase("MORIBUNDO")
    }else if(negativaN==2){
-     setEstadoDeFase("MORIBUNDO")
+    estadoDeFaseActual="MORIBUNDO" 
+    setEstadoDeFase("MORIBUNDO")
    }else if(negativaN>=3){
+     estadoDeFaseActual="INCAPACITADO"
      setEstadoDeFase("INCAPACITADO")
    }
     //estadoDeFase="fase iNCAPACITADO"
@@ -136,20 +213,25 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
    if(newDamage>(vidaTotalPositiva+faseSalud*2) && newDamage<=(vidaTotalPositiva+faseSalud*3)){
     
     if(negativaN==1){
+       estadoDeFaseActual=""
       setEstadoDeFase("")
    }else if(negativaN==2){
+     estadoDeFaseActual=""
      setEstadoDeFase("")
    }else if(negativaN>=3){
+     estadoDeFaseActual="MORIBUNDO"
      setEstadoDeFase("MORIBUNDO")
    }
     //estadoDeFase="fase MORIBUNDO"
    }
   
    if(newDamage > vidaTotal){
+     estadoDeFaseActual="MUERTO"
     setEstadoDeFase("MUERTO")
   }
 
   if(newDamage == 0){
+     estadoDeFaseActual="SIN HERIDAS"
     setEstadoDeFase("SIN HERIDAS")
   }
 
@@ -177,12 +259,12 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
     let message
 
     if(newValue>0){
-        message = `            Recibio ${newValue} p de DAÑO                        VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFase}   ${estadoSalud}`;
+        message = `            Recibio ${newValue} p de DAÑO                        VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFaseActual}   ${estadoSalud}`;
     }else if(newValue<0){
         let recuperado=-(newValue)
-        message = `            Restauro ${recuperado} p de VIDA                     VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFase}   ${estadoSalud}`;
+        message = `            Restauro ${recuperado} p de VIDA                     VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFaseActual}   ${estadoSalud}`;
     }else {
-        message = `                             VITALIDAD: ${newDamage} / ${vidaTotal}          ${estadoDeFase}   ${estadoSalud}`;
+        message = `                             VITALIDAD: ${newDamage} / ${vidaTotal}          ${estadoDeFaseActual}   ${estadoSalud}`;
     }
   
    
