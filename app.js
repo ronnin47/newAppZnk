@@ -38,6 +38,7 @@ const pool = new Pool({
 });
 */
 
+/*
 //BASE MARZO
 const pool = new Pool({
   user: 'gorda',          
@@ -46,6 +47,16 @@ const pool = new Pool({
   password: 'lZIqq2HQYXgXqrC3ot1Z6AEN1mBh66lq',  
   port: 5432,
 });
+*/
+
+const pool = new Pool({
+  user: 'gorda',          
+  host: 'dpg-ctmluupopnds73fgeus0-a',
+  database: 'baseenero', 
+  password: 'euuj1xWFh0oyyiHdIib89guQPwBuFrap',  
+  port: 5432,
+});
+
 
 
 
