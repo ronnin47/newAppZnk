@@ -32,19 +32,8 @@ const server = http.createServer(app);
 const pool = new Pool({
   user: 'postgres',          // Reemplaza con tu usuario de PostgreSQL
   host: 'localhost',
-  database: 'znkAppNew', // Reemplaza con el nombre de tu base de datos
-  password: '1234',   // Reemplaza con tu contraseña de PostgreSQL
-  port: 5432,
-});
-*/
-
-/*
-//BASE MARZO
-const pool = new Pool({
-  user: 'gorda',          
-  host: 'dpg-cvfe8eogph6c73bc3d5g-a',
-  database: 'basemarzo', 
-  password: 'lZIqq2HQYXgXqrC3ot1Z6AEN1mBh66lq',  
+  database: 'baseLocalZnk', // Reemplaza con el nombre de tu base de datos
+  password: '041183',   // Reemplaza con tu contraseña de PostgreSQL
   port: 5432,
 });
 */
