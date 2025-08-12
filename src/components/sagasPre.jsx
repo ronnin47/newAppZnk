@@ -219,7 +219,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
                <img
                 className="agrandarB"
                   key={personaje.idpersonaje}
-                  src={personaje.imagen || '/imagenBase.jpeg'} // Imagen por defecto si no existe una imagen
+                  src={personaje.imagenurl || '/imagenBase.jpeg'} // Imagen por defecto si no existe una imagen
                   alt={personaje.nombre}
                   style={{
                     width: '2.5em',
@@ -228,7 +228,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
                     border: '2px solid yellow',
                     cursor: 'pointer',
                   }}
-                  onClick={() => handleImagenClick(personaje.naturaleza, personaje.ken,personaje.raza,personaje.conviccion,personaje.dominio,personaje.imagen, personaje.nombre,personaje.notasaga,personaje.usuarioId,personaje.idpersonaje)}
+                  onClick={() => handleImagenClick(personaje.naturaleza, personaje.ken,personaje.raza,personaje.conviccion,personaje.dominio,personaje.imagenurl, personaje.nombre,personaje.notasaga,personaje.usuarioId,personaje.idpersonaje)}
                 />
                 </OverlayTrigger>
               ))}
@@ -342,7 +342,7 @@ naturaleza,
 
 
 
-  console.log("*******************DOMINIO DEL PJ: ",dominio)
+ 
   //console.log(`NOTA SAGA DE ${nombre} : ${JSON.stringify(notaSaga)}`);
   const [isEditing, setIsEditing] = useState(false);
   const [editableHistoria, setEditableHistoria] = useState('');

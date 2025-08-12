@@ -23,6 +23,7 @@ const Cartita=({
   ken,
   ki,
   imagen,
+  imagenurl,
   fuerza, 
   fortaleza, 
   agilidad, 
@@ -114,7 +115,7 @@ const Cartita=({
   
       return [
         ...prevGrupo,
-        { idpersonaje, nombre, imagen }
+        { idpersonaje, nombre, imagenurl }
       ];
     });
   };
@@ -125,7 +126,7 @@ const Cartita=({
   return(
         <>
           <div className="cartita" style={{ padding: "10px", position: "relative" }} onDoubleClick={handleCardClick}>
-  <img src={imagen} alt={nombre} className="cartita-image" />
+  <img src={imagenurl} alt={nombre} className="cartita-image" />
   <div className="cartita-info">
     <p className="cartita-name">{nombre}</p>
     <p className="cartita-description">{dominio}</p>
@@ -154,7 +155,7 @@ const Cartita=({
             eliminarPj={eliminarPj}
             onClose={handleCloseCartaPj}
             idpersonaje={idpersonaje}
-            imagen={imagen}
+            imagenurl={imagenurl}
             nombre={nombre}
             dominio={dominio}
             ken={ken}
@@ -249,7 +250,7 @@ const Cartita=({
 
 
 
-const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
+const GrupoCard = ({ nombre, idpersonaje, imagenurl, grupo, setGrupo }) => {
 
   const handleEliminarPersonaje = (idpersonaje) => { 
     const personajesActualizados = grupo.filter(pj => pj.idpersonaje !== idpersonaje);
@@ -260,7 +261,7 @@ const GrupoCard = ({ nombre, idpersonaje, imagen, grupo, setGrupo }) => {
     <>
       <div className="grupo-card" key={idpersonaje}>
         <img 
-          src={imagen} 
+          src={imagenurl} 
           alt={nombre} 
           className="grupo-card-image"  
           onClick={() => handleEliminarPersonaje(idpersonaje)} // Llama a la función con el idpersonaje
@@ -445,7 +446,7 @@ const handleClickCrearGrupo = async() => {
           key={pj.idpersonaje}
           idpersonaje={pj.idpersonaje} 
           nombre={pj.nombre}
-          imagen={pj.imagen}
+          imagenurl={pj.imagenurl}
           grupo={grupo}
           setGrupo={setGrupo}
         
@@ -502,7 +503,7 @@ const handleClickCrearGrupo = async() => {
   nombre={pj.nombre} 
   idpersonaje={pj.idpersonaje} 
   dominio={pj.dominio} 
-  imagen={pj.imagen} 
+  imagenurl={pj.imagenurl} 
   ken={pj.ken} 
   ki={pj.ki}
   

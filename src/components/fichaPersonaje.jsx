@@ -34,7 +34,8 @@ export const FichaPersonaje = ({
   fuerza, 
   fortaleza, 
   agilidad, 
-  imagen, 
+  imagen,
+  imagenurl, 
   destreza, 
   sabiduria, 
   presencia, 
@@ -125,6 +126,7 @@ export const FichaPersonaje = ({
   
   const [nombreN,setNombreN]=useState(nombre);
   const [imagenN,setImagenN]=useState(imagen);
+  const [imagenurlN,setImagenurlN]=useState(imagenurl || imagen);
   const [dominioN,setDominioN]=useState(dominio);
   const [razaN,setRazaN]=useState(raza);
   const [naturalezaN,setNaturalezaN]=useState(naturaleza);
@@ -432,6 +434,7 @@ const btnGuardarCambios = () => {
     raza:razaN,
     edad:edadN,
     imagen: imagenN,
+    imagenurl:imagenN,
     ken:kenN,
     ki:kiN,
     destino:destinoN,
@@ -579,6 +582,7 @@ const guardarCambiosBBDD = async () => {
       add4:add4N,
       valAdd4: valAdd4N || 0,
       imagen: imagenN,
+      imagenurl:imagenurlN,
       inventario: inventarioN,//JSON
       dominios: dominiosN,//JASON
 
@@ -610,6 +614,9 @@ const guardarCambiosBBDD = async () => {
       }
     });
 
+
+    const data=response.data;
+    console.log(data.imagenurl)
     console.log('Cambios guardados exitosamente:', response.data);
 
     Swal.fire({
@@ -701,6 +708,7 @@ useEffect(() => {
   cicatrizN,
   resistenciaN,
   pjPnjN,
+
 ]);
 
 const handleEliminarPj = async() => {
@@ -896,8 +904,8 @@ const isChecked = pjsCombinados.some((pj) => pj.idpersonaje === idpersonaje);
 
 
 
-const combinarPjs = (idpersonaje, nombre, imagen, isAdding) => {
-  const nuevoPJ = { idpersonaje, nombre, imagen };
+const combinarPjs = (idpersonaje, nombre, imagenurl, isAdding) => {
+  const nuevoPJ = { idpersonaje, nombre, imagenurl };
 
   setPjsCombinados((prevPjs) => {
     if (isAdding) {
@@ -914,8 +922,15 @@ const combinarPjs = (idpersonaje, nombre, imagen, isAdding) => {
 };
 
 const handleCheckboxChange = () => {
-  combinarPjs(idpersonaje, nombreN, imagenN, !isChecked);
+  const pjActual = { 
+    idpersonaje, 
+    nombre: nombreN, 
+    imagenurl: imagenN || imagenurl // usar backup si imagenurlN está vacío
+  };
+  
+  combinarPjs(pjActual.idpersonaje, pjActual.nombre, pjActual.imagenurl, !isChecked);
 };
+
 
 const renderTooltipCombinados = () => (
   <Tooltip id={`tooltip-${idpersonaje}`} style={{textAlign: 'center' }}>
@@ -981,7 +996,7 @@ const renderTooltipPjPnj = () => (
        
         <div className='row col2' style={{marginBottom:"1em", marginTop:"2.5em"}}>
           <div className='col1'>
-            <img src={imagenN} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
+            <img src={imagenN || imagenurl} alt="imagen del personaje" className={vivoMuerto ? "imagenPj" : "muertoPJ"} />
             <Button onClick={handleImageUpload} variant="outline-danger" style={{width:"30%",fontSize:"10px", marginTop:"3px"}}>Seleccionar Imagen</Button>
             <input type="file" accept="image/*" ref={inputFileRef} style={{ display: 'none' }} onChange={handleFileChange} />
           </div>

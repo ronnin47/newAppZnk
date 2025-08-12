@@ -112,6 +112,7 @@ export const CartaNarrador = ({
   ken,
   ki,
   imagen,
+  imagenurl,
   fuerza, 
   fortaleza, 
   agilidad, 
@@ -224,7 +225,7 @@ return (
       <Modal.Body className='modalCartaPjBody' style={{backgroundColor:"black", color:"aliceblue"}}>
       <Card.Img
             variant="top"
-            src={imagen}
+            src={imagenurl}
             style={{ maxWidth: "100%", maxHeight: "100%"}}
             className='imagenCartaPj'
           />

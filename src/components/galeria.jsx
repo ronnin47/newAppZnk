@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 
 export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccionado,setActiveKey, coleccionPersonajes }) => {
 
-//console.log("****PERSONAJES: ",personajes)
+
+  console.log("Gallery montado, personajes:", personajes);
+
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -57,8 +59,9 @@ export const Gallery = ({ personajes,setPersonajes,pjSeleccionado,setPjSeleccion
               boxShadow: pj.idpersonaje === pjSeleccionado ? "0px 0px 15px 5px #FFFF00" : "none", // Box-shadow blanco para el seleccionado
               transition: "box-shadow 0.3s ease", // Animación suave para el cambio de box-shadow
             }}
-
-            src={pj.imagen} alt={`Image ${index}`} className="gallery-image"/>
+          
+            src={pj.imagenurl || pj.imagen} alt={`Image ${index}`} className="gallery-image"/>
+            
             
             {index === selectedIndex ? (<p style={{color:"yellow", fontFamily:"cursive",textAlign:"center",marginTop:"10px"}}>{pj.nombre}</p>):(<></>)}
            

@@ -20,7 +20,7 @@ export const ModalHorizontal = ({ idGrupoSeleccionado,eliminarPersonaje, show, o
     >
  <Modal.Header closeButton className="bg-dark text-light" style={{ display: "flex", alignItems: "center" }}>
     <img 
-        src={personaje.imagen} 
+        src={personaje.imagenurl} 
         alt={personaje.nombre} 
         className='grupo-card-image' 
         style={{ width: "60px", height: "60px", marginRight: "1em" }} 
@@ -35,7 +35,7 @@ export const ModalHorizontal = ({ idGrupoSeleccionado,eliminarPersonaje, show, o
     </div>
 
     <img 
-        src={personaje.imagen} 
+        src={personaje.imagenurl} 
         alt={personaje.nombre} 
         className='grupo-card-image' 
         style={{ width: "60px", height: "60px", marginRight: "1em" }} 

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
 
-export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dominio, imagen, setPjSeleccionado, pjSeleccionado }) => {
+export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dominio, imagen,imagenurl, setPjSeleccionado, pjSeleccionado }) => {
 
   const [animacionActiva, setAnimacionActiva] = useState(false);
 
@@ -50,7 +50,19 @@ export const MiniCard = ({ setVivoMuerto, vivoMuerto,setActiveKey,id, nombre,dom
               transition: "box-shadow 0.3s ease",}} 
       
       className={cardClassName}>
-              <Card.Img   variant="top" src={imagen} style={{ maxWidth: "100%", maxHeight: "100%",   opacity: !vivoMuerto && id === pjSeleccionado ? 0.3 : 1}} />
+              <Card.Img
+  variant="top"
+  src={imagenurl || imagen}
+  style={{
+    width: "97px",
+    height: "97px",
+    backgroundColor: "#000",
+       objectFit: "contain",
+    opacity: !vivoMuerto && id === pjSeleccionado ? 0.3 : 1,
+    margin: "0 auto",
+        borderRadius: "0px",
+  }}
+/>
               <Card.Body 
                     
               style={{

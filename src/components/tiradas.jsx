@@ -28,7 +28,7 @@ function generarNumerosAzarSinRangoMin(cantidad, rangoMax) {
 }
 
 
-const Pj = ({ idpersonaje, nombre, imagen, pjSeleccionado, setPjSeleccionado }) => {
+const Pj = ({ idpersonaje, nombre, imagen, imagenurl, pjSeleccionado, setPjSeleccionado }) => {
   
   const seleccionar = (idpersonaje) => {
     //console.log("funciona seleccionar pj", idpersonaje);
@@ -49,7 +49,7 @@ const Pj = ({ idpersonaje, nombre, imagen, pjSeleccionado, setPjSeleccionado }) 
     >
       <img 
         onClick={() => seleccionar(idpersonaje)} 
-        src={imagen} 
+        src={imagenurl || imagen} 
         className='grupo-card-image' 
         style={{ 
           width: "50px", 
@@ -85,6 +85,7 @@ export const Tiradas = ({
   personajes,
   setPersonajes,
   imagen,
+  imagenurl,
   conviccion,
   isChecked,
   setIsChecked,
@@ -692,6 +693,7 @@ const [mensajeChat,setMensajeChat]=useState("")
 const handleChangeM=(event)=>{
   setMensajeChat(event.target.value)
 }
+
 const enviar=()=>{
 const msgEnviar={
   nombre:nombre,
@@ -866,13 +868,13 @@ const incrementos=()=>{
       <div className="container" style={{display:"flex",   flexWrap: "wrap", gap:"0.5em", color:"yellow", justifyContent:"center", marginBottom:"1em"}}>
 
       {pjsCombinados.map((pj)=>(  
-        <Pj key={pj.idpersonaje} idpersonaje={pj.idpersonaje} nombre={pj.nombre} imagen={pj.imagen} pjSeleccionado={pjSeleccionado} setPjSeleccionado={setPjSeleccionado}></Pj>
+        <Pj key={pj.idpersonaje} idpersonaje={pj.idpersonaje} nombre={pj.nombre} imagen={pj.imagen} imagenurl={pj.imagenurl} pjSeleccionado={pjSeleccionado} setPjSeleccionado={setPjSeleccionado}></Pj>
       ))}
       </div>
 
       <div className="container" style={{ display: "flex", alignItems: "center" }}>
       <img 
-        src={imagen} 
+        src={imagenurl || imagen} 
         onClick={handleShow} 
         className='grupo-card-image' 
         style={{ width: "60px", height: "60px", marginRight: "1em", cursor: "pointer" }} 
@@ -887,7 +889,7 @@ const incrementos=()=>{
     </div>
 
     <img 
-        src={imagen} 
+        src={imagenurl || imagen} 
         onClick={handleShowFicha} 
         className='grupo-card-image' 
         style={{ width: "60px", height: "60px", marginRight: "1em", cursor: "pointer" }} 

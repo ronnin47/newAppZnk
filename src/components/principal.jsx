@@ -12,7 +12,6 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Narrador } from "./narrador.jsx";
 import Swal from 'sweetalert2';
-import Badge from 'react-bootstrap/Badge';
 import { Nava } from "./nava.jsx";
 import axios from 'axios';
 import { Reglas } from "./reglas.jsx";
@@ -22,7 +21,7 @@ import { MiGrupo } from "./migrupo.jsx";
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
-import { DNA } from 'react-loader-spinner'; // Importar el spinner DNA
+import { DNA } from 'react-loader-spinner'; 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Enemigos } from "./enemigos.jsx";
 import { GeneradorBake } from "./generadorBake.jsx";
@@ -40,6 +39,7 @@ export const Principal= ()=> {
   const [loading, setLoading] = useState(true); 
   const [nombre,setNombre]=useState("");
   const [imagen,setImagen]=useState("/imagenBase.jpeg");
+  const [imagenurl,setImagenurl]=useState("/imagenBase.jpeg");
   const [dominio,setDominio]=useState("");
   const [raza,setRaza]=useState("");
   const [edad,setEdad]=useState("");
@@ -380,9 +380,6 @@ useEffect(() => {
 //*************coleccion de SAGAS ZNK */
 const [coleccionSagas,setColeccionSagas]=useState([])
 
-
-
-
 useEffect(() => {
   const consumirSagasZnk = async () => {
     try {
@@ -413,7 +410,7 @@ useEffect(() => {
 }, [sesion]);
 
 
-//esto para consumir SECCIONES
+//ESTO ES PARA CONSUMIR SECCIONES
 const [coleccionSecciones,setColeccionSecciones]=useState([])
 
 useEffect(() => {
@@ -483,7 +480,7 @@ useEffect(() => {
 
 
 
-  const [isChecked, setIsChecked] = useState(true);
+const [isChecked, setIsChecked] = useState(true);
 
 
 useEffect(() => {
@@ -496,10 +493,12 @@ useEffect(() => {
       (personaje) => personaje.idpersonaje === pj.idpersonaje
     ); // Encuentra el personaje en la colección por ID
 
-    return {
-      ...pj,
-      imagen: personajeConImagen ? personajeConImagen.imagen : null, // Asigna la imagen si se encuentra
-    };
+   return {
+  ...pj,
+  imagen: personajeConImagen
+    ? (personajeConImagen.imagenurl || personajeConImagen.imagen)
+    : null,
+};
   });
 
   // Actualizar el estado con los personajes combinados y sus imágenes
@@ -549,7 +548,7 @@ useEffect(() => {
   );
 
 
-
+console.log("HOLASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
 
 return (
     <>
@@ -604,6 +603,7 @@ return (
                   idpersonaje={pj.idpersonaje}
                   nombre={pj.nombre}
                   imagen={pj.imagen}
+                  imagenurl={pj.imagenurl}
                   pjUsuarioId={pj.usuarioId}
                   idusuario={usuarioId}
                   usuariosConectados={usuariosConectados} 
@@ -623,6 +623,7 @@ return (
                   idpersonaje={pj.idpersonaje}
                   nombre={pj.nombre}
                   imagen={pj.imagen}
+                  imagenurl={pj.imagenurl}
                   destreza={pj.destreza}
                   apCombate={pj.apCombate}
                   valCombate={pj.valCombate}
@@ -700,6 +701,7 @@ return (
               principio={principio}
               sentidos={sentidos}
               setImagen={setImagen} 
+              setImagenurl={setImagenurl} 
               setDestreza={setDestreza} 
               setApCombate={setApCombate} 
               setValCombate={setValCombate} 
@@ -710,6 +712,7 @@ return (
               fortaleza={fortaleza} 
               agilidad={agilidad}  
               imagen={imagen} 
+              imagenurl={imagenurl} 
               destreza={destreza} 
               apCombate={apCombate} 
               valCombate={valCombate}
@@ -890,6 +893,7 @@ return (
                                   nombre={pj.nombre}
                                   dominio={pj.dominio}
                                   imagen={pj.imagen}
+                                  imagenurl={pj.imagenurl}
                                   setPjSeleccionado={setPjSeleccionado}
                                   pjSeleccionado={pjSeleccionado}
                                 />
@@ -922,6 +926,7 @@ return (
                   idpersonaje={pj.idpersonaje}
                   nombre={pj.nombre}
                   imagen={pj.imagen}
+                  imagenurl={pj.imagenurl}
                   dominio={pj.dominio}
                   raza={pj.raza}
                   edad={pj.edad}
@@ -1026,6 +1031,7 @@ return (
                   
                   nombre={pj.nombre}
                   imagen={pj.imagen}
+                  imagenurl={pj.imagenurl}
                 
                  
                 

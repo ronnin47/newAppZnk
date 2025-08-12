@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { io } from 'socket.io-client';
 const socket = io(process.env.REACT_APP_BACKEND_URL);
 
-export const Panel = ({ textareaRef, messagesEndRef, nombre, setMessage, sock, setSock }) => {
+export const Panel = ({ textareaRef, messagesEndRef,imagenurl, nombre, setMessage, sock, setSock }) => {
   const chatContainerRef = useRef(null);
   const [isAtTop, setIsAtTop] = useState(true);  // Estado para saber si estamos en la parte superior de la página
 

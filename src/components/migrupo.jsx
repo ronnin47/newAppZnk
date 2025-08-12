@@ -14,6 +14,7 @@ export const MiGrupo = ({
   values,
   sesion,
   setValues,
+  imagenurl,
 }) => {
   const [gruposFiltrados, setGruposFiltrados] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Estado de carga
@@ -85,8 +86,8 @@ export const MiGrupo = ({
     );
   };
 
-  const handleImageClick = imagen => {
-    setSelectedImage(imagen);
+  const handleImageClick = imagenurl => {
+    setSelectedImage(imagenurl);
     setShowModal(true);
   };
 
@@ -106,7 +107,7 @@ export const MiGrupo = ({
           <div key={grupo.idgrupo} className="grupoPj">
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               {grupo.personajes.length > 0 ? (
-                grupo.personajes.map(({ nombre, imagen, idpersonaje, usuarioId }) => {
+                grupo.personajes.map(({ nombre, imagen,imagenurl, idpersonaje, usuarioId }) => {
                   return (
                     <div
                       className="grupo-card"
@@ -119,7 +120,7 @@ export const MiGrupo = ({
                     >
                       <OverlayTrigger placement="right" overlay={renderTooltip(idpersonaje)}>
                         <img
-                          src={imagen}
+                          src={imagenurl || imagen}
                           alt={nombre}
                           className="grupo-card-image"
                           style={{
@@ -128,7 +129,7 @@ export const MiGrupo = ({
                               ? '0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(0, 191, 255, 0.9), 0 0 60px rgba(0, 191, 255, 0.6)'
                               : 'none',
                           }}
-                          onClick={() => handleImageClick(imagen)}
+                          onClick={() => handleImageClick(imagenurl)}
                         />
                       </OverlayTrigger>
                       <p>{nombre}</p>

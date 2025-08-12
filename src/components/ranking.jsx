@@ -16,6 +16,7 @@ export const CartaUnica = ({
     dominio,
     ken,
     imagen,
+    imagenurl,
     historia,  
     naturaleza,
     tecEspecial,
@@ -69,7 +70,7 @@ export const CartaUnica = ({
         <Modal.Body className='modalCartaPjBody' style={{backgroundColor:"black", color:"aliceblue"}}>
         <Card.Img
               variant="top"
-              src={imagen}
+              src={imagenurl || imagen}
               style={{ maxWidth: "100%", maxHeight: "100%"}}
               className='imagenCartaPj'
             />
@@ -142,6 +143,7 @@ export const CartaUnica = ({
     dominio,
     ken,
     imagen,
+    imagenurl,
     historia,
     naturaleza,
     conviccion,
@@ -200,7 +202,7 @@ export const CartaUnica = ({
             {rank}
           </span>
           
-          <img src={imagen} alt={nombre} className="cartaImagenRanking" />
+          <img src={imagenurl || imagen} alt={nombre} className="cartaImagenRanking" />
           <div className="cartitaElementos">
             <Estrellitas ken={ken}></Estrellitas>
             <p className="cartita-name" style={{ fontSize: "1em", color: "yellow" }}>{nombre}</p>
@@ -213,6 +215,7 @@ export const CartaUnica = ({
             onClose={handleCloseCartaPj}
             idpersonaje={idpersonaje}
             imagen={imagen}
+            imagenurl={imagenurl}
             nombre={nombre}
             dominio={dominio}
             ken={ken}         
@@ -285,6 +288,7 @@ export const CartaUnica = ({
                 idpersonaje={pj.idpersonaje}
                 dominio={pj.dominio}
                 imagen={pj.imagen}
+                imagenurl={pj.imagenurl}
                 ken={pj.ken}
                 historia={pj.historia}
                 naturaleza={pj.naturaleza}

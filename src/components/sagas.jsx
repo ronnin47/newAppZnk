@@ -606,7 +606,7 @@ const renderTooltip = (idpersonaje,nombre) => (
 
 
 
-const ImagenModal = ({ show, onHide, imagen }) => {
+const ImagenModal = ({ show, onHide, imagen}) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Body className="d-flex justify-content-center align-items-center">
@@ -692,9 +692,9 @@ const handleCloseModalImg = () => {
                 >
                 <img
                   className="agrandar"
-                  src={personaje.imagen}
+                  src={personaje.imagenurl}
                   alt={personaje.nombre}
-                  onClick={() => handleImagenClick(personaje.imagen)}
+                  onClick={() => handleImagenClick(personaje.imagenurl)}
                   style={{
                     width: '50px',
                     height: '50px',
@@ -819,7 +819,7 @@ const handleCloseModalImg = () => {
           >
             <img
               className="agrandar"
-              src={personaje.imagen}
+              src={personaje.imagenurl}
               alt={personaje.nombre}
               style={{
                 width: "6em",

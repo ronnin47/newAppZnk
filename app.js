@@ -7,9 +7,10 @@ import { dirname, join } from 'path';
 import pkg from 'pg'; 
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-
 import nodemailer from 'nodemailer';
-
+import { v2 as cloudinary } from 'cloudinary';
+//para la carpeta de imagene sy sus urls
+//const cloudinary = require('cloudinary').v2;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -38,6 +39,7 @@ const pool = new Pool({
 });
 */
 
+/*
 const pool = new Pool({
   user: 'gorda',          
   host: 'dpg-ctmluupopnds73fgeus0-a',
@@ -45,8 +47,36 @@ const pool = new Pool({
   password: 'euuj1xWFh0oyyiHdIib89guQPwBuFrap',  
   port: 5432,
 });
+*/
 
 
+
+
+
+//base de datos en RENDER
+const pool = new Pool({
+  user: 'gorda',
+  host: 'dpg-d1s01g7diees73akbt00-a.oregon-postgres.render.com',
+  database: 'appbasenative',
+  password: '7p1AkuNrAUkPQpM0i75VCA5Ljx71WLRC',
+  port: 5432,
+   ssl: {
+    rejectUnauthorized: false, // Esto es clave en conexiones con Render
+  },
+});
+
+
+//PARA GAURDADO DE IMAGENES Y OBTENER URLS
+cloudinary.config({
+  cloud_name: 'dzul1hatw',
+  api_key: '687946621544217',
+  api_secret: '09DUepXU-FApoUrHnc8h6sJb25I',
+});
+
+
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando y conectado a PostgreSQL');
+});
 
 
 
@@ -163,6 +193,8 @@ io.on('connection', (socket) => {
 
 
 
+
+//*************PETICIONES********************* 
 app.post('/insert-usuario', async (req, res) => {
   const { email, contrasenia } = req.body;
     const estatus="jugador"
@@ -225,45 +257,88 @@ app.post('/loginUsuario', async (req, res) => {
   }
 });
 
+
+
+
+//ya tiene cloudnary
 app.get('/consumirPersonajesNarrador', async (req, res) => {
   try {
-    const userQuery = 'SELECT * FROM personajes';
+    const userQuery = `
+      SELECT 
+        idpersonaje, nombre, dominio, raza, naturaleza, edad, ken, ki, destino, "pDestino",
+        fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+        sentidos, academisismo, alerta, atletismo, "conBakemono", mentir, pilotear,
+        "artesMarciales", medicina, "conObjMagicos", sigilo, "conEsferas", "conLeyendas",
+        forja, "conDemonio", "conEspiritual", "manejoBlaster", "manejoSombras", "tratoBakemono",
+        "conHechiceria", "medVital", "medEspiritual", rayo, fuego, frio, veneno, corte,
+        energia, ventajas, "apCombate", "valCombate", "apCombate2", "valCombate2",
+        add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
+        inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
+        hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
+        notasaga, resistencia, "pjPnj", imagenurl,imagencloudid, "usuarioId"
+      FROM personajes
+    `;
+
+
+
     const userResult = await pool.query(userQuery);
 
     if (userResult.rows.length === 0) {
-      return res.status(401).json({ message: 'No se recupero personajes para Narrador' });
-    }
+  return res.status(404).json({ message: 'No se encontraron personajes en la base de datos' });
+}
 
     const coleccionPersonajes = userResult.rows;
     res.json({
-      message: 'Inicio de sesión exitoso',
+      message: 'Se consumiron todos los personajes',
       coleccionPersonajes: coleccionPersonajes,   
     });
 
   } catch (error) {
-    console.error('Error al obtener coleccion personajes Narrador:', error);
+    console.error('Error al obtener coleccion todos los persoanjes de la base de datos:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
 
-
-
+//ya tiene cloudnary
 app.get('/consumirPersonajesUsuario', async (req, res) => {
   try {
     
     const { usuarioId } = req.query;
-    //console.log("el id del usuario es: ",usuarioId)
-    const userQuery = 'SELECT * FROM personajes WHERE "usuarioId"=$1';
+   // console.log("el id del usuario es: ",usuarioId)
+    const userQuery = `
+      SELECT 
+        idpersonaje, nombre, dominio, raza, naturaleza, edad, ken, ki, destino, "pDestino",
+        fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+        sentidos, academisismo, alerta, atletismo, "conBakemono", mentir, pilotear,
+        "artesMarciales", medicina, "conObjMagicos", sigilo, "conEsferas", "conLeyendas",
+        forja, "conDemonio", "conEspiritual", "manejoBlaster", "manejoSombras", "tratoBakemono",
+        "conHechiceria", "medVital", "medEspiritual", rayo, fuego, frio, veneno, corte,
+        energia, ventajas, "apCombate", "valCombate", "apCombate2", "valCombate2",
+        add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
+        inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
+        hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
+        notasaga, resistencia, "pjPnj", imagenurl, imagencloudid, "usuarioId"
+      FROM personajes
+      WHERE "usuarioId" = $1
+      ORDER BY "idpersonaje" ASC
+    `;
     const userResult = await pool.query(userQuery,[usuarioId]);
 
    
-    if (userResult.rows.length === 0) {
-      return res.status(401).json({ message: 'No se recupero personajes para Usuario' });
-    }
+   if (userResult.rows.length === 0) {
+  return res.status(200).json({
+    message: 'Usuario sin personajes aún',
+    coleccionPersonajes: [],  // ← importante
+  });
+}
 
     const coleccionPersonajes = userResult.rows;
+
+   
+
+    
     res.json({
-      message: 'Inicio de sesión exitoso',
+      message: 'Peticion de personajes consumidos exitoso',
       coleccionPersonajes: coleccionPersonajes,   
     });
 
@@ -273,341 +348,176 @@ app.get('/consumirPersonajesUsuario', async (req, res) => {
   }
 });
 
-
-
-
-
-
+//ya tiene cloudnary
 app.post('/insert-personaje', async (req, res) => {
-
-  //console.log("*******NOta saga: ",req.body)
-  const { 
+  const {
     nombre,
-      dominio,
-      raza,
-      naturaleza,
-      edad,
-      ken,
-      ki,
-      destino,
-      pDestino,
-      fuerza,
-      fortaleza,
-      destreza,
-      agilidad,
-      sabiduria,
-      presencia,
-      principio,
-      sentidos,
-      academisismo,
-      alerta,
-      atletismo,
-      conBakemono,
-      mentir,
-      pilotear,
-      artesMarciales,
-      medicina,
-      conObjMagicos,
-      sigilo,
-      conEsferas,
-      conLeyendas,
-      forja,
-      conDemonio,
-      conEspiritual,
-      manejoBlaster,
-      manejoSombras,
-      tratoBakemono,
-      conHechiceria,
-      medVital,
-      medEspiritual,
-      rayo,
-      fuego,
-      frio,
-      veneno,
-      corte,
-      energia,
-      ventajas,  
-      apCombate,
-      valCombate,
-      apCombate2,
-      valCombate2,
-      add1,
-      valAdd1,
-      add2,
-      valAdd2,
-      add3,
-      valAdd3,
-      add4,
-      valAdd4,
-      imagen,
-      inventario,
-      dominios,
-      kenActual,
-      kiActual,
-      positiva,
-      negativa,
-      vidaActual,
-      hechizos,
-      consumision,
-      iniciativa,
-      historia,
-      usuarioId,
-      tecEspecial,   
-      conviccion,
-      cicatriz, 
-      notaSaga,  
-      resistencia,  
-      pjPnj,
-   } = req.body;
-   
+    dominio,
+    raza,
+    naturaleza,
+    edad,
+    ken,
+    ki,
+    destino,
+    pDestino,
+    fuerza,
+    fortaleza,
+    destreza,
+    agilidad,
+    sabiduria,
+    presencia,
+    principio,
+    sentidos,
+    academisismo,
+    alerta,
+    atletismo,
+    conBakemono,
+    mentir,
+    pilotear,
+    artesMarciales,
+    medicina,
+    conObjMagicos,
+    sigilo,
+    conEsferas,
+    conLeyendas,
+    forja,
+    conDemonio,
+    conEspiritual,
+    manejoBlaster,
+    manejoSombras,
+    tratoBakemono,
+    conHechiceria,
+    medVital,
+    medEspiritual,
+    rayo,
+    fuego,
+    frio,
+    veneno,
+    corte,
+    energia,
+    ventajas,
+    apCombate,
+    valCombate,
+    apCombate2,
+    valCombate2,
+    add1,
+    valAdd1,
+    add2,
+    valAdd2,
+    add3,
+    valAdd3,
+    add4,
+    valAdd4,
+    imagen, // base64
+    inventario,
+    dominios,
+    kenActual,
+    kiActual,
+    positiva,
+    negativa,
+    vidaActual,
+    hechizos,
+    consumision,
+    iniciativa,
+    historia,
+    usuarioId,
+    tecEspecial,
+    conviccion,
+    cicatriz,
+    notaSaga,
+    resistencia,
+    pjPnj,
+  } = req.body;
+
   try {
+    // 1. Insertar personaje SIN imagen ni imagenurl
     const query = `
       INSERT INTO personajes (
-      nombre, 
-      dominio, 
-      raza, 
-      naturaleza, 
-      edad, 
-      ken, 
-      ki, 
-      destino, 
-      "pDestino", 
-      fuerza, 
-      fortaleza, 
-      destreza, 
-      agilidad, 
-      sabiduria, 
-      presencia, 
-      principio, 
-      sentidos, 
-      academisismo, 
-      alerta, 
-      atletismo, 
-      "conBakemono", 
-      mentir,
-      pilotear,
-      "artesMarciales",
-      medicina,
-      "conObjMagicos",
-      sigilo,
-      "conEsferas",
-      "conLeyendas",
-      forja,
-      "conDemonio",
-      "conEspiritual",
-      "manejoBlaster",
-      "manejoSombras",
-      "tratoBakemono",
-      "conHechiceria",
-      "medVital",
-      "medEspiritual",
-      rayo,
-      fuego,
-      frio,
-      veneno,
-      corte,
-      energia,
-      ventajas,
-      "apCombate",
-      "valCombate",
-      "apCombate2",
-      "valCombate2",
-      add1,
-      "valAdd1",
-      add2,
-      "valAdd2",
-      add3,
-      "valAdd3",
-      add4,
-      "valAdd4",
-      imagen,
-      inventario,
-      dominios,
-      "kenActual",
-      "kiActual",
-      positiva,
-      negativa,
-      "vidaActual",
-      hechizos,
-      consumision,
-      iniciativa,
-      historia,
-      "tecEspecial",
-      conviccion,
-      cicatriz,
-      notasaga,
-      resistencia,
-      "pjPnj",
-      "usuarioId"
+        nombre, dominio, raza, naturaleza, edad, ken, ki, destino, "pDestino",
+        fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+        sentidos, academisismo, alerta, atletismo, "conBakemono", mentir, pilotear,
+        "artesMarciales", medicina, "conObjMagicos", sigilo, "conEsferas", "conLeyendas",
+        forja, "conDemonio", "conEspiritual", "manejoBlaster", "manejoSombras", "tratoBakemono",
+        "conHechiceria", "medVital", "medEspiritual", rayo, fuego, frio, veneno, corte,
+        energia, ventajas, "apCombate", "valCombate", "apCombate2", "valCombate2",
+        add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
+        inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
+        hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
+        notasaga, resistencia, "pjPnj", "usuarioId"
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76)
+      VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9,
+        $10, $11, $12, $13, $14, $15, $16,
+        $17, $18, $19, $20, $21, $22, $23,
+        $24, $25, $26, $27, $28, $29,
+        $30, $31, $32, $33, $34, $35,
+        $36, $37, $38, $39, $40, $41, $42, $43,
+        $44, $45, $46, $47, $48, $49,
+        $50, $51, $52, $53, $54, $55,
+        $56, $57, $58, $59, $60, $61,
+        $62, $63, $64, $65, $66, $67,
+        $68, $69, $70, $71, $72, $73,
+        $74, $75
+      )
       RETURNING idpersonaje
     `;
 
     const values = [
-      nombre,
-      dominio,
-      raza,
-      naturaleza,
-      edad,
-      ken,
-      ki,
-      destino,
-      pDestino,
-      fuerza,
-      fortaleza,
-      destreza,
-      agilidad,
-      sabiduria,
-      presencia,
-      principio,
-      sentidos,
-      academisismo,
-      alerta,
-      atletismo,
-      conBakemono,
-      mentir,
-      pilotear,
-      artesMarciales,
-      medicina,
-      conObjMagicos,
-      sigilo,
-      conEsferas,
-      conLeyendas,
-      forja,
-      conDemonio,
-      conEspiritual,
-      manejoBlaster,
-      manejoSombras,
-      tratoBakemono,
-      conHechiceria,
-      medVital,
-      medEspiritual,
-      rayo,
-      fuego,
-      frio,
-      veneno,
-      corte,
-      energia,
-      ventajas,    
-      apCombate,
-      valCombate,
-      apCombate2,
-      valCombate2,
-      add1,
-      valAdd1,
-      add2,
-      valAdd2,
-      add3,
-      valAdd3,
-      add4,
-      valAdd4,
-      imagen,
-      inventario,
-      dominios,
-      kenActual,
-      kiActual,
-      positiva,
-      negativa,
-      vidaActual,
-      hechizos,
-      consumision,
-      iniciativa,
-      historia,
-      tecEspecial,
-      conviccion,
-      cicatriz,
-      notaSaga,
-      resistencia,
-      pjPnj,
-      usuarioId,   
-      ];
+      nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
+      fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+      sentidos, academisismo, alerta, atletismo, conBakemono, mentir, pilotear,
+      artesMarciales, medicina, conObjMagicos, sigilo, conEsferas, conLeyendas,
+      forja, conDemonio, conEspiritual, manejoBlaster, manejoSombras, tratoBakemono,
+      conHechiceria, medVital, medEspiritual, rayo, fuego, frio, veneno, corte,
+      energia, ventajas, apCombate, valCombate, apCombate2, valCombate2,
+      add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
+      inventario, dominios, kenActual, kiActual, positiva, negativa, vidaActual,
+      hechizos, consumision, iniciativa, historia, tecEspecial, conviccion, cicatriz,
+      notaSaga, resistencia, pjPnj, usuarioId,
+    ];
+
     const result = await pool.query(query, values);
     const newId = result.rows[0].idpersonaje;
-    res.status(201).json({ message: 'Personaje insertado exitosamente.', idpersonaje: newId });
+
+    let imageUrl = null;
+
+    // 2. Si envían imagen base64, subir a Cloudinary
+    if (imagen) {
+      const matches = imagen.match(/^data:image\/(\w+);base64,(.+)$/);
+      if (!matches) {
+        return res.status(400).json({ error: 'Imagen base64 inválida.' });
+      }
+      const ext = matches[1];
+      const data = matches[2];
+
+      const uploadResult = await cloudinary.uploader.upload(`data:image/${ext};base64,${data}`, {
+        folder: 'personajes',
+        public_id: `personaje_${newId}`,
+        overwrite: true,
+      });
+
+      imageUrl = uploadResult.secure_url;
+
+      // 3. Actualizar la url en el registro
+      await pool.query(
+        'UPDATE personajes SET imagenurl = $1 WHERE idpersonaje = $2',
+        [imageUrl, newId]
+      );
+    }
+
+    // 4. Responder con éxito y url imagen
+    res.status(201).json({
+      message: 'Personaje insertado exitosamente.',
+      idpersonaje: newId,
+      imagenurl: imageUrl,
+    });
   } catch (err) {
-    console.error('Error al insertar el personaje:', err.message);
+    console.error('Error al insertar el personaje:', err);
     res.status(500).json({ error: 'Error al insertar el personaje.' });
   }
 });
 
-app.post('/insertGrupo', async (req, res) => {
-  const { 
-    nombre,
-    idspersonajes,    
-   } = req.body;
-  try {
-    const query = `
-      INSERT INTO grupos (
-      nombre, 
-      idspersonajes 
-      )
-      VALUES ($1, $2)
-      RETURNING idgrupo
-    `;
-
-    const values = [
-      nombre,
-      idspersonajes,
-      ];
-    const result = await pool.query(query, values);
-    const newId = result.rows[0].idgrupo;
-    res.status(201).json({ message: 'Grupo insertado exitosamente.', idgrupo: newId });
-  } catch (err) {
-    console.error('Error al insertar el nuevo Grupo:', err.message);
-    res.status(500).json({ error: 'Error al insertar el nuevo Grupo.' });
-  }
-});
-
-app.get('/consumirGrupos', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM grupos');
-    const coleccionGrupos = result.rows;
-    if (!Array.isArray(coleccionGrupos)) {
-      return res.status(500).json({ message: 'Error: no se encontró la colección de grupos.' });
-    }
-
-    res.status(200).json({ coleccionGrupos });
-  } catch (err) {
-    console.error('Error al consumir los grupos:', err.message);
-    res.status(500).json({ error: 'Error al consumir los grupos.' });
-  }
-});
-
-app.put('/update-grupos', async (req, res) => {
-  const { idgrupo, idspersonajes } = req.body; 
-  try {
-    const result = await pool.query(
-      'UPDATE grupos SET idspersonajes = $1 WHERE idgrupo = $2 RETURNING *',
-      [idspersonajes, idgrupo]
-    );
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Grupo no encontrado' });
-    }
-    res.json({ message: 'Grupo actualizado exitosamente', grupo: result.rows[0] });
-  } catch (error) {
-    console.error('Error al actualizar el grupo en la base de datos:', error);
-    res.status(500).json({ error: 'Error del servidor' });
-  }
-});
-
-app.delete('/delete-grupo/:idgrupo', async (req, res) => {
-  const { idgrupo } = req.params;
-
-  try {
-    const resultado = await pool.query('DELETE FROM grupos WHERE idgrupo = $1', [idgrupo]);
-    if (resultado.rowCount > 0) {
-      res.status(200).json({ message: 'Grupo eliminado exitosamente' });
-    } else {
-      res.status(404).json({ message: 'Grupo no encontrado' });
-    }
-  } catch (error) {
-    console.error('Error al eliminar el grupo:', error);
-    res.status(500).json({ message: 'Error al eliminar el grupo' });
-  }
-});
-
-
+/*
 app.put('/update-personaje/:id', async (req, res) => {
 
 //console.log("esto es lo que trae el req",req)
@@ -861,22 +771,251 @@ app.put('/update-personaje/:id', async (req, res) => {
   }
   
 });
+*/
+//cloudnary
+app.put('/update-personaje/:id', async (req, res) => {
+  const idpersonaje = req.params.id;
+  //console.log("se disparo")
+  
+
+  const {
+    nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
+    fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+    sentidos, academisismo, alerta, atletismo, conBakemono, mentir, pilotear,
+    artesMarciales, medicina, conObjMagicos, sigilo, conEsferas, conLeyendas,
+    forja, conDemonio, conEspiritual, manejoBlaster, manejoSombras, tratoBakemono,
+    conHechiceria, medVital, medEspiritual, rayo, fuego, frio, veneno, corte,
+    energia, ventajas, apCombate, valCombate, apCombate2, valCombate2,
+    add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
+    imagen, inventario, dominios, kenActual, kiActual, positiva, negativa,
+    vidaActual, hechizos, consumision, iniciativa, historia, usuarioId,
+    tecEspecial, conviccion, cicatriz, resistencia, pjPnj
+  } = req.body;
 
 
+  
+  try {
+    let imagenurl = null;
+    let imagencloudid = null;
+
+    // Si hay imagen base64, la subimos a Cloudinary
+    if (imagen && imagen.startsWith('data:image/')) {
+      const matches = imagen.match(/^data:image\/(\w+);base64,(.+)$/);
+      if (!matches) {
+        return res.status(400).json({ error: 'Imagen base64 inválida.' });
+      }
+
+      const ext = matches[1];
+      const data = matches[2];
+
+      const uploadResult = await cloudinary.uploader.upload(`data:image/${ext};base64,${data}`, {
+        folder: 'personajes',
+        public_id: `personaje_${idpersonaje}`,
+        overwrite: true,
+      });
+
+      imagenurl = uploadResult.secure_url;
+      imagencloudid = uploadResult.public_id;
+
+      // Actualizar imagenurl e imagencloudid en la base
+      await pool.query(
+        'UPDATE personajes SET imagenurl = $1, imagencloudid = $2 WHERE idpersonaje = $3',
+        [imagenurl, imagencloudid, idpersonaje]
+      );
+    }
+
+    // Actualizar los demás campos
+    const query = `
+      UPDATE personajes SET
+        nombre=$1, dominio=$2, raza=$3, naturaleza=$4, edad=$5,
+        ken=$6, ki=$7, destino=$8, "pDestino"=$9, fuerza=$10,
+        fortaleza=$11, destreza=$12, agilidad=$13, sabiduria=$14,
+        presencia=$15, principio=$16, sentidos=$17, academisismo=$18,
+        alerta=$19, atletismo=$20, "conBakemono"=$21, mentir=$22,
+        pilotear=$23, "artesMarciales"=$24, medicina=$25, "conObjMagicos"=$26,
+        sigilo=$27, "conEsferas"=$28, "conLeyendas"=$29, forja=$30,
+        "conDemonio"=$31, "conEspiritual"=$32, "manejoBlaster"=$33,
+        "manejoSombras"=$34, "tratoBakemono"=$35, "conHechiceria"=$36,
+        "medVital"=$37, "medEspiritual"=$38, rayo=$39, fuego=$40,
+        frio=$41, veneno=$42, corte=$43, energia=$44, ventajas=$45,
+        "apCombate"=$46, "valCombate"=$47, "apCombate2"=$48,
+        "valCombate2"=$49, add1=$50, "valAdd1"=$51, add2=$52,
+        "valAdd2"=$53, add3=$54, "valAdd3"=$55, add4=$56, "valAdd4"=$57,
+        inventario=$58, dominios=$59, "kenActual"=$60,
+        "kiActual"=$61, positiva=$62, negativa=$63, "vidaActual"=$64,
+        hechizos=$65, consumision=$66, iniciativa=$67, historia=$68,
+        "usuarioId"=$69, "tecEspecial"=$70, conviccion=$71, cicatriz=$72,
+        resistencia=$73, "pjPnj"=$74
+      WHERE idpersonaje=$75
+    `;
+
+    const values = [
+      nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
+      fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+      sentidos, academisismo, alerta, atletismo, conBakemono, mentir, pilotear,
+      artesMarciales, medicina, conObjMagicos, sigilo, conEsferas, conLeyendas,
+      forja, conDemonio, conEspiritual, manejoBlaster, manejoSombras, tratoBakemono,
+      conHechiceria, medVital, medEspiritual, rayo, fuego, frio, veneno, corte,
+      energia, ventajas, apCombate, valCombate, apCombate2, valCombate2,
+      add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
+      inventario, dominios, kenActual, kiActual, positiva, negativa,
+      vidaActual, hechizos, consumision, iniciativa, historia, usuarioId,
+      tecEspecial, conviccion, cicatriz, resistencia, pjPnj, idpersonaje
+    ];
+
+    await pool.query(query, values);
+
+    res.status(201).json({ message: 'Personaje modificado exitosamente.', idpersonaje, imagenurl, imagencloudid });
+
+  } catch (err) {
+    console.error('Error al modificar el personaje:', err.message);
+    res.status(500).json({ error: 'Error al modificar el personaje.' });
+  }
+});
+
+
+
+//cloudnary
 app.delete('/deletePersonaje/:id', async (req, res) => {
   const idpersonaje = parseInt(req.params.id, 10);
+
   try {
-    const result = await pool.query('DELETE FROM personajes WHERE idpersonaje = $1 RETURNING *', [idpersonaje]);
-    if (result.rowCount > 0) {
-      res.status(200).json({ message: 'Personaje eliminado exitosamente.', deletedPersonaje: result.rows[0] });
-    } else {
-      res.status(404).json({ message: 'Personaje no encontrado.' });
+    // 1) Obtener el imagencloudid (nombre público en Cloudinary)
+    const { rows } = await pool.query(
+      'SELECT imagencloudid FROM personajes WHERE idpersonaje = $1',
+      [idpersonaje]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Personaje no encontrado.' });
     }
+
+    const imagencloudid = rows[0].imagencloudid;
+
+    // 2) Eliminar el personaje de la base de datos
+    const result = await pool.query(
+      'DELETE FROM personajes WHERE idpersonaje = $1 RETURNING *',
+      [idpersonaje]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'No se pudo eliminar el personaje.' });
+    }
+
+    // 3) Si había imagencloudid, eliminar imagen de Cloudinary
+    if (imagencloudid) {
+      try {
+        await cloudinary.uploader.destroy(imagencloudid);
+        console.log(`🗑️ Imagen ${imagencloudid} eliminada de Cloudinary`);
+      } catch (cloudErr) {
+        console.error('❌ Error al eliminar imagen en Cloudinary:', cloudErr.message);
+        // No cancelamos la respuesta por error en imagen, pero lo informamos
+      }
+    }
+
+    res.status(200).json({
+      message: 'Personaje y su imagen eliminados correctamente.',
+      deletedPersonaje: result.rows[0]
+    });
+
   } catch (error) {
-    console.error('Error al eliminar el personaje:', error);
+    console.error('🚨 Error al eliminar personaje:', error);
     res.status(500).json({ message: 'Error interno del servidor.' });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post('/insertGrupo', async (req, res) => {
+  const { 
+    nombre,
+    idspersonajes,    
+   } = req.body;
+  try {
+    const query = `
+      INSERT INTO grupos (
+      nombre, 
+      idspersonajes 
+      )
+      VALUES ($1, $2)
+      RETURNING idgrupo
+    `;
+
+    const values = [
+      nombre,
+      idspersonajes,
+      ];
+    const result = await pool.query(query, values);
+    const newId = result.rows[0].idgrupo;
+    res.status(201).json({ message: 'Grupo insertado exitosamente.', idgrupo: newId });
+  } catch (err) {
+    console.error('Error al insertar el nuevo Grupo:', err.message);
+    res.status(500).json({ error: 'Error al insertar el nuevo Grupo.' });
+  }
+});
+
+app.get('/consumirGrupos', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM grupos');
+    const coleccionGrupos = result.rows;
+    if (!Array.isArray(coleccionGrupos)) {
+      return res.status(500).json({ message: 'Error: no se encontró la colección de grupos.' });
+    }
+
+    res.status(200).json({ coleccionGrupos });
+  } catch (err) {
+    console.error('Error al consumir los grupos:', err.message);
+    res.status(500).json({ error: 'Error al consumir los grupos.' });
+  }
+});
+
+app.put('/update-grupos', async (req, res) => {
+  const { idgrupo, idspersonajes } = req.body; 
+  try {
+    const result = await pool.query(
+      'UPDATE grupos SET idspersonajes = $1 WHERE idgrupo = $2 RETURNING *',
+      [idspersonajes, idgrupo]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Grupo no encontrado' });
+    }
+    res.json({ message: 'Grupo actualizado exitosamente', grupo: result.rows[0] });
+  } catch (error) {
+    console.error('Error al actualizar el grupo en la base de datos:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+app.delete('/delete-grupo/:idgrupo', async (req, res) => {
+  const { idgrupo } = req.params;
+
+  try {
+    const resultado = await pool.query('DELETE FROM grupos WHERE idgrupo = $1', [idgrupo]);
+    if (resultado.rowCount > 0) {
+      res.status(200).json({ message: 'Grupo eliminado exitosamente' });
+    } else {
+      res.status(404).json({ message: 'Grupo no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar el grupo:', error);
+    res.status(500).json({ message: 'Error al eliminar el grupo' });
+  }
+});
+
+
+
+
 
 app.get('/consumirTecEspeciales', async (req, res) => {
    try {
@@ -972,6 +1111,10 @@ app.delete('/deleteSaga/:idsaga', async (req, res) => {
   }
 });
 
+
+
+
+
 //SECCIONES DE SAGAS
 app.get('/consumirSecciones', async (req, res) => {
 
@@ -1052,7 +1195,6 @@ app.delete('/deleteSeccion/:idseccion', async (req, res) => {
   }
 });
 
-
 app.post('/insertPjSaga', async (req, res) => {
   const { idpersonaje, idsaga } = req.body;
 
@@ -1073,6 +1215,9 @@ app.post('/insertPjSaga', async (req, res) => {
     res.status(500).json({ message: 'Hubo un error al añadir el personaje a la saga.' });
   }
 });
+
+
+
 
 //NOTAS
 app.put('/update-notas/:idpersonaje', async (req, res) => {
@@ -1236,8 +1381,14 @@ app.get('/recuperarPass', async (req, res) => {
 });
 
 
-//const PORT = process.env.PORT || 4000;
-const PORT = process.env.PORT || 10000;
+
+
+
+
+
+
+const PORT = process.env.PORT || 4000;
+//const PORT = process.env.PORT || 10000;
 
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);

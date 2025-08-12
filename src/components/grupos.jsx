@@ -287,7 +287,7 @@ useEffect(() => {
             <div style={{ display: "flex", flexDirection: "row" }}>
               {grupo.personajes.length > 0 ? (
                     
-                 grupo.personajes.map(({ nombre, imagen, idpersonaje, usuarioId }) => (
+                 grupo.personajes.map(({ nombre, imagenurl, idpersonaje, usuarioId }) => (
                   
                   <div
                     className="grupo-card"
@@ -303,7 +303,7 @@ useEffect(() => {
                         placement="right"
                         overlay={renderTooltip(idpersonaje)}
                     >
-                    <img src={imagen} alt={nombre} className="grupo-card-image" 
+                    <img src={imagenurl} alt={nombre} className="grupo-card-image" 
                       style={{
                            
                         boxShadow: usuariosConectados.includes(Number(usuarioId)) 
@@ -363,7 +363,7 @@ useEffect(() => {
                     <div style={{ display: 'flex', flexDirection: "row" }}>
                       {resultadosBusqueda[grupo.idgrupo].map(personaje => (
                         <div key={personaje.idpersonaje} style={{ margin: '10px', textAlign: 'center' }}>
-                          <img src={personaje.imagen} alt={personaje.nombre} style={{ borderRadius: "50%", width: '40px', height: '40px' }} />
+                          <img src={personaje.imagenurl} alt={personaje.nombre} style={{ borderRadius: "50%", width: '40px', height: '40px' }} />
                           <p style={{color:"aliceblue"}}>{personaje.nombre}</p>
                           <Button variant="outline-warning" onClick={() => agregarPersonaje(grupo.idgrupo, personaje.idpersonaje)}>Agregar</Button>
                         </div>
