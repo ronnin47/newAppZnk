@@ -128,7 +128,7 @@ export const FichaPersonaje = ({
   
   
   const [nombreN,setNombreN]=useState(nombre);
-  const [imagenN,setImagenN]=useState(imagen);
+  const [imagenN,setImagenN]=useState(imagenurl);
   const [imagenurlN,setImagenurlN]=useState(imagenurl || imagen);
   const [dominioN,setDominioN]=useState(dominio);
   const [razaN,setRazaN]=useState(raza);
@@ -511,6 +511,7 @@ const btnGuardarCambios = () => {
     cicatriz: cicatriz,  
     resistencia:resistenciaN,
     pjPnj:pjPnjN,
+    imagenurl:imagenurlN,
   };
 
 
@@ -634,6 +635,11 @@ const guardarCambiosBBDD = async () => {
   }
 };
 
+
+
+
+
+
 useEffect(() => {
  btnGuardarCambios();
 }, [ 
@@ -642,6 +648,7 @@ useEffect(() => {
   razaN,
   edadN,
   imagenN,
+  imagenurlN,
   kenN,
   kiN,
   destinoN,
