@@ -284,7 +284,7 @@ const baset=principalValue+secundariaValue
     imprimirBonoKen="";
   }
   
-  const message = `     Tirada  ${nombreTirada}      ${imprimirBase}     ${imprimirTirada}       ${imprimirBonoD10}        ${imprimirBonoD20}        ${imprimirBonoKen}         ${imprimirBonoD6}        ${imprimirBonoD4}       ${imprimirBonoD12}       TOTAL: ${total}`;
+  const message = `🎲 Tirada  ${nombreTirada}      ${imprimirBase}     ${imprimirTirada}       ${imprimirBonoD10}        ${imprimirBonoD20}        ${imprimirBonoKen}         ${imprimirBonoD6}        ${imprimirBonoD4}       ${imprimirBonoD12}       TOTAL: ${total}`;
   
   const msgEnviar={
     nombre:nombre,
