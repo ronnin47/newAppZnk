@@ -66,6 +66,20 @@ const pool = new Pool({
 });
 
 
+
+async function testConnection() {
+  try {
+    const res = await pool.query('SELECT NOW()');
+    console.log('Conexión exitosa:', res.rows);
+  } catch (err) {
+    console.error('Error de conexión:', err);
+  } finally {
+    await pool.end();
+  }
+}
+
+testConnection();
+
 //PARA GAURDADO DE IMAGENES Y OBTENER URLS
 cloudinary.config({
   cloud_name: 'dzul1hatw',
