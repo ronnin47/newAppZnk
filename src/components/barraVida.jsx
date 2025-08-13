@@ -295,7 +295,7 @@ export const BarraVida = ({idpersonaje,estatus, usuarioId,imagenurl,cicatrizN, s
         tipo: "vida",   //ok
     };
     
-    socket.emit('message', msgEnviar);
+    socket.emit('chat-chat', msgEnviar);
    
    
   };

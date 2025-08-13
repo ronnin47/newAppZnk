@@ -296,7 +296,7 @@ const baset=principalValue+secundariaValue
   setAnimacionActiva(false); 
 }, 1000); 
   
-  socket.emit('message', msgEnviar);
+  socket.emit('chat-chat', msgEnviar);
   setMessage('');
   setNombreTirada("");
 
@@ -725,7 +725,7 @@ const msgEnviar={
  
   }  
 
-  socket.emit('message', msgEnviar);
+  socket.emit('chat-chat', msgEnviar);
   setMessage('')
   setMensajeChat("")
 }

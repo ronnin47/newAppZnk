@@ -64,7 +64,7 @@ export const BarraKen = ({ nombreN,estatus, usuarioId,imagenurl, kenN, kenActual
                 nick: "",   // este campo no existe
                 tipo: "ken",   //ok
             };
-            socket.emit('message', msgEnviar);
+            socket.emit('chat-chat', msgEnviar);
             
         }
        

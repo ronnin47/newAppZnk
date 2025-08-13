@@ -233,11 +233,11 @@ useEffect(() => {
     });
   };
 
-    socket.on('message', handleMessage);
+    socket.on('chat-chat', handleMessage);
 
   
     return () => {
-      socket.off('message', handleMessage);
+      socket.off('chat-chat', handleMessage);
     };
   }, [socket, coleccionPersonajes]);
   

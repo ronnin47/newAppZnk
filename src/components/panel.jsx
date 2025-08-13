@@ -47,12 +47,12 @@ useEffect(() => {
 }, [sock, isAtTop]);
 
   useEffect(() => {
-    socket.on('message', (newMessage) => {
+    socket.on('chat-chat', (newMessage) => {
       const mensajeC = `${newMessage.nombre}: ${newMessage.mensaje}`;
       setSock((prevMessages) => [...prevMessages, mensajeC]);
     });
     return () => {
-      socket.off('message');
+      socket.off('chat-chat');
     };
   }, []);
 

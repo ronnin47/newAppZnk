@@ -471,11 +471,11 @@ useEffect(() => {
   };
 
   // Escuchar los eventos del socket
-  socket.on('message', handleMessage);
+  socket.on('chat-chat', handleMessage);
 
   // Limpiar la suscripción al socket cuando el componente se desmonte
   return () => {
-    socket.off('message', handleMessage);
+    socket.off('chat-chat', handleMessage);
   };
 }, []);
 

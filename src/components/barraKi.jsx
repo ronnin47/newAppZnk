@@ -69,7 +69,7 @@ export const BarraKi = ({nombreN,estatus, usuarioId,imagenurl, consumisionN, set
         tipo: "ki",   //ok
     };
             
-            socket.emit('message', msgEnviar);
+            socket.emit('chat-chat', msgEnviar);
             
         }
 
