@@ -551,8 +551,6 @@ useEffect(() => {
   );
 
 
-console.log("HOLASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
-
 return (
     <>
      <Nava 
