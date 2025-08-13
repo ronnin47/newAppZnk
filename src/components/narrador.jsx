@@ -446,7 +446,7 @@ const handleClickCrearGrupo = async() => {
           key={pj.idpersonaje}
           idpersonaje={pj.idpersonaje} 
           nombre={pj.nombre}
-          imagenurl={pj.imagenurl}
+          imagenurl={pj.imagenurl || '/imagenBase.jpeg'}
           grupo={grupo}
           setGrupo={setGrupo}
         
