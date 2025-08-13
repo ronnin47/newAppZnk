@@ -33,7 +33,7 @@ export const BarraKi = ({nombreN,estatus, usuarioId,imagenurl, consumisionN, set
             setKiActualN(newValue);
 
             let message
-
+/*
             if(consumir>0){
                 message = `            Consumio ${consumir} p de KI                     KI: ${newValue} / ${kiN}`;
             }else if(consumir<0){
@@ -41,6 +41,15 @@ export const BarraKi = ({nombreN,estatus, usuarioId,imagenurl, consumisionN, set
                 message = `            Recupero ${recuperado} p de KI                     KI: ${newValue} / ${kiN}`;
             }else {
                 message = `                             KI: ${newValue} / ${kiN}`;
+            }
+*/
+             if (parseInt(consumir) > 0) {
+                message = `🔷 Consumió ${consumir} p de KI             KI: ${newValue} / ${kiN}`;
+            } else if (parseInt(consumir) < 0) {
+                let recuperado = -(parseInt(consumir));
+                message = `🔷 Recuperó ${recuperado} p de KI             KI: ${newValue} / ${kiN}`;
+            } else {
+                message = `🔷 KI: ${newValue} / ${kiN}`;
             }
                   
             const nombre=nombreN

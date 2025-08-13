@@ -257,15 +257,14 @@ export const BarraVida = ({idpersonaje,estatus, usuarioId,imagenurl,cicatrizN, s
 
     let message
 
-    if(newValue>0){
-        message = `            Recibio ${newValue} p de DAÑO                        VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFaseActual}   ${estadoSalud}`;
+     if(newValue>0){
+        message = `💥 Recibio ${newValue} p de DAÑO    VITALIDAD: ${newDamage} / ${vidaTotal}    ${estadoDeFaseActual}   ${estadoSalud}`;
     }else if(newValue<0){
         let recuperado=-(newValue)
-        message = `            Restauro ${recuperado} p de VIDA                     VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFaseActual}   ${estadoSalud}`;
+        message = `🟢 Restauro ${recuperado} p de VIDA     VITALIDAD: ${newDamage} / ${vidaTotal}                             ${estadoDeFaseActual}   ${estadoSalud}`;
     }else {
-        message = `                             VITALIDAD: ${newDamage} / ${vidaTotal}          ${estadoDeFaseActual}   ${estadoSalud}`;
+        message = `✅ VITALIDAD: ${newDamage} / ${vidaTotal}     ${estadoDeFaseActual}  ${estadoSalud}`;
     }
-  
    
     const nombre=nombreN
 

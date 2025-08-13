@@ -31,7 +31,7 @@ export const BarraKen = ({ nombreN,estatus, usuarioId,imagenurl, kenN, kenActual
            
             setKenActualN(newValue);
             let message
-
+/*
             if(consumir>0){
                 message = `            Consumio ${consumir} p de KEN                     KEN: ${newValue} / ${kenN}`;
             }else if(consumir<0){
@@ -40,6 +40,15 @@ export const BarraKen = ({ nombreN,estatus, usuarioId,imagenurl, kenN, kenActual
             }else {
                 message = `                             KEN: ${newValue} / ${kenN}`;
             } 
+  */
+            if (parseInt(consumir) > 0) {
+                    message = `✨ Consumió ${consumir} p de KEN         KEN: ${newValue} / ${kenN}`;
+                } else if (parseInt(consumir) < 0) {
+                    let recuperado = -(parseInt(consumir));
+                    message = `✨ Recuperó ${recuperado} p de KEN         KEN: ${newValue} / ${kenN}`;
+                } else {
+                    message = `✨ KEN: ${newValue} / ${kenN}`;
+                }
             const nombre=nombreN
             /*
             const msgEnviar = {
