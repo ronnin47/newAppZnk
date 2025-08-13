@@ -28,7 +28,7 @@ export const SagasPre = ({ setColeccionPersonajes,usuarioid,coleccionSecciones,c
           key={saga.idsaga}
           idsaga={saga.idsaga}
           titulo={saga.titulo}
-          imagensaga={saga.imagensaga}
+          imagenurl={saga.imagenurl}
           presentacion={saga.presentacion}
           secciones={coleccionSecciones.filter((seccion) => seccion.idsaga === saga.idsaga)} // Filtra las secciones que corresponden a la saga actual
           personajesSaga={saga.personajes}
@@ -45,7 +45,7 @@ export const SagasPre = ({ setColeccionPersonajes,usuarioid,coleccionSecciones,c
 
 
 
-const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid,personajesSaga, secciones,  titulo, imagensaga, presentacion }) => {
+const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid,personajesSaga, secciones,  titulo, imagenurl, presentacion }) => {
  
   const personajesFiltrados = (coleccionPersonajes || []).filter((personaje) =>
     (personajesSaga || []).includes(personaje.idpersonaje) // Verificar si el ID del personaje está en personajesSaga
@@ -92,7 +92,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
 
  
 
-  const handleImagenClick = (naturaleza,ken,raza,conviccion,dominio,imagen,nombre,notasaga,usuarioid,idpersonaje) => {
+  const handleImagenClick = (naturaleza,ken,raza,conviccion,dominio,imagenurl,nombre,notasaga,usuarioid,idpersonaje) => {
 
    
    // console.log("ACA VEMOS EL CONTENIDO DE NOTASAGA: ",notasaga)
@@ -106,7 +106,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
     setRazaPj(raza);
     setConviccionPj(conviccion);
     setDominioPj(dominio);
-    setImagenSeleccionada(imagen);
+    setImagenSeleccionada(imagenurl);
     setNombrePj(nombre);
     setNotaSagaPj(notasaga)
     setUsuarioIdPj(usuarioid)
@@ -130,8 +130,8 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
   const handleCloseModalImgN = () => {
     setShowModalImgN(false);
   };
-  const handleImagenClickN = (imagen,nombre,notasaga) => {
-    setImagenSeleccionadaN(imagen);
+  const handleImagenClickN = (imagenurl,nombre,notasaga) => {
+    setImagenSeleccionadaN(imagenurl);
     setNombrePj(nombre);
     setNotaSagaPj(notasaga);
     setShowModalImgN(true);
@@ -166,7 +166,7 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
           
         <div className='diagonal-box'>
         <img
-            src={imagensaga}
+            src={imagenurl}
             alt="Imagen de la saga"
            
           
@@ -249,9 +249,9 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
             }}
           >
             <img
-              src={imagensaga}
+              src={imagenurl}
               alt="Imagen de la saga"
-              onClick={() => handleImagenClickN(imagensaga)}
+              onClick={() => handleImagenClickN(imagenurl)}
               style={{
                 width: '20em',
                 height: '20em',
@@ -271,10 +271,10 @@ const SagaUni = ({ idsaga, coleccionPersonajes, setColeccionPersonajes,usuarioid
               <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '1em', marginBottom: '20px' }}>
                 <img
                   className='bordeSeccion'
-                  src={seccion.imagen || '/imagenBase.jpeg'}
+                  src={seccion.imagenurl || '/imagenBase.jpeg'}
                   alt="Previsualización"
                   style={{ width: '16em', height: '16em' }}
-                  onClick={() => handleImagenClickN(seccion.imagen)}
+                  onClick={() => handleImagenClickN(seccion.imagenurl)}
                 />
                 <div style={{ flexGrow: 1 }}>
                   <p style={{ color: 'orange', margin:"0px",fontFamily:"fantasy",fontSize:"1.2em"}}>{seccion.titulo}</p>

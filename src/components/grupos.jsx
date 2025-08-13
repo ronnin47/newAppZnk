@@ -12,8 +12,9 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
 
+const socket = io('https://appmobileznk.onrender.com');
 
 export const Grupos = ({ sesion,usuariosConectados, coleccionGrupos, setColeccionGrupos, coleccionPersonajes }) => {
   const [gruposConPersonajes, setGruposConPersonajes] = useState([]);

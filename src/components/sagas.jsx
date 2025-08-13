@@ -59,7 +59,8 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
         const nuevaSaga = {
           titulo:titulo,
           presentacion: presentacion,
-          imagen: imagen,
+          imagensaga: imagen,
+          personajes: []
         };
     
         try {
@@ -106,7 +107,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
           key={saga.idsaga}
           idsaga={saga.idsaga}
           titulo={saga.titulo}
-          imagensaga={saga.imagensaga}
+          imagenurl={saga.imagenurl}
           presentacion={saga.presentacion}
           secciones={coleccionSecciones.filter((seccion) => seccion.idsaga === saga.idsaga)} // Filtra las secciones que corresponden a la saga actual
           setColeccionSecciones={setColeccionSecciones}
@@ -184,7 +185,7 @@ export const Sagas = ({coleccionPersonajes,coleccionSecciones,setColeccionSeccio
 
 
 
-const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecciones,setColeccionSagas,coleccionSagas, idsaga, titulo, imagensaga, presentacion }) => {
+const SagaUni = ({personajesSaga,coleccionPersonajes, secciones,setColeccionSecciones,setColeccionSagas,coleccionSagas, idsaga, titulo, imagenurl, presentacion }) => {
   const [showModal, setShowModal] = useState(false);
 
   // Estado para las secciones dinámicas
@@ -646,7 +647,7 @@ const handleCloseModalImg = () => {
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <img
-            src={imagensaga}
+            src={imagenurl}
             alt="Imagen de la seccion"
             style={{
               width: '12em',
@@ -722,7 +723,7 @@ const handleCloseModalImg = () => {
         <Modal.Body style={{ backgroundColor: 'black', color: 'white' }}>
         <div style={{ display: 'flex', flexDirection: 'row', backgroundColor: 'black', padding: '20px', borderRadius: '10px' }}>
             <img
-              src={imagensaga}
+              src={imagenurl}
               alt="Imagen de la saga"
               style={{
                 width: '20em',
@@ -942,7 +943,7 @@ const handleCloseModalImg = () => {
     <div style={{ display: 'flex', flexDirection: 'row', gap: '1em', marginBottom: '20px' }}>
       {/* Imagen de la sección */}
       <img
-        src={seccion.imagen || '/imagenBase.jpeg'}
+        src={seccion.imagenurl || '/imagenBase.jpeg'}
         alt="Previsualización"
         style={{ width: '20em', height: '20em', objectFit: 'cover' }}
       />

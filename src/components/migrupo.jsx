@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Tooltip, OverlayTrigger, Modal } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const socket = io('https://appmobileznk.onrender.com');
 
 export const MiGrupo = ({
   usuariosConectados,

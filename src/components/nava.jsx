@@ -9,7 +9,9 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const socket = io('https://appmobileznk.onrender.com');
 
 const apiUrl =import.meta.env.VITE_API_URL;
 

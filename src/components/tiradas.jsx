@@ -13,7 +13,9 @@ import {BarraVida} from "./barraVida.jsx";
 import Modal from 'react-bootstrap/Modal';
 
 
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const socket = io('https://appmobileznk.onrender.com');
 //REACT_APP_BACKEND_URL=https://tu-backend-en-render.onrender.com
 
 
@@ -160,6 +162,8 @@ export const Tiradas = ({
   pjSeleccionado,
   setPjSeleccionado,
   resistencia,
+   usuarioId,
+   estatus,
 
 }) => {
 
@@ -695,10 +699,24 @@ const handleChangeM=(event)=>{
 }
 
 const enviar=()=>{
+  /*
 const msgEnviar={
   nombre:nombre,
   mensaje:mensajeChat
 }
+*/
+
+
+  const msgEnviar = {
+    usuarioId: usuarioId,
+    idpersonaje: idpersonaje,
+    nombre: nombre,//ok
+    mensaje: mensajeChat,//ok
+    estatus: estatus,
+    imagenPjUrl: imagenurl || "",
+    nick:  "",
+    tipo: "tirada",
+  };
 
   if(msgEnviar.mensaje.includes("+")){
   
@@ -970,9 +988,9 @@ const incrementos=()=>{
 
         
        <div className="container barrasTiradas">  
-          <BarraVida idpersonaje={idpersonaje} cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombre} fortalezaN={fortaleza} kiN={ki} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
-          <BarraKi idpersonaje={idpersonaje} nombreN={nombre} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={ki} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
-          <BarraKen idpersonaje={idpersonaje} nombreN={nombre} kenN={ken} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
+          <BarraVida idpersonaje={idpersonaje} estatus={estatus} usuarioId={usuarioId} imagenurl={imagenurl} cicatrizN={cicatrizN} setCicatrizN={setCicatrizN} nombreN={nombre} fortalezaN={fortaleza} kiN={ki} positivaN={positivaN} setPositivaN={setPositivaN} negativaN={negativaN} setNegativaN={setNegativaN} damageActualN={damageActualN} setDamageActualN={setDamageActualN}></BarraVida>
+          <BarraKi idpersonaje={idpersonaje} estatus={estatus} usuarioId={usuarioId} imagenurl={imagenurl} nombreN={nombre} consumisionN={consumisionN} setConsumisionN={setConsumisionN} kiN={ki} kiActualN={kiActualN} setKiActualN={setKiActualN}></BarraKi>
+          <BarraKen idpersonaje={idpersonaje} estatus={estatus} usuarioId={usuarioId} imagenurl={imagenurl} nombreN={nombre} kenN={ken} kenActualN={kenActualN} setKenActualN={setKenActualN}></BarraKen>
         </div>
       
       

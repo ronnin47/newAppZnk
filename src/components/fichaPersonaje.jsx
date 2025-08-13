@@ -12,7 +12,10 @@ import axios from 'axios';
 import { TecnicaEspecial } from './tecEspecial.jsx';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const socket = io('https://appmobileznk.onrender.com');
+
 const apiUrl =import.meta.env.VITE_API_URL;
 
 import { Tronco } from './tronco.jsx';
@@ -854,7 +857,7 @@ const agregarPersonaje = async () => {
     valAdd3: valAdd3 || 0,
     add4:add4,
     valAdd4: valAdd4 || 0,
-    imagen: imagen,
+    imagenurl: imagenurl,
     inventario: inventario,
     dominios: dominios,
     kenActual:ken || 0,
@@ -875,7 +878,7 @@ const agregarPersonaje = async () => {
 
 
   try {  
-    const response = await axios.post(`${apiUrl}/insert-personaje`, pjNuevo, {   
+    const response = await axios.post(`${apiUrl}/insert-personajeBake`, pjNuevo, {   
     //const response = await axios.post(`http://localhost:4000/insert-personaje`, pjNuevo, { 
     headers: {
         'Content-Type': 'application/json', 

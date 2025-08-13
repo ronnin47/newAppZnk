@@ -122,74 +122,124 @@ console.log("Ready for send e-mail")
 
 
 
-
+/*
 const io = new Server(server, {
   cors: {
     origin: '*', // Cambia esto según sea necesario
   },
 });
 
+
 const connectedUsers = new Map();
+
+function normalizarMensaje(mensaje) {
+  return {
+    usuarioId: mensaje.usuarioId?.toString() ?? '',
+    idpersonaje: mensaje.idpersonaje?.toString() ?? '',
+    nombre: mensaje.nombre?.toString() ?? '',
+    mensaje: mensaje.mensaje?.toString() ?? '',
+    estatus: mensaje.estatus?.toString() ?? '',
+    imagenurl: mensaje.imagenurl?.toString() ?? '',
+    imagenPjUrl: mensaje.imagenPjUrl?.toString() ?? '',
+    nick: mensaje.nick?.toString() ?? '',
+    kenActual: mensaje.kenActual?.toString() ?? '',
+    ken: mensaje.ken?.toString() ?? '',
+    kiActual: mensaje.kiActual?.toString() ?? '',
+    ki: mensaje.ki?.toString() ?? '',
+    vidaActual: mensaje.vidaActual?.toString() ?? '',
+    vidaTotal: mensaje.vidaTotal?.toString() ?? '',
+    timestamp: Date.now(),
+    tipo: mensaje.tipo?.toString() ?? '',
+  };
+}
 
 io.on('connection', (socket) => {
   console.log('Socket: un usuario se conectó');
 
-
   socket.on('user-connected', (userData) => {
     const { usuarioId, sesion } = userData;
-    if(usuarioId && sesion){
+    if (usuarioId && sesion) {
       connectedUsers.set(socket.id, usuarioId);
-      console.log(`Usuario ${usuarioId} conectado.`);  
+      console.log(`Usuario ${usuarioId} conectado.`);
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
-   
   });
-
 
   socket.on('image', (imageData) => {
-    io.emit('image', imageData); 
+    io.emit('image', imageData);
   });
 
-
-   // Escuchar evento 'removeImage' cuando un cliente quiere eliminar una imagen
   socket.on('removeImage', (idpersonaje) => {
     console.log(`Eliminando personaje con id: ${idpersonaje}`);
-    
-    // Emitir el evento 'removeImage' a todos los clientes (incluido el que lo emitió)
     io.emit('removeImage', idpersonaje);
-    
-    // Si deseas que solo se emita a los demás clientes y no al que hizo la solicitud:
-    // socket.broadcast.emit('removeImage', idpersonaje);
   });
- 
-  socket.on('message', (message) => {
-    io.emit('message', message); 
+
+  // Aquí adaptamos 'message' para guardar en DB y luego emitir
+  socket.on('message', async (mensaje) => {
+    const msgNormalizado = normalizarMensaje(mensaje);
+
+    try {
+      const insertQuery = `
+        INSERT INTO mensajes (
+          "usuarioId", idpersonaje, nombre, mensaje, estatus,
+          imagenurl, "imagenPjUrl", nick,
+          "kenActual", ken, "kiActual", ki,
+          "vidaActual", "vidaTotal", timestamp, tipo
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+        RETURNING id
+      `;
+
+      const { rows } = await pool.query(insertQuery, [
+        msgNormalizado.usuarioId,
+        msgNormalizado.idpersonaje,
+        msgNormalizado.nombre,
+        msgNormalizado.mensaje,
+        msgNormalizado.estatus,
+        msgNormalizado.imagenurl,
+        msgNormalizado.imagenPjUrl,
+        msgNormalizado.nick,
+        msgNormalizado.kenActual,
+        msgNormalizado.ken,
+        msgNormalizado.kiActual,
+        msgNormalizado.ki,
+        msgNormalizado.vidaActual,
+        msgNormalizado.vidaTotal,
+        msgNormalizado.timestamp,
+        msgNormalizado.tipo,
+      ]);
+
+      msgNormalizado.id = rows[0].id;
+    } catch (error) {
+      console.error('Error al guardar mensaje en DB:', error);
+      // Si falla, no bloqueamos el chat, asignamos un id temporal
+      msgNormalizado.id = Date.now().toString() + Math.random().toString(36).substring(2);
+    }
+
+    io.emit('message', msgNormalizado);
   });
 
   socket.on('user-disconnect', (data) => {
-    const { usuarioId } = data; 
+    const { usuarioId } = data;
     const socketId = [...connectedUsers.entries()].find(([key, value]) => value === usuarioId)?.[0];
-  
     if (socketId) {
-      connectedUsers.delete(socketId); 
+      connectedUsers.delete(socketId);
       console.log(`Usuario ${usuarioId} se desconectó por cierre de sesión.`);
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
   });
-  
 
   socket.on('disconnect', () => {
     const usuarioId = connectedUsers.get(socket.id);
     if (usuarioId) {
       connectedUsers.delete(socket.id);
       console.log(`Usuario ${usuarioId} se desconectó.`);
-      
-      io.emit('user-disconnect', { usuarioId }); 
+      io.emit('user-disconnect', { usuarioId });
       io.emit('connected-users', Array.from(connectedUsers.values()));
     }
   });
-
 });
+
+*/
 
 
 
@@ -517,262 +567,73 @@ app.post('/insert-personaje', async (req, res) => {
   }
 });
 
-/*
-app.put('/update-personaje/:id', async (req, res) => {
+app.post('/insert-personajeBake', async (req, res) => {
+  const {
+    nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
+    fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+    sentidos, academisismo, alerta, atletismo, conBakemono, mentir, pilotear,
+    artesMarciales, medicina, conObjMagicos, sigilo, conEsferas, conLeyendas,
+    forja, conDemonio, conEspiritual, manejoBlaster, manejoSombras, tratoBakemono,
+    conHechiceria, medVital, medEspiritual, rayo, fuego, frio, veneno, corte,
+    energia, ventajas, apCombate, valCombate, apCombate2, valCombate2,
+    add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
+    imagenurl, // <-- aquí llega la URL (string) desde el front
+    inventario, dominios, kenActual, kiActual, positiva, negativa, vidaActual,
+    hechizos, consumision, iniciativa, historia, tecEspecial, conviccion, cicatriz,
+    notaSaga, resistencia, pjPnj, usuarioId
+  } = req.body;
 
-//console.log("esto es lo que trae el req",req)
-  const idpersonaje = req.params.id;
-  const { 
-      nombre,
-      dominio,
-      raza,
-      naturaleza,
-      edad,
-      ken,
-      ki,
-      destino,
-      pDestino,
-      fuerza,
-      fortaleza,
-      destreza,
-      agilidad,
-      sabiduria,
-      presencia,
-      principio,
-      sentidos,
-      academisismo,
-      alerta,
-      atletismo,
-      conBakemono,
-      mentir,
-      pilotear,
-      artesMarciales,
-      medicina,
-      conObjMagicos,
-      sigilo,
-      conEsferas,
-      conLeyendas,
-      forja,
-      conDemonio,
-      conEspiritual,
-      manejoBlaster,
-      manejoSombras,
-      tratoBakemono,
-      conHechiceria,
-      medVital,
-      medEspiritual,
-      rayo,
-      fuego,
-      frio,
-      veneno,
-      corte,
-      energia,
-      ventajas,   
-      apCombate,
-      valCombate,
-      apCombate2,
-      valCombate2,
-      add1,
-      valAdd1,
-      add2,
-      valAdd2,
-      add3,
-      valAdd3,
-      add4,
-      valAdd4,
-      imagen,
-      inventario,
-      dominios,
-      kenActual,
-      kiActual,
-      positiva,
-      negativa,
-      vidaActual,
-      hechizos,
-      consumision,
-      iniciativa,
-      historia,
-      usuarioId,
-      tecEspecial,
-      conviccion,
-      cicatriz,
-      resistencia,
-      pjPnj,
-      
-   } = req.body;
- 
   try {
-    const query = `
-    UPDATE personajes
-    SET 
-      nombre = $1,
-      dominio = $2,
-      raza = $3,
-      naturaleza = $4,
-      edad = $5,
-      ken = $6,
-      ki = $7,
-      destino = $8,
-      "pDestino" = $9,
-      fuerza = $10,
-      fortaleza = $11,
-      destreza = $12,
-      agilidad = $13,
-      sabiduria = $14,
-      presencia = $15,
-      principio = $16,
-      sentidos = $17,
-      academisismo = $18,
-      alerta = $19,
-      atletismo = $20,
-      "conBakemono" = $21,
-      mentir = $22,
-      pilotear = $23,
-      "artesMarciales" = $24,
-      medicina = $25,
-      "conObjMagicos" = $26,
-      sigilo = $27,
-      "conEsferas" = $28,
-      "conLeyendas" = $29,
-      forja = $30,
-      "conDemonio" = $31,
-      "conEspiritual" = $32,
-      "manejoBlaster" = $33,
-      "manejoSombras" = $34,
-      "tratoBakemono" = $35,
-      "conHechiceria" = $36,
-      "medVital" = $37,
-      "medEspiritual" = $38,
-      rayo = $39,
-      fuego = $40,
-      frio = $41,
-      veneno = $42,
-      corte = $43,
-      energia = $44,
-      ventajas = $45,
-      "apCombate" = $46,
-      "valCombate" = $47,
-      "apCombate2" = $48,
-      "valCombate2" = $49,
-      add1 = $50,
-      "valAdd1" = $51,
-      add2 = $52,
-      "valAdd2" = $53,
-      add3 = $54,
-      "valAdd3" = $55,
-      add4 = $56,
-      "valAdd4" = $57,
-      imagen = $58,
-      inventario = $59,
-      dominios = $60,
-      "kenActual" = $61,
-      "kiActual" = $62,
-      positiva = $63,
-      negativa = $64,
-      "vidaActual" = $65,
-      hechizos = $66,
-      consumision = $67,
-      iniciativa = $68,
-      historia = $69,
-      "usuarioId" = $70,
-      "tecEspecial" = $71,
-      conviccion= $72,
-      cicatriz= $73,
-      resistencia= $74,
-      "pjPnj"= $75
-    WHERE idpersonaje = $76
-  `;
+    // Columnas en el mismo orden que el array `values` más abajo
+    const columns = [
+      'nombre','dominio','raza','naturaleza','edad','ken','ki','destino','"pDestino"',
+      'fuerza','fortaleza','destreza','agilidad','sabiduria','presencia','principio',
+      'sentidos','academisismo','alerta','atletismo','"conBakemono"','mentir','pilotear',
+      '"artesMarciales"','medicina','"conObjMagicos"','sigilo','"conEsferas"','"conLeyendas"',
+      'forja','"conDemonio"','"conEspiritual"','"manejoBlaster"','"manejoSombras"','"tratoBakemono"',
+      '"conHechiceria"','"medVital"','"medEspiritual"','rayo','fuego','frio','veneno','corte',
+      'energia','ventajas','"apCombate"','"valCombate"','"apCombate2"','"valCombate2"',
+      'add1','"valAdd1"','add2','"valAdd2"','add3','"valAdd3"','add4','"valAdd4"',
+      'imagenurl','inventario','dominios','"kenActual"','"kiActual"','positiva','negativa','"vidaActual"',
+      'hechizos','consumision','iniciativa','historia','"tecEspecial"','conviccion','cicatriz',
+      'notasaga','resistencia','"pjPnj"','"usuarioId"'
+    ];
+
     const values = [
-      nombre,
-      dominio,
-      raza,
-      naturaleza,
-      edad,
-      ken,
-      ki,
-      destino,
-      pDestino,
-      fuerza,
-      fortaleza,
-      destreza,
-      agilidad,
-      sabiduria,
-      presencia,
-      principio,
-      sentidos,
+      nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
+      fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+      sentidos, academisismo, alerta, atletismo, conBakemono, mentir, pilotear,
+      artesMarciales, medicina, conObjMagicos, sigilo, conEsferas, conLeyendas,
+      forja, conDemonio, conEspiritual, manejoBlaster, manejoSombras, tratoBakemono,
+      conHechiceria, medVital, medEspiritual, rayo, fuego, frio, veneno, corte,
+      energia, ventajas, apCombate, valCombate, apCombate2, valCombate2,
+      add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
+      imagenurl, inventario, dominios, kenActual, kiActual, positiva, negativa, vidaActual,
+      hechizos, consumision, iniciativa, historia, tecEspecial, conviccion, cicatriz,
+      notaSaga, resistencia, pjPnj, usuarioId
+    ];
 
+    // Por seguridad/debug: comprobar que columnas y valores coinciden
+    if (columns.length !== values.length) {
+      console.error('Mismatch columns/values length', columns.length, values.length);
+      return res.status(500).json({ error: 'Error interno: mismatch columnas/valores' });
+    }
 
-      academisismo,
-      alerta,
-      atletismo,
-      conBakemono,
-      mentir,
-      pilotear,
-      artesMarciales,
-      medicina,
-      conObjMagicos,
-      sigilo,
-      conEsferas,
-      conLeyendas,
-      forja,
-      conDemonio,
-      conEspiritual,
-      manejoBlaster,
-      manejoSombras,
-      tratoBakemono,
-      conHechiceria,
-      medVital,
-      medEspiritual,
-      rayo,
-      fuego,
-      frio,
-      veneno,
-      corte,
-      energia,
-      ventajas,      
-      apCombate,
-      valCombate,
-      apCombate2,
-      valCombate2,
-      add1,
-      valAdd1,
-      add2,
-      valAdd2,
-      add3,
-      valAdd3,
-      add4,
-      valAdd4,
-      imagen,
-      inventario,
-      dominios,
-      kenActual,
-      kiActual,
-      positiva,
-      negativa,
-      vidaActual,
-      hechizos,
-      consumision,
-      iniciativa,
-      historia,
-      usuarioId,
-      tecEspecial,    
-      conviccion,
-      cicatriz,
-      resistencia,
-      pjPnj,
-      idpersonaje
-      ];
+    const placeholders = values.map((_, i) => `$${i + 1}`).join(', ');
+    const query = `INSERT INTO personajes (${columns.join(', ')}) VALUES (${placeholders}) RETURNING idpersonaje`;
     const result = await pool.query(query, values);
- 
-    res.status(201).json({ message: 'Personaje modificado exitosamente.', idpersonaje});
+
+    res.status(201).json({
+      message: 'Personaje insertado exitosamente.',
+      idpersonaje: result.rows[0].idpersonaje
+    });
   } catch (err) {
-    console.error('Error al modificar el personaje:', err.message);
-    res.status(500).json({ error: 'Error al modificar el personaje.' });
+    console.error('Error al insertar el personaje:', err);
+    res.status(500).json({ error: 'Error al insertar el personaje.' });
   }
-  
 });
-*/
-//cloudnary
+
+//ya tiene cloudnary
 app.put('/update-personaje/:id', async (req, res) => {
   const idpersonaje = req.params.id;
   //console.log("se disparo")
@@ -873,9 +734,7 @@ app.put('/update-personaje/:id', async (req, res) => {
   }
 });
 
-
-
-//cloudnary
+//ya tiene cloudnary
 app.delete('/deletePersonaje/:id', async (req, res) => {
   const idpersonaje = parseInt(req.params.id, 10);
 
@@ -1041,46 +900,88 @@ app.get('/consumirTecEspeciales', async (req, res) => {
 
 
 
-
-// SAGAS
+//insert saga ya tiene cloudnary
 app.post('/insertSaga', async (req, res) => {
-  const { titulo, presentacion, imagen } = req.body; 
-  //console.log(" Lo que viene del req: ",req.body)
 
-  if (!imagen) {
-    return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
-  }
-
-  try {
-    const result = await pool.query(
-      'INSERT INTO sagas (titulo, presentacion, imagensaga) VALUES ($1, $2, $3) RETURNING *',
-      [titulo, presentacion, imagen] 
-    );
-    const nuevoSaber = result.rows[0]; 
-
-    res.status(201).json(nuevoSaber); 
-  } catch (error) {
-    console.error('Error al insertar el saber:', error);
-    res.status(500).json({ error: 'Error al insertar el saber' });
-  }
-});
-
-app.get('/consumirSagas', async (req, res) => {
+ // console.log("esto viene del cliente: ",req.body)
+  const {
+    titulo,
+    presentacion,
+    imagensaga, // si tenés otro campo aparte de imagen
+    personajes=[],
+  } = req.body;
 
   try {
-    const result = await pool.query('SELECT * FROM sagas');
-    const coleccionSagas = result.rows;
-    if (!Array.isArray(coleccionSagas)) {
-      return res.status(500).json({ message: 'Error: no se encontró la colección de Sagas ZNK.' });
+    // 1. Insertar saga sin imagenurl ni imagencloudid
+    const insertQuery = `
+      INSERT INTO sagas (titulo, presentacion, imagensaga, personajes)
+      VALUES ($1, $2, $3, $4)
+      RETURNING idsaga
+    `;
+
+    const insertValues = [titulo, presentacion, imagensaga, personajes];
+    const insertResult = await pool.query(insertQuery, insertValues);
+
+    const newSagaId = insertResult.rows[0].idsaga;
+
+    let imagenUrl = null;
+    let imagenCloudId = null;
+
+    // 2. Si recibís imagen base64, subir a Cloudinary
+    if (imagensaga) {
+      const matches = imagensaga.match(/^data:image\/(\w+);base64,(.+)$/);
+      if (!matches) return res.status(400).json({ error: 'Imagen base64 inválida.' });
+
+      const ext = matches[1];
+      const data = matches[2];
+
+      const uploadResult = await cloudinary.uploader.upload(`data:image/${ext};base64,${data}`, {
+        folder: 'sagas',
+        public_id: `saga_${newSagaId}`,
+        overwrite: true,
+      });
+
+      imagenUrl = uploadResult.secure_url;
+      imagenCloudId = uploadResult.public_id;
+
+      // 3. Actualizar saga con URL e id Cloudinary
+      const updateQuery = `
+        UPDATE sagas SET imagenurl = $1, imagencloudid = $2 WHERE idsaga = $3
+      `;
+
+      await pool.query(updateQuery, [imagenUrl, imagenCloudId, newSagaId]);
     }
 
-    res.status(200).json({ coleccionSagas });
-  } catch (err) {
-    console.error('Error al consumir los SAGAS znk:', err.message);
-    res.status(500).json({ error: 'Error al consumir SAGAS ZNK.' });
+    // 4. Retornar resultado con el idsaga y url de imagen
+    res.status(201).json({
+      message: 'Saga creada exitosamente.',
+      idsaga: newSagaId,
+      imagenurl: imagenUrl,
+      imagencloudid: imagenCloudId,
+    });
+
+  } catch (error) {
+    console.error('Error al insertar la saga:', error);
+    res.status(500).json({ error: 'Error al insertar la saga.' });
   }
 });
 
+//consmumir cloudnary
+app.get('/consumirSagas', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT idsaga, titulo, presentacion, personajes, imagenurl, imagencloudid
+     FROM sagas ORDER BY idsaga DESC
+    `);
+
+    res.status(200).json({ coleccionSagas: result.rows });
+  } catch (error) {
+    console.error('Error al obtener sagas:', error);
+    res.status(500).json({ error: 'Error interno al obtener sagas' });
+  }
+});
+
+//quedo como estaba
 app.put('/updateSaga/:idsaga', async (req, res) => {
   const { idsaga } = req.params;
   const { presentacion} = req.body;
@@ -1098,13 +999,40 @@ app.put('/updateSaga/:idsaga', async (req, res) => {
   }
 });
 
+
 app.delete('/deleteSaga/:idsaga', async (req, res) => {
   const { idsaga } = req.params;
 
   try {
-     await pool.query('DELETE FROM secciones WHERE idsaga = $1', [idsaga]);
+    // 1. Obtener el imagencloudid de la saga
+    const result = await pool.query(
+      'SELECT imagencloudid FROM sagas WHERE idsaga = $1',
+      [idsaga]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Saga no encontrada' });
+    }
+
+    const imagenCloudId = result.rows[0].imagencloudid;
+
+    // 2. Si hay imagen en Cloudinary, eliminarla
+    if (imagenCloudId) {
+      try {
+        await cloudinary.uploader.destroy(imagenCloudId);
+      } catch (err) {
+        console.warn(`No se pudo eliminar imagen en Cloudinary: ${err.message}`);
+      }
+    }
+
+    // 3. Eliminar primero las secciones relacionadas
+    await pool.query('DELETE FROM secciones WHERE idsaga = $1', [idsaga]);
+
+    // 4. Eliminar la saga en sí
     await pool.query('DELETE FROM sagas WHERE idsaga = $1', [idsaga]);
+
     res.status(200).json({ message: 'Saga eliminada correctamente' });
+
   } catch (error) {
     console.error('Error al eliminar la saga:', error);
     res.status(500).json({ message: 'Error al eliminar la saga' });
@@ -1112,14 +1040,16 @@ app.delete('/deleteSaga/:idsaga', async (req, res) => {
 });
 
 
-
-
-
 //SECCIONES DE SAGAS
 app.get('/consumirSecciones', async (req, res) => {
 
+
+
+ 
+    
   try {
-    const result = await pool.query('SELECT * FROM secciones');
+    const result = await pool.query(`SELECT idseccion, titulo, presentacion,idsaga, imagenurl, imagencloudid
+     FROM secciones ORDER BY idseccion DESC`);
     const coleccionSecciones = result.rows;
     if (!Array.isArray(coleccionSecciones)) {
       return res.status(500).json({ message: 'Error: no se encontró la coleccionesSecciones.' });
@@ -1132,48 +1062,81 @@ app.get('/consumirSecciones', async (req, res) => {
   }
 });
 
+//cloudnary 
 app.post('/insertSeccion', async (req, res) => {
-  // Extraer las propiedades del body de la solicitud
   const { titulo, presentacion, imagen, idsaga } = req.body;
-  //console.log("Lo que viene del req: ", req.body);
 
-  // Validar si la imagen está presente
+  // Validaciones básicas
+  if (!titulo || !presentacion || !idsaga) {
+    return res.status(400).json({ error: 'Faltan campos requeridos' });
+  }
   if (!imagen) {
     return res.status(400).json({ error: 'No se ha proporcionado una imagen' });
   }
 
-  // Validar que el título y la presentación no estén vacíos
-  if (!titulo || !presentacion || !idsaga) {
-    return res.status(400).json({ error: 'Faltan campos requeridos' });
-  }
-
   try {
-    // Insertar la nueva sección en la base de datos
-    const result = await pool.query(
-      'INSERT INTO secciones (titulo, presentacion, imagen, idsaga) VALUES ($1, $2, $3, $4) RETURNING *',
-      [titulo, presentacion, imagen, idsaga]
-    );
-    
-    // Obtener la nueva sección insertada
-    const nuevaSeccion = result.rows[0];
+    // 1. Insertar sección sin imagenurl ni imagencloudid para obtener el id
+    const insertQuery = `
+      INSERT INTO secciones (titulo, presentacion, idsaga)
+      VALUES ($1, $2, $3)
+      RETURNING idseccion
+    `;
+    const insertResult = await pool.query(insertQuery, [titulo, presentacion, idsaga]);
+    const newSeccionId = insertResult.rows[0].idseccion;
 
-    // Enviar la respuesta con la nueva sección
-    res.status(201).json(nuevaSeccion); 
+    let imagenUrl = null;
+    let imagenCloudId = null;
+
+    // 2. Validar y subir imagen a Cloudinary
+    const matches = imagen.match(/^data:image\/(\w+);base64,(.+)$/);
+    if (!matches) {
+      return res.status(400).json({ error: 'Imagen base64 inválida.' });
+    }
+
+    const ext = matches[1];
+    const data = matches[2];
+
+    const uploadResult = await cloudinary.uploader.upload(
+      `data:image/${ext};base64,${data}`,
+      {
+        folder: 'secciones',
+        public_id: `seccion_${newSeccionId}`,
+        overwrite: true,
+      }
+    );
+
+    imagenUrl = uploadResult.secure_url;
+    imagenCloudId = uploadResult.public_id;
+
+    // 3. Actualizar la sección con la URL y el cloudId
+    const updateQuery = `
+      UPDATE secciones
+      SET imagenurl = $1, imagencloudid = $2
+      WHERE idseccion = $3
+      RETURNING *
+    `;
+    const updateResult = await pool.query(updateQuery, [imagenUrl, imagenCloudId, newSeccionId]);
+
+    // 4. Enviar la sección final con imagen de Cloudinary
+    res.status(201).json(updateResult.rows[0]);
+
   } catch (error) {
-    // Manejar errores en la inserción
     console.error('Error al insertar la sección:', error);
     res.status(500).json({ error: 'Error al insertar la sección' });
   }
 });
 
+
+
+
 app.put('/updateSeccion/:idseccion', async (req, res) => {
   const { idseccion } = req.params;
-  const { titulo, presentacion, imagen } = req.body;
+  const { titulo, presentacion } = req.body;
 
   try {
     await pool.query(
-      'UPDATE secciones SET titulo = $1, presentacion = $2, imagen = $3 WHERE idseccion = $4',
-      [titulo, presentacion, imagen, idseccion]
+      'UPDATE secciones SET titulo = $1, presentacion = $2 WHERE idseccion = $3',
+      [titulo, presentacion, idseccion]
     );
 
     res.status(200).json({ message: 'Sección actualizada correctamente' });
@@ -1187,13 +1150,42 @@ app.delete('/deleteSeccion/:idseccion', async (req, res) => {
   const { idseccion } = req.params;
 
   try {
+    // 1. Obtener el imagencloudid de la sección
+    const result = await pool.query(
+      'SELECT imagencloudid FROM secciones WHERE idseccion = $1',
+      [idseccion]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Sección no encontrada' });
+    }
+
+    const imagenCloudId = result.rows[0].imagencloudid;
+
+    // 2. Si hay imagen en Cloudinary, eliminarla
+    if (imagenCloudId) {
+      try {
+        await cloudinary.uploader.destroy(imagenCloudId);
+      } catch (err) {
+        console.warn(`No se pudo eliminar imagen en Cloudinary: ${err.message}`);
+      }
+    }
+
+    // 3. Eliminar la sección en la base de datos
     await pool.query('DELETE FROM secciones WHERE idseccion = $1', [idseccion]);
+
     res.status(200).json({ message: 'Sección eliminada correctamente' });
+
   } catch (error) {
     console.error('Error al eliminar la sección:', error);
     res.status(500).json({ message: 'Error al eliminar la sección' });
   }
 });
+
+
+
+
+
 
 app.post('/insertPjSaga', async (req, res) => {
   const { idpersonaje, idsaga } = req.body;
@@ -1215,6 +1207,9 @@ app.post('/insertPjSaga', async (req, res) => {
     res.status(500).json({ message: 'Hubo un error al añadir el personaje a la saga.' });
   }
 });
+
+
+
 
 
 
@@ -1387,8 +1382,8 @@ app.get('/recuperarPass', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 4000;
-//const PORT = process.env.PORT || 10000;
+//const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 
 server.listen(PORT, () => {
   console.log(`Server levantado en el puerto http://localhost:${PORT}`);

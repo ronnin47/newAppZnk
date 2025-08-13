@@ -178,96 +178,94 @@ export const GeneradorBake = ({
 
     switch (selectedDominio) {
         case "Trasgo":
-          setImagen("/trasgo.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039863/trasgo_ol9b5s.jpg");
           break;
       
         case "Aracnida":
-          setImagen("/aracnida.jfif");       
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039892/aracnida_vlubp4.jpg");       
           break;
       
         case "Abeja":
-          setImagen("/abeja.jpg");         
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039917/abeja_pn1nqc.jpg");         
           break;
 
           case "Rata":
-          setImagen("/rata.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040246/rata_btswzm.jpg");
           break;
       
         case "Kriak":
-          setImagen("/kriak.jfif");       
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039684/kriak_qemd69.jpg");       
           break;
       
         case "Bagu":
-          setImagen("/bagu.jfif");         
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039974/bagu_m0i13m.jpg");         
           break;
 
           case "Cangrejogro":
-          setImagen("/cangrejogro.jfif");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039947/cangrejogro_qd2g3s.jpg");
           break;
       
         case "Troll":
-          setImagen("/troll.jpg");       
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039546/troll_ziheor.jpg");       
           break;
       
         case "Aparicion":
-          setImagen("/aparicion.jpg");         
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040184/aparicion_l48sua.jpg");         
           break;
           
           case "Gatana":
-          setImagen("/gatana.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040151/gatana_omyv0p.jpg");
           break;
       
         case "Wuargo":
-          setImagen("/wuargo.jfif");       
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039516/wuargo_qvhu7a.jpg");       
           break;
       
         case "Zombi":
-          setImagen("/zombi.jfif");         
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755038331/zombi_p3j3ab.jpg");         
           break;
 
         case "Esqueleto":
-          setImagen("/esqueleto.jfif");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040024/esqueleto_ngjeqi.jpg");
           break;
       
         case "Necrofago":
-          setImagen("/necrofago.jpg");       
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040127/necrofago_hz3xzp.jpg");       
           break;
       
         case "Zing":
-          setImagen("/zing.jpg");         
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039481/zing_iwlfnf.jpg");         
           break;
 
         case "Kappa":
-          setImagen("/kappa.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039717/kappa_moe0n7.jpg");
           break;
       
         case "Gargola":
-          setImagen("/gargola.jfif");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040103/gargola_l8mcun.jpg");
           break;
 
         case "Babosa":
-          setImagen("/babosa.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040069/babosa_efcppu.jpg");
           break;
 
         case "Escorpion":
-          setImagen("/escorpion.jfif");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039981/escorpion_uxrkjl.jpg");
           break;
 
         case "Sierpe":
-          setImagen("/sierpe.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039621/sierpe_ntgvb5.jpg");
           break;
 
         case "Caballero":
-          setImagen("/caballero.jpg");
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755040189/caballero_b13zcv.jpg");
           break;
 
         case "Licano":
-          setImagen("/licano.jfif");       
+          setImagen("https://res.cloudinary.com/dzul1hatw/image/upload/v1755039657/licano_uevq4e.jpg");       
           break;
 
-          case "Hegel":
-          setImagen("/hegel.jpg");       
-          break;
+         
       
        
       
@@ -786,24 +784,6 @@ break;
           negativaBase = 3;
           break;
 
-          case "Hegel":
-            fuerzaBase = 5;
-            fortalezaBase = 10;
-            destrezaBase = 10;
-            agilidadBase = 20;
-            sabiduriaBase = 10;
-            principioBase= 10;
-            sentidosBase = 20;
-            presenciaBase = 20;
-            kiBase = 20;
-            valCombateBase = 0;
-            alertaBase = 30;
-            sigiloBase = 0;
-            atletismoBase = 20;
-            positivaBase = 1;
-            negativaBase = 1;
-            break;
-
         default:
         // Acción por defecto si no coincide con ninguno de los casos anteriores
         break;
@@ -1137,7 +1117,7 @@ switch (dificultad) {
             valAdd3: valAdd3 || 0,
             add4:add4,
             valAdd4: valAdd4 || 0,
-            imagen: imagen,
+            imagenurl: imagen,
             inventario: inventario,
             dominios: dominios,
             kenActual:ken || 0,
@@ -1158,7 +1138,7 @@ switch (dificultad) {
     
         try {
            //const response = await axios.post("http://localhost:4000/insert-personaje", pjNuevo, {
-           const response = await axios.post(`${apiUrl}/insert-personaje`, pjNuevo, {
+           const response = await axios.post(`${apiUrl}/insert-personajeBake`, pjNuevo, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -1223,7 +1203,7 @@ switch (dificultad) {
                 <option value="Sierpe">Sierpe</option>
                 <option value="Caballero">Caballero</option>
                 <option value="Licano">Licano</option>
-                <option value="Hegel">Hegel</option>
+           
              
                 
               </select>

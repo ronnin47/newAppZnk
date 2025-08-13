@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+const socket = io('https://appmobileznk.onrender.com');
 
-
-export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN, setKiActualN,idpersonaje}) => {
+export const BarraKi = ({nombreN,estatus, usuarioId,imagenurl, consumisionN, setConsumisionN, kiN, kiActualN, setKiActualN,idpersonaje}) => {
     
     const [animacionActiva, setAnimacionActiva] = useState(true);
     const [consumir,setConsumir]=useState("")
@@ -44,7 +44,7 @@ export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN,
             }
                   
             const nombre=nombreN
-      
+      /*
              const msgEnviar = {
                 idpersonaje: idpersonaje,   
                 nombre:nombre,
@@ -52,6 +52,22 @@ export const BarraKi = ({nombreN, consumisionN, setConsumisionN, kiN, kiActualN,
                 ki: kiN,                   
                 mensaje: message            
             };
+
+*/
+            
+      const msgEnviar = {
+        //id: Date.now().toString() + Math.random().toString(36).substring(2),
+        usuarioId: usuarioId, // ok
+        idpersonaje: idpersonaje, //ok  
+        nombre:nombre, // ok
+        kiActual: newValue,        
+        ki: kiN,                  
+        mensaje: message, // ok
+        estatus:estatus, // ok
+        imagenPjUrl:imagenurl || "", // ok
+        nick:  "",   // este campo no existe
+        tipo: "ki",   //ok
+    };
             
             socket.emit('message', msgEnviar);
             

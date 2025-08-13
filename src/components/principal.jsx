@@ -19,7 +19,10 @@ import { Unicos } from"./unicos.jsx";
 import { Ranking } from "./ranking.jsx";
 import { MiGrupo } from "./migrupo.jsx";
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const socket = io('https://appmobileznk.onrender.com');
+
 
 import { DNA } from 'react-loader-spinner'; 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
@@ -1136,6 +1139,8 @@ return (
                   setPjSeleccionado={setPjSeleccionado}
 
                   resistencia={pj.resistencia || (parseInt(pj.fuerza)+parseInt(pj.fortaleza))}
+                   usuarioId={usuarioId}
+                   estatus={estatus}
 
 
                 />

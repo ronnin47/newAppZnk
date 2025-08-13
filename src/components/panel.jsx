@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+const socket = io('https://appmobileznk.onrender.com');
+
 
 export const Panel = ({ textareaRef, messagesEndRef,imagenurl, nombre, setMessage, sock, setSock }) => {
   const chatContainerRef = useRef(null);

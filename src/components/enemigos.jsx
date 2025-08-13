@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { io } from 'socket.io-client';
 import { Tooltip, OverlayTrigger, Modal } from 'react-bootstrap';
 
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const socket = io('https://appmobileznk.onrender.com');
+
+
 
 export const Enemigos = ({ values, estatus, usuarioId }) => {
   const [images, setImages] = useState([]);

@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import React, { useState } from "react";
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_BACKEND_URL);
-
-
+//const socket = io(process.env.REACT_APP_BACKEND_URL);
+const socket = io('https://appmobileznk.onrender.com');
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import 'animate.css';
 
-export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
+export const BarraVida = ({idpersonaje,estatus, usuarioId,imagenurl,cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
   const faseSalud = parseInt(kiN) + parseInt(fortalezaN);
   const vidaTotalPositiva = faseSalud * parseInt(positivaN);
   const vidaTotalNegativa = faseSalud * parseInt(negativaN);
@@ -270,7 +269,7 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
    
     const nombre=nombreN
 
-    
+    /*
       // Emitiendo el objeto con idpersonaje, kenActual y ken
       const msgEnviar = {
         idpersonaje: idpersonaje,    
@@ -278,6 +277,22 @@ export const BarraVida = ({idpersonaje,cicatrizN, setCicatrizN, nombreN,fortalez
         vidaActual: newDamage,         
         vidaTotal: vidaTotal,                   
         mensaje: message            
+    };
+*/
+
+
+      const msgEnviar = {
+        //id: Date.now().toString() + Math.random().toString(36).substring(2),
+        usuarioId: usuarioId, // ok
+        idpersonaje: idpersonaje, //ok  
+        nombre:nombre, // ok
+        vidaActual: newDamage, // ok         
+        vidaTotal: vidaTotal, // ok                  
+        mensaje: message, // ok
+        estatus:estatus, // ok
+        imagenPjUrl:imagenurl || "", // ok
+        nick: "",   // este campo no existe
+        tipo: "vida",   //ok
     };
     
     socket.emit('message', msgEnviar);
