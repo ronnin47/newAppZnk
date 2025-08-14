@@ -279,7 +279,7 @@ export const Narrador = ({usuarioid,coleccionSecciones,setColeccionSecciones,col
 
 const [pjBuscado, setPjBuscado]=useState("");
 const [tecBuscar, setTectBuscar]=useState("");
-
+const imagenBase="https://res.cloudinary.com/dzul1hatw/image/upload/v1755123685/imagenBase_wcjism.jpg";
 
 const handleInputTecBuscar=(event)=>{
   setTectBuscar(event.target.value);
@@ -446,7 +446,7 @@ const handleClickCrearGrupo = async() => {
           key={pj.idpersonaje}
           idpersonaje={pj.idpersonaje} 
           nombre={pj.nombre}
-          imagenurl={pj.imagenurl}
+          imagenurl={pj.imagenurl || imagenBase}
           grupo={grupo}
           setGrupo={setGrupo}
         
@@ -503,7 +503,7 @@ const handleClickCrearGrupo = async() => {
   nombre={pj.nombre} 
   idpersonaje={pj.idpersonaje} 
   dominio={pj.dominio} 
-  imagenurl={pj.imagenurl} 
+  imagenurl={pj.imagenurl || imagenBase} 
   ken={pj.ken} 
   ki={pj.ki}
   

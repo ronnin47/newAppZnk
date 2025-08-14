@@ -197,7 +197,7 @@ const [key, setKey] = useState('personaje');
 const handleEliminarPj = async() => {
   eliminarPj(idpersonaje,nombre);
 };
-
+const imagenBase="https://res.cloudinary.com/dzul1hatw/image/upload/v1755123685/imagenBase_wcjism.jpg";
 
 
 return (
@@ -225,7 +225,7 @@ return (
       <Modal.Body className='modalCartaPjBody' style={{backgroundColor:"black", color:"aliceblue"}}>
       <Card.Img
             variant="top"
-            src={imagenurl}
+            src={imagenurl || imagenBase}
             style={{ maxWidth: "100%", maxHeight: "100%"}}
             className='imagenCartaPj'
           />

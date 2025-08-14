@@ -333,6 +333,16 @@ export const CargarPersonaje = ({
   };
 
   const agregarPersonaje = async () => {
+
+   if (!imagen || imagen === "/imagenBase.jpeg") {
+  Swal.fire({
+    position: "top-center",
+    icon: "error",
+    title: "Debes cargar una imagen para el personaje",
+    showConfirmButton: true
+  });
+  return; // corta la función y no envía
+}
     const pjNuevo = {      
       nombre: nombre,
       dominio: dominio,
