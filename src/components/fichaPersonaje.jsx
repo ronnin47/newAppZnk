@@ -437,7 +437,7 @@ const btnGuardarCambios = () => {
     raza:razaN,
     edad:edadN,
     imagen: imagenN,
-    imagenurl:imagenN,
+  //  imagenurl:imagenN,
     ken:kenN,
     ki:kiN,
     destino:destinoN,
@@ -511,7 +511,7 @@ const btnGuardarCambios = () => {
     cicatriz: cicatriz,  
     resistencia:resistenciaN,
     pjPnj:pjPnjN,
-    imagenurl:imagenurlN,
+    imagenurl:imagenurlN,//aca
   };
 
 
@@ -648,7 +648,7 @@ useEffect(() => {
   razaN,
   edadN,
   imagenN,
-  imagenurlN,
+  imagenurlN,//aca
   kenN,
   kiN,
   destinoN,
