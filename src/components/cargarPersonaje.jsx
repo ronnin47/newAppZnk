@@ -431,9 +431,12 @@ export const CargarPersonaje = ({
           'Content-Type': 'application/json', 
         },
       });
-      const { idpersonaje } = response.data;
-      
-      setPersonajes([...personajes, { ...pjNuevo, idpersonaje }]);
+   const { idpersonaje, imagenurl } = response.data;
+
+setPersonajes([
+  ...personajes,
+  { ...pjNuevo, idpersonaje, imagenurl }
+]);
   
     } catch (error) {
       console.error('Error al insertar el personaje:', error.message);
