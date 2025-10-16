@@ -70,7 +70,7 @@ export const CartaUnica = ({
         <Modal.Body className='modalCartaPjBody' style={{backgroundColor:"black", color:"aliceblue"}}>
         <Card.Img
               variant="top"
-              src={imagenurl || imagen}
+              src={imagenurl || imagen || '/imagenBase.jpeg'}
               style={{ maxWidth: "100%", maxHeight: "100%"}}
               className='imagenCartaPj'
             />
@@ -202,7 +202,7 @@ export const CartaUnica = ({
             {rank}
           </span>
           
-          <img src={imagenurl || imagen} alt={nombre} className="cartaImagenRanking" />
+          <img src={imagenurl || imagen || '/imagenBase.jpeg'} alt={nombre} className="cartaImagenRanking" />
           <div className="cartitaElementos">
             <Estrellitas ken={ken}></Estrellitas>
             <p className="cartita-name" style={{ fontSize: "1em", color: "yellow" }}>{nombre}</p>
