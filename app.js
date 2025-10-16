@@ -276,6 +276,7 @@ app.post('/insert-usuario', async (req, res) => {
 
     
   }
+  
 });
 
 app.post('/loginUsuario', async (req, res) => {

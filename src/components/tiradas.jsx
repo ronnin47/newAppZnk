@@ -285,11 +285,23 @@ const baset=principalValue+secundariaValue
   }
   
   const message = `🎲 Tirada  ${nombreTirada}      ${imprimirBase}     ${imprimirTirada}       ${imprimirBonoD10}        ${imprimirBonoD20}        ${imprimirBonoKen}         ${imprimirBonoD6}        ${imprimirBonoD4}       ${imprimirBonoD12}       TOTAL: ${total}`;
-  
+  /*
   const msgEnviar={
     nombre:nombre,
     mensaje:message
   }
+*/
+
+    const msgEnviar = {
+    usuarioId: usuarioId,
+    idpersonaje: idpersonaje,
+    nombre: nombre,//ok
+    mensaje: message,//ok
+    estatus: estatus,
+    imagenPjUrl: imagenurl || "",
+    nick:  "",
+    tipo: "tirada",
+  };
  
   setAnimacionActiva(true);
   setTimeout(() => {
@@ -860,9 +872,6 @@ useEffect(() => {
   const handleCloseFicha = () => setShowModalFicha(false);
   
   const handleShowFicha = () => setShowModalFicha(true);
-
-
-
 
 
 
