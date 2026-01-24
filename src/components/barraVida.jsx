@@ -9,7 +9,24 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import 'animate.css';
 
 export const BarraVida = ({idpersonaje,estatus, usuarioId,imagenurl,cicatrizN, setCicatrizN, nombreN,fortalezaN, kiN, positivaN,setPositivaN, negativaN,setNegativaN, damageActualN, setDamageActualN }) => {
-  const faseSalud = parseInt(kiN) + parseInt(fortalezaN);
+  
+  
+  //cambio para el nuevo calculo de ki natural
+  /*
+  let faseSalud=0;
+
+  if(parseInt(kiN)>=10){
+        faseSalud= parseInt(kiN) + parseInt(fortalezaN);
+  }else{
+       faseSalud= parseInt(fortalezaN);
+  }
+*/
+const faseSalud = React.useMemo(() => {
+  const ki = Number(kiN) || 0;
+  const fortaleza = Number(fortalezaN) || 0;
+  return ki >= 10 ? ki + fortaleza : fortaleza;
+}, [kiN, fortalezaN]);
+
   const vidaTotalPositiva = faseSalud * parseInt(positivaN);
   const vidaTotalNegativa = faseSalud * parseInt(negativaN);
   const vidaTotal = vidaTotalPositiva + vidaTotalNegativa;
