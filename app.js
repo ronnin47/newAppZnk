@@ -328,9 +328,8 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
         add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
         inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
         hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
-        notasaga, resistencia, "pjPnj", imagenurl,imagencloudid, "usuarioId"
-      FROM personajes
-    `;
+        notasaga, resistencia, "pjPnj", imagenurl,imagencloudid,"imagenSeleccionada","coleccionImagenes", "usuarioId"
+      FROM personajes`;
 
 
 
@@ -340,7 +339,11 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
   return res.status(404).json({ message: 'No se encontraron personajes en la base de datos' });
 }
 
-    const coleccionPersonajes = userResult.rows;
+    const coleccionPersonajes = userResult.rows.map(p => ({
+  ...p,
+  coleccionImagenes: p.coleccionImagenes ? JSON.parse(p.coleccionImagenes) : [],
+}));
+
     res.json({
       message: 'Se consumiron todos los personajes',
       coleccionPersonajes: coleccionPersonajes,   
@@ -370,7 +373,7 @@ app.get('/consumirPersonajesUsuario', async (req, res) => {
         add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
         inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
         hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
-        notasaga, resistencia, "pjPnj", imagenurl, imagencloudid, "usuarioId"
+        notasaga, resistencia, "pjPnj", imagenurl, imagencloudid,"imagenSeleccionada","coleccionImagenes", "usuarioId"
       FROM personajes
       WHERE "usuarioId" = $1
       ORDER BY "idpersonaje" ASC
@@ -385,9 +388,10 @@ app.get('/consumirPersonajesUsuario', async (req, res) => {
   });
 }
 
-    const coleccionPersonajes = userResult.rows;
-
-   
+    const coleccionPersonajes = userResult.rows.map(p => ({
+  ...p,
+  coleccionImagenes: p.coleccionImagenes ? JSON.parse(p.coleccionImagenes) : [],
+}));  
 
     
     res.json({
@@ -400,7 +404,7 @@ app.get('/consumirPersonajesUsuario', async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
-
+/*
 //ya tiene cloudnary
 app.post('/insert-personaje', async (req, res) => {
   const {
@@ -569,6 +573,210 @@ app.post('/insert-personaje', async (req, res) => {
     res.status(500).json({ error: 'Error al insertar el personaje.' });
   }
 });
+*/
+
+//adaptacion para compatibilidad con el nuevo sistema de imagenes (coleccion, imagenSeleccionada, cloudid)
+app.post('/insert-personaje', async (req, res) => {
+  const {
+    nombre,
+    dominio,
+    raza,
+    naturaleza,
+    edad,
+    ken,
+    ki,
+    destino,
+    pDestino,
+    fuerza,
+    fortaleza,
+    destreza,
+    agilidad,
+    sabiduria,
+    presencia,
+    principio,
+    sentidos,
+    academisismo,
+    alerta,
+    atletismo,
+    conBakemono,
+    mentir,
+    pilotear,
+    artesMarciales,
+    medicina,
+    conObjMagicos,
+    sigilo,
+    conEsferas,
+    conLeyendas,
+    forja,
+    conDemonio,
+    conEspiritual,
+    manejoBlaster,
+    manejoSombras,
+    tratoBakemono,
+    conHechiceria,
+    medVital,
+    medEspiritual,
+    rayo,
+    fuego,
+    frio,
+    veneno,
+    corte,
+    energia,
+    ventajas,
+    apCombate,
+    valCombate,
+    apCombate2,
+    valCombate2,
+    add1,
+    valAdd1,
+    add2,
+    valAdd2,
+    add3,
+    valAdd3,
+    add4,
+    valAdd4,
+    imagen, // base64
+    inventario,
+    dominios,
+    kenActual,
+    kiActual,
+    positiva,
+    negativa,
+    vidaActual,
+    hechizos,
+    consumision,
+    iniciativa,
+    historia,
+    usuarioId,
+    tecEspecial,
+    conviccion,
+    cicatriz,
+    notaSaga,
+    resistencia,
+    pjPnj,
+  } = req.body;
+
+  try {
+    // 1. Insertar personaje base
+    const query = `
+      INSERT INTO personajes (
+        nombre, dominio, raza, naturaleza, edad, ken, ki, destino, "pDestino",
+        fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+        sentidos, academisismo, alerta, atletismo, "conBakemono", mentir, pilotear,
+        "artesMarciales", medicina, "conObjMagicos", sigilo, "conEsferas", "conLeyendas",
+        forja, "conDemonio", "conEspiritual", "manejoBlaster", "manejoSombras", "tratoBakemono",
+        "conHechiceria", "medVital", "medEspiritual", rayo, fuego, frio, veneno, corte,
+        energia, ventajas, "apCombate", "valCombate", "apCombate2", "valCombate2",
+        add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
+        inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
+        hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
+        notasaga, resistencia, "pjPnj", "usuarioId"
+      )
+      VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9,
+        $10, $11, $12, $13, $14, $15, $16,
+        $17, $18, $19, $20, $21, $22, $23,
+        $24, $25, $26, $27, $28, $29,
+        $30, $31, $32, $33, $34, $35,
+        $36, $37, $38, $39, $40, $41, $42, $43,
+        $44, $45, $46, $47, $48, $49,
+        $50, $51, $52, $53, $54, $55,
+        $56, $57, $58, $59, $60, $61,
+        $62, $63, $64, $65, $66, $67,
+        $68, $69, $70, $71, $72, $73,
+        $74, $75
+      )
+      RETURNING idpersonaje
+    `;
+
+    const values = [
+      nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
+      fuerza, fortaleza, destreza, agilidad, sabiduria, presencia, principio,
+      sentidos, academisismo, alerta, atletismo, conBakemono, mentir, pilotear,
+      artesMarciales, medicina, conObjMagicos, sigilo, conEsferas, conLeyendas,
+      forja, conDemonio, conEspiritual, manejoBlaster, manejoSombras, tratoBakemono,
+      conHechiceria, medVital, medEspiritual, rayo, fuego, frio, veneno, corte,
+      energia, ventajas, apCombate, valCombate, apCombate2, valCombate2,
+      add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
+      inventario, dominios, kenActual, kiActual, positiva, negativa, vidaActual,
+      hechizos, consumision, iniciativa, historia, tecEspecial, conviccion, cicatriz,
+      notaSaga, resistencia, pjPnj, usuarioId,
+    ];
+
+    const result = await pool.query(query, values);
+    const newId = result.rows[0].idpersonaje;
+
+    let imageUrl = null;
+    let cloudid = null;
+
+    // 2. Si hay imagen → subir y crear sistema completo
+    if (imagen) {
+      const matches = imagen.match(/^data:image\/(\w+);base64,(.+)$/);
+      if (!matches) {
+        return res.status(400).json({ error: 'Imagen base64 inválida.' });
+      }
+
+      const ext = matches[1];
+      const data = matches[2];
+
+      const uploadResult = await cloudinary.uploader.upload(
+        `data:image/${ext};base64,${data}`,
+        {
+          folder: 'personajes',
+          public_id: `personaje_${newId}`,
+          overwrite: true,
+        }
+      );
+
+      imageUrl = uploadResult.secure_url;
+      cloudid = uploadResult.public_id;
+
+      const coleccion = [
+        {
+          id: cloudid,
+          url: imageUrl,
+        },
+      ];
+
+      // 🔥 UPDATE COMPLETO
+      await pool.query(
+        `UPDATE personajes 
+         SET imagenurl = $1,
+             imagencloudid = $2,
+             "coleccionImagenes" = $3,
+             "imagenSeleccionada" = $2
+         WHERE idpersonaje = $4`,
+        [imageUrl, cloudid, JSON.stringify(coleccion), newId]
+      );
+    } else {
+      // 🔹 Caso sin imagen → dejar limpio
+      await pool.query(
+        `UPDATE personajes 
+         SET "coleccionImagenes" = $1,
+             "imagenSeleccionada" = $2
+         WHERE idpersonaje = $3`,
+        [JSON.stringify([]), null, newId]
+      );
+    }
+
+    // 3. Respuesta final
+    res.status(201).json({
+  message: 'Personaje insertado exitosamente.',
+  idpersonaje: newId,
+  imagenurl: imageUrl,
+  imagencloudid: cloudid,
+  coleccionImagenes: cloudid
+    ? [{ id: cloudid, url: imageUrl }]
+    : [],
+  imagenSeleccionada: cloudid || null
+});
+
+  } catch (err) {
+    console.error('Error al insertar el personaje:', err);
+    res.status(500).json({ error: 'Error al insertar el personaje.' });
+  }
+});
+
 
 app.post('/insert-personajeBake', async (req, res) => {
   const {
@@ -639,8 +847,6 @@ app.post('/insert-personajeBake', async (req, res) => {
 //ya tiene cloudnary
 app.put('/update-personaje/:id', async (req, res) => {
   const idpersonaje = req.params.id;
-  //console.log("se disparo")
-  
 
   const {
     nombre, dominio, raza, naturaleza, edad, ken, ki, destino, pDestino,
@@ -656,11 +862,22 @@ app.put('/update-personaje/:id', async (req, res) => {
     tecEspecial, conviccion, cicatriz, resistencia, pjPnj
   } = req.body;
 
-
-  
   try {
     let imagenurl = null;
     let imagencloudid = null;
+    let coleccion = [];
+    let imagenSeleccionada = null;
+
+    // Traer coleccion actual del personaje
+    const { rows } = await pool.query(
+      'SELECT "coleccionImagenes", "imagenSeleccionada" FROM personajes WHERE idpersonaje=$1',
+      [idpersonaje]
+    );
+
+    if (rows.length > 0) {
+      coleccion = rows[0].coleccionImagenes ? JSON.parse(rows[0].coleccionImagenes) : [];
+      imagenSeleccionada = rows[0].imagenSeleccionada || null;
+    }
 
     // Si hay imagen base64, la subimos a Cloudinary
     if (imagen && imagen.startsWith('data:image/')) {
@@ -681,14 +898,16 @@ app.put('/update-personaje/:id', async (req, res) => {
       imagenurl = uploadResult.secure_url;
       imagencloudid = uploadResult.public_id;
 
-      // Actualizar imagenurl e imagencloudid en la base
-      await pool.query(
-        'UPDATE personajes SET imagenurl = $1, imagencloudid = $2 WHERE idpersonaje = $3',
-        [imagenurl, imagencloudid, idpersonaje]
-      );
+      // Agregar a coleccion si no existe
+      if (!coleccion.find(img => img.id === imagencloudid)) {
+        coleccion.push({ id: imagencloudid, url: imagenurl });
+      }
+
+      // Actualizar imagenSeleccionada automáticamente
+      imagenSeleccionada = imagencloudid;
     }
 
-    // Actualizar los demás campos
+    // Actualizar todos los campos incluyendo imágenes y colección
     const query = `
       UPDATE personajes SET
         nombre=$1, dominio=$2, raza=$3, naturaleza=$4, edad=$5,
@@ -705,12 +924,13 @@ app.put('/update-personaje/:id', async (req, res) => {
         "apCombate"=$46, "valCombate"=$47, "apCombate2"=$48,
         "valCombate2"=$49, add1=$50, "valAdd1"=$51, add2=$52,
         "valAdd2"=$53, add3=$54, "valAdd3"=$55, add4=$56, "valAdd4"=$57,
-        inventario=$58, dominios=$59, "kenActual"=$60,
-        "kiActual"=$61, positiva=$62, negativa=$63, "vidaActual"=$64,
-        hechizos=$65, consumision=$66, iniciativa=$67, historia=$68,
-        "usuarioId"=$69, "tecEspecial"=$70, conviccion=$71, cicatriz=$72,
-        resistencia=$73, "pjPnj"=$74
-      WHERE idpersonaje=$75
+        inventario=$58, dominios=$59, "kenActual"=$60, "kiActual"=$61,
+        positiva=$62, negativa=$63, "vidaActual"=$64, hechizos=$65,
+        consumision=$66, iniciativa=$67, historia=$68, "usuarioId"=$69,
+        "tecEspecial"=$70, conviccion=$71, cicatriz=$72, resistencia=$73,
+        "pjPnj"=$74, imagenurl=$75, imagencloudid=$76,
+        "coleccionImagenes"=$77, "imagenSeleccionada"=$78
+      WHERE idpersonaje=$79
     `;
 
     const values = [
@@ -724,12 +944,23 @@ app.put('/update-personaje/:id', async (req, res) => {
       add1, valAdd1, add2, valAdd2, add3, valAdd3, add4, valAdd4,
       inventario, dominios, kenActual, kiActual, positiva, negativa,
       vidaActual, hechizos, consumision, iniciativa, historia, usuarioId,
-      tecEspecial, conviccion, cicatriz, resistencia, pjPnj, idpersonaje
+      tecEspecial, conviccion, cicatriz, resistencia, pjPnj,
+      imagenurl, imagencloudid,
+      JSON.stringify(coleccion),
+      imagenSeleccionada,
+      idpersonaje
     ];
 
     await pool.query(query, values);
 
-    res.status(201).json({ message: 'Personaje modificado exitosamente.', idpersonaje, imagenurl, imagencloudid });
+    res.status(201).json({
+      message: 'Personaje modificado exitosamente.',
+      idpersonaje,
+      imagenurl,
+      imagencloudid,
+      coleccionImagenes: coleccion,
+      imagenSeleccionada
+    });
 
   } catch (err) {
     console.error('Error al modificar el personaje:', err.message);

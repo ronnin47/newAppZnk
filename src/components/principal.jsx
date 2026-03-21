@@ -43,6 +43,10 @@ export const Principal= ()=> {
   const [nombre,setNombre]=useState("");
   const [imagen,setImagen]=useState("/imagenBase.jpeg");
   const [imagenurl,setImagenurl]=useState("/imagenBase.jpeg");
+
+  
+
+
   const [dominio,setDominio]=useState("");
   const [raza,setRaza]=useState("");
   const [edad,setEdad]=useState("");

@@ -411,7 +411,7 @@ export const CargarPersonaje = ({
       vidaActual:0,
       hechizos:hechizos,
       consumision:consumision || 0,
-      iniciativa:(parseInt(sentidos)+parseInt(agilidad)) || 0,
+      iniciativa: (parseInt(sentidos || 0) + parseInt(agilidad || 0)),
       historia:"",
       conviccion: conviccion || "",
       cicatriz: cicatriz || 0,
@@ -431,11 +431,18 @@ export const CargarPersonaje = ({
           'Content-Type': 'application/json', 
         },
       });
-   const { idpersonaje, imagenurl } = response.data;
+   const { idpersonaje, imagenurl, imagencloudid, coleccionImagenes, imagenSeleccionada } = response.data;
 
-setPersonajes([
-  ...personajes,
-  { ...pjNuevo, idpersonaje, imagenurl }
+setPersonajes(prev => [
+  ...prev,
+  {
+    ...pjNuevo,
+    idpersonaje,
+    imagenurl,
+    imagencloudid,
+    coleccionImagenes,
+    imagenSeleccionada
+  }
 ]);
   
     } catch (error) {
