@@ -312,8 +312,7 @@ app.post('/loginUsuario', async (req, res) => {
 
 
 
-
-//ya tiene cloudnary
+// Endpoint para consumir personajes del Narrador
 app.get('/consumirPersonajesNarrador', async (req, res) => {
   try {
     const userQuery = `
@@ -328,39 +327,57 @@ app.get('/consumirPersonajesNarrador', async (req, res) => {
         add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
         inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
         hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
-        notasaga, resistencia, "pjPnj", imagenurl,imagencloudid,"imagenSeleccionada","coleccionImagenes", "usuarioId"
-      FROM personajes`;
-
-
+        notasaga, resistencia, "pjPnj", imagenurl, imagencloudid, "imagenSeleccionada", "coleccionImagenes", "usuarioId"
+      FROM personajes
+    `;
 
     const userResult = await pool.query(userQuery);
 
-    if (userResult.rows.length === 0) {
-  return res.status(404).json({ message: 'No se encontraron personajes en la base de datos' });
-}
+    if (!userResult.rows || userResult.rows.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron personajes en la base de datos' });
+    }
 
+    // Normalizamos la colección de imágenes y forzamos siempre array
     const coleccionPersonajes = userResult.rows.map(p => ({
-  ...p,
-  coleccionImagenes: p.coleccionImagenes ? JSON.parse(p.coleccionImagenes) : [],
-}));
+      ...p,
+      coleccionImagenes: Array.isArray(p.coleccionImagenes)
+        ? p.coleccionImagenes
+        : p.coleccionImagenes
+          ? (() => {
+              try {
+                return JSON.parse(p.coleccionImagenes);
+              } catch {
+                console.warn(`No se pudo parsear coleccionImagenes de personaje ${p.idpersonaje}`);
+                return [];
+              }
+            })()
+          : [],
+      // Si quieres, puedes forzar que imagenSeleccionada exista
+      imagenSeleccionada: p.imagenSeleccionada || null,
+      imagenurl: p.imagenurl || null,
+      imagencloudid: p.imagencloudid || null
+    }));
 
     res.json({
-      message: 'Se consumiron todos los personajes',
-      coleccionPersonajes: coleccionPersonajes,   
+      message: 'Se consumieron todos los personajes',
+      coleccionPersonajes
     });
 
   } catch (error) {
-    console.error('Error al obtener coleccion todos los persoanjes de la base de datos:', error);
+    console.error('Error al obtener colección de personajes del Narrador:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
-
 //ya tiene cloudnary
+// Endpoint para consumir personajes de un Usuario
 app.get('/consumirPersonajesUsuario', async (req, res) => {
   try {
-    
     const { usuarioId } = req.query;
-   // console.log("el id del usuario es: ",usuarioId)
+
+    if (!usuarioId) {
+      return res.status(400).json({ message: 'Falta el parámetro usuarioId' });
+    }
+
     const userQuery = `
       SELECT 
         idpersonaje, nombre, dominio, raza, naturaleza, edad, ken, ki, destino, "pDestino",
@@ -373,34 +390,48 @@ app.get('/consumirPersonajesUsuario', async (req, res) => {
         add1, "valAdd1", add2, "valAdd2", add3, "valAdd3", add4, "valAdd4",
         inventario, dominios, "kenActual", "kiActual", positiva, negativa, "vidaActual",
         hechizos, consumision, iniciativa, historia, "tecEspecial", conviccion, cicatriz,
-        notasaga, resistencia, "pjPnj", imagenurl, imagencloudid,"imagenSeleccionada","coleccionImagenes", "usuarioId"
+        notasaga, resistencia, "pjPnj", imagenurl, imagencloudid, "imagenSeleccionada", "coleccionImagenes", "usuarioId"
       FROM personajes
       WHERE "usuarioId" = $1
       ORDER BY "idpersonaje" ASC
     `;
-    const userResult = await pool.query(userQuery,[usuarioId]);
 
-   
-   if (userResult.rows.length === 0) {
-  return res.status(200).json({
-    message: 'Usuario sin personajes aún',
-    coleccionPersonajes: [],  // ← importante
-  });
-}
+    const userResult = await pool.query(userQuery, [usuarioId]);
 
+    if (!userResult.rows || userResult.rows.length === 0) {
+      return res.status(200).json({
+        message: 'Usuario sin personajes aún',
+        coleccionPersonajes: [],
+      });
+    }
+
+    // Normalizamos coleccionImagenes y forzamos array siempre
     const coleccionPersonajes = userResult.rows.map(p => ({
-  ...p,
-  coleccionImagenes: p.coleccionImagenes ? JSON.parse(p.coleccionImagenes) : [],
-}));  
+      ...p,
+      coleccionImagenes: Array.isArray(p.coleccionImagenes)
+        ? p.coleccionImagenes
+        : p.coleccionImagenes
+          ? (() => {
+              try {
+                return JSON.parse(p.coleccionImagenes);
+              } catch {
+                console.warn(`No se pudo parsear coleccionImagenes de personaje ${p.idpersonaje}`);
+                return [];
+              }
+            })()
+          : [],
+      imagenSeleccionada: p.imagenSeleccionada || null,
+      imagenurl: p.imagenurl || null,
+      imagencloudid: p.imagencloudid || null
+    }));
 
-    
     res.json({
-      message: 'Peticion de personajes consumidos exitoso',
-      coleccionPersonajes: coleccionPersonajes,   
+      message: 'Petición de personajes consumidos exitoso',
+      coleccionPersonajes
     });
 
   } catch (error) {
-    console.error('Error al obtener coleccion personajes del Usuario:', error);
+    console.error('Error al obtener colección de personajes del Usuario:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 });
