@@ -899,46 +899,58 @@ app.put('/update-personaje/:id', async (req, res) => {
     let coleccion = [];
     let imagenSeleccionada = null;
 
-    // Traer coleccion actual del personaje
+    // 🔹 Traer coleccion actual del personaje
     const { rows } = await pool.query(
       'SELECT "coleccionImagenes", "imagenSeleccionada" FROM personajes WHERE idpersonaje=$1',
       [idpersonaje]
     );
 
     if (rows.length > 0) {
-      coleccion = rows[0].coleccionImagenes ? JSON.parse(rows[0].coleccionImagenes) : [];
+      // 🔹 Parse seguro: soporta string o JSON
+      const coleccionRaw = rows[0].coleccionImagenes || [];
+      coleccion = typeof coleccionRaw === 'string'
+        ? JSON.parse(coleccionRaw)
+        : coleccionRaw;
+
       imagenSeleccionada = rows[0].imagenSeleccionada || null;
     }
 
-    // Si hay imagen base64, la subimos a Cloudinary
+    // 🔹 Subir imagen a Cloudinary si viene en base64
     if (imagen && imagen.startsWith('data:image/')) {
       const matches = imagen.match(/^data:image\/(\w+);base64,(.+)$/);
-      if (!matches) {
-        return res.status(400).json({ error: 'Imagen base64 inválida.' });
-      }
+      if (!matches) return res.status(400).json({ error: 'Imagen base64 inválida.' });
 
       const ext = matches[1];
       const data = matches[2];
 
-      const uploadResult = await cloudinary.uploader.upload(`data:image/${ext};base64,${data}`, {
-        folder: 'personajes',
-        public_id: `personaje_${idpersonaje}`,
-        overwrite: true,
-      });
+      const uploadResult = await cloudinary.uploader.upload(
+        `data:image/${ext};base64,${data}`,
+        {
+          folder: 'personajes',
+          public_id: `personaje_${idpersonaje}`,
+          overwrite: true,
+        }
+      );
 
       imagenurl = uploadResult.secure_url;
       imagencloudid = uploadResult.public_id;
 
-      // Agregar a coleccion si no existe
+      // 🔹 Agregar a coleccion si no existe
       if (!coleccion.find(img => img.id === imagencloudid)) {
         coleccion.push({ id: imagencloudid, url: imagenurl });
       }
 
-      // Actualizar imagenSeleccionada automáticamente
+      // 🔹 Actualizar imagenSeleccionada automáticamente
       imagenSeleccionada = imagencloudid;
     }
 
-    // Actualizar todos los campos incluyendo imágenes y colección
+    // 🔹 Preparar coleccion para guardar: filtrar undefined y asegurar id/url
+    const coleccionParaGuardar = coleccion.map(img => ({
+      id: img.id || '',
+      url: img.url || ''
+    }));
+
+    // 🔹 Query de actualización
     const query = `
       UPDATE personajes SET
         nombre=$1, dominio=$2, raza=$3, naturaleza=$4, edad=$5,
@@ -953,14 +965,14 @@ app.put('/update-personaje/:id', async (req, res) => {
         "medVital"=$37, "medEspiritual"=$38, rayo=$39, fuego=$40,
         frio=$41, veneno=$42, corte=$43, energia=$44, ventajas=$45,
         "apCombate"=$46, "valCombate"=$47, "apCombate2"=$48,
-        "valCombate2"=$49, add1=$50, "valAdd1"=$51, add2=$52,
-        "valAdd2"=$53, add3=$54, "valAdd3"=$55, add4=$56, "valAdd4"=$57,
+        "valCombate2"=$49, add1=$50, "valAdd1"=$51, add2=$52, "valAdd2"=$53,
+        add3=$54, "valAdd3"=$55, add4=$56, "valAdd4"=$57,
         inventario=$58, dominios=$59, "kenActual"=$60, "kiActual"=$61,
         positiva=$62, negativa=$63, "vidaActual"=$64, hechizos=$65,
         consumision=$66, iniciativa=$67, historia=$68, "usuarioId"=$69,
         "tecEspecial"=$70, conviccion=$71, cicatriz=$72, resistencia=$73,
         "pjPnj"=$74, imagenurl=$75, imagencloudid=$76,
-        "coleccionImagenes"=$77, "imagenSeleccionada"=$78
+        "coleccionImagenes"=$77::json, "imagenSeleccionada"=$78
       WHERE idpersonaje=$79
     `;
 
@@ -977,7 +989,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       vidaActual, hechizos, consumision, iniciativa, historia, usuarioId,
       tecEspecial, conviccion, cicatriz, resistencia, pjPnj,
       imagenurl, imagencloudid,
-      JSON.stringify(coleccion),
+      JSON.stringify(coleccionParaGuardar),
       imagenSeleccionada,
       idpersonaje
     ];
@@ -989,7 +1001,7 @@ app.put('/update-personaje/:id', async (req, res) => {
       idpersonaje,
       imagenurl,
       imagencloudid,
-      coleccionImagenes: coleccion,
+      coleccionImagenes: coleccionParaGuardar,
       imagenSeleccionada
     });
 
