@@ -621,6 +621,7 @@ const guardarCambiosBBDD = async () => {
 
     const data=response.data;
     console.log(data.imagenurl)
+    setImagenurlN(data.imagenurl); // Actualiza el estado con la nueva URL de la imagen 
     console.log('Cambios guardados exitosamente:', response.data);
 
     Swal.fire({

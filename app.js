@@ -894,31 +894,40 @@ app.put('/update-personaje/:id', async (req, res) => {
   } = req.body;
 
   try {
-    let imagenurl = null;
-    let imagencloudid = null;
     let coleccion = [];
     let imagenSeleccionada = null;
 
-    // 🔹 Traer coleccion actual del personaje
+    // 🔹 Traer datos actuales
     const { rows } = await pool.query(
-      'SELECT "coleccionImagenes", "imagenSeleccionada" FROM personajes WHERE idpersonaje=$1',
+      `SELECT "coleccionImagenes", "imagenSeleccionada", imagenurl, imagencloudid 
+       FROM personajes WHERE idpersonaje=$1`,
       [idpersonaje]
     );
 
-    if (rows.length > 0) {
-      // 🔹 Parse seguro: soporta string o JSON
-      const coleccionRaw = rows[0].coleccionImagenes || [];
-      coleccion = typeof coleccionRaw === 'string'
-        ? JSON.parse(coleccionRaw)
-        : coleccionRaw;
-
-      imagenSeleccionada = rows[0].imagenSeleccionada || null;
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Personaje no encontrado' });
     }
 
-    // 🔹 Subir imagen a Cloudinary si viene en base64
+    const current = rows[0];
+
+    // 🔹 Parse colección
+    const coleccionRaw = current.coleccionImagenes || [];
+    coleccion = typeof coleccionRaw === 'string'
+      ? JSON.parse(coleccionRaw)
+      : coleccionRaw;
+
+    imagenSeleccionada = current.imagenSeleccionada || null;
+
+    // 🔹 Mantener imagen actual por defecto
+    let imagenurl = current.imagenurl || null;
+    let imagencloudid = current.imagencloudid || null;
+
+    // 🔹 Subir imagen si viene base64
     if (imagen && imagen.startsWith('data:image/')) {
       const matches = imagen.match(/^data:image\/(\w+);base64,(.+)$/);
-      if (!matches) return res.status(400).json({ error: 'Imagen base64 inválida.' });
+      if (!matches) {
+        return res.status(400).json({ error: 'Imagen base64 inválida.' });
+      }
 
       const ext = matches[1];
       const data = matches[2];
@@ -927,30 +936,31 @@ app.put('/update-personaje/:id', async (req, res) => {
         `data:image/${ext};base64,${data}`,
         {
           folder: 'personajes',
-          public_id: `personaje_${idpersonaje}`,
-          overwrite: true,
+          public_id: `personaje_${idpersonaje}_${Date.now()}`, // 🔥 ID único
+          overwrite: false,
         }
       );
 
       imagenurl = uploadResult.secure_url;
       imagencloudid = uploadResult.public_id;
 
-      // 🔹 Agregar a coleccion si no existe
-      if (!coleccion.find(img => img.id === imagencloudid)) {
-        coleccion.push({ id: imagencloudid, url: imagenurl });
-      }
+      // 🔥 SIEMPRE agregar a colección (ahora sí funciona)
+      coleccion.push({
+        id: imagencloudid,
+        url: imagenurl
+      });
 
-      // 🔹 Actualizar imagenSeleccionada automáticamente
+      // 🔹 Nueva imagen pasa a ser la seleccionada
       imagenSeleccionada = imagencloudid;
     }
 
-    // 🔹 Preparar coleccion para guardar: filtrar undefined y asegurar id/url
+    // 🔹 Limpiar colección
     const coleccionParaGuardar = coleccion.map(img => ({
-      id: img.id || '',
-      url: img.url || ''
+      id: img?.id || '',
+      url: img?.url || ''
     }));
 
-    // 🔹 Query de actualización
+    // 🔹 Query
     const query = `
       UPDATE personajes SET
         nombre=$1, dominio=$2, raza=$3, naturaleza=$4, edad=$5,
@@ -996,7 +1006,7 @@ app.put('/update-personaje/:id', async (req, res) => {
 
     await pool.query(query, values);
 
-    res.status(201).json({
+    res.status(200).json({
       message: 'Personaje modificado exitosamente.',
       idpersonaje,
       imagenurl,
