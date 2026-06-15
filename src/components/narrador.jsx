@@ -290,12 +290,16 @@ const handleInputBuscardor=(event)=>{
  setPjBuscado(event.target.value);
 }
 
-
+/*
   // Filtramos la colección de personajes según el valor de la búsqueda
   const personajesFiltrados = coleccionPersonajes.filter((pj) =>
     pj.nombre.toLowerCase().includes(pjBuscado.toLowerCase())
   );
-
+*/
+//surgio un problema porque algunos personajes no tenian nombre, entonces para evitar errores al hacer toLowerCase sobre undefined, se hizo esta validacion previa:
+const personajesFiltrados = coleccionPersonajes.filter((pj) =>
+  (pj.nombre || "").toLowerCase().includes((pjBuscado || "").toLowerCase())
+);
 
 
   // Filtrar personajes que tengan técnicas que coincidan con la búsqueda
